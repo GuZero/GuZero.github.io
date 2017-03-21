@@ -31,19 +31,10 @@ function createMap(){
         AMap.event.addListener(geolocation, 'error', onError);      //返回定位出错信息
     });
     //解析定位结果
-    function onComplete(data) {
-        var str=['定位成功'];
-        str.push('经度：' + data.position.getLng());
-        str.push('纬度：' + data.position.getLat());
-        if(data.accuracy){
-             str.push('精度：' + data.accuracy + ' 米');
-        }//如为IP精确定位结果则没有精度信息
-        str.push('是否经过偏移：' + (data.isConverted ? '是' : '否'));
-        document.getElementById('tip').innerHTML = str.join('<br>');
-    }
+    
     //解析定位错误信息
     function onError(data) {
-        document.getElementById('tip').innerHTML = '定位失败';
+        alert("抱歉定位失败！");
     }
      //地图中添加地图操作ToolBar插件
     map.plugin(["AMap.ToolBar"], function() {
