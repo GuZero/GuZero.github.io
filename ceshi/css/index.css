@@ -22,11 +22,10 @@ html body {
 
 .main {
     background: -webkit-linear-gradient(top, #3d7eea, #022f79);
+    background: -moz-linear-gradient(top, #3d7eea, #022f79);
     background: linear-gradient(top, #3d7eea, #022f79);
     height: 100vh;
     width: 100vw;
-    margin: 0;
-    padding: 0;
 }
 
 a {
@@ -102,13 +101,13 @@ a {
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
+    opacity: 0.5;
 
 }
-
-.opacity_5 {
-    opacity: 0.5
+.active {
+	opacity: 1;
 }
-
 .btn span {
     font-size: 14px;
     color: #fff;
@@ -116,12 +115,13 @@ a {
 
 .show {
     padding: 30px 30px;
+    height: 75%
 
 }
 
 .show div {
     width: 100%;
-    height: 410px;
+    height: 75%;
     background: #fff;
     border-radius: 5px;
 }
@@ -143,17 +143,19 @@ a {
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
+    opacity: 1;
 }
 .img a{
     display: block;
     width: 42%;
-    position: absolute;
+    position: relative;
     
 }
 .img p {
     font-size: 12px;
     color: #bcbcbc;
-    margin-top: 70px;
+    margin-top: 20px;
 }
 
 .show div .img span {
@@ -165,14 +167,16 @@ a {
     display: flex;
     justify-content: center;
     align-items: center;
+    
 }
 .text p{
     font-size: 16px;
+    display: none;
 }
 .show .nextBtn{
     width: 100%;
     height: 42px;
-    margin-top: 40px;
+    margin-top: 35px;
     background: #4285f4;
     border-radius: 5px;
     display: flex;
@@ -237,7 +241,11 @@ a {
     border: solid 1px #ddd;
     opacity: 0;
 }
-
+#text {
+	width: 100%;
+    border: none;
+    font-size: 14px;
+}
 
 #user_head .user_logo i {
     display: inline-block;
@@ -279,7 +287,7 @@ a {
 
 #user_head #left_ico i {
     color: #fff;
-    font-size: 24px;
+    font-size: 20px;
 }
 
 #user_head p {

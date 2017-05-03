@@ -10,6 +10,7 @@
     <meta name="format-detection" content="telephone=no, email=no" />
     <!--<link href="css/style.css" rel="stylesheet" type="text/css">-->
     <link rel="stylesheet" href="css/index.css" type="text/css">
+    <link rel="stylesheet" href="fonts/iconfont/iconfont.css">
     <!--[if IE]>
 <script src="js/html5shiv.min.js"></script>
 <![endif]-->
@@ -20,13 +21,13 @@
     <div class="main">
         <div id="user_head">
             <a id="left_ico" href="javascript:history.go(-1);">
-                <i class="icon iconfont">&#xe645;</i>
+                <i class="icon iconfont">&#xe67f;</i>
             </a>
             <p>制作中</p>
         </div>
         <div class="nav">
-            <div class="btn"><span>1.制作</span></div>
-            <div class="btn opacity_5"><span>2.选择柜机</span></div>
+            <div class="btn active"><span>1.制作</span></div>
+            <div class="btn"><span>2.选择柜机</span></div>
         </div>
         <div class="show">
             <div>
@@ -39,20 +40,11 @@
                 </div>
                 <div class="text">
                     <p>点击输入文字</p>
+                    <textarea maxlength="140" id="text" rows="3"></textarea>
+                    
                 </div>
             </div>
             <div class="nextBtn"><span>下一步</span></div>
-        </div>
-        <div class="upload">
-            <div class="herder">
-                <p>上传图片</p>
-            </div>
-            <div class="nav">
-                拍照
-            </div>
-            <div class="nav2">
-                相册
-            </div>
         </div>
     </div>
 
@@ -73,19 +65,7 @@
     <script src="js/iscroll-zoom.js"></script>
     <script src="js/hammer.js"></script>
     <script src="js/jquery.photoclip.js"></script>
-    <script>
-        $("#upload").click(function() {
-            if ($(".upload").is(':hidden')) {
-                $(".upload").show();
-                $(".upload").animate({
-                    bottom: '0px'
-                }, "slow");
-            }
 
-
-        })
-
-    </script>
     <script>
         var obUrl = ''
         //document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
