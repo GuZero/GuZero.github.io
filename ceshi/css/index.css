@@ -2,6 +2,7 @@
 
 /* CSS Document*/
 
+
 /*公共部分*/
 
 * {
@@ -52,7 +53,10 @@ a {
     font-family: 'iconfont';
     src: url('../fonts/iconfont.eot');
     /* IE9*/
-    src: url('../fonts/iconfont.eot') format('embedded-opentype'), /* IE6-IE8 */ url('../fonts/iconfont.woff') format('woff'), /* chrome、firefox */ url('../fonts/iconfont.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/ url('../fonts/iconfont.svg#iconfont') format('svg');
+    src: url('../fonts/iconfont.eot') format('embedded-opentype'), /* IE6-IE8 */
+    url('../fonts/iconfont.woff') format('woff'), /* chrome、firefox */
+    url('../fonts/iconfont.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+    url('../fonts/iconfont.svg#iconfont') format('svg');
     /* iOS 4.1- */
 }
 
@@ -103,11 +107,12 @@ a {
     align-items: center;
     cursor: pointer;
     opacity: 0.5;
+}
 
-}
 .active {
-	opacity: 1;
+    opacity: 1;
 }
+
 .btn span {
     font-size: 14px;
     color: #fff;
@@ -115,26 +120,66 @@ a {
 
 .show {
     padding: 30px 30px;
-    height: 75%
-
+    height: 85%;
+    box-sizing: border-box;
 }
 
 .show div {
     width: 100%;
-    height: 75%;
+    height: 70%;
     background: #fff;
     border-radius: 5px;
 }
 
 .show div .img {
     height: 75%;
-    border-bottom: 1px solid #ececec;
+/*    border-bottom: 1px solid red;*/
+    position: relative;
+}
+.show div .img:before{
+     content: '';
+    display: block;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background-color: #ececec;
+    transform: scale(1, .5);
+}
+.show div #uploadBox {
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+/*    display: block;*/
 }
-
+.show div #error{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+    display: none;
+}
+#error label{
+    text-decoration:underline;
+}
+#error a{
+    margin-top: 20px;
+    text-align: center;
+}
+#error label,a, .img #error p{
+    color: #6e6e6e;
+}
+#retry{
+    width: 40%;
+    margin-top: 30px;
+}
+#photo{
+    width: 100%
+}
 .img .btn {
     width: 100%;
     height: 40px;
@@ -146,12 +191,13 @@ a {
     cursor: pointer;
     opacity: 1;
 }
-.img a{
+
+.img a {
     display: block;
     width: 42%;
     position: relative;
-    
 }
+
 .img p {
     font-size: 12px;
     color: #bcbcbc;
@@ -162,18 +208,38 @@ a {
     font-size: 14px;
     color: #4285f4;
 }
-.show div .text{
-    height: 25%;
+
+.show div .text {
+    height: 30%;
     display: flex;
     justify-content: center;
     align-items: center;
-    
 }
-.text p{
+
+.txt1 {
     font-size: 16px;
     display: none;
 }
-.show .nextBtn{
+
+#text {
+    width: 100%;
+    border: none;
+    font-size: 14px;
+    padding: 15px;
+    padding-right: 0px;
+    box-sizing: border-box;
+    height: 80%;
+}
+
+#num1 {
+    margin-top: 5%;
+    height: 20%;
+    line-height: 20%;
+    text-align: right;
+    color: #d1d1d1;
+}
+
+.show .nextBtn {
     width: 100%;
     height: 42px;
     margin-top: 35px;
@@ -183,11 +249,13 @@ a {
     justify-content: center;
     align-items: center;
 }
-.show .nextBtn span{
+
+.show .nextBtn span {
     color: #fff;
     font-size: 20px;
 }
-.upload{
+
+.upload {
     width: 100%;
     height: 142px;
     background: #fff;
@@ -196,14 +264,16 @@ a {
     left: 0px;
     display: none;
 }
-.upload .herder{
-    padding-left:20px;
+
+.upload .herder {
+    padding-left: 20px;
     background: #ececec;
     height: 33px;
     line-height: 33px;
     font-size: 12px;
 }
-.upload .nav:before{
+
+.upload .nav:before {
     content: '';
     display: block;
     position: absolute;
@@ -211,23 +281,24 @@ a {
     left: 16px;
     width: 100%;
     height: 1px;
-    background-color:#ececec;
+    background-color: #ececec;
     transform: scale(1, .5);
 }
 
-.upload .nav{
+.upload .nav {
     width: 100%;
     padding: 20px;
     position: absolute;
 }
-.upload .nav2{
+
+.upload .nav2 {
     width: 100%;
     padding: 20px;
     position: absolute;
     bottom: 0px;
 }
 
-.img a input[type=file]{
+.img a input[type=file] {
     position: absolute;
     top: 0;
     left: 0;
@@ -240,11 +311,6 @@ a {
     cursor: pointer;
     border: solid 1px #ddd;
     opacity: 0;
-}
-#text {
-	width: 100%;
-    border: none;
-    font-size: 14px;
 }
 
 #user_head .user_logo i {
@@ -291,7 +357,6 @@ a {
 }
 
 #user_head p {
-
     height: 26px;
     line-height: 26px;
     font-size: 17px;
@@ -377,6 +442,7 @@ a {
     padding-top: 10%;
 }
 
+
 /*图片裁剪-触屏设备*/
 
 .clearfix:before,
@@ -418,6 +484,7 @@ a {
     font-size: 0.65em;
 }
 
+
 /* Header*/
 
 .htmleaf-header {
@@ -444,6 +511,7 @@ a {
     padding: 0.8em 0 0.5em 0;
     color: #c3c8cd;
 }
+
 
 /*nav*/
 
@@ -473,6 +541,7 @@ a {
     background: #1d7db1;
     color: #fff;
 }
+
 
 /* Top Navigation Style*/
 
@@ -521,6 +590,7 @@ a {
     -webkit-font-smoothing: antialiased;
 }
 
+
 /* footer*/
 
 .htmleaf-footer {
@@ -545,7 +615,7 @@ a {
     overflow: hidden;
 }
 
-.related > a {
+.related>a {
     vertical-align: top;
     width: calc(100% - 20px);
     max-width: 340px;
@@ -593,6 +663,7 @@ a {
     color: #fff;
 }
 
+
 /* icomoon*/
 
 .icon-htmleaf-home-outline:before {
@@ -607,7 +678,6 @@ a {
     .htmleaf-header {
         padding: 3em 10% 4em;
     }
-
     .htmleaf-header h1 {
         font-size: 2em;
     }
@@ -817,6 +887,7 @@ table {
 #clipArea {
     height: 90%;
 }
+
 
 /*上传图标*/
 

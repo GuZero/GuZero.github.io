@@ -18,6 +18,10 @@
 
 <body>
     <!--头部-->
+    <div class="htmleaf-container">
+        <div id="clipArea"></div>
+        <div id="view"></div>
+    </div>
     <div class="main">
         <div id="user_head">
             <a id="left_ico" href="javascript:history.go(-1);">
@@ -32,16 +36,33 @@
         <div class="show">
             <div>
                 <div class="img">
-                    <a href="javascript:void(0);">
-                        <div class="btn" id="upload"><span>上传图片</span></div>
-                        <input id="file" type="file" onchange="javascript:setImagePreview();" accept="image/*" multiple  />
-                    </a>
-                    <p>建议上传1M以上 清晰度高的图片</p>
+                    <div id="uploadBox">
+                        <a href="javascript:void(0);">
+                            <div class="btn" id="upload"><span>上传图片</span></div>
+                            <input id="file" type="file" onchange="javascript:setImagePreview();" accept="image/*" multiple />
+                        </a>
+                        <p>建议上传1M以上 清晰度高的图片</p>
+                    </div>
+
+                    <div id="error">
+                        <p>咣咣，上传失败/(ㄒoㄒ)/~~</p>
+                        <div class="btn" id="retry"><span>重试</span></div>
+                        <a href="javascript:void(0);"><label for="file">重选作品
+                        <input id="file" type="file" onchange="javascript:setImagePreview();" accept="image/*" multiple />
+                        
+                        </label></a>
+                    </div>
+                    <div id="photo"></div>
                 </div>
+
                 <div class="text">
-                    <p>点击输入文字</p>
-                    <textarea maxlength="140" id="text" rows="3"></textarea>
-                    
+                    <p class="txt1">点击输入文字</p>
+                    <div>
+                        <textarea maxlength="140" id="text" rows="2"></textarea>
+                        <p id="num1"><span id="word">23</span>/140</p>
+                    </div>
+
+
                 </div>
             </div>
             <div class="nextBtn"><span>下一步</span></div>
@@ -65,7 +86,20 @@
     <script src="js/iscroll-zoom.js"></script>
     <script src="js/hammer.js"></script>
     <script src="js/jquery.photoclip.js"></script>
+    <script>
+        $(function() {
+            $('#text').keyup(function() {
+                var len = $(this).val().length;
+                if (len > 139) {
+                    alert('您输入超出了限制');
+                }
+                var num = 140 - len;
+                $("#word").text(len);
+            })
 
+        })
+
+    </script>
     <script>
         var obUrl = ''
         //document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
@@ -246,6 +280,7 @@
         });
 
     </script>
+<!--
     <script type="text/javascript">
         function setImagePreview() {
             var preview, img_txt, localImag, file_head = document.getElementById("file_head"),
@@ -275,6 +310,7 @@
         }
 
     </script>
+-->
 
 </body>
 
