@@ -133,11 +133,12 @@ a {
 
 .show div .img {
     height: 75%;
-/*    border-bottom: 1px solid red;*/
+    /*    border-bottom: 1px solid red;*/
     position: relative;
 }
-.show div .img:before{
-     content: '';
+
+.show div .img:before {
+    content: '';
     display: block;
     position: absolute;
     bottom: 0;
@@ -146,15 +147,17 @@ a {
     background-color: #ececec;
     transform: scale(1, .5);
 }
+
 .show div #uploadBox {
     width: 100%;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-/*    display: block;*/
 }
-.show div #error{
+
+.show div #error {
     width: 100%;
     display: flex;
     justify-content: center;
@@ -163,30 +166,39 @@ a {
     height: 100%;
     display: none;
 }
-#error label{
-    text-decoration:underline;
+
+#error label {
+    text-decoration: underline;
 }
-#error a{
+
+#error a {
     margin-top: 20px;
     text-align: center;
 }
-#error label,a, .img #error p{
+
+#error label,
+a,
+.img #error p {
     color: #6e6e6e;
 }
-#retry{
+
+#retry {
     width: 40%;
     margin-top: 30px;
 }
-#photo{
+
+#photo {
     width: 100%;
     height: 100%;
     display: none;
 }
-#img_s{
+
+#img_s {
     width: 100%;
     height: 100%;
     border-radius: 5px 5px 0px 0px;
 }
+
 .img .btn {
     width: 100%;
     height: 40px;
@@ -223,10 +235,12 @@ a {
     align-items: center;
     color: black;
 }
+
 .show div .text .text_1 {
-	display: none;
+    display: none;
     z-index: 111;
 }
+
 .txt1 {
     font-size: 16px;
     display: block;
@@ -275,7 +289,6 @@ a {
     bottom: -142px;
     left: 0px;
     display: none;
-   
 }
 
 .upload .herder {
@@ -303,26 +316,24 @@ a {
     padding: 20px;
     position: absolute;
 }
-        
-.footer{
+
+.footer {
     display: flex;
-    justify-content:space-around;
     position: absolute;
-    bottom: 20px;
+    justify-content: space-between;
+    bottom: 0px;
     width: 100%;
-    
-}
-.footer .btn{
-     width: 30%;
-    height: 40px;
-    border: 1px solid #fff;
-    border-radius: 5px;
-    display: flex;
-    justify-content: center;
+    padding: 0 16px;
     align-items: center;
-    cursor: pointer;
-    opacity: 1;
+    height: 10%;
+    box-sizing: border-box;
 }
+
+.footer span {
+   color: #fff;
+    font-size: 14px;
+}
+
 .upload .nav2 {
     width: 100%;
     padding: 20px;

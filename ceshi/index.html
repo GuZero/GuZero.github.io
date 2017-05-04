@@ -20,11 +20,11 @@
     <!--头部-->
     <div class="htmleaf-container">
         <div id="clipArea"></div>
+        <div class="footer">
+            <span id="cancle">取消</span>
+            <span id="finish" class="fr">完成</span>
+        </div>
         <div id="view">
-            <div class="footer">
-                <div class="btn" id="cancle"><span>取消</span></div>
-                <div class="btn" id="finish"><span>完成</span></div>
-            </div>
 
         </div>
     </div>
@@ -61,9 +61,9 @@
                 </div>
 
                 <div class="text">
-                   
-                        <p class="txt1">点击输入文字</p>
-                    
+
+                    <p class="txt1">点击输入文字</p>
+
 
                     <div class="text_1">
                         <textarea maxlength="140" id="text" rows="2"></textarea>
@@ -110,11 +110,18 @@
             })
             $("#cancle").click(function() {
                 $(".htmleaf-container").fadeOut(300);
+                $("#photo").hide();
             })
 
             $(".txt1").click(function() {
                 $(this).hide();
                 $(".text_1").show();
+            })
+            //删除图片
+            $("#photo").click(function() {
+                $(this).empty();
+                $("#uploadBox").show();
+                $("#photo").hide();
             })
 
         })
@@ -124,8 +131,8 @@
         var obUrl = ''
         //document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
         $("#clipArea").photoClip({
-            width: 280,
-            height: 280,
+            width: 290,
+            height: 310,
             file: "#file",
             view: "#view",
             ok: "#finish",
@@ -143,165 +150,18 @@
     </script>
     <script>
         $(function() {
-            $("#logoBox,#s_dpage").click(function() {
-                $(".htmleaf-container").fadeIn(300);
-                $("#dpage").addClass("show");
-            })
+
             $("#finish").click(function() {
                 $("#uploadBox").hide();
                 $("#photo").empty();
                 $('#photo').append('<img src="' + imgsource + '" align="absmiddle"  id="img_s">');
                 $(".htmleaf-container").hide();
-                $("#dpage").removeClass("show");
             })
         });
 
     </script>
-    <script type="text/javascript">
-        $(function() {
-            jQuery.divselect = function(divselectid, inputselectid) {
-                var inputselect = $(inputselectid);
-                $(divselectid + " small").click(function() {
-                    $("#divselect ul").toggle();
-                    $(".mask").show();
-                });
-                $(divselectid + " ul li a").click(function() {
-                    var txt = $(this).text();
-                    $(divselectid + " small").html(txt);
-                    var value = $(this).attr("selectid");
-                    inputselect.val(value);
-                    $(divselectid + " ul").hide();
-                    $(".mask").hide();
-                    $("#divselect small").css("color", "#333")
-                });
-            };
-            $.divselect("#divselect", "#inputselect");
-        });
 
-    </script>
-    <script type="text/javascript">
-        $(function() {
-            jQuery.divselectx = function(divselectxid, inputselectxid) {
-                var inputselectx = $(inputselectxid);
-                $(divselectxid + " small").click(function() {
-                    $("#divselectx ul").toggle();
-                    $(".mask").show();
-                });
-                $(divselectxid + " ul li a").click(function() {
-                    var txt = $(this).text();
-                    $(divselectxid + " small").html(txt);
-                    var value = $(this).attr("selectidx");
-                    inputselectx.val(value);
-                    $(divselectxid + " ul").hide();
-                    $(".mask").hide();
-                    $("#divselectx small").css("color", "#333")
-                });
-            };
-            $.divselectx("#divselectx", "#inputselectx");
-        });
 
-    </script>
-    <script type="text/javascript">
-        $(function() {
-            jQuery.divselecty = function(divselectyid, inputselectyid) {
-                var inputselecty = $(inputselectyid);
-                $(divselectyid + " small").click(function() {
-                    $("#divselecty ul").toggle();
-                    $(".mask").show();
-                });
-                $(divselectyid + " ul li a").click(function() {
-                    var txt = $(this).text();
-                    $(divselectyid + " small").html(txt);
-                    var value = $(this).attr("selectyid");
-                    inputselecty.val(value);
-                    $(divselectyid + " ul").hide();
-                    $(".mask").hide();
-                    $("#divselecty small").css("color", "#333")
-                });
-            };
-            $.divselecty("#divselecty", "#inputselecty");
-        });
-
-    </script>
-    <script type="text/javascript">
-        $(function() {
-            $(".mask").click(function() {
-                $(".mask").hide();
-                $(".all").hide();
-            })
-            $(".right input").blur(function() {
-                if ($.trim($(this).val()) == '') {
-                    $(this).addClass("place").html();
-                } else {
-                    $(this).removeClass("place");
-                }
-            })
-        });
-
-    </script>
-    <script>
-        $("#file0").change(function() {
-            var objUrl = getObjectURL(this.files[0]);
-            obUrl = objUrl;
-            console.log("objUrl = " + objUrl);
-            if (objUrl) {
-                $("#img0").attr("src", objUrl).show();
-            } else {
-                $("#img0").hide();
-            }
-        });
-
-        function qd() {
-            var objUrl = getObjectURL(this.files[0]);
-            obUrl = objUrl;
-            console.log("objUrl = " + objUrl);
-            if (objUrl) {
-                $("#img0").attr("src", objUrl).show();
-            } else {
-                $("#img0").hide();
-            }
-        }
-
-        function getObjectURL(file) {
-            var url = null;
-            if (window.createObjectURL != undefined) { // basic
-                url = window.createObjectURL(file);
-            } else if (window.URL != undefined) { // mozilla(firefox)
-                url = window.URL.createObjectURL(file);
-            } else if (window.webkitURL != undefined) { // webkit or chrome
-                url = window.webkitURL.createObjectURL(file);
-            }
-            return url;
-        }
-
-    </script>
-    <script type="text/javascript">
-        var subUrl = "";
-        $(function() {
-            $(".file-3").bind('change', function() {
-                subUrl = $(this).val()
-                $(".yulan").show();
-                $(".file-3").val("");
-            });
-
-            $(".file-3").each(function() {
-                if ($(this).val() == "") {
-                    $(this).parents(".uploader").find(".filename").val("营业执照");
-                }
-            });
-            $(".btn-3").click(function() {
-                $("#img-1").attr("src", obUrl);
-                $(".yulan").hide();
-                $(".file-3").parents(".uploader").find(".filename").val(subUrl);
-            })
-            $(".btn-2").click(function() {
-                $(".yulan").hide();
-            })
-
-        });
-
-    </script>
-    
     <script type="text/javascript">
         function setImagePreview() {
             var preview, img_txt, localImag, file_head = document.getElementById("file_head"),

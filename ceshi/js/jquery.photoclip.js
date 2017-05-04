@@ -427,7 +427,7 @@ var imgsource ='';
 		function clipImg() {
 			if (!imgLoaded) {
 				alert("亲，当前没有图片可以裁剪!");
-				return;
+				return ;
 			}
 			var local = loaclToLoacl($moveLayer, $clipView);
 			var scale = myScroll.scale;
