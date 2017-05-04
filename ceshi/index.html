@@ -20,7 +20,13 @@
     <!--头部-->
     <div class="htmleaf-container">
         <div id="clipArea"></div>
-        <div id="view"></div>
+        <div id="view">
+            <div class="footer">
+                <div class="btn" id="cancle"><span>取消</span></div>
+                <div class="btn" id="finish"><span>完成</span></div>
+            </div>
+
+        </div>
     </div>
     <div class="main">
         <div id="user_head">
@@ -37,13 +43,12 @@
             <div>
                 <div class="img">
                     <div id="uploadBox">
-                        <a href="javascript:void(0);">
-                            <div class="btn" id="upload"><span>上传图片</span></div>
+                        <a href="javascript:void(0);" id="upload">
+                            <div class="btn"><span>上传图片</span></div>
                             <input id="file" type="file" onchange="javascript:setImagePreview();" accept="image/*" multiple />
                         </a>
                         <p>建议上传1M以上 清晰度高的图片</p>
                     </div>
-
                     <div id="error">
                         <p>咣咣，上传失败/(ㄒoㄒ)/~~</p>
                         <div class="btn" id="retry"><span>重试</span></div>
@@ -56,10 +61,13 @@
                 </div>
 
                 <div class="text">
-                    <p class="txt1">点击输入文字</p>
-                    <div>
+                   
+                        <p class="txt1">点击输入文字</p>
+                    
+
+                    <div class="text_1">
                         <textarea maxlength="140" id="text" rows="2"></textarea>
-                        <p id="num1"><span id="word">23</span>/140</p>
+                        <p id="num1"><span id="word">0</span>/140</p>
                     </div>
 
 
@@ -95,6 +103,18 @@
                 }
                 var num = 140 - len;
                 $("#word").text(len);
+            });
+            $("#upload").click(function() {
+                $(".htmleaf-container").fadeIn(300);
+                $("#photo").show();
+            })
+            $("#cancle").click(function() {
+                $(".htmleaf-container").fadeOut(300);
+            })
+
+            $(".txt1").click(function() {
+                $(this).hide();
+                $(".text_1").show();
             })
 
         })
@@ -108,7 +128,7 @@
             height: 280,
             file: "#file",
             view: "#view",
-            ok: "#clipBtn",
+            ok: "#finish",
             loadStart: function() {
                 console.log("照片读取中");
             },
@@ -127,9 +147,10 @@
                 $(".htmleaf-container").fadeIn(300);
                 $("#dpage").addClass("show");
             })
-            $("#clipBtn").click(function() {
-                $("#logoBox").empty();
-                $('#logoBox').append('<img src="' + imgsource + '" align="absmiddle" style=" width:100%;">');
+            $("#finish").click(function() {
+                $("#uploadBox").hide();
+                $("#photo").empty();
+                $('#photo').append('<img src="' + imgsource + '" align="absmiddle"  id="img_s">');
                 $(".htmleaf-container").hide();
                 $("#dpage").removeClass("show");
             })
@@ -280,7 +301,7 @@
         });
 
     </script>
-<!--
+    
     <script type="text/javascript">
         function setImagePreview() {
             var preview, img_txt, localImag, file_head = document.getElementById("file_head"),
@@ -310,7 +331,7 @@
         }
 
     </script>
--->
+
 
 </body>
 
