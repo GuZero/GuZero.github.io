@@ -20,13 +20,7 @@
 .blue{
     color: #4285f4;
 }
-.bottom{
-    position: absolute;
-    bottom: 5%;
-}
-.active{
 
-}
 .margin45{
     margin-top: 45px;
 }
@@ -71,7 +65,7 @@ header{
 }
 /*货栈信息列表*/
 .margin120{
-    margin-top: 160px !important;
+    margin-top: 35% !important;
 }
 .pd_t16{
     padding-top: 16px;
@@ -87,7 +81,8 @@ header{
     background-color: #4285f4;
     font-size: 18px;
     padding: 12px 0;
-    width: 86%;
+    width: 100%;
+    margin-top: 22%;
 }
 #info{
     display:none;
