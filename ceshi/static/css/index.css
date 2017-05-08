@@ -50,6 +50,7 @@ header{
     font-size: 15px;
     color: #ffffff;
     margin-top: 15px;
+    margin-left: 12px;
 }
 .btn_share{
     width: 24px;
@@ -65,7 +66,7 @@ header{
 }
 /*货栈信息列表*/
 .margin120{
-    margin-top: 35% !important;
+    margin-top: 20vh !important;
 }
 .pd_t16{
     padding-top: 16px;
@@ -80,16 +81,16 @@ header{
     border: 1px solid #4285f4;
     background-color: #4285f4;
     font-size: 18px;
-    padding: 12px 0;
+    padding: 7px 0;
     width: 100%;
-    margin-top: 22%;
+    margin-top: 6vh;
 }
 #info{
     display:none;
 }
 #no_work{
     width: 100%;
-    height: 330px;
+    height: 50vh;
 }
 #no_work>div{
     width: 100%;
