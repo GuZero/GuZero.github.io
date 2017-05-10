@@ -29,7 +29,6 @@
 
 <body>
     <!--裁剪部分-->
-    <div  data-role="page">
     <div class="htmleaf-container">
         <div id="clipArea"></div>
         <div class="footer">
@@ -44,6 +43,8 @@
 
         </div>
     </div>
+    <div  data-role="page">
+
     <div class="mui-content main">
         <header>
             <div class="mui-row">
@@ -437,9 +438,11 @@
                 $(".mui-title").text("选择快递柜");
             });
             //      选择货栈
-            $("#choose").on("tap",function() {
+            $("#choose").on("tap",function(event) {
+                event.stopPropagation();
                 $("#two").hide();
                 $("#choice").show();
+
             });
             //获取城市id
             $("#cityList>li").each(function() {
@@ -520,7 +523,7 @@
             });
             //裁剪图片
            var clipArea = new bjj.PhotoClip("#clipArea", {
-                size: [520, 520],
+                size: [550, 550],
                 outputSize: [640, 640],
                 file: "#file",
                 view: "#view",
