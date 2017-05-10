@@ -3,6 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <!--    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />-->
     <title>大屏互动-制作中</title>
     <link rel="stylesheet" href="../interaction/mui/mui.min.css">
@@ -265,26 +267,26 @@
                 end_date = '2017-05-17',
                 isflag = flag;
             image = imgsrc;
-//            if (content == "") {
-//                mui.alert('请输入您想要说的话', 'Hello...');
-//                return false;
-//            };
-//            if (city_id == "") {
-//                mui.alert('请选择您要展示的城市', 'Hello...');
-//                return false;
-//            };
-//            if (start_date == "" && end_date == "") {
-//                mui.alert('请选择展示的日期', 'Hello...');
-//                return false;
-//            };
-//            if (image == "") {
-//                mui.alert('请您上传一张图片', 'Hello...');
-//                return false;
-//            };
-//            if (!flag) {
-//                mui.alert('抱歉您还没有同意展示协议', 'Hello...');
-//                return false;
-//            };
+            //            if (content == "") {
+            //                mui.alert('请输入您想要说的话', 'Hello...');
+            //                return false;
+            //            };
+            //            if (city_id == "") {
+            //                mui.alert('请选择您要展示的城市', 'Hello...');
+            //                return false;
+            //            };
+            //            if (start_date == "" && end_date == "") {
+            //                mui.alert('请选择展示的日期', 'Hello...');
+            //                return false;
+            //            };
+            //            if (image == "") {
+            //                mui.alert('请您上传一张图片', 'Hello...');
+            //                return false;
+            //            };
+            //            if (!flag) {
+            //                mui.alert('抱歉您还没有同意展示协议', 'Hello...');
+            //                return false;
+            //            };
 
             let data = {
                 content: content,
@@ -503,7 +505,7 @@
             })
             //裁剪图片
             var clipArea = new bjj.PhotoClip("#clipArea", {
-                size: [450, 450],
+                size: [520, 520],
                 outputSize: [640, 640],
                 file: "#file",
                 view: "#view",
