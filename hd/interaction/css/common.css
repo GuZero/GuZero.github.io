@@ -6,6 +6,13 @@
     -webkit-user-select: none;
     
 }
+/*
+html{
+     background: -webkit-linear-gradient(top, #3d7eea, #022f79);
+    background: -moz-linear-gradient(top, #3d7eea, #022f79);
+    background: linear-gradient(top, #3d7eea, #022f79);
+}
+*/
 .main{
     background: -webkit-linear-gradient(top, #3d7eea, #022f79);
     background: -moz-linear-gradient(top, #3d7eea, #022f79);

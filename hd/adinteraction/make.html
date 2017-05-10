@@ -3,8 +3,6 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <!--    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />-->
     <title>大屏互动-制作中</title>
     <link rel="stylesheet" href="../interaction/mui/mui.min.css">
@@ -218,9 +216,8 @@
                 <div class="show">
                     <ul class="mui-table-view" id="cityList">
                         <li class="mui-table-view-cell pd" value="3201">南京</li>
-                        <li class="mui-table-view-cell pd" value="3211">北京</li>
-                        <li class="mui-table-view-cell pd" value="3221">上海</li>
-                        <li class="mui-table-view-cell pd" value="3231">深圳</li>
+                        <li class="mui-table-view-cell pd" value="1101">北京</li>
+                        <li class="mui-table-view-cell pd" value="3101">上海</li>
                     </ul>
                 </div>
             </div>
@@ -233,9 +230,8 @@
     <script src="../interaction/js/lrz.all.bundle.js"></script>
     <script src="../interaction/js/jquery.photoclip.js"></script>
     <script src="https://cdn.bootcss.com/jquery-mobile/1.4.5/jquery.mobile.min.js"></script>
+    <!--    <script src="../../static/interaction/mui/mui.min.js"></script>-->
     <script src="../interaction/js/date.js"></script>
-
-
 
 
     <script type="text/javascript">
@@ -267,27 +263,27 @@
                 end_date = '2017-05-17',
                 isflag = flag;
             image = imgsrc;
-            //            if (content == "") {
+            //            if(content==""){
             //                mui.alert('请输入您想要说的话', 'Hello...');
             //                return false;
             //            };
-            //            if (city_id == "") {
+            //            if(city_id==""){
             //                mui.alert('请选择您要展示的城市', 'Hello...');
             //                return false;
             //            };
-            //            if (start_date == "" && end_date == "") {
+            //            if(start_date==""&&end_date==""){
             //                mui.alert('请选择展示的日期', 'Hello...');
             //                return false;
             //            };
-            //            if (image == "") {
+            //            if(image==""){
             //                mui.alert('请您上传一张图片', 'Hello...');
             //                return false;
             //            };
-            //            if (!flag) {
+            //            if(!flag){
             //                mui.alert('抱歉您还没有同意展示协议', 'Hello...');
             //                return false;
             //            };
-
+            //            
             let data = {
                 content: content,
                 image: image,
@@ -368,14 +364,6 @@
 
         };
         $(function() {
-            //隐藏浏览器地址栏
-            if (document.documentElement.scrollHeight <= document.documentElement.clientHeight) {
-                bodyTag = document.getElementsByTagName('body')[0];
-                bodyTag.style.height = document.documentElement.clientWidth / screen.width * screen.height + 'px';
-            }
-            setTimeout(function() {
-                window.scrollTo(0, 1)
-            }, 0);
             //文字限制
             $('#text').keyup(function() {
                 var len = $(this).val().length;
@@ -385,27 +373,27 @@
                 var num = 140 - len;
                 $("#word").text(len);
             });
-            $("#upload").on("tap",function() {
+            $("#upload").click(function() {
                 $(".htmleaf-container").fadeIn(300);
                 $("#photo").show();
             });
-            $("#cancle").on("tap",function() {
+            $("#cancle").click(function() {
                 $(".htmleaf-container").fadeOut(300);
                 $("#photo").hide();
             });
 
-            $(".txt1").on("tap",function() {
+            $(".txt1").click(function() {
                 $(this).hide();
                 $(".text_1").show();
             });
             //删除图片
-            $("#photo").on("tap",function() {
+            $("#photo").click(function() {
                 $(this).empty();
                 $("#uploadBox").show();
                 $("#photo").hide();
             });
             //        点击1.制作
-            $("#make_btn").on("tap",function() {
+            $("#make_btn").click(function() {
                 $("#choice_btn").removeClass("active");
                 $(this).toggleClass("active");
                 if ($("#show").is(":hidden")) {
@@ -416,7 +404,7 @@
 
             });
             //      选择柜机
-            $("#choice_btn").on("tap",function() {
+            $("#choice_btn").click(function() {
                 $("#make_btn").removeClass("active");
                 $(this).toggleClass("active");
                 $("#show").hide();
@@ -424,13 +412,13 @@
                 $(".mui-title").text("选择快递柜");
             });
             //      选择货栈
-            $("#choose").on("tap",function() {
+            $("#choose").click(function() {
                 $("#two").hide();
                 $("#choice").show();
             });
             //获取城市id
             $("#cityList>li").each(function() {
-                $(this).on("tap",function() {
+                $(this).click(function() {
                     cityId = $(this).val();
                     $("#two").show();
                     $("#choice").hide();
@@ -440,14 +428,14 @@
                 })
             })
             //        选择时间
-            $("#chooseDate").on("tap",function() {
+            $("#chooseDate").click(function() {
                 $("#time").show();
                 $("#time").animate({
-                    bottom: '0rem'
+                    bottom: '0'
                 }, "slow");
             });
             //        取消选择时间
-            $("#NO").on("tap",function() {
+            $("#NO").click(function() {
                 $("#time").animate({
                     bottom: '-30%'
                 }, "slow", function() {
@@ -455,10 +443,12 @@
                 });
                 start_date = "";
                 end_date = "";
+                $("#chooseDate .mui-col-xs-4").eq(0).text("开始时间");
+                $("#chooseDate .mui-col-xs-4").eq(2).text("结束时间");
 
             });
             //确定选择时间
-            $("#confirm").on("tap",function() {
+            $("#confirm").click(function() {
                 $("#time").animate({
                     bottom: '-30%'
                 }, "slow", function() {
@@ -467,12 +457,12 @@
 
             });
             //        返回上一个页面
-            $("#goBack").on("tap",function() {
-                location.href = "index.html";
+            $("#goBack").click(function() {
+                location.href = "/adinteraction";
             });
             //        同意协议
 
-            $("#agreement").on("tap",function() {
+            $("#agreement").click(function() {
 
                 if (!flag) {
                     $("#agreement").attr({
@@ -489,22 +479,22 @@
                 }
             });
             // 下一步 提交数据
-            $("#nextBtn").on("tap",function() {
+            $("#nextBtn").click(function() {
 
                 submit();
-                location.href = "examine.html";
+                location.href = "/adinteraction/examine";
 
             });
             // 重试再次提交数据
-            $("#retry").on("tap",function() {
+            $("#retry").click(function() {
                 submit();
             });
-            $("#reelect").on("tap",function() {
+            $("#reelect").click(function() {
                 $(".htmleaf-container").fadeIn(300);
                 $("#photo").show();
             })
             //裁剪图片
-            var clipArea = new bjj.PhotoClip("#clipArea", {
+           var clipArea = new bjj.PhotoClip("#clipArea", {
                 size: [520, 520],
                 outputSize: [640, 640],
                 file: "#file",
@@ -520,7 +510,7 @@
                     post_img(dataURL);
                 }
             });
-            $("#finish").on("tap",function() {
+            $("#finish").click(function() {
                 $("#uploadBox").hide();
                 $("#photo").empty();
                 $('#photo').append('<img src="' + imgsource + '" align="absmiddle"  id="img_s">');
@@ -542,13 +532,15 @@
             //选取日期
             $("#date li").each(function() {
 
-                $(this).on("tap",function() {
+                $(this).click(function() {
                     $("#date li").each(function() {
                         $("#date li").removeClass("dateActive");
                     })
                     $(this).toggleClass("dateActive");
                     start_date = $(this).children().children().eq(0).text();
                     end_date = $(this).children().children().eq(2).text();
+                    $("#chooseDate .mui-col-xs-4").eq(0).text(start_date);
+                    $("#chooseDate .mui-col-xs-4").eq(2).text(end_date);
                 })
             })
         })
