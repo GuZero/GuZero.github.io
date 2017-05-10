@@ -229,8 +229,10 @@
     <script src="../interaction/js/iscroll-zoom.js"></script>
     <script src="../interaction/js/hammer.js"></script>
     <script src="../interaction/js/jquery.photoclip.js"></script>
-    <script src="../interaction/mui/mui.min.js"></script>
+    <!--    <script src="../interaction/mui/mui.min.js"></script>-->
     <script src="../interaction/js/date.js"></script>
+    <script src="../interaction/js/lrz.all.bundle.js"></script>
+
 
 
     <script type="text/javascript">
@@ -492,8 +494,10 @@
             })
             //裁剪图片
             $("#clipArea").photoClip({
-                width: 520,
-                height: 520,
+//                width: 520,
+//                height: 520,
+                size: [260, 260],
+                outputSize: [640, 640],
                 file: "#file",
                 view: "#view",
                 ok: "#finish",

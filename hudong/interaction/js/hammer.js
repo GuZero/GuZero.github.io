@@ -5,12 +5,16 @@
  * Licensed under the MIT license */
 (function(window, document, exportName, undefined) {
   'use strict';
+
 var VENDOR_PREFIXES = ['', 'webkit', 'moz', 'MS', 'ms', 'o'];
 var TEST_ELEMENT = document.createElement('div');
+
 var TYPE_FUNCTION = 'function';
+
 var round = Math.round;
 var abs = Math.abs;
 var now = Date.now;
+
 /**
  * set a timeout with a given scope
  * @param {Function} fn
@@ -21,6 +25,7 @@ var now = Date.now;
 function setTimeoutContext(fn, timeout, context) {
     return setTimeout(bindFn(fn, context), timeout);
 }
+
 /**
  * if the argument is an array, we want to execute the fn on each entry
  * if it aint an array we don't want to do a thing.
@@ -37,6 +42,7 @@ function invokeArrayArg(arg, fn, context) {
     }
     return false;
 }
+
 /**
  * walk objects and arrays
  * @param {Object} obj
@@ -64,6 +70,7 @@ function each(obj, iterator, context) {
         }
     }
 }
+
 /**
  * extend object.
  * means that properties in dest will be overwritten by the ones in src.
@@ -83,6 +90,7 @@ function extend(dest, src, merge) {
     }
     return dest;
 }
+
 /**
  * merge the values from src in the dest.
  * means that properties that exist in dest will not be overwritten by src
@@ -93,6 +101,7 @@ function extend(dest, src, merge) {
 function merge(dest, src) {
     return extend(dest, src, true);
 }
+
 /**
  * simple class inheritance
  * @param {Function} child
@@ -111,6 +120,7 @@ function inherit(child, base, properties) {
         extend(childP, properties);
     }
 }
+
 /**
  * simple function bind
  * @param {Function} fn
@@ -122,6 +132,7 @@ function bindFn(fn, context) {
         return fn.apply(context, arguments);
     };
 }
+
 /**
  * let a boolean value also be a function that must return a boolean
  * this first item in args will be used as the context
@@ -135,6 +146,7 @@ function boolOrFn(val, args) {
     }
     return val;
 }
+
 /**
  * use the val2 when val1 is undefined
  * @param {*} val1
@@ -144,6 +156,7 @@ function boolOrFn(val, args) {
 function ifUndefined(val1, val2) {
     return (val1 === undefined) ? val2 : val1;
 }
+
 /**
  * addEventListener with multiple events at once
  * @param {EventTarget} target
@@ -155,6 +168,7 @@ function addEventListeners(target, types, handler) {
         target.addEventListener(type, handler, false);
     });
 }
+
 /**
  * removeEventListener with multiple events at once
  * @param {EventTarget} target
@@ -166,6 +180,7 @@ function removeEventListeners(target, types, handler) {
         target.removeEventListener(type, handler, false);
     });
 }
+
 /**
  * find if a node is in the given parent
  * @method hasParent
@@ -182,6 +197,7 @@ function hasParent(node, parent) {
     }
     return false;
 }
+
 /**
  * small indexOf wrapper
  * @param {String} str
@@ -191,6 +207,7 @@ function hasParent(node, parent) {
 function inStr(str, find) {
     return str.indexOf(find) > -1;
 }
+
 /**
  * split string on whitespace
  * @param {String} str
@@ -199,6 +216,7 @@ function inStr(str, find) {
 function splitStr(str) {
     return str.trim().split(/\s+/g);
 }
+
 /**
  * find if a array contains the object using indexOf or a simple polyFill
  * @param {Array} src
@@ -220,6 +238,7 @@ function inArray(src, find, findByKey) {
         return -1;
     }
 }
+
 /**
  * convert array-like objects to real arrays
  * @param {Object} obj
@@ -228,6 +247,7 @@ function inArray(src, find, findByKey) {
 function toArray(obj) {
     return Array.prototype.slice.call(obj, 0);
 }
+
 /**
  * unique array with objects based on a key (like 'id') or just by the array's value
  * @param {Array} src [{id:1},{id:2},{id:1}]
@@ -239,6 +259,7 @@ function uniqueArray(src, key, sort) {
     var results = [];
     var values = [];
     var i = 0;
+
     while (i < src.length) {
         var val = key ? src[i][key] : src[i];
         if (inArray(values, val) < 0) {
@@ -247,6 +268,7 @@ function uniqueArray(src, key, sort) {
         values[i] = val;
         i++;
     }
+
     if (sort) {
         if (!key) {
             results = results.sort();
@@ -256,8 +278,10 @@ function uniqueArray(src, key, sort) {
             });
         }
     }
+
     return results;
 }
+
 /**
  * get the prefixed property
  * @param {Object} obj
@@ -267,6 +291,7 @@ function uniqueArray(src, key, sort) {
 function prefixed(obj, property) {
     var prefix, prop;
     var camelProp = property[0].toUpperCase() + property.slice(1);
+
     var i = 0;
     while (i < VENDOR_PREFIXES.length) {
         prefix = VENDOR_PREFIXES[i];
@@ -279,6 +304,7 @@ function prefixed(obj, property) {
     }
     return undefined;
 }
+
 /**
  * get a unique id
  * @returns {number} uniqueId
@@ -287,6 +313,7 @@ var _uniqueId = 1;
 function uniqueId() {
     return _uniqueId++;
 }
+
 /**
  * get the window object of an element
  * @param {HTMLElement} element
@@ -296,29 +323,38 @@ function getWindowForElement(element) {
     var doc = element.ownerDocument;
     return (doc.defaultView || doc.parentWindow);
 }
+
 var MOBILE_REGEX = /mobile|tablet|ip(ad|hone|od)|android/i;
+
 var SUPPORT_TOUCH = ('ontouchstart' in window);
 var SUPPORT_POINTER_EVENTS = prefixed(window, 'PointerEvent') !== undefined;
 var SUPPORT_ONLY_TOUCH = SUPPORT_TOUCH && MOBILE_REGEX.test(navigator.userAgent);
+
 var INPUT_TYPE_TOUCH = 'touch';
 var INPUT_TYPE_PEN = 'pen';
 var INPUT_TYPE_MOUSE = 'mouse';
 var INPUT_TYPE_KINECT = 'kinect';
+
 var COMPUTE_INTERVAL = 25;
+
 var INPUT_START = 1;
 var INPUT_MOVE = 2;
 var INPUT_END = 4;
 var INPUT_CANCEL = 8;
+
 var DIRECTION_NONE = 1;
 var DIRECTION_LEFT = 2;
 var DIRECTION_RIGHT = 4;
 var DIRECTION_UP = 8;
 var DIRECTION_DOWN = 16;
+
 var DIRECTION_HORIZONTAL = DIRECTION_LEFT | DIRECTION_RIGHT;
 var DIRECTION_VERTICAL = DIRECTION_UP | DIRECTION_DOWN;
 var DIRECTION_ALL = DIRECTION_HORIZONTAL | DIRECTION_VERTICAL;
+
 var PROPS_XY = ['x', 'y'];
 var PROPS_CLIENT_XY = ['clientX', 'clientY'];
+
 /**
  * create new input type manager
  * @param {Manager} manager
@@ -332,6 +368,7 @@ function Input(manager, callback) {
     this.callback = callback;
     this.element = manager.element;
     this.target = manager.options.inputTarget;
+
     // smaller wrapper around the handler, for the scope and the enabled state of the manager,
     // so when disabled the input events are completely bypassed.
     this.domHandler = function(ev) {
@@ -339,14 +376,18 @@ function Input(manager, callback) {
             self.handler(ev);
         }
     };
+
     this.init();
+
 }
+
 Input.prototype = {
     /**
      * should handle the inputEvent data and trigger the callback
      * @virtual
      */
     handler: function() { },
+
     /**
      * bind the events
      */
@@ -355,6 +396,7 @@ Input.prototype = {
         this.evTarget && addEventListeners(this.target, this.evTarget, this.domHandler);
         this.evWin && addEventListeners(getWindowForElement(this.element), this.evWin, this.domHandler);
     },
+
     /**
      * unbind the events
      */
@@ -364,6 +406,7 @@ Input.prototype = {
         this.evWin && removeEventListeners(getWindowForElement(this.element), this.evWin, this.domHandler);
     }
 };
+
 /**
  * create new input type manager
  * called by the Manager constructor
@@ -387,6 +430,7 @@ function createInputInstance(manager) {
     }
     return new (Type)(manager, inputHandler);
 }
+
 /**
  * handle input events
  * @param {Manager} manager
@@ -398,21 +442,28 @@ function inputHandler(manager, eventType, input) {
     var changedPointersLen = input.changedPointers.length;
     var isFirst = (eventType & INPUT_START && (pointersLen - changedPointersLen === 0));
     var isFinal = (eventType & (INPUT_END | INPUT_CANCEL) && (pointersLen - changedPointersLen === 0));
+
     input.isFirst = !!isFirst;
     input.isFinal = !!isFinal;
+
     if (isFirst) {
         manager.session = {};
     }
+
     // source event is the normalized value of the domEvents
     // like 'touchstart, mouseup, pointerdown'
     input.eventType = eventType;
+
     // compute scale, rotation etc
     computeInputData(manager, input);
+
     // emit secret event
     manager.emit('hammer.input', input);
+
     manager.recognize(input);
     manager.session.prevInput = input;
 }
+
 /**
  * extend the data with some usable properties like scale, rotate, velocity etc
  * @param {Object} manager
