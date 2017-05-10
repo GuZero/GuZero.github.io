@@ -231,6 +231,7 @@
     <script src="../interaction/js/jquery.photoclip.js"></script>
     <!--<script src="https://cdn.bootcss.com/jquery-mobile/1.4.5/jquery.mobile.min.js"></script>-->
     <!--    <script src="../../static/interaction/mui/mui.min.js"></script>-->
+    <script src="http://code.jquery.com/mobile/git/jquery.mobile-git.js"></script>
     <script src="../interaction/js/date.js"></script>
 
 
@@ -373,27 +374,27 @@
                 var num = 140 - len;
                 $("#word").text(len);
             });
-            $("#upload").click(function() {
+            $("#upload").on("tap",function() {
                 $(".htmleaf-container").fadeIn(300);
                 $("#photo").show();
             });
-            $("#cancle").click(function() {
+            $("#cancle").on("tap",function() {
                 $(".htmleaf-container").fadeOut(300);
                 $("#photo").hide();
             });
 
-            $(".txt1").click(function() {
+            $(".txt1").on("tap",function() {
                 $(this).hide();
                 $(".text_1").show();
             });
             //删除图片
-            $("#photo").click(function() {
+            $("#photo").on("tap",function() {
                 $(this).empty();
                 $("#uploadBox").show();
                 $("#photo").hide();
             });
             //        点击1.制作
-            $("#make_btn").click(function() {
+            $("#make_btn").on("tap",function() {
                 $("#choice_btn").removeClass("active");
                 $(this).toggleClass("active");
                 if ($("#show").is(":hidden")) {
@@ -404,7 +405,7 @@
 
             });
             //      选择柜机
-            $("#choice_btn").click(function() {
+            $("#choice_btn").on("tap",function() {
                 $("#make_btn").removeClass("active");
                 $(this).toggleClass("active");
                 $("#show").hide();
@@ -412,13 +413,13 @@
                 $(".mui-title").text("选择快递柜");
             });
             //      选择货栈
-            $("#choose").click(function() {
+            $("#choose").on("tap",function() {
                 $("#two").hide();
                 $("#choice").show();
             });
             //获取城市id
             $("#cityList>li").each(function() {
-                $(this).click(function() {
+                $(this).on("tap",function() {
                     cityId = $(this).val();
                     $("#two").show();
                     $("#choice").hide();
@@ -426,16 +427,16 @@
                     window.sessionStorage.setItem("id", $(this).val());
 
                 })
-            })
+            });
             //        选择时间
-            $("#chooseDate").click(function() {
+            $("#chooseDate").on("tap",function() {
                 $("#time").show();
                 $("#time").animate({
                     bottom: '0'
                 }, "slow");
             });
             //        取消选择时间
-            $("#NO").click(function() {
+            $("#NO").on("tap",function() {
                 $("#time").animate({
                     bottom: '-30%'
                 }, "slow", function() {
@@ -448,7 +449,7 @@
 
             });
             //确定选择时间
-            $("#confirm").click(function() {
+            $("#confirm").on("tap",function() {
                 $("#time").animate({
                     bottom: '-30%'
                 }, "slow", function() {
@@ -457,12 +458,12 @@
 
             });
             //        返回上一个页面
-            $("#goBack").click(function() {
+            $("#goBack").on("tap",function() {
                 location.href = "/adinteraction";
             });
             //        同意协议
 
-            $("#agreement").click(function() {
+            $("#agreement").on("tap",function() {
 
                 if (!flag) {
                     $("#agreement").attr({
@@ -479,17 +480,17 @@
                 }
             });
             // 下一步 提交数据
-            $("#nextBtn").click(function() {
+            $("#nextBtn").on("tap",function() {
 
                 submit();
                 location.href = "/adinteraction/examine";
 
             });
             // 重试再次提交数据
-            $("#retry").click(function() {
+            $("#retry").on("tap",function() {
                 submit();
             });
-            $("#reelect").click(function() {
+            $("#reelect").on("tap",function() {
                 $(".htmleaf-container").fadeIn(300);
                 $("#photo").show();
             });
@@ -510,12 +511,12 @@
                     post_img(dataURL);
                 }
             });
-            $("#finish").click(function() {
+            $("#finish").on("tap",function() {
                 $("#uploadBox").hide();
                 $("#photo").empty();
                 $('#photo').append('<img src="' + imgsource + '" align="absmiddle"  id="img_s">');
                 $(".htmleaf-container").hide();
-            })
+            });
             //把时间渲染到页面上
             let week1 = setValAndReqNow(2);
             let week2 = setValAndReqNow(3);
@@ -532,10 +533,10 @@
             //选取日期
             $("#date li").each(function() {
 
-                $(this).click(function() {
+                $(this).on("tap",function() {
                     $("#date li").each(function() {
                         $("#date li").removeClass("dateActive");
-                    })
+                    });
                     $(this).toggleClass("dateActive");
                     start_date = $(this).children().children().eq(0).text();
                     end_date = $(this).children().children().eq(2).text();
