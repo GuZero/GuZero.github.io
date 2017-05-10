@@ -10,8 +10,7 @@
     <link rel="stylesheet" href="../interaction/mui/mui.min.css">
     <link rel="stylesheet" href="../interaction/css/common.css">
     <link rel="stylesheet" href="../interaction/css/make.css">
-    <script src="../interaction/js/jquery-2.1.1.min.js"></script>
-    <script src="../interaction/js/jquery.mobile-1.4.5.min.js"></script>
+
     <script src="../interaction/js/adaptive.js"></script>
 
 
@@ -30,6 +29,7 @@
 
 <body>
     <!--裁剪部分-->
+    <div  data-role="page">
     <div class="htmleaf-container">
         <div id="clipArea"></div>
         <div class="footer">
@@ -228,6 +228,8 @@
 
         </div>
     </div>
+        <script src="../interaction/js/jquery-2.1.1.min.js"></script>
+        <script src="../interaction/js/jquery.mobile-1.4.5.min.js"></script>
     <script src="../interaction/js/iscroll-zoom.js"></script>
     <script src="../interaction/js/hammer.js"></script>
     <script src="../interaction/js/lrz.all.bundle.js"></script>
@@ -253,16 +255,16 @@
         var imgsrc = "",
             cityId = "",
             flag = false,
-            start_date = "",
-            end_date = "";
+            startDate = "",
+            endDate = "";
 
         window.sessionStorage.setItem("id", cityId);
 
         function submit() {
             let content = $("#text").val(),
                 city_id = cityId,
-                start_date ="2017-02-14",
-                end_date = "2017-03-14",
+                start_date =startDate,
+                end_date = endDate,
                 isflag = flag;
             image = imgsrc;
                         if(content==""){
@@ -464,8 +466,8 @@
                 }, "slow", function() {
                     $("#time").hide();
                 });
-                start_date = "";
-                end_date = "";
+                startDate = "";
+                endDate = "";
                 $("#chooseDate .mui-col-xs-4").eq(0).text("开始时间");
                 $("#chooseDate .mui-col-xs-4").eq(2).text("结束时间");
 
@@ -560,10 +562,10 @@
                         $("#date li").removeClass("dateActive");
                     });
                     $(this).toggleClass("dateActive");
-                    start_date = $(this).children().children().eq(0).text();
-                    end_date = $(this).children().children().eq(2).text();
-                    $("#chooseDate .mui-col-xs-4").eq(0).text(start_date);
-                    $("#chooseDate .mui-col-xs-4").eq(2).text(end_date);
+                    startDate = $(this).children().children().eq(0).text();
+                    endDate = $(this).children().children().eq(2).text();
+                    $("#chooseDate .mui-col-xs-4").eq(0).text(startDate);
+                    $("#chooseDate .mui-col-xs-4").eq(2).text(endDate);
                 })
             })
         })
@@ -604,7 +606,7 @@
 
     </script>
 -->
-
+    </div>
 </body>
 
 </html>
