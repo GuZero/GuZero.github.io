@@ -493,11 +493,9 @@
                 $("#photo").show();
             })
             //裁剪图片
-            $("#clipArea").photoClip({
-                width: 520,
-                height: 520,
-//                size: [260, 260],
-//                outputSize: [640, 640],
+            var clipArea = new bjj.PhotoClip("#clipArea", {
+                size: [260, 260],
+                outputSize: [640, 640],
                 file: "#file",
                 view: "#view",
                 ok: "#finish",
