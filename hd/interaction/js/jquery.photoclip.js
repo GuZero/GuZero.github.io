@@ -22,7 +22,7 @@
  * @option_param {function} loadError 加载失败的回调函数。this指向 fileReader 对象，并将错误事件的 event 对象作为参数传入
  * @option_param {function} clipFinish 裁剪完成的回调函数。this指向原图片对象，会将裁剪出的图像数据DataURL作为参数传入
  */
-
+var imgsource="";
 (function(root, factory) {
 	"use strict";
 
@@ -445,6 +445,7 @@
 			ctx.restore();
 
 			var dataURL = canvas.toDataURL(outputType, 1);
+            imgsource=dataURL;
 			$view.css("background-image", "url("+ dataURL +")");
 			clipFinish.call($img[0], dataURL);
 		}

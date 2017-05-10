@@ -229,7 +229,7 @@
     <script src="../interaction/js/hammer.js"></script>
     <script src="../interaction/js/lrz.all.bundle.js"></script>
     <script src="../interaction/js/jquery.photoclip.js"></script>
-    <script src="https://cdn.bootcss.com/jquery-mobile/1.4.5/jquery.mobile.min.js"></script>
+    <!--<script src="https://cdn.bootcss.com/jquery-mobile/1.4.5/jquery.mobile.min.js"></script>-->
     <!--    <script src="../../static/interaction/mui/mui.min.js"></script>-->
     <script src="../interaction/js/date.js"></script>
 
@@ -259,8 +259,8 @@
         function submit() {
             let content = $("#text").val(),
                 city_id = cityId,
-                start_date = '2017-05-10',
-                end_date = '2017-05-17',
+                start_date = start_date,
+                end_date = end_date,
                 isflag = flag;
             image = imgsrc;
             //            if(content==""){
@@ -314,7 +314,7 @@
 
                 },
                 error: function(data) {
-                    console.log('上传失败')
+                    console.log('上传失败');
                     $("#uploadBox").hide();
                     $("#error").show();
                 }
@@ -492,7 +492,7 @@
             $("#reelect").click(function() {
                 $(".htmleaf-container").fadeIn(300);
                 $("#photo").show();
-            })
+            });
             //裁剪图片
            var clipArea = new bjj.PhotoClip("#clipArea", {
                 size: [520, 520],
