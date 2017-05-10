@@ -110,21 +110,20 @@
                 </div>
                 <div id="cabinet" class="margin45" style="display: none">
                     <ul class="mui-table-view line_h30">
-                        <li class="mui-table-view-cell pd">
-                            <div class="mui-row ">
+                        <li class="mui-table-view-cell pd" >
+                            <div class="mui-row" id="choose">
                                 <div class="mui-col-xs-1">
                                     <div style="width:0.18rem;height:0.18rem">
                                         <img class="mui-pull-left" src="//img.aimoge.com/FjHjVjKxuwijQBc6c_9jq9Ru0v9c" width="100%" height="100%">
                                     </div>
                                 </div>
-                                <div class="mui-col-xs-9 margin-5" id="choose">
+                                <div class="mui-col-xs-9 margin-5" >
                                     <p class="mui-ellipsis font_14">南京格格货栈</p>
                                 </div>
                                 <div class="mui-col-xs-2 mui-text-right">
                                     <div style="width:0.18rem;height:0.18rem">
                                         <img src="//img.aimoge.com/FnvoecOAQ0w2pmYfw0BfkPjXlvHC" width="100%" height="100%">
                                     </div>
-
                                 </div>
                             </div>
                         </li>
@@ -438,11 +437,10 @@
                 $(".mui-title").text("选择快递柜");
             });
             //      选择货栈
-            $("#choose").on("tap",function(event) {
-                event.stopPropagation();
-                $("#two").hide();
+            $("#choose").on("tap",function() {
                 $("#choice").show();
-
+                $("#two").hide();
+                return false;
             });
             //获取城市id
             $("#cityList>li").each(function() {
