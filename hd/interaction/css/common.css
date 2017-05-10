@@ -161,5 +161,8 @@ font-size: 0.18rem;
     transform: scaleY(.5);
     background-color: #c8c7cc;
 }
+.ui-loader{
+    display: none;
+}
 
 

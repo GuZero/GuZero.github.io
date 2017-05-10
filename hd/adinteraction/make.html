@@ -228,7 +228,6 @@
 
         </div>
     </div>
-    <!--<script src="../interaction/js/jquery-2.1.1.min.js"></script>-->
     <script src="../interaction/js/iscroll-zoom.js"></script>
     <script src="../interaction/js/hammer.js"></script>
     <script src="../interaction/js/lrz.all.bundle.js"></script>
@@ -262,31 +261,31 @@
         function submit() {
             let content = $("#text").val(),
                 city_id = cityId,
-                start_date = start_date,
-                end_date = end_date,
+                start_date ="2017-02-14",
+                end_date = "2017-03-14",
                 isflag = flag;
             image = imgsrc;
-            //            if(content==""){
-            //                mui.alert('请输入您想要说的话', 'Hello...');
-            //                return false;
-            //            };
-            //            if(city_id==""){
-            //                mui.alert('请选择您要展示的城市', 'Hello...');
-            //                return false;
-            //            };
-            //            if(start_date==""&&end_date==""){
-            //                mui.alert('请选择展示的日期', 'Hello...');
-            //                return false;
-            //            };
-            //            if(image==""){
-            //                mui.alert('请您上传一张图片', 'Hello...');
-            //                return false;
-            //            };
-            //            if(!flag){
-            //                mui.alert('抱歉您还没有同意展示协议', 'Hello...');
-            //                return false;
-            //            };
-            //            
+                        if(content==""){
+                            msgAlert("warning","请输入您想要说的话");
+                            return false;
+                        };
+                        if(city_id==""){
+                            msgAlert("warning","请选择您要展示的城市");
+                            return false;
+                        };
+                        if(start_date==""&&end_date==""){
+                            msgAlert("warning","请选择展示的日期");
+                            return false;
+                        };
+                        if(image==""){
+                            msgAlert("warning","请您上传一张图片");
+                            return false;
+                        };
+                        if(!flag){
+                            msgAlert("warning","抱歉您还没有同意展示协议");
+                            return false;
+                        };
+
             let data = {
                 content: content,
                 image: image,
@@ -297,6 +296,25 @@
             console.log(data);
             postData(data);
         }
+        //弹出窗口
+        function msgAlert(type,msg) {
+            $('.msg_'+type).html(msg);
+            $('.msg_'+type).animate({'top': 0},500);
+            setTimeout(function(){$('.msg_'+type).animate({'top': '-0.3rem'},500)},2000);
+        }
+
+        $(document).ready(function(){
+            var htmlstyle = "<style>body{padding:0;margin:0;}.msg{color:#FFF;width:100%;height:0.3rem;text-align:center;font-size:0.14rem;line-height:0.3rem;position:fixed;top:-0.3rem;z-index:20;}"
+                +".msg_success{background-color:#1fcc6c;}"
+                +".msg_warning{background-color:#e94b35;}"
+                +".msg_primary{background-color:#337ab7;}"
+                +".msg_info{background-color:#5bc0de;}</style>";
+            $('head').append(htmlstyle);
+            $('body').prepend('<div class="msg msg_success"></div>'
+                +'<div class="msg msg_warning"></div>'
+                +'<div class="msg msg_primary"></div>'
+                +'<div class="msg msg_info"></div>');
+        });
 
         function postData(data) {
             $.ajax({
@@ -366,7 +384,9 @@
 
 
         };
+//        $.mobile.pageLoading(true);
         $(function() {
+
             //文字限制
             $('#text').keyup(function() {
                 var len = $(this).val().length;
@@ -485,7 +505,7 @@
             $("#nextBtn").on("tap",function() {
 
                 submit();
-                location.href = "/adinteraction/examine";
+//                location.href = "/adinteraction/examine";
 
             });
             // 重试再次提交数据
