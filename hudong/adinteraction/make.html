@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <!--    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />-->
+    <title>大屏互动-制作中</title>
+    <link rel="stylesheet" href="../interaction/mui/mui.min.css">
+    <link rel="stylesheet" href="../interaction/css/common.css">
+    <link rel="stylesheet" href="../interaction/css/make.css">
+    <script src="../interaction/js/adaptive.js"></script>
+
+
+    <script>
+        // 设计图宽度
+        window['adaptive'].desinWidth = 375;
+        // body 字体大小
+        window['adaptive'].baseFont = 24;
+
+        window['adaptive'].scaleType = 3;
+        // 初始化
+        window['adaptive'].init();
+
+    </script>
+</head>
+
+<body>
+    <!--裁剪部分-->
+    <div class="htmleaf-container">
+        <div id="clipArea"></div>
+        <div class="footer">
+            <div class="mui-table-view-cell pd">
+                <div class="mui-row color_w">
+                    <div class="mui-col-xs-6 mui-text-left "><span id="cancle" class="font_14">取消</span></div>
+                    <div class="mui-col-xs-6 mui-text-right font_14"><span id="finish">完成</span></div>
+                </div>
+            </div>
+        </div>
+        <div id="view">
+
+        </div>
+    </div>
+    <div class="mui-content main">
+        <header>
+            <div class="mui-row">
+                <div class="mui-col-xs-1">
+                    <a class="mui-pull-left btn_share " id="goBack">
+                        <img src="//img.aimoge.com/FuGSEC9x9qNjuZhJ4gYjJ_81iPjf" alt="">
+                    </a>
+                </div>
+                <div class="mui-col-xs-11">
+                    <div class="mui-title">制作中</div>
+                </div>
+            </div>
+        </header>
+        <div id="two" class="mui-content">
+            <div class="mui-content-padded">
+                <div class="mui-row">
+                    <div class="mui-col-xs-5">
+                        <button type="button" class="mui-btn mui-btn-outlined btn" id="make_btn">
+                        1.制作
+                    </button>
+                    </div>
+                    <div class="mui-col-xs-2"></div>
+                    <div class="mui-col-xs-5">
+                        <button type="button" class="mui-btn mui-btn-outlined btn" id="choice_btn">
+                        2.选择柜机
+                    </button>
+                    </div>
+                </div>
+                <div class="show " id="show">
+                    <div class="mui-card">
+                        <div class="mui-card-header mui-card-media">
+                            <div id="uploadBox">
+                                <a href="javascript:void(0);" id="upload">
+                                    <button type="button" class="mui-btn mui-btn-outlined upload_btn">
+                                  上传图片
+                                </button>
+                                    <input id="file" type="file" accept="image/*" multiple />
+                                </a>
+                                <p class="font_14">建议上传1M以上 清晰度高的图片</p>
+                            </div>
+                            <div id="error">
+                                <p class="font_14">咣咣，上传失败/(ㄒoㄒ)/~~</p>
+                                <div class="mui-text-center">
+                                    <button type="button" class="mui-btn mui-btn-outlined upload_btn" id="retry">重试</button>
+                                </div>
+                                <a href="javascript:void(0);" id="reelect"><label for="file">重选作品
+                                <input id="file" type="file" onchange="javascript:setImagePreview();" accept="image/*" multiple />
+
+                            </label></a>
+                            </div>
+                            <div id="photo"></div>
+                        </div>
+                        <div class="mui-card-content">
+                            <div class="text ">
+                                <p class="txt1 font_14">点击输入文字</p>
+                                <div class="text_1">
+                                    <textarea maxlength="140" id="text" rows="2"></textarea>
+                                    <p id="num1" class="pd_l mui-text-right font_14"><span id="word">0</span>/140</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="cabinet" class="margin45" style="display: none">
+                    <ul class="mui-table-view line_h30">
+                        <li class="mui-table-view-cell pd">
+                            <div class="mui-row ">
+                                <div class="mui-col-xs-1">
+                                    <div style="width:0.18rem;height:0.18rem">
+                                        <img class="mui-pull-left" src="//img.aimoge.com/FjHjVjKxuwijQBc6c_9jq9Ru0v9c" width="100%" height="100%">
+                                    </div>
+                                </div>
+                                <div class="mui-col-xs-9 margin-5" id="choose">
+                                    <p class="mui-ellipsis font_14">南京格格货栈</p>
+                                </div>
+                                <div class="mui-col-xs-2 mui-text-right">
+                                    <div style="width:0.18rem;height:0.18rem">
+                                        <img src="//img.aimoge.com/FnvoecOAQ0w2pmYfw0BfkPjXlvHC" width="100%" height="100%">
+                                    </div>
+
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="height32"></div>
+                    <ul class="mui-table-view">
+                        <li class="mui-table-view-cell pd">
+                            <div class="mui-row">
+                                <div class="mui-col-xs-1">
+                                    <div style="width:0.18rem;height:0.18rem">
+                                        <img src="//img.aimoge.com/FgsAPXW3eFt4MN3pHyGaq6_B-fjQ" alt="" width="100%" height="100%">
+                                    </div>
+
+                                </div>
+                                <div class="mui-col-xs-11 margin5">
+                                    <p class="font_14">选择展示日期</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="mui-table-view-cell pd">
+                            <div class="mui-row" id="chooseDate">
+                                <div class="mui-col-xs-4 mui-text-center">开始时间</div>
+                                <div class="mui-col-xs-4 mui-text-center">------</div>
+                                <div class="mui-col-xs-4 mui-text-center">结束时间</div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="mui-row margin145">
+                        <div class="mui-col-xs-3 mui-text-right">
+                            <div style="width: 0.16rem;height: 0.16rem;margin-left: 0.63rem;margin-top: -0.03rem">
+                                <img src="//img.aimoge.com/FhK_8jHkPbHUvC7yuZgnh5XzAmfy" alt="" width="100%" height="100%" id="agreement">
+                            </div>
+                        </div>
+                        <div class="mui-col-xs-9 font_14">
+                            <a href="#" class="agreement">同意柜机屏幕展示协议</a>
+                        </div>
+                    </div>
+
+                </div>
+
+                <button type="button" class="mui-btn mui-btn-primary mui-btn-block bottom" id="nextBtn">下一步</button>
+            </div>
+            <div id="time">
+                <div class="mui-row mui-table-view-cell">
+                    <div class="mui-col-xs-6 font_14" id="NO">
+                        取消
+                    </div>
+                    <div class="mui-col-xs-6 blue mui-text-right font_14" id="confirm">
+                        确定
+                    </div>
+                </div>
+                <ul class="mui-table-view" id="date">
+                    <li class="mui-table-view-cell mui-text-center">
+                        <div class="mui-row" id="week1">
+                            <div class="mui-col-xs-5 mui-text-right">2017-7-9</div>
+                            <div class="mui-col-xs-2">到</div>
+                            <div class="mui-col-xs-5 mui-text-left">2017-7-9</div>
+                        </div>
+                    </li>
+                    <li class="mui-table-view-cell  mui-text-center">
+                        <div class="mui-row" id="week2">
+                            <div class="mui-col-xs-5 mui-text-right">2017-7-9</div>
+                            <div class="mui-col-xs-2">到</div>
+                            <div class="mui-col-xs-5 mui-text-left">2017-7-9</div>
+                        </div>
+                    </li>
+
+                    <li class="mui-table-view-cell  mui-text-center">
+                        <div class="mui-row" id="week3">
+                            <div class="mui-col-xs-5 mui-text-right">2017-7-9</div>
+                            <div class="mui-col-xs-2">到</div>
+                            <div class="mui-col-xs-5 mui-text-left">2017-7-9</div>
+                        </div>
+                    </li>
+                    <li class="mui-table-view-cell  mui-text-center">
+                        <div class="mui-row" id="week4">
+                            <div class="mui-col-xs-5 mui-text-right">2017-7-9</div>
+                            <div class="mui-col-xs-2">到</div>
+                            <div class="mui-col-xs-5 mui-text-left">2017-7-9</div>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+        <div id="choice" class="mui-content" style="display: none">
+            <div class="mui-content-padded">
+                <div class="mui-row mui-text-center color_w font_18">
+                    <div class="mui-col-xs-4 mui-text-right">朕要包下全</div>
+                    <div class="mui-col-xs-4 mui-h2">南京</div>
+                    <div class="mui-col-xs-4 mui-text-left">格格货栈</div>
+                </div>
+                <div class="height32"></div>
+                <div class="show">
+                    <ul class="mui-table-view" id="cityList">
+                        <li class="mui-table-view-cell pd" value="3201">南京</li>
+                        <li class="mui-table-view-cell pd" value="3211">北京</li>
+                        <li class="mui-table-view-cell pd" value="3221">上海</li>
+                        <li class="mui-table-view-cell pd" value="3231">深圳</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script src="../interaction/js/jquery-2.1.1.min.js"></script>
+    <script src="../interaction/js/iscroll-zoom.js"></script>
+    <script src="../interaction/js/hammer.js"></script>
+    <script src="../interaction/js/jquery.photoclip.js"></script>
+    <script src="../interaction/mui/mui.min.js"></script>
+    <script src="../interaction/js/date.js"></script>
+
+
+    <script type="text/javascript">
+        (function() {
+            var isIPhone = !!window.navigator.appVersion.match(/iphone/gi);
+            if (isIPhone && devicePixelRatio === 2) {
+                var testElem = document.createElement('div');
+                testElem.style.border = '.5px solid transparent';
+                document.body.appendChild(testElem);
+                if (testElem.offsetHeight == 1) {
+                    document.querySelector('html').classList.add('hairlines');
+                }
+                document.body.removeChild(testElem);
+            }
+        })();
+        window.token = 'MlZsy_bZg4Sg5zLmdjBV4nZ35EWxXfwWIznsSViW:U4tfLAvt-rhNyyCweZhEJEAo30w=:eyJzY29wZSI6Im1vZ2UiLCJkZWFkbGluZSI6Mjg2MTExNTA3NCwiY2FsbGJhY2tVcmwiOiJodHRwOlwvXC9hcGkuYWltb2dlLmNvbVwvdjFcL3VwbG9hZFwvY2FsbGJhY2siLCJjYWxsYmFja0JvZHkiOiJuYW1lPSQoZm5hbWUpJmtleT0kKGtleSkmaGFzaD0kKGV0YWcpJnNpemU9JChmc2l6ZSkmd2lkdGg9JChpbWFnZUluZm8ud2lkdGgpJmhlaWdodD0kKGltYWdlSW5mby5oZWlnaHQpJm1pbWV0eXBlPSQobWltZVR5cGUpJnNpZD0xODYxODE0Mjc2NCZ1aWQ9MTg2MTgxNDI3NjQmc291cmNlPSQoeDpzb3VyY2UpIiwiZGV0ZWN0TWltZSI6MX0=';
+        var imgsrc = "",
+            cityId = "",
+            flag = false,
+            start_date = "",
+            end_date = "";
+
+        window.sessionStorage.setItem("id", cityId);
+
+        function submit() {
+            let content = $("#text").val(),
+                city_id = cityId,
+                start_date = '2017-05-10',
+                end_date = '2017-05-17',
+                isflag = flag;
+            image = imgsrc;
+            if (content == "") {
+                mui.alert('请输入您想要说的话', 'Hello...');
+                return false;
+            };
+            if (city_id == "") {
+                mui.alert('请选择您要展示的城市', 'Hello...');
+                return false;
+            };
+            if (start_date == "" && end_date == "") {
+                mui.alert('请选择展示的日期', 'Hello...');
+                return false;
+            };
+            if (image == "") {
+                mui.alert('请您上传一张图片', 'Hello...');
+                return false;
+            };
+            if (!flag) {
+                mui.alert('抱歉您还没有同意展示协议', 'Hello...');
+                return false;
+            };
+
+            let data = {
+                content: content,
+                image: image,
+                city_id: cityId,
+                start_date: start_date,
+                end_date: end_date,
+            };
+            console.log(data);
+            postData(data);
+        }
+
+        function postData(data) {
+            $.ajax({
+                type: "post",
+                data: JSON.stringify(data),
+                url: window.config.API + "/media/adinteraction",
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                xhrFields: {
+                    withCredentials: true
+                },
+                success: function(data) {
+                    if (data.status == 0) {
+                        console.log(data, '上传成功');
+                        location.href = "/adinteraction/examine";
+                    }
+
+
+                },
+                error: function(data) {
+                    console.log('上传失败')
+                    $("#uploadBox").hide();
+                    $("#error").show();
+                }
+            });
+        }
+        window.config = {
+            'BASE_URL': "{{ settings.BASE_URL|autodomain }}",
+            'API': '{{ settings.PREFIX_API|autodomain }}',
+            'PAY': '{{ settings.PREFIX_PAY|autodomain }}',
+            "IMG": "{{ settings.PREFIX_IMG }}",
+            "FILE": "{{ settings.PREFIX_FILE }}",
+            "STORE": '{{ settings.PREFIX_STORE|autodomain }}'
+        };
+        //上传图片到七牛
+        function post_img(data) {
+            // $("#showshare img").attr("src",data);
+            var blobBin = atob(data.split(',')[1]);
+            var array = [];
+            for (var i = 0; i < blobBin.length; i++) {
+                array.push(blobBin.charCodeAt(i));
+            }
+            var file = new Blob([new Uint8Array(array)], {
+                type: 'image/png'
+            });
+            // Pic = data.replace(/^data:image\/(png|jpg);base64,/, "");
+            var formdata = new FormData();
+            formdata.append("file", file);
+            formdata.append("token", window.token);
+            formdata.append("x:source", "dazhongdianping");
+            $.ajax({
+                url: "http://upload.qiniu.com",
+                type: "POST",
+                data: formdata,
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                processData: false,
+                contentType: false,
+                success: function(respond) {
+                    imgsrc = respond.name;
+                    console.log(imgsrc);
+
+                }
+            }).done(function(respond) {
+                imgsrc = respond.name;
+            });
+
+
+        };
+        $(function() {
+            //文字限制
+            $('#text').keyup(function() {
+                var len = $(this).val().length;
+                if (len > 139) {
+                    alert('您输入超出了限制');
+                }
+                var num = 140 - len;
+                $("#word").text(len);
+            });
+            $("#upload").click(function() {
+                $(".htmleaf-container").fadeIn(300);
+                $("#photo").show();
+            });
+            $("#cancle").click(function() {
+                $(".htmleaf-container").fadeOut(300);
+                $("#photo").hide();
+            });
+
+            $(".txt1").click(function() {
+                $(this).hide();
+                $(".text_1").show();
+            });
+            //删除图片
+            $("#photo").click(function() {
+                $(this).empty();
+                $("#uploadBox").show();
+                $("#photo").hide();
+            });
+            //        点击1.制作
+            $("#make_btn").click(function() {
+                $("#choice_btn").removeClass("active");
+                $(this).toggleClass("active");
+                if ($("#show").is(":hidden")) {
+                    $("#show").show();
+                    $("#cabinet").hide();
+                    $(".mui-title").text("制作中");
+                }
+
+            });
+            //      选择柜机
+            $("#choice_btn").click(function() {
+                $("#make_btn").removeClass("active");
+                $(this).toggleClass("active");
+                $("#show").hide();
+                $("#cabinet").show();
+                $(".mui-title").text("选择快递柜");
+            });
+            //      选择货栈
+            $("#choose").click(function() {
+                $("#two").hide();
+                $("#choice").show();
+            });
+            //获取城市id
+            $("#cityList>li").each(function() {
+                $(this).click(function() {
+                    cityId = $(this).val();
+                    $("#two").show();
+                    $("#choice").hide();
+                    console.log(cityId);
+                    window.sessionStorage.setItem("id", $(this).val());
+
+                })
+            })
+            //        选择时间
+            $("#chooseDate").click(function() {
+                $("#time").show();
+                $("#time").animate({
+                    bottom: '0rem'
+                }, "slow");
+            });
+            //        取消选择时间
+            $("#NO").click(function() {
+                $("#time").animate({
+                    bottom: '-30%'
+                }, "slow", function() {
+                    $("#time").hide();
+                });
+                start_date = "";
+                end_date = "";
+
+            });
+            //确定选择时间
+            $("#confirm").click(function() {
+                $("#time").animate({
+                    bottom: '-30%'
+                }, "slow", function() {
+                    $("#time").hide();
+                });
+
+            });
+            //        返回上一个页面
+            $("#goBack").click(function() {
+                location.href = "index.html";
+            });
+            //        同意协议
+
+            $("#agreement").click(function() {
+
+                if (!flag) {
+                    $("#agreement").attr({
+                        src: "//img.aimoge.com/FtRcBl62d6oHvi4N6OfL2xSYkREC",
+                        alt: "选中"
+                    });
+                    flag = true;
+                } else {
+                    $("#agreement").attr({
+                        src: "//img.aimoge.com/FhK_8jHkPbHUvC7yuZgnh5XzAmfy",
+                        alt: "不选中"
+                    });
+                    flag = false;
+                }
+            });
+            // 下一步 提交数据
+            $("#nextBtn").click(function() {
+
+                submit();
+                location.href = "examine.html";
+
+            });
+            // 重试再次提交数据
+            $("#retry").click(function() {
+                submit();
+            });
+            $("#reelect").click(function() {
+                $(".htmleaf-container").fadeIn(300);
+                $("#photo").show();
+            })
+            //裁剪图片
+            $("#clipArea").photoClip({
+                width: 520,
+                height: 520,
+                file: "#file",
+                view: "#view",
+                ok: "#finish",
+                loadStart: function() {
+                    console.log("照片读取中");
+                },
+                loadComplete: function() {
+                    console.log("照片读取完成");
+                },
+                clipFinish: function(dataURL) {
+                    post_img(dataURL);
+                }
+            });
+            $("#finish").click(function() {
+                $("#uploadBox").hide();
+                $("#photo").empty();
+                $('#photo').append('<img src="' + imgsource + '" align="absmiddle"  id="img_s">');
+                $(".htmleaf-container").hide();
+            })
+            //把时间渲染到页面上
+            let week1 = setValAndReqNow(2);
+            let week2 = setValAndReqNow(3);
+            let week3 = setValAndReqNow(4);
+            let week4 = setValAndReqNow(5);
+            $("#week1 .mui-col-xs-5").eq(0).text(getFormatData(week1.monday));
+            $("#week1 .mui-col-xs-5").eq(1).text(getFormatData(week1.sunday));
+            $("#week2 .mui-col-xs-5").eq(0).text(getFormatData(week2.monday));
+            $("#week2 .mui-col-xs-5").eq(1).text(getFormatData(week2.sunday));
+            $("#week3 .mui-col-xs-5").eq(0).text(getFormatData(week3.monday));
+            $("#week3 .mui-col-xs-5").eq(1).text(getFormatData(week3.sunday));
+            $("#week4 .mui-col-xs-5").eq(0).text(getFormatData(week4.monday));
+            $("#week4 .mui-col-xs-5").eq(1).text(getFormatData(week4.sunday));
+            //选取日期
+            $("#date li").each(function() {
+
+                $(this).click(function() {
+                    $("#date li").each(function() {
+                        $("#date li").removeClass("dateActive");
+                    })
+                    $(this).toggleClass("dateActive");
+                    start_date = $(this).children().children().eq(0).text();
+                    end_date = $(this).children().children().eq(2).text();
+                })
+            })
+        })
+
+    </script>
+
+
+
+
+    <!--
+    <script type="text/javascript">
+        function setImagePreview() {
+            var preview, img_txt, localImag, file_head = document.getElementById("file_head"),
+                picture = file_head.value;
+            if (!picture.match(/.jpg|.gif|.png|.bmp/i)) return alert("您上传的图片格式不正确，请重新选择！"), !1;
+            if (preview = document.getElementById("preview"), file_head.files && file_head.files[0]) preview.style.display = "block",
+                preview.style.width = "100px",
+                preview.style.height = "100px",
+                preview.src = window.navigator.userAgent.indexOf("Chrome") >= 1 || window.navigator.userAgent.indexOf("Safari") >= 1 ? window.webkitURL.createObjectURL(file_head.files[0]) : window.URL.createObjectURL(file_head.files[0]);
+            else {
+                file_head.select(),
+                    file_head.blur(),
+                    img_txt = document.selection.createRange().text,
+                    localImag = document.getElementById("localImag"),
+                    localImag.style.width = "100px",
+                    localImag.style.height = "100px";
+                try {
+                    localImag.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)",
+                        localImag.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = img_txt
+                } catch (f) {
+                    return alert("您上传的图片格式不正确，请重新选择！"), !1
+                }
+                preview.style.display = "none",
+                    document.selection.empty()
+            }
+            return document.getElementById("DivUp").style.display = "block", !0
+        }
+
+    </script>
+-->
+
+</body>
+
+</html>
