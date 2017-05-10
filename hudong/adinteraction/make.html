@@ -228,10 +228,11 @@
     <script src="../interaction/js/jquery-2.1.1.min.js"></script>
     <script src="../interaction/js/iscroll-zoom.js"></script>
     <script src="../interaction/js/hammer.js"></script>
+    <script src="../interaction/js/lrz.all.bundle.js"></script>
     <script src="../interaction/js/jquery.photoclip.js"></script>
     <!--    <script src="../interaction/mui/mui.min.js"></script>-->
     <script src="../interaction/js/date.js"></script>
-    <script src="../interaction/js/lrz.all.bundle.js"></script>
+
 
 
 
@@ -264,26 +265,26 @@
                 end_date = '2017-05-17',
                 isflag = flag;
             image = imgsrc;
-            if (content == "") {
-                mui.alert('请输入您想要说的话', 'Hello...');
-                return false;
-            };
-            if (city_id == "") {
-                mui.alert('请选择您要展示的城市', 'Hello...');
-                return false;
-            };
-            if (start_date == "" && end_date == "") {
-                mui.alert('请选择展示的日期', 'Hello...');
-                return false;
-            };
-            if (image == "") {
-                mui.alert('请您上传一张图片', 'Hello...');
-                return false;
-            };
-            if (!flag) {
-                mui.alert('抱歉您还没有同意展示协议', 'Hello...');
-                return false;
-            };
+//            if (content == "") {
+//                mui.alert('请输入您想要说的话', 'Hello...');
+//                return false;
+//            };
+//            if (city_id == "") {
+//                mui.alert('请选择您要展示的城市', 'Hello...');
+//                return false;
+//            };
+//            if (start_date == "" && end_date == "") {
+//                mui.alert('请选择展示的日期', 'Hello...');
+//                return false;
+//            };
+//            if (image == "") {
+//                mui.alert('请您上传一张图片', 'Hello...');
+//                return false;
+//            };
+//            if (!flag) {
+//                mui.alert('抱歉您还没有同意展示协议', 'Hello...');
+//                return false;
+//            };
 
             let data = {
                 content: content,
@@ -365,6 +366,14 @@
 
         };
         $(function() {
+            //隐藏浏览器地址栏
+            if (document.documentElement.scrollHeight <= document.documentElement.clientHeight) {
+                bodyTag = document.getElementsByTagName('body')[0];
+                bodyTag.style.height = document.documentElement.clientWidth / screen.width * screen.height + 'px';
+            }
+            setTimeout(function() {
+                window.scrollTo(0, 1)
+            }, 0);
             //文字限制
             $('#text').keyup(function() {
                 var len = $(this).val().length;
@@ -494,7 +503,7 @@
             })
             //裁剪图片
             var clipArea = new bjj.PhotoClip("#clipArea", {
-                size: [260, 260],
+                size: [450, 450],
                 outputSize: [640, 640],
                 file: "#file",
                 view: "#view",
