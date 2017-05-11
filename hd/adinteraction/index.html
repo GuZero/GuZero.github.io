@@ -82,8 +82,8 @@
         //            "STORE": '{{ settings.PREFIX_STORE|autodomain }}'
         //        };
         $(function() {
-            $("#startBtn").click(function() {
-                location.href = "make.html";
+            $("#startBtn").on("click",function() {
+                location.href = "make.html?run="+Math.random();
 
             })
             var arry = [];
