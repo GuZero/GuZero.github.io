@@ -43,203 +43,206 @@
 
         </div>
     </div>
-<!--    <div data-role="page">-->
+    <!--    <div data-role="page">-->
 
-        <div class="mui-content main">
-            <header>
-                <div class="mui-row">
-                    <div class="mui-col-xs-1">
-                        <a class="mui-pull-left btn_share " id="goBack">
-                            <img src="//img.aimoge.com/FuGSEC9x9qNjuZhJ4gYjJ_81iPjf" alt="">
-                        </a>
-                    </div>
-                    <div class="mui-col-xs-11">
-                        <div class="mui-title">制作中</div>
-                    </div>
+    <div class="mui-content main">
+        <header>
+            <div class="mui-row">
+                <div class="mui-col-xs-1">
+                    <a class="mui-pull-left btn_share " id="goBack">
+                        <img src="//img.aimoge.com/FuGSEC9x9qNjuZhJ4gYjJ_81iPjf" alt="">
+                    </a>
                 </div>
-            </header>
-            <div id="two" class="mui-content">
-                <div class="mui-content-padded">
-                    <div class="mui-row">
-                        <div class="mui-col-xs-5">
-                            <button type="button" class="mui-btn mui-btn-outlined btn" id="make_btn">
+                <div class="mui-col-xs-11">
+                    <div class="mui-title">制作中</div>
+                </div>
+            </div>
+        </header>
+        <div id="two" class="mui-content">
+            <div class="mui-content-padded">
+                <div class="mui-row">
+                    <div class="mui-col-xs-5">
+                        <button type="button" class="mui-btn mui-btn-outlined btn" id="make_btn">
                         1.制作
                     </button>
-                        </div>
-                        <div class="mui-col-xs-2"></div>
-                        <div class="mui-col-xs-5">
-                            <button type="button" class="mui-btn mui-btn-outlined btn" id="choice_btn">
+                    </div>
+                    <div class="mui-col-xs-2"></div>
+                    <div class="mui-col-xs-5">
+                        <button type="button" class="mui-btn mui-btn-outlined btn" id="choice_btn">
                         2.选择柜机
                     </button>
-                        </div>
                     </div>
-                    <div class="show " id="show">
-                        <div class="mui-card">
-                            <div class="mui-card-header mui-card-media">
-                                <div id="uploadBox">
-                                    <a href="javascript:void(0);" id="upload">
-                                        <button type="button" class="mui-btn mui-btn-outlined upload_btn">
+                </div>
+                <div class="show " id="show">
+                    <div class="mui-card">
+                        <div class="mui-card-header mui-card-media">
+                            <div id="uploadBox">
+                                <a href="javascript:void(0);" id="upload">
+                                    <button type="button" class="mui-btn mui-btn-outlined upload_btn">
                                   上传图片
                                 </button>
-                                        <input id="file" type="file" accept="image/*" multiple />
-                                    </a>
-                                    <p class="font_14">建议上传1M以上 清晰度高的图片</p>
+                                    <input id="file" type="file" accept="image/*" multiple />
+                                </a>
+                                <p class="font_14">建议上传1M以上 清晰度高的图片</p>
+                            </div>
+                            <div id="error">
+                                <p class="font_14">咣咣，上传失败/(ㄒoㄒ)/~~</p>
+                                <div class="mui-text-center">
+                                    <button type="button" class="mui-btn mui-btn-outlined upload_btn" id="retry">重试</button>
                                 </div>
-                                <div id="error">
-                                    <p class="font_14">咣咣，上传失败/(ㄒoㄒ)/~~</p>
-                                    <div class="mui-text-center">
-                                        <button type="button" class="mui-btn mui-btn-outlined upload_btn" id="retry">重试</button>
-                                    </div>
-                                    <a href="javascript:void(0);" id="reelect"><label for="file">重选作品
+                                <a href="javascript:void(0);" id="reelect"><label for="file">重选作品
                                 <input id="file" type="file" onchange="javascript:setImagePreview();" accept="image/*" multiple />
 
                             </label></a>
-                                </div>
-                                <div id="photo"></div>
                             </div>
-                            <div class="mui-card-content">
-                                <div class="text ">
-                                    <p class="txt1 font_14">点击输入文字</p>
-                                    <div class="text_1">
-                                        <textarea maxlength="140" id="text" rows="2"></textarea>
-                                        <p id="num1" class="pd_l mui-text-right font_14"><span id="word">0</span>/140</p>
-                                    </div>
+                            <div id="photo"></div>
+                        </div>
+                        <div class="mui-card-content">
+                            <div class="text ">
+                                <p class="txt1 font_14">点击输入文字</p>
+                                <div class="text_1">
+                                    <textarea maxlength="140" id="text" rows="2"></textarea>
+                                    <p id="num1" class="pd_l mui-text-right font_14"><span id="word">0</span>/140</p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div id="cabinet" class="margin45" style="display: none">
-                        <ul class="mui-table-view line_h30">
-                            <li class="mui-table-view-cell pd" id="choose">
-                                <div class="mui-row" >
-                                    <div class="mui-col-xs-1">
-                                        <div style="width:0.18rem;height:0.18rem">
-                                            <img class="mui-pull-left" src="//img.aimoge.com/FjHjVjKxuwijQBc6c_9jq9Ru0v9c" width="100%" height="100%">
-                                        </div>
-                                    </div>
-                                    <div class="mui-col-xs-9 margin-5">
-                                        <p class="mui-ellipsis font_14">南京格格货栈</p>
-                                    </div>
-                                    <div class="mui-col-xs-2 mui-text-right">
-                                        <div style="width:0.18rem;height:0.18rem">
-                                            <img src="//img.aimoge.com/FnvoecOAQ0w2pmYfw0BfkPjXlvHC" width="100%" height="100%">
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                        <div class="height32"></div>
-                        <ul class="mui-table-view">
-                            <li class="mui-table-view-cell pd">
-                                <div class="mui-row">
-                                    <div class="mui-col-xs-1">
-                                        <div style="width:0.18rem;height:0.18rem">
-                                            <img src="//img.aimoge.com/FgsAPXW3eFt4MN3pHyGaq6_B-fjQ" alt="" width="100%" height="100%">
-                                        </div>
-
-                                    </div>
-                                    <div class="mui-col-xs-11 margin5">
-                                        <p class="font_14">选择展示日期</p>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="mui-table-view-cell pd">
-                                <div class="mui-row" id="chooseDate">
-                                    <div class="mui-col-xs-4 mui-text-center">开始时间</div>
-                                    <div class="mui-col-xs-4 mui-text-center">------</div>
-                                    <div class="mui-col-xs-4 mui-text-center">结束时间</div>
-                                </div>
-                            </li>
-                        </ul>
-                        <div class="mui-row margin145">
-                            <div class="mui-col-xs-3 mui-text-right">
-                                <div style="width: 0.16rem;height: 0.16rem;margin-left: 0.63rem;margin-top: -0.03rem">
-                                    <img src="//img.aimoge.com/FhK_8jHkPbHUvC7yuZgnh5XzAmfy" alt="" width="100%" height="100%" id="agreement">
-                                </div>
-                            </div>
-                            <div class="mui-col-xs-9 font_14">
-                                <a href="#" class="agreement">同意柜机屏幕展示协议</a>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <button type="button" class="mui-btn mui-btn-primary mui-btn-block bottom" id="nextBtn">下一步</button>
                 </div>
-                <div id="time">
-                    <div class="mui-row mui-table-view-cell">
-                        <div class="mui-col-xs-6 font_14" id="NO">
-                            取消
+                <div id="cabinet" class="margin45" style="display: none">
+                    <ul class="mui-table-view line_h30">
+                        <li class="mui-table-view-cell pd" id="choose">
+                            <div class="mui-row">
+                                <div class="mui-col-xs-1">
+                                    <div style="width:0.18rem;height:0.18rem">
+                                        <img class="mui-pull-left" src="//img.aimoge.com/FjHjVjKxuwijQBc6c_9jq9Ru0v9c" width="100%" height="100%">
+                                    </div>
+                                </div>
+                                <div class="mui-col-xs-9 margin-5">
+                                    <p class="mui-ellipsis font_14">南京格格货栈</p>
+                                </div>
+                                <div class="mui-col-xs-2 mui-text-right">
+                                    <div style="width:0.18rem;height:0.18rem">
+                                        <img src="//img.aimoge.com/FnvoecOAQ0w2pmYfw0BfkPjXlvHC" width="100%" height="100%">
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="height32"></div>
+                    <ul class="mui-table-view">
+                        <li class="mui-table-view-cell pd">
+                            <div class="mui-row">
+                                <div class="mui-col-xs-1">
+                                    <div style="width:0.18rem;height:0.18rem">
+                                        <img src="//img.aimoge.com/FgsAPXW3eFt4MN3pHyGaq6_B-fjQ" alt="" width="100%" height="100%">
+                                    </div>
+
+                                </div>
+                                <div class="mui-col-xs-11 margin5">
+                                    <p class="font_14">选择展示日期</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="mui-table-view-cell pd">
+                            <div class="mui-row" id="chooseDate">
+                                <div class="mui-col-xs-4 mui-text-center">开始时间</div>
+                                <div class="mui-col-xs-4 mui-text-center">------</div>
+                                <div class="mui-col-xs-4 mui-text-center">结束时间</div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="mui-row margin145">
+                        <div class="mui-col-xs-3 mui-text-right">
+                            <div style="width: 0.16rem;height: 0.16rem;margin-left: 0.63rem;margin-top: -0.03rem">
+                                <img src="//img.aimoge.com/FhK_8jHkPbHUvC7yuZgnh5XzAmfy" alt="" width="100%" height="100%" id="agreement">
+                            </div>
                         </div>
-                        <div class="mui-col-xs-6 blue mui-text-right font_14" id="confirm">
-                            确定
+                        <div class="mui-col-xs-9 font_14">
+                            <a href="#" class="agreement">同意柜机屏幕展示协议</a>
                         </div>
                     </div>
-                    <ul class="mui-table-view" id="date">
-                        <li class="mui-table-view-cell mui-text-center">
-                            <div class="mui-row" id="week1">
-                                <div class="mui-col-xs-5 mui-text-right">2017-7-9</div>
-                                <div class="mui-col-xs-2">到</div>
-                                <div class="mui-col-xs-5 mui-text-left">2017-7-9</div>
-                            </div>
-                        </li>
-                        <li class="mui-table-view-cell  mui-text-center">
-                            <div class="mui-row" id="week2">
-                                <div class="mui-col-xs-5 mui-text-right">2017-7-9</div>
-                                <div class="mui-col-xs-2">到</div>
-                                <div class="mui-col-xs-5 mui-text-left">2017-7-9</div>
-                            </div>
-                        </li>
 
-                        <li class="mui-table-view-cell  mui-text-center">
-                            <div class="mui-row" id="week3">
-                                <div class="mui-col-xs-5 mui-text-right">2017-7-9</div>
-                                <div class="mui-col-xs-2">到</div>
-                                <div class="mui-col-xs-5 mui-text-left">2017-7-9</div>
-                            </div>
-                        </li>
-                        <li class="mui-table-view-cell  mui-text-center">
-                            <div class="mui-row" id="week4">
-                                <div class="mui-col-xs-5 mui-text-right">2017-7-9</div>
-                                <div class="mui-col-xs-2">到</div>
-                                <div class="mui-col-xs-5 mui-text-left">2017-7-9</div>
-                            </div>
-                        </li>
+                </div>
 
+                <button type="button" class="mui-btn mui-btn-primary mui-btn-block bottom" id="nextBtn">下一步</button>
+            </div>
+            <div id="time">
+                <div class="mui-row mui-table-view-cell">
+                    <div class="mui-col-xs-6 font_14" id="NO">
+                        取消
+                    </div>
+                    <div class="mui-col-xs-6 blue mui-text-right font_14" id="confirm">
+                        确定
+                    </div>
+                </div>
+                <ul class="mui-table-view" id="date">
+                    <li class="mui-table-view-cell mui-text-center">
+                        <div class="mui-row" id="week1">
+                            <div class="mui-col-xs-5 mui-text-right">2017-7-9</div>
+                            <div class="mui-col-xs-2">到</div>
+                            <div class="mui-col-xs-5 mui-text-left">2017-7-9</div>
+                        </div>
+                    </li>
+                    <li class="mui-table-view-cell  mui-text-center">
+                        <div class="mui-row" id="week2">
+                            <div class="mui-col-xs-5 mui-text-right">2017-7-9</div>
+                            <div class="mui-col-xs-2">到</div>
+                            <div class="mui-col-xs-5 mui-text-left">2017-7-9</div>
+                        </div>
+                    </li>
+
+                    <li class="mui-table-view-cell  mui-text-center">
+                        <div class="mui-row" id="week3">
+                            <div class="mui-col-xs-5 mui-text-right">2017-7-9</div>
+                            <div class="mui-col-xs-2">到</div>
+                            <div class="mui-col-xs-5 mui-text-left">2017-7-9</div>
+                        </div>
+                    </li>
+                    <li class="mui-table-view-cell  mui-text-center">
+                        <div class="mui-row" id="week4">
+                            <div class="mui-col-xs-5 mui-text-right">2017-7-9</div>
+                            <div class="mui-col-xs-2">到</div>
+                            <div class="mui-col-xs-5 mui-text-left">2017-7-9</div>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+        <div id="choice" class="mui-content" style="display: none">
+            <div class="mui-content-padded">
+                <div class="mui-row mui-text-center color_w font_18">
+                    <div class="mui-col-xs-4 mui-text-right">朕要包下全</div>
+                    <div class="mui-col-xs-4 mui-h2">南京</div>
+                    <div class="mui-col-xs-4 mui-text-left">格格货栈</div>
+                </div>
+                <div class="height32"></div>
+                <div class="show">
+                    <ul class="mui-table-view" id="cityList">
+                        <li class="mui-table-view-cell pd" value="3201">南京</li>
+                        <li class="mui-table-view-cell pd" value="1101">北京</li>
+                        <li class="mui-table-view-cell pd" value="3101">上海</li>
                     </ul>
                 </div>
             </div>
-            <div id="choice" class="mui-content" style="display: none">
-                <div class="mui-content-padded">
-                    <div class="mui-row mui-text-center color_w font_18">
-                        <div class="mui-col-xs-4 mui-text-right">朕要包下全</div>
-                        <div class="mui-col-xs-4 mui-h2">南京</div>
-                        <div class="mui-col-xs-4 mui-text-left">格格货栈</div>
-                    </div>
-                    <div class="height32"></div>
-                    <div class="show">
-                        <ul class="mui-table-view" id="cityList">
-                            <li class="mui-table-view-cell pd" value="3201">南京</li>
-                            <li class="mui-table-view-cell pd" value="1101">北京</li>
-                            <li class="mui-table-view-cell pd" value="3101">上海</li>
-                        </ul>
-                    </div>
-                </div>
 
-            </div>
         </div>
-        <script src="https://cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script>
-<!--        <script src="http://apps.bdimg.com/libs/jquerymobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>-->
-<!--       <script src="../interaction/js/jquery.mobile-1.4.5.min.js"></script>-->
-        <script src="../interaction/js/iscroll-zoom.js"></script>
-        <script src="../interaction/js/hammer.js"></script>
-        <script src="../interaction/js/lrz.all.bundle.js"></script>
-        <script src="../interaction/js/jquery.photoclip.js"></script>
-        <!--    <script src="../../static/interaction/mui/mui.min.js"></script>-->
-        <script src="../interaction/js/date.js"></script>
+    </div>
+    <script src="https://cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script>
+    <!--        <script src="http://apps.bdimg.com/libs/jquerymobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>-->
+    <!--       <script src="../interaction/js/jquery.mobile-1.4.5.min.js"></script>-->
+    <script src="../interaction/js/iscroll-zoom.js"></script>
+    <script src="../interaction/js/hammer.js"></script>
+    <script src="../interaction/js/lrz.all.bundle.js"></script>
+    <script src="../interaction/js/jquery.photoclip.js"></script>
+    <!--    <script src="../../static/interaction/mui/mui.min.js"></script>-->
+    <script src="../interaction/js/date.js"></script>
 
 
-        <script type="text/javascript">
+    <script>
+        window.onload = fuction() {
+
+
             (function() {
                 var isIPhone = !!window.navigator.appVersion.match(/iphone/gi);
                 if (isIPhone && devicePixelRatio === 2) {
@@ -448,7 +451,7 @@
                 $("#choose").on("click", function() {
                     $("#choice").show();
                     $("#two").hide();
-//                    return false;
+                    //                    return false;
                 });
                 //获取城市id
                 $("#cityList>li").each(function() {
@@ -528,7 +531,7 @@
                     $("#photo").show();
                 });
                 //裁剪图片
-                 $("#clipArea").photoClip({
+                $("#clipArea").photoClip({
                     width: 520,
                     height: 520,
                     file: "#file",
@@ -578,13 +581,14 @@
                     })
                 })
             })
+        }
 
-        </script>
+    </script>
 
 
 
 
-        <!--
+    <!--
     <script type="text/javascript">
         function setImagePreview() {
             var preview, img_txt, localImag, file_head = document.getElementById("file_head"),
@@ -615,7 +619,7 @@
 
     </script>
 -->
-<!--    </div>-->
+    <!--    </div>-->
 </body>
 
 </html>
