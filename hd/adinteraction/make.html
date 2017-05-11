@@ -528,9 +528,9 @@
                     $("#photo").show();
                 });
                 //裁剪图片
-                var clipArea = new bjj.PhotoClip("#clipArea", {
-                    size: [550, 550],
-                    outputSize: [640, 640],
+                 $("#clipArea").photoClip({
+                    width: 520,
+                    height: 520,
                     file: "#file",
                     view: "#view",
                     ok: "#finish",
