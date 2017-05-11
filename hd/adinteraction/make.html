@@ -405,28 +405,28 @@
                     var num = 140 - len;
                     $("#word").text(len);
                 });
-                $("#upload").on("touchend", function() {
+                $("#upload").on("click", function() {
                     $(".htmleaf-container").fadeIn(300);
                     $("#photo").show();
                     $("#file").click();
                 });
-                $("#cancle").on("touchend", function() {
+                $("#cancle").on("click", function() {
                     $(".htmleaf-container").fadeOut(300);
                     $("#photo").hide();
                 });
 
-                $(".txt1").on("touchend", function() {
+                $(".txt1").on("click", function() {
                     $(this).hide();
                     $(".text_1").show();
                 });
                 //删除图片
-                $("#photo").on("touchend", function() {
+                $("#photo").on("click", function() {
                     $(this).empty();
                     $("#uploadBox").show();
                     $("#photo").hide();
                 });
                 //        点击1.制作
-                $("#make_btn").on("touchend", function() {
+                $("#make_btn").on("click", function() {
                     $("#choice_btn").removeClass("active");
                     $(this).toggleClass("active");
                     if ($("#show").is(":hidden")) {
@@ -437,7 +437,7 @@
 
                 });
                 //      选择柜机
-                $("#choice_btn").on("touchend", function() {
+                $("#choice_btn").on("click", function() {
                     $("#make_btn").removeClass("active");
                     $(this).toggleClass("active");
                     $("#show").hide();
@@ -445,14 +445,14 @@
                     $(".mui-title").text("选择快递柜");
                 });
                 //      选择货栈
-                $("#choose").on("touchend", function() {
+                $("#choose").on("click", function() {
                     $("#choice").show();
                     $("#two").hide();
 //                    return false;
                 });
                 //获取城市id
                 $("#cityList>li").each(function() {
-                    $(this).on("touchend", function() {
+                    $(this).on("click", function() {
                         cityId = $(this).val();
                         $("#two").show();
                         $("#choice").hide();
@@ -462,14 +462,14 @@
                     })
                 });
                 //        选择时间
-                $("#chooseDate").on("touchend", function() {
+                $("#chooseDate").on("click", function() {
                     $("#time").show();
                     $("#time").animate({
                         bottom: '0'
                     }, "slow");
                 });
                 //        取消选择时间
-                $("#NO").on("touchend", function() {
+                $("#NO").on("click", function() {
                     $("#time").animate({
                         bottom: '-30%'
                     }, "slow", function() {
@@ -482,7 +482,7 @@
 
                 });
                 //确定选择时间
-                $("#confirm").on("touchend", function() {
+                $("#confirm").on("click", function() {
                     $("#time").animate({
                         bottom: '-30%'
                     }, "slow", function() {
@@ -491,12 +491,12 @@
 
                 });
                 //        返回上一个页面
-                $("#goBack").on("touchend", function() {
+                $("#goBack").on("click", function() {
                     location.href = "/adinteraction";
                 });
                 //        同意协议
 
-                $("#agreement").on("touchend", function() {
+                $("#agreement").on("click", function() {
 
                     if (!flag) {
                         $("#agreement").attr({
@@ -513,17 +513,17 @@
                     }
                 });
                 // 下一步 提交数据
-                $("#nextBtn").on("touchend", function() {
+                $("#nextBtn").on("click", function() {
 
                     submit();
                     //                location.href = "/adinteraction/examine";
 
                 });
                 // 重试再次提交数据
-                $("#retry").on("touchend", function() {
+                $("#retry").on("click", function() {
                     submit();
                 });
-                $("#reelect").on("touchend", function() {
+                $("#reelect").on("click", function() {
                     $(".htmleaf-container").fadeIn(300);
                     $("#photo").show();
                 });
