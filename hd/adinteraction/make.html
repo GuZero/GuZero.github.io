@@ -295,7 +295,7 @@
                     $("#photo").hide();
                 });
                 //        点击1.制作
-                $("#make_btn").on("click", function() {
+                $(".mui-col-xs-5").on("click","#make_btn",function() {
                     $("#choice_btn").removeClass("active");
                     alert("0000000000");
                     $(this).toggleClass("active");
@@ -307,7 +307,7 @@
 
                 });
                 //      选择柜机
-                $("#choice_btn").on("click", function() {
+                $(".mui-col-xs-5").on("click","#choice_btn",function() {
                      alert("0000000000");
                     $("#make_btn").removeClass("active");
                     $(this).toggleClass("active");
