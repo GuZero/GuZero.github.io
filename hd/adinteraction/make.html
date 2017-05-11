@@ -375,7 +375,7 @@
                 formdata.append("token", window.token);
                 formdata.append("x:source", "dazhongdianping");
                 $.ajax({
-                    url: "http://upload.qiniu.com",
+                    url: location.protocol == "http:" ? 'http://upload.qiniu.com' : 'https://up.qbox.me',
                     type: "POST",
                     data: formdata,
                     contentType: 'application/json; charset=utf-8',
