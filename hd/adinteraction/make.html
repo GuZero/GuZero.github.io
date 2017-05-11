@@ -241,203 +241,6 @@
 
     <script>
         window.onload = function() {
-                $(document).ready(function() {
-                    var htmlstyle = "<style>body{padding:0;margin:0;}.msg{color:#FFF;width:100%;height:0.3rem;text-align:center;font-size:0.14rem;line-height:0.3rem;position:fixed;top:-0.3rem;z-index:20;}" +
-                        ".msg_success{background-color:#1fcc6c;}" +
-                        ".msg_warning{background-color:#e94b35;}" +
-                        ".msg_primary{background-color:#337ab7;}" +
-                        ".msg_info{background-color:#5bc0de;}</style>";
-                    $('head').append(htmlstyle);
-                    $('body').prepend('<div class="msg msg_success"></div>' +
-                        '<div class="msg msg_warning"></div>' +
-                        '<div class="msg msg_primary"></div>' +
-                        '<div class="msg msg_info"></div>');
-                });
-                $(function() {
-
-                    //文字限制
-                    $('#text').keyup(function() {
-                        var len = $(this).val().length;
-                        if (len > 139) {
-                            alert('您输入超出了限制');
-                        }
-                        var num = 140 - len;
-                        $("#word").text(len);
-                    });
-                    $("#upload").on("click", function() {
-                        $(".htmleaf-container").fadeIn(300);
-                        $("#photo").show();
-                        $("#file").click();
-                    });
-                    $("#cancle").on("click", function() {
-                        $(".htmleaf-container").fadeOut(300);
-                        $("#photo").hide();
-                    });
-
-                    $(".txt1").on("click", function() {
-                        $(this).hide();
-                        $(".text_1").show();
-                    });
-                    //删除图片
-                    $("#photo").on("click", function() {
-                        $(this).empty();
-                        $("#uploadBox").show();
-                        $("#photo").hide();
-                    });
-                    //        点击1.制作
-                    $("#make_btn").on("click", function() {
-                        $("#choice_btn").removeClass("active");
-                        $(this).toggleClass("active");
-                        if ($("#show").is(":hidden")) {
-                            $("#show").show();
-                            $("#cabinet").hide();
-                            $(".mui-title").text("制作中");
-                        }
-
-                    });
-                    //      选择柜机
-                    $("#choice_btn").on("click", function() {
-                        $("#make_btn").removeClass("active");
-                        $(this).toggleClass("active");
-                        $("#show").hide();
-                        $("#cabinet").show();
-                        $(".mui-title").text("选择快递柜");
-                    });
-                    //      选择货栈
-                    $("#choose").on("click", function() {
-                        $("#choice").show();
-                        $("#two").hide();
-                        //                    return false;
-                    });
-                    //获取城市id
-                    $("#cityList>li").each(function() {
-                        $(this).on("click", function() {
-                            cityId = $(this).val();
-                            $("#two").show();
-                            $("#choice").hide();
-                            console.log(cityId);
-                            window.sessionStorage.setItem("id", $(this).val());
-
-                        })
-                    });
-                    //        选择时间
-                    $("#chooseDate").on("click", function() {
-                        $("#time").show();
-                        $("#time").animate({
-                            bottom: '0'
-                        }, "slow");
-                    });
-                    //        取消选择时间
-                    $("#NO").on("click", function() {
-                        $("#time").animate({
-                            bottom: '-30%'
-                        }, "slow", function() {
-                            $("#time").hide();
-                        });
-                        startDate = "";
-                        endDate = "";
-                        $("#chooseDate .mui-col-xs-4").eq(0).text("开始时间");
-                        $("#chooseDate .mui-col-xs-4").eq(2).text("结束时间");
-
-                    });
-                    //确定选择时间
-                    $("#confirm").on("click", function() {
-                        $("#time").animate({
-                            bottom: '-30%'
-                        }, "slow", function() {
-                            $("#time").hide();
-                        });
-
-                    });
-                    //        返回上一个页面
-                    $("#goBack").on("click", function() {
-                        location.href = "/adinteraction";
-                    });
-                    //        同意协议
-
-                    $("#agreement").on("click", function() {
-
-                        if (!flag) {
-                            $("#agreement").attr({
-                                src: "//img.aimoge.com/FtRcBl62d6oHvi4N6OfL2xSYkREC",
-                                alt: "选中"
-                            });
-                            flag = true;
-                        } else {
-                            $("#agreement").attr({
-                                src: "//img.aimoge.com/FhK_8jHkPbHUvC7yuZgnh5XzAmfy",
-                                alt: "不选中"
-                            });
-                            flag = false;
-                        }
-                    });
-                    // 下一步 提交数据
-                    $("#nextBtn").on("click", function() {
-
-                        submit();
-                        //                location.href = "/adinteraction/examine";
-
-                    });
-                    // 重试再次提交数据
-                    $("#retry").on("click", function() {
-                        submit();
-                    });
-                    $("#reelect").on("click", function() {
-                        $(".htmleaf-container").fadeIn(300);
-                        $("#photo").show();
-                    });
-                    //裁剪图片
-                    $("#clipArea").photoClip({
-                        width: 520,
-                        height: 520,
-                        file: "#file",
-                        view: "#view",
-                        ok: "#finish",
-                        loadStart: function() {
-                            console.log("照片读取中");
-                        },
-                        loadComplete: function() {
-                            console.log("照片读取完成");
-                        },
-                        clipFinish: function(dataURL) {
-                            post_img(dataURL);
-                        }
-                    });
-                    $("#finish").on("touchend", function() {
-                        $("#uploadBox").hide();
-                        $("#photo").empty();
-                        $('#photo').append('<img src="' + imgsource + '" align="absmiddle"  id="img_s">');
-                        $(".htmleaf-container").hide();
-                    });
-                    //把时间渲染到页面上
-                    let week1 = setValAndReqNow(2);
-                    let week2 = setValAndReqNow(3);
-                    let week3 = setValAndReqNow(4);
-                    let week4 = setValAndReqNow(5);
-                    $("#week1 .mui-col-xs-5").eq(0).text(getFormatData(week1.monday));
-                    $("#week1 .mui-col-xs-5").eq(1).text(getFormatData(week1.sunday));
-                    $("#week2 .mui-col-xs-5").eq(0).text(getFormatData(week2.monday));
-                    $("#week2 .mui-col-xs-5").eq(1).text(getFormatData(week2.sunday));
-                    $("#week3 .mui-col-xs-5").eq(0).text(getFormatData(week3.monday));
-                    $("#week3 .mui-col-xs-5").eq(1).text(getFormatData(week3.sunday));
-                    $("#week4 .mui-col-xs-5").eq(0).text(getFormatData(week4.monday));
-                    $("#week4 .mui-col-xs-5").eq(1).text(getFormatData(week4.sunday));
-                    //选取日期
-                    $("#date li").each(function() {
-
-                        $(this).on("touchend", function() {
-                            $("#date li").each(function() {
-                                $("#date li").removeClass("dateActive");
-                            });
-                            $(this).toggleClass("dateActive");
-                            startDate = $(this).children().children().eq(0).text();
-                            endDate = $(this).children().children().eq(2).text();
-                            $("#chooseDate .mui-col-xs-4").eq(0).text(startDate);
-                            $("#chooseDate .mui-col-xs-4").eq(2).text(endDate);
-                        })
-                    })
-                })
-            }
             (function() {
                 var isIPhone = !!window.navigator.appVersion.match(/iphone/gi);
                 if (isIPhone && devicePixelRatio === 2) {
@@ -450,6 +253,204 @@
                     document.body.removeChild(testElem);
                 }
             })();
+            $(document).ready(function() {
+                var htmlstyle = "<style>body{padding:0;margin:0;}.msg{color:#FFF;width:100%;height:0.3rem;text-align:center;font-size:0.14rem;line-height:0.3rem;position:fixed;top:-0.3rem;z-index:20;}" +
+                    ".msg_success{background-color:#1fcc6c;}" +
+                    ".msg_warning{background-color:#e94b35;}" +
+                    ".msg_primary{background-color:#337ab7;}" +
+                    ".msg_info{background-color:#5bc0de;}</style>";
+                $('head').append(htmlstyle);
+                $('body').prepend('<div class="msg msg_success"></div>' +
+                    '<div class="msg msg_warning"></div>' +
+                    '<div class="msg msg_primary"></div>' +
+                    '<div class="msg msg_info"></div>');
+            });
+            $(function() {
+
+                //文字限制
+                $('#text').keyup(function() {
+                    var len = $(this).val().length;
+                    if (len > 139) {
+                        alert('您输入超出了限制');
+                    }
+                    var num = 140 - len;
+                    $("#word").text(len);
+                });
+                $("#upload").on("click", function() {
+                    $(".htmleaf-container").fadeIn(300);
+                    $("#photo").show();
+                    $("#file").click();
+                });
+                $("#cancle").on("click", function() {
+                    $(".htmleaf-container").fadeOut(300);
+                    $("#photo").hide();
+                });
+
+                $(".txt1").on("click", function() {
+                    $(this).hide();
+                    $(".text_1").show();
+                });
+                //删除图片
+                $("#photo").on("click", function() {
+                    $(this).empty();
+                    $("#uploadBox").show();
+                    $("#photo").hide();
+                });
+                //        点击1.制作
+                $("#make_btn").on("click", function() {
+                    $("#choice_btn").removeClass("active");
+                    $(this).toggleClass("active");
+                    if ($("#show").is(":hidden")) {
+                        $("#show").show();
+                        $("#cabinet").hide();
+                        $(".mui-title").text("制作中");
+                    }
+
+                });
+                //      选择柜机
+                $("#choice_btn").on("click", function() {
+                    $("#make_btn").removeClass("active");
+                    $(this).toggleClass("active");
+                    $("#show").hide();
+                    $("#cabinet").show();
+                    $(".mui-title").text("选择快递柜");
+                });
+                //      选择货栈
+                $("#choose").on("click", function() {
+                    $("#choice").show();
+                    $("#two").hide();
+                    //                    return false;
+                });
+                //获取城市id
+                $("#cityList>li").each(function() {
+                    $(this).on("click", function() {
+                        cityId = $(this).val();
+                        $("#two").show();
+                        $("#choice").hide();
+                        console.log(cityId);
+                        window.sessionStorage.setItem("id", $(this).val());
+
+                    })
+                });
+                //        选择时间
+                $("#chooseDate").on("click", function() {
+                    $("#time").show();
+                    $("#time").animate({
+                        bottom: '0'
+                    }, "slow");
+                });
+                //        取消选择时间
+                $("#NO").on("click", function() {
+                    $("#time").animate({
+                        bottom: '-30%'
+                    }, "slow", function() {
+                        $("#time").hide();
+                    });
+                    startDate = "";
+                    endDate = "";
+                    $("#chooseDate .mui-col-xs-4").eq(0).text("开始时间");
+                    $("#chooseDate .mui-col-xs-4").eq(2).text("结束时间");
+
+                });
+                //确定选择时间
+                $("#confirm").on("click", function() {
+                    $("#time").animate({
+                        bottom: '-30%'
+                    }, "slow", function() {
+                        $("#time").hide();
+                    });
+
+                });
+                //        返回上一个页面
+                $("#goBack").on("click", function() {
+                    location.href = "/adinteraction";
+                });
+                //        同意协议
+
+                $("#agreement").on("click", function() {
+
+                    if (!flag) {
+                        $("#agreement").attr({
+                            src: "//img.aimoge.com/FtRcBl62d6oHvi4N6OfL2xSYkREC",
+                            alt: "选中"
+                        });
+                        flag = true;
+                    } else {
+                        $("#agreement").attr({
+                            src: "//img.aimoge.com/FhK_8jHkPbHUvC7yuZgnh5XzAmfy",
+                            alt: "不选中"
+                        });
+                        flag = false;
+                    }
+                });
+                // 下一步 提交数据
+                $("#nextBtn").on("click", function() {
+
+                    submit();
+                    //                location.href = "/adinteraction/examine";
+
+                });
+                // 重试再次提交数据
+                $("#retry").on("click", function() {
+                    submit();
+                });
+                $("#reelect").on("click", function() {
+                    $(".htmleaf-container").fadeIn(300);
+                    $("#photo").show();
+                });
+                //裁剪图片
+//                $("#clipArea").photoClip({
+//                    width: 520,
+//                    height: 520,
+//                    file: "#file",
+//                    view: "#view",
+//                    ok: "#finish",
+//                    loadStart: function() {
+//                        console.log("照片读取中");
+//                    },
+//                    loadComplete: function() {
+//                        console.log("照片读取完成");
+//                    },
+//                    clipFinish: function(dataURL) {
+//                        post_img(dataURL);
+//                    }
+//                });
+                $("#finish").on("touchend", function() {
+                    $("#uploadBox").hide();
+                    $("#photo").empty();
+                    $('#photo').append('<img src="' + imgsource + '" align="absmiddle"  id="img_s">');
+                    $(".htmleaf-container").hide();
+                });
+                //把时间渲染到页面上
+                let week1 = setValAndReqNow(2);
+                let week2 = setValAndReqNow(3);
+                let week3 = setValAndReqNow(4);
+                let week4 = setValAndReqNow(5);
+                $("#week1 .mui-col-xs-5").eq(0).text(getFormatData(week1.monday));
+                $("#week1 .mui-col-xs-5").eq(1).text(getFormatData(week1.sunday));
+                $("#week2 .mui-col-xs-5").eq(0).text(getFormatData(week2.monday));
+                $("#week2 .mui-col-xs-5").eq(1).text(getFormatData(week2.sunday));
+                $("#week3 .mui-col-xs-5").eq(0).text(getFormatData(week3.monday));
+                $("#week3 .mui-col-xs-5").eq(1).text(getFormatData(week3.sunday));
+                $("#week4 .mui-col-xs-5").eq(0).text(getFormatData(week4.monday));
+                $("#week4 .mui-col-xs-5").eq(1).text(getFormatData(week4.sunday));
+                //选取日期
+                $("#date li").each(function() {
+
+                    $(this).on("touchend", function() {
+                        $("#date li").each(function() {
+                            $("#date li").removeClass("dateActive");
+                        });
+                        $(this).toggleClass("dateActive");
+                        startDate = $(this).children().children().eq(0).text();
+                        endDate = $(this).children().children().eq(2).text();
+                        $("#chooseDate .mui-col-xs-4").eq(0).text(startDate);
+                        $("#chooseDate .mui-col-xs-4").eq(2).text(endDate);
+                    })
+                })
+            })
+        }
+
         window.token = 'MlZsy_bZg4Sg5zLmdjBV4nZ35EWxXfwWIznsSViW:U4tfLAvt-rhNyyCweZhEJEAo30w=:eyJzY29wZSI6Im1vZ2UiLCJkZWFkbGluZSI6Mjg2MTExNTA3NCwiY2FsbGJhY2tVcmwiOiJodHRwOlwvXC9hcGkuYWltb2dlLmNvbVwvdjFcL3VwbG9hZFwvY2FsbGJhY2siLCJjYWxsYmFja0JvZHkiOiJuYW1lPSQoZm5hbWUpJmtleT0kKGtleSkmaGFzaD0kKGV0YWcpJnNpemU9JChmc2l6ZSkmd2lkdGg9JChpbWFnZUluZm8ud2lkdGgpJmhlaWdodD0kKGltYWdlSW5mby5oZWlnaHQpJm1pbWV0eXBlPSQobWltZVR5cGUpJnNpZD0xODYxODE0Mjc2NCZ1aWQ9MTg2MTgxNDI3NjQmc291cmNlPSQoeDpzb3VyY2UpIiwiZGV0ZWN0TWltZSI6MX0=';
         var imgsrc = "",
             cityId = "",
@@ -509,9 +510,6 @@
                 }, 500)
             }, 2000);
         }
-
-
-
         function postData(data) {
             $.ajax({
                 type: "post",
