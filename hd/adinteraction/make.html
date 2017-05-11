@@ -398,27 +398,27 @@
                 var num = 140 - len;
                 $("#word").text(len);
             });
-            $("#upload").on("tap",function() {
+            $("#upload").on("touchend",function() {
                 $(".htmleaf-container").fadeIn(300);
                 $("#photo").show();
             });
-            $("#cancle").on("tap",function() {
+            $("#cancle").on("touchend",function() {
                 $(".htmleaf-container").fadeOut(300);
                 $("#photo").hide();
             });
 
-            $(".txt1").on("tap",function() {
+            $(".txt1").on("touchend",function() {
                 $(this).hide();
                 $(".text_1").show();
             });
             //删除图片
-            $("#photo").on("tap",function() {
+            $("#photo").on("touchend",function() {
                 $(this).empty();
                 $("#uploadBox").show();
                 $("#photo").hide();
             });
             //        点击1.制作
-            $("#make_btn").on("tap",function() {
+            $("#make_btn").on("touchend",function() {
                 $("#choice_btn").removeClass("active");
                 $(this).toggleClass("active");
                 if ($("#show").is(":hidden")) {
@@ -429,7 +429,7 @@
 
             });
             //      选择柜机
-            $("#choice_btn").on("tap",function() {
+            $("#choice_btn").on("touchend",function() {
                 $("#make_btn").removeClass("active");
                 $(this).toggleClass("active");
                 $("#show").hide();
@@ -437,14 +437,14 @@
                 $(".mui-title").text("选择快递柜");
             });
             //      选择货栈
-            $("#choose").on("tap",function() {
+            $("#choose").on("ttouchend",function() {
                 $("#choice").show();
                 $("#two").hide();
                 return false;
             });
             //获取城市id
             $("#cityList>li").each(function() {
-                $(this).on("tap",function() {
+                $(this).on("touchend",function() {
                     cityId = $(this).val();
                     $("#two").show();
                     $("#choice").hide();
@@ -454,14 +454,14 @@
                 })
             });
             //        选择时间
-            $("#chooseDate").on("tap",function() {
+            $("#chooseDate").on("touchend",function() {
                 $("#time").show();
                 $("#time").animate({
                     bottom: '0'
                 }, "slow");
             });
             //        取消选择时间
-            $("#NO").on("tap",function() {
+            $("#NO").on("touchend",function() {
                 $("#time").animate({
                     bottom: '-30%'
                 }, "slow", function() {
@@ -474,7 +474,7 @@
 
             });
             //确定选择时间
-            $("#confirm").on("tap",function() {
+            $("#confirm").on("touchend",function() {
                 $("#time").animate({
                     bottom: '-30%'
                 }, "slow", function() {
@@ -483,12 +483,12 @@
 
             });
             //        返回上一个页面
-            $("#goBack").on("tap",function() {
+            $("#goBack").on("touchend",function() {
                 location.href = "/adinteraction";
             });
             //        同意协议
 
-            $("#agreement").on("tap",function() {
+            $("#agreement").on("touchend",function() {
 
                 if (!flag) {
                     $("#agreement").attr({
@@ -505,17 +505,17 @@
                 }
             });
             // 下一步 提交数据
-            $("#nextBtn").on("tap",function() {
+            $("#nextBtn").on("touchend",function() {
 
                 submit();
 //                location.href = "/adinteraction/examine";
 
             });
             // 重试再次提交数据
-            $("#retry").on("tap",function() {
+            $("#retry").on("touchend",function() {
                 submit();
             });
-            $("#reelect").on("tap",function() {
+            $("#reelect").on("touchend",function() {
                 $(".htmleaf-container").fadeIn(300);
                 $("#photo").show();
             });
@@ -536,7 +536,7 @@
                     post_img(dataURL);
                 }
             });
-            $("#finish").on("tap",function() {
+            $("#finish").on("touchend",function() {
                 $("#uploadBox").hide();
                 $("#photo").empty();
                 $('#photo').append('<img src="' + imgsource + '" align="absmiddle"  id="img_s">');
