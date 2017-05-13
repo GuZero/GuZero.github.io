@@ -174,11 +174,8 @@ header {
     height: 100%;
     border-radius: 4px;
     background: #ffffff;
-    padding-top: 20%;
-    padding-right: 30px;
-    padding-left: 30px;
+    padding-top: 25%;
     display: flex;
-
     align-items: center;
     flex-direction: column;
 }
@@ -188,7 +185,7 @@ header {
 }
 
 .img_pic {
-    width: 100%;
+    width: 170px;
     height: 110px;
 }
 
