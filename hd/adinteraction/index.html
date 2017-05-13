@@ -105,35 +105,35 @@
                  $("#share1").hide();
              });
          });
-          console.log(window.config.API);
-          var adinteractions=[{'status':1,"start_date":'2017-05-17 00:00:',"end_date":'2017-05-17 00:00:'},{'status':12,"start_date":'2017-05-17 00:00:',"end_date":'2017-05-17 00:00:'},{'status':11,"start_date":'2017-05-17 00:00:',"end_date":'2017-05-17 00:00:'}];
-          if(adinteractions.length>0){
-              $("#startBtn").css({
-                  "margin-top": "28%"
-              });
-              $("#no_work").hide();
-              $("#info").show();
-              var array = adinteractions;
-              var html = "";
-              $.each(array, function(index, obj) {
-                  switch (obj.status) {
-                      case 1:
-                          obj.status = '等待审核';
-                          break;
-                      case 11:
-                          obj.status = '通过审核';
-                          break;
-                      case 12:
-                          obj.status = '审核拒绝';
-                          break;
-                      default:
-                          obj.status = '等待审核';
-                          break;
-                  }
-                  html += '<li class="mui-table-view-cell"><div class="mui-table"><div class="mui-table-cell mui-col-xs-10"><div class="mui-row line_h30"><div class="mui-col-sm-2 mui-ellipsis gray ">屏幕：</div><div class="mui-col-sm-10 mui-ellipsis ">南京格格货栈</div></div><div class="mui-row line_h30"><div class="mui-col-sm-2 mui-ellipsis gray">日期：</div><div class="mui-col-sm-10 line_h30">' + obj.start_date.substring(0, 10) + '---' + obj.end_date.substring(0, 10) + '</div></div><div class="mui-row line_h30"><div class="mui-col-sm-2 mui-ellipsis gray ">审核：</div><div class="mui-col-sm-10 blue line_h30">' + obj.status + '</div></div></div><div class="mui-table-cell mui-col-xs-2 mui-text-right"><a href="#"><img src="//img.aimoge.com/FnvoecOAQ0w2pmYfw0BfkPjXlvHC" alt="" width="24" height="22"></a></div></div></li>';
-              });
-              $("#info>ul").append(html);
-          }
+//          console.log(window.config.API);
+//          var adinteractions=[{'status':1,"start_date":'2017-05-17 00:00:',"end_date":'2017-05-17 00:00:'},{'status':12,"start_date":'2017-05-17 00:00:',"end_date":'2017-05-17 00:00:'},{'status':11,"start_date":'2017-05-17 00:00:',"end_date":'2017-05-17 00:00:'}];
+//          if(adinteractions.length>0){
+//              $("#startBtn").css({
+//                  "margin-top": "28%"
+//              });
+//              $("#no_work").hide();
+//              $("#info").show();
+//              var array = adinteractions;
+//              var html = "";
+//              $.each(array, function(index, obj) {
+//                  switch (obj.status) {
+//                      case 1:
+//                          obj.status = '等待审核';
+//                          break;
+//                      case 11:
+//                          obj.status = '通过审核';
+//                          break;
+//                      case 12:
+//                          obj.status = '审核拒绝';
+//                          break;
+//                      default:
+//                          obj.status = '等待审核';
+//                          break;
+//                  }
+//                  html += '<li class="mui-table-view-cell"><div class="mui-table"><div class="mui-table-cell mui-col-xs-10"><div class="mui-row line_h30"><div class="mui-col-sm-2 mui-ellipsis gray ">屏幕：</div><div class="mui-col-sm-10 mui-ellipsis ">南京格格货栈</div></div><div class="mui-row line_h30"><div class="mui-col-sm-2 mui-ellipsis gray">日期：</div><div class="mui-col-sm-10 line_h30">' + obj.start_date.substring(0, 10) + '---' + obj.end_date.substring(0, 10) + '</div></div><div class="mui-row line_h30"><div class="mui-col-sm-2 mui-ellipsis gray ">审核：</div><div class="mui-col-sm-10 blue line_h30">' + obj.status + '</div></div></div><div class="mui-table-cell mui-col-xs-2 mui-text-right"><a href="#"><img src="//img.aimoge.com/FnvoecOAQ0w2pmYfw0BfkPjXlvHC" alt="" width="24" height="22"></a></div></div></li>';
+//              });
+//              $("#info>ul").append(html);
+//          }
         $.ajax({
             type: "GET",
             url: window.config.API + "/media/adinteraction",
