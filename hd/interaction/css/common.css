@@ -159,7 +159,7 @@ header {
 
 #info {
     display: none;
-    max-height: 350px;
+    max-height: 50vh;
     overflow: auto;
 }
 
