@@ -3,139 +3,180 @@
 
 <head>
     <meta charset="UTF-8">
-    <!--    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />-->
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <title>大屏互动</title>
     <link rel="stylesheet" href="../interaction/mui/mui.min.css">
     <link rel="stylesheet" href="../interaction/css/common.css">
-    <script src="../interaction/js/adaptive.js"></script>
-
-    <script>
-        // 设计图宽度
-        window['adaptive'].desinWidth = 375;
-        // body 字体大小
-        window['adaptive'].baseFont = 24;
-
-        window['adaptive'].scaleType = 3;
-        // 初始化
-        window['adaptive'].init();
-
-    </script>
-
 </head>
 
 <body class="mui-ios mui-ios-9 mui-ios-9-1">
-
-    <div class="mui-content main">
-        <header>
-            <div class="mui-row">
-                <div class="mui-col-xs-11">
-                    <div class="mui-title margin_l28">大屏互动</div>
-                </div>
-                <div class="mui-col-xs-1">
-                    <a href="#" class="btn_share">
-                        <img src="//img.aimoge.com/Fvp6_ACzFw9KhXBG06gEjT-id2R-" alt="">
-                    </a>
-                </div>
-            </div>
-        </header>
-        <div class="mui-content">
-            <div class="mui-content-padded margin120">
-                <div id="info">
-                    <ul class="mui-table-view">
-
-                    </ul>
-                </div>
-                <div id="no_work">
-                    <div>
-                        <div class="img_pic">
-                            <img src="//img.aimoge.com/FhZ2HwIuo8ORmL5WmRl2evWh8yGT" alt="">
+    <header>
+        <h1 class="mui-title">大屏互动</h1>
+        <a class="mui-pull-right btn_share">
+            <img src="//img.aimoge.com/Fvp6_ACzFw9KhXBG06gEjT-id2R-" alt="分享">
+        </a>
+    </header>
+    <div class="mui-content pd-t40">
+        <div class="mui-content-padded">
+            <div id="info">
+                <ul class="mui-table-view">
+                    <li class="mui-table-view-cell">
+                        <div class="mui-table">
+                            <div class="mui-table-cell mui-col-xs-10">
+                                <div class="mui-row line_h30">
+                                    <div class="mui-col-sm-2 mui-ellipsis gray ">屏幕：</div>
+                                    <div class="mui-col-sm-10 mui-ellipsis ">南京格格货栈</div>
+                                </div>
+                                <div class="mui-row line_h30">
+                                    <div class="mui-col-sm-2 mui-ellipsis gray">日期：</div>
+                                    <div class="mui-col-sm-10 line_h30">2017-05-12---2017-05-18</div>
+                                </div>
+                                <div class="mui-row line_h30">
+                                    <div class="mui-col-sm-2 mui-ellipsis gray ">审核：</div>
+                                    <div class="mui-col-sm-10 blue line_h30">等待审核</div>
+                                </div>
+                            </div>
+                            <div class="mui-table-cell mui-col-xs-2 mui-text-right">
+                                <a href="#"><img src="//img.aimoge.com/FnvoecOAQ0w2pmYfw0BfkPjXlvHC" alt="" width="24" height="22"></a>
+                            </div>
                         </div>
-                        <p class="blue font_14 margin16">暂无互动作品</p>
-                    </div>
-                </div>
-
-                <button type="button" class="mui-btn mui-btn-primary mui-btn-block" id="startBtn">开始制作</button>
+                    </li>
+                </ul>
             </div>
+            <div id="no_work">
+                <div>
+                    <div class="img_pic">
+                        <img src="//img.aimoge.com/FhZ2HwIuo8ORmL5WmRl2evWh8yGT" alt="">
+                    </div>
+                    <p class="blue  margin16">暂无互动作品</p>
+                </div>
+            </div>
+            <button type="button" class="mui-btn mui-btn-primary mui-btn-block" id="startBtn">开始制作</button>
+        </div>
+        <div id="share1">
+            <div class="mui-text-center">分享</div>
+            <div class="itme margin20" id="share">
+            </div>
+            <div class="mui-text-center" id="shareCancel">取消</div>
         </div>
     </div>
+    <script src="../interaction/js/soshm.js"></script>
     <script src="https://cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script>
-<!--    <script src="http://apps.bdimg.com/libs/jquerymobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>-->
     <script>
-        (function() {
-            var isIPhone = !!window.navigator.appVersion.match(/iphone/gi);
-            if (isIPhone && devicePixelRatio === 2) {
-                var testElem = document.createElement('div');
-                testElem.style.border = '.5px solid transparent';
-                document.body.appendChild(testElem);
-                if (testElem.offsetHeight == 1) {
-                    document.querySelector('html').classList.add('hairlines');
+    soshm('#share', {
+        // 分享的链接，默认使用location.href
+        url: '',
+        // 分享的标题，默认使用document.title
+        title: '',
+        // 分享的摘要，默认使用<meta name="description" content="">content的值
+        digest: '',
+        // 分享的图片，默认获取本页面第一个img元素的src
+        pic: '',
+        // 默认显示的网站为以下六个个,支持设置的网站有
+        // weixin,weixintimeline,qq,qzone,yixin,weibo,tqq,renren,douban,tieba
+        sites: ['weixin', 'weixintimeline', 'qq', 'qzone']
+    });
+    </script>
+    <script>
+    window.config = {
+        'API': '//api.dev.aimoge.com/v1'
+    };
+    //$(function() {
+//        $("#startBtn").on("click", function() {
+//            location.href = "/adinteraction/make?run=" + Math.random();
+//        });
+
+
+     $(document).ready(function () {
+         //分享
+         $(".btn_share").on("click",function() {
+             $("#share1").show();
+             $("#share1").animate({
+                 bottom: '0'
+             }, "slow");
+         });
+         $("#shareCancel").on("click", function() {
+             let h = $("#share1").height();
+             $("#share1").animate({
+                 bottom: -h
+             }, "slow", function() {
+                 $("#share1").hide();
+             });
+         });
+          console.log(window.config.API);
+          var adinteractions=[{'status':1,"start_date":'2017-05-17 00:00:',"end_date":'2017-05-17 00:00:'},{'status':12,"start_date":'2017-05-17 00:00:',"end_date":'2017-05-17 00:00:'},{'status':11,"start_date":'2017-05-17 00:00:',"end_date":'2017-05-17 00:00:'}];
+          if(adinteractions.length>0){
+              $("#startBtn").css({
+                  "margin-top": "28%"
+              });
+              $("#no_work").hide();
+              $("#info").show();
+              var array = adinteractions;
+              var html = "";
+              $.each(array, function(index, obj) {
+                  switch (obj.status) {
+                      case 1:
+                          obj.status = '等待审核';
+                          break;
+                      case 11:
+                          obj.status = '通过审核';
+                          break;
+                      case 12:
+                          obj.status = '审核拒绝';
+                          break;
+                      default:
+                          obj.status = '等待审核';
+                          break;
+                  }
+                  html += '<li class="mui-table-view-cell"><div class="mui-table"><div class="mui-table-cell mui-col-xs-10"><div class="mui-row line_h30"><div class="mui-col-sm-2 mui-ellipsis gray ">屏幕：</div><div class="mui-col-sm-10 mui-ellipsis ">南京格格货栈</div></div><div class="mui-row line_h30"><div class="mui-col-sm-2 mui-ellipsis gray">日期：</div><div class="mui-col-sm-10 line_h30">' + obj.start_date.substring(0, 10) + '---' + obj.end_date.substring(0, 10) + '</div></div><div class="mui-row line_h30"><div class="mui-col-sm-2 mui-ellipsis gray ">审核：</div><div class="mui-col-sm-10 blue line_h30">' + obj.status + '</div></div></div><div class="mui-table-cell mui-col-xs-2 mui-text-right"><a href="#"><img src="//img.aimoge.com/FnvoecOAQ0w2pmYfw0BfkPjXlvHC" alt="" width="24" height="22"></a></div></div></li>';
+              });
+              $("#info>ul").append(html);
+          }
+        $.ajax({
+            type: "GET",
+            url: window.config.API + "/media/adinteraction",
+            dataType: 'json',
+            xhrFields: {
+                withCredentials: true
+            },
+            success: function(data) {
+                console.log(data);
+                if (data.data.adinteractions.length > 0) {
+                    $("#startBtn").css({
+                        "margin-top": "28%"
+                    });
+                    $("#no_work").hide();
+                    $("#info").show();
+                    var array = data.data.adinteractions;
+                    var html = "";
+                    $.each(array, function(index, obj) {
+                        switch (obj.status) {
+                            case 1:
+                                obj.status = '等待审核';
+                                break;
+                            case 11:
+                                obj.status = '通过审核';
+                                break;
+                            case 12:
+                                obj.status = '审核拒绝';
+                                break;
+                            default:
+                                obj.status = '等待审核';
+                                break;
+                        }
+                        html += '<li class="mui-table-view-cell"><div class="mui-table"><div class="mui-table-cell mui-col-xs-10"><div class="mui-row line_h30"><div class="mui-col-sm-2 mui-ellipsis gray ">屏幕：</div><div class="mui-col-sm-10 mui-ellipsis ">南京格格货栈</div></div><div class="mui-row line_h30"><div class="mui-col-sm-2 mui-ellipsis gray">日期：</div><div class="mui-col-sm-10 line_h30">' + obj.start_date.substring(0, 10) + '---' + obj.end_date.substring(0, 10) + '</div></div><div class="mui-row line_h30"><div class="mui-col-sm-2 mui-ellipsis gray ">审核：</div><div class="mui-col-sm-10 blue line_h30">' + obj.status + '</div></div></div><div class="mui-table-cell mui-col-xs-2 mui-text-right"><a href="#"><img src="//img.aimoge.com/FnvoecOAQ0w2pmYfw0BfkPjXlvHC" alt="" width="24" height="22"></a></div></div></li>';
+                    });
+                    $("#info>ul").append(html);
+                } else {
+                    $("#info").hide();
+                    $("#no_work").show();
                 }
-                document.body.removeChild(testElem);
             }
-        })();
-        //        window.config = {
-        //            'BASE_URL': "{{ settings.BASE_URL|autodomain }}",
-        //            'API': '{{ settings.PREFIX_API|autodomain }}',
-        //            'PAY': '{{ settings.PREFIX_PAY|autodomain }}',
-        //            "IMG": "{{ settings.PREFIX_IMG }}",
-        //            "FILE": "{{ settings.PREFIX_FILE }}",
-        //            "STORE": '{{ settings.PREFIX_STORE|autodomain }}'
-        //        };
-        $(function() {
-            $("#startBtn").on("click",function() {
-                location.href = "make.html?run="+Math.random();
+        });
 
-            })
-            var arry = [];
-            //            console.log(window.config.API);
-            //            $.ajax({
-            //                type: "GET",
-            //                url: window.config.API + "/media/adinteraction",
-            //                dataType: 'json',
-            //                xhrFields: {
-            //                    withCredentials: true
-            //                },
-            //                success: function(data) {
-            //
-            //                    console.log(data);
-            //                    if(data.data.adinteractions.length<3){
-            //                        $("#startBtn").css({ "margin-top": "1rem" });
-            //                    }
-            //                    if (data.data.adinteractions.length>0) {
-            //                        $("#no_work").hide();
-            //                        $("#info").show();
-            //
-            //                       var array=data.data.adinteractions;
-            //                        var html="";            
-            //                        $.each(array,function(index,obj){
-            //                            switch(obj.status) {
-            //                                case 1:
-            //                                    obj.status='等待审核'
-            //                                    break;
-            //                                case 11:
-            //                                    obj.status='通过审核'
-            //                                    break;
-            //                                case 12:
-            //                                    obj.status='审核拒绝'
-            //                                    break;     
-            //                                default:
-            //                                     obj.status='等待审核'
-            //                                    break;
-            //                            }
-            //                            html+='<li class="mui-table-view-cell"><div class="mui-table"><div class="mui-table-cell mui-col-xs-10"><div class="mui-row line_h30"><div class="mui-col-sm-2 mui-ellipsis gray ">屏幕：</div><div class="mui-col-sm-10 mui-ellipsis ">南京格格货栈</div></div><div class="mui-row line_h30"><div class="mui-col-sm-2 mui-ellipsis gray">日期：</div><div class="mui-col-sm-10 line_h30">'+obj.start_date.substring(0,10)+'---'+obj.end_date.substring(0,10)+'</div></div><div class="mui-row line_h30"><div class="mui-col-sm-2 mui-ellipsis gray ">审核：</div><div class="mui-col-sm-10 blue line_h30">'+obj.status+'</div></div></div><div class="mui-table-cell mui-col-xs-2 mui-text-right"><a href="#"><img src="//img.aimoge.com/FnvoecOAQ0w2pmYfw0BfkPjXlvHC" alt="" width="24" height="22"></a></div></div></li>';                            
-            //                        });
-            //                        $("#info>ul").append(html);
-            //
-            //                    } else {
-            //                        $("#info").hide();
-            //                        $("#no_work").show();
-            //
-            //                    }
-            //                }
-            //            });
-
-        })
-
+     })
     </script>
 </body>
 

@@ -43,8 +43,8 @@ var imgsource ='';
 		}
 
 		var defaultOption = {
-			width: 300,
-			height: 300,
+			width: 290*1.5,
+			height: 310*1.5,
 			file: "",
 			view: "",
 			ok: "",
@@ -65,8 +65,8 @@ var imgsource ='';
 	}
 
 	function photoClip(container, option) {
-		var clipWidth = option.width,
-			clipHeight = option.height,
+		var clipWidth = option.width*2,
+			clipHeight = option.height*2,
 			file = option.file,
 			view = option.view,
 			ok = option.ok,

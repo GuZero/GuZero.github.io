@@ -73,7 +73,7 @@
                     break;
                 case 2: //  第一个周
                     //  计算出周天离今天还有几天
-                    diff = 7 - getIntager(isNow)
+                    diff = 4 - getIntager(isNow)
                     //  计算出下周一日期
                     monday = getDate(diff + 1)
                     //  计算出下周日日期
@@ -81,7 +81,7 @@
                     break;
                 case 3: //  第二个周
                     //  计算出周天离今天还有几天
-                    diff = 14 - getIntager(isNow)
+                    diff = 10 - getIntager(isNow)
                     //  计算出下周一日期
                     monday = getDate(diff + 1)
                     //  计算出下周日日期
@@ -89,7 +89,7 @@
                     break;
                 case 4: //  第三个周
                     //  计算出周天离今天还有几天
-                    diff = 21 - getIntager(isNow)
+                    diff = 15 - getIntager(isNow)
                     //  计算出下周一日期
                     monday = getDate(diff + 1)
                     //  计算出下周日日期
@@ -97,7 +97,7 @@
                     break;
                 case 5: //  第四个周
                     //  计算出周天离今天还有几天
-                    diff = 28 - getIntager(isNow)
+                    diff = 20 - getIntager(isNow)
                     //  计算出下周一日期
                     monday = getDate(diff + 1)
                     //  计算出下周日日期

@@ -7,11 +7,10 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <!--    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />-->
     <title>大屏互动-制作中</title>
-    <link rel="stylesheet" href="../interaction/mui/mui.min.css">
-    <link rel="stylesheet" href="../interaction/css/common.css">
-    <link rel="stylesheet" href="../interaction/css/make.css">
-
-    <script src="../interaction/js/adaptive.js"></script>
+    <link rel="stylesheet" href="../../static/interaction/mui/mui.min.css">
+    <link rel="stylesheet" href="../../static/interaction/css/common.css">
+    <link rel="stylesheet" href="../../static/interaction/css/make.css">
+    <script src="../../static/interaction/js/adaptive.js"></script>
 
 
     <script>
@@ -27,7 +26,7 @@
     </script>
 </head>
 
-<body>
+<body class="mui-ios mui-ios-9 mui-ios-9-1">
     <!--裁剪部分-->
     <div class="htmleaf-container">
         <div id="clipArea"></div>
@@ -43,7 +42,6 @@
 
         </div>
     </div>
-    <!--    <div data-role="page">-->
 
     <div class="mui-content main">
         <header>
@@ -88,10 +86,10 @@
                             <div id="error">
                                 <p class="font_14">咣咣，上传失败/(ㄒoㄒ)/~~</p>
                                 <div class="mui-text-center">
-                                    <button type="button" class="mui-btn mui-btn-outlined upload_btn" id="retry">重试</button>
+                                    <button type="button" class="mui-btn mui-btn-outlined upload_btn margin20" id="retry">重试</button>
                                 </div>
-                                <a href="javascript:void(0);" id="reelect"><label for="file">重选作品
-                                <input id="file" type="file" onchange="javascript:setImagePreview();" accept="image/*" multiple />
+                                <a href="javascript:void(0);" id="reelect" class="font_14"><label for="file">重选作品
+<!--                                <input id="file" type="file"  accept="image/*" multiple />-->
 
                             </label></a>
                             </div>
@@ -110,20 +108,21 @@
                 </div>
                 <div id="cabinet" class="margin45" style="display: none">
                     <ul class="mui-table-view line_h30">
-                        <li class="mui-table-view-cell pd" id="choose">
-                            <div class="mui-row">
+                        <li class="mui-table-view-cell pd">
+                            <div class="mui-row ">
                                 <div class="mui-col-xs-1">
                                     <div style="width:0.18rem;height:0.18rem">
                                         <img class="mui-pull-left" src="//img.aimoge.com/FjHjVjKxuwijQBc6c_9jq9Ru0v9c" width="100%" height="100%">
                                     </div>
                                 </div>
-                                <div class="mui-col-xs-9 margin-5">
-                                    <p class="mui-ellipsis font_14">南京格格货栈</p>
+                                <div class="mui-col-xs-9 margin-5" id="choose">
+                                    <p class="mui-ellipsis font_14">请选择城市</p>
                                 </div>
                                 <div class="mui-col-xs-2 mui-text-right">
                                     <div style="width:0.18rem;height:0.18rem">
                                         <img src="//img.aimoge.com/FnvoecOAQ0w2pmYfw0BfkPjXlvHC" width="100%" height="100%">
                                     </div>
+
                                 </div>
                             </div>
                         </li>
@@ -230,211 +229,26 @@
     </div>
     <script src="https://cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script>
     <!--        <script src="http://apps.bdimg.com/libs/jquerymobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>-->
-    <!--       <script src="../interaction/js/jquery.mobile-1.4.5.min.js"></script>-->
-    <!--        <script src="../interaction/js/iscroll-zoom.js"></script>-->
-    <!--    <script src="../interaction/js/hammer.js"></script>-->
-    <!--    <script src="../interaction/js/lrz.all.bundle.js"></script>-->
-    <!--    <script src="../interaction/js/jquery.photoclip.js"></script>-->
+    <script src="../../static/interaction/js/iscroll-zoom.js"></script>
+    <script src="../../static/interaction/js/hammer.js"></script>
+    <script src="../../static/interaction/js/jquery.photoclip.js"></script>
     <!--    <script src="../../static/interaction/mui/mui.min.js"></script>-->
-    <script src="../interaction/js/date.js"></script>
+    <script src="../../static/interaction/js/date.js"></script>
 
 
-    <script>
-        window.onload = function() {
-            (function() {
-                var isIPhone = !!window.navigator.appVersion.match(/iphone/gi);
-                if (isIPhone && devicePixelRatio === 2) {
-                    var testElem = document.createElement('div');
-                    testElem.style.border = '.5px solid transparent';
-                    document.body.appendChild(testElem);
-                    if (testElem.offsetHeight == 1) {
-                        document.querySelector('html').classList.add('hairlines');
-                    }
-                    document.body.removeChild(testElem);
+    <script type="text/javascript">
+        (function() {
+            var isIPhone = !!window.navigator.appVersion.match(/iphone/gi);
+            if (isIPhone && devicePixelRatio === 2) {
+                var testElem = document.createElement('div');
+                testElem.style.border = '.5px solid transparent';
+                document.body.appendChild(testElem);
+                if (testElem.offsetHeight == 1) {
+                    document.querySelector('html').classList.add('hairlines');
                 }
-            })();
-            $(document).ready(function() {
-                var htmlstyle = "<style>body{padding:0;margin:0;}.msg{color:#FFF;width:100%;height:0.3rem;text-align:center;font-size:0.14rem;line-height:0.3rem;position:fixed;top:-0.3rem;z-index:20;}" +
-                    ".msg_success{background-color:#1fcc6c;}" +
-                    ".msg_warning{background-color:#e94b35;}" +
-                    ".msg_primary{background-color:#337ab7;}" +
-                    ".msg_info{background-color:#5bc0de;}</style>";
-                $('head').append(htmlstyle);
-                $('body').prepend('<div class="msg msg_success"></div>' +
-                    '<div class="msg msg_warning"></div>' +
-                    '<div class="msg msg_primary"></div>' +
-                    '<div class="msg msg_info"></div>');
-                
-                //文字限制
-                $('#text').keyup(function() {
-                    var len = $(this).val().length;
-                    if (len > 139) {
-                        alert('您输入超出了限制');
-                    }
-                    var num = 140 - len;
-                    $("#word").text(len);
-                });
-                $("#upload").on("click", function() {
-                    $(".htmleaf-container").fadeIn(300);
-                    $("#photo").show();
-                    $("#file").click();
-                });
-                $("#cancle").on("click", function() {
-                    $(".htmleaf-container").fadeOut(300);
-                    $("#photo").hide();
-                });
-
-                $(".txt1").on("click", function() {
-                    $(this).hide();
-                    $(".text_1").show();
-                });
-                //删除图片
-                $("#photo").on("click", function() {
-                    $(this).empty();
-                    $("#uploadBox").show();
-                    $("#photo").hide();
-                });
-                //        点击1.制作
-                $(".mui-col-xs-5").on("click","#make_btn",function() {
-                    $("#choice_btn").removeClass("active");
-                    alert("0000000000");
-                    $(this).toggleClass("active");
-                    if ($("#show").is(":hidden")) {
-                        $("#show").show();
-                        $("#cabinet").hide();
-                        $(".mui-title").text("制作中");
-                    }
-
-                });
-                //      选择柜机
-                $(".mui-col-xs-5").on("click","#choice_btn",function() {
-                     alert("0000000000");
-                    $("#make_btn").removeClass("active");
-                    $(this).toggleClass("active");
-                    $("#show").hide();
-                    $("#cabinet").show();
-                    $(".mui-title").text("选择快递柜");
-                });
-                //      选择货栈
-                $("#choose").on("click", function() {
-                     alert("0000000000");
-                    $("#choice").show();
-                    $("#two").hide();
-                    //                    return false;
-                });
-                //获取城市id
-                $("#cityList>li").each(function() {
-                    $(this).on("click", function() {
-                        cityId = $(this).val();
-                        $("#two").show();
-                        $("#choice").hide();
-                        console.log(cityId);
-                        window.sessionStorage.setItem("id", $(this).val());
-
-                    })
-                });
-                //        选择时间
-                $("#chooseDate").on("click", function() {
-                    $("#time").show();
-                    $("#time").animate({
-                        bottom: '0'
-                    }, "slow");
-                });
-                //        取消选择时间
-                $("#NO").on("click", function() {
-                    $("#time").animate({
-                        bottom: '-30%'
-                    }, "slow", function() {
-                        $("#time").hide();
-                    });
-                    startDate = "";
-                    endDate = "";
-                    $("#chooseDate .mui-col-xs-4").eq(0).text("开始时间");
-                    $("#chooseDate .mui-col-xs-4").eq(2).text("结束时间");
-
-                });
-                //确定选择时间
-                $("#confirm").on("click", function() {
-                    $("#time").animate({
-                        bottom: '-30%'
-                    }, "slow", function() {
-                        $("#time").hide();
-                    });
-
-                });
-                //        返回上一个页面
-                $("#goBack").on("click", function() {
-                    location.href = "/adinteraction";
-                });
-                //        同意协议
-
-                $("#agreement").on("click", function() {
-
-                    if (!flag) {
-                        $("#agreement").attr({
-                            src: "//img.aimoge.com/FtRcBl62d6oHvi4N6OfL2xSYkREC",
-                            alt: "选中"
-                        });
-                        flag = true;
-                    } else {
-                        $("#agreement").attr({
-                            src: "//img.aimoge.com/FhK_8jHkPbHUvC7yuZgnh5XzAmfy",
-                            alt: "不选中"
-                        });
-                        flag = false;
-                    }
-                });
-                // 下一步 提交数据
-                $("#nextBtn").on("click", function() {
-
-                    submit();
-                    //                location.href = "/adinteraction/examine";
-
-                });
-                // 重试再次提交数据
-                $("#retry").on("click", function() {
-                    submit();
-                });
-                $("#reelect").on("click", function() {
-                    $(".htmleaf-container").fadeIn(300);
-                    $("#photo").show();
-                });
-                 $("#finish").on("touchend", function() {
-                    $("#uploadBox").hide();
-                    $("#photo").empty();
-                    $('#photo').append('<img src="' + imgsource + '" align="absmiddle"  id="img_s">');
-                    $(".htmleaf-container").hide();
-                });
-                //把时间渲染到页面上
-                let week1 = setValAndReqNow(2);
-                let week2 = setValAndReqNow(3);
-                let week3 = setValAndReqNow(4);
-                let week4 = setValAndReqNow(5);
-                $("#week1 .mui-col-xs-5").eq(0).text(getFormatData(week1.monday));
-                $("#week1 .mui-col-xs-5").eq(1).text(getFormatData(week1.sunday));
-                $("#week2 .mui-col-xs-5").eq(0).text(getFormatData(week2.monday));
-                $("#week2 .mui-col-xs-5").eq(1).text(getFormatData(week2.sunday));
-                $("#week3 .mui-col-xs-5").eq(0).text(getFormatData(week3.monday));
-                $("#week3 .mui-col-xs-5").eq(1).text(getFormatData(week3.sunday));
-                $("#week4 .mui-col-xs-5").eq(0).text(getFormatData(week4.monday));
-                $("#week4 .mui-col-xs-5").eq(1).text(getFormatData(week4.sunday));
-                //选取日期
-                $("#date li").each(function() {
-
-                    $(this).on("touchend", function() {
-                        $("#date li").each(function() {
-                            $("#date li").removeClass("dateActive");
-                        });
-                        $(this).toggleClass("dateActive");
-                        startDate = $(this).children().children().eq(0).text();
-                        endDate = $(this).children().children().eq(2).text();
-                        $("#chooseDate .mui-col-xs-4").eq(0).text(startDate);
-                        $("#chooseDate .mui-col-xs-4").eq(2).text(endDate);
-                    })
-                })
-            });
-        }
-
+                document.body.removeChild(testElem);
+            }
+        })();
         window.token = 'MlZsy_bZg4Sg5zLmdjBV4nZ35EWxXfwWIznsSViW:U4tfLAvt-rhNyyCweZhEJEAo30w=:eyJzY29wZSI6Im1vZ2UiLCJkZWFkbGluZSI6Mjg2MTExNTA3NCwiY2FsbGJhY2tVcmwiOiJodHRwOlwvXC9hcGkuYWltb2dlLmNvbVwvdjFcL3VwbG9hZFwvY2FsbGJhY2siLCJjYWxsYmFja0JvZHkiOiJuYW1lPSQoZm5hbWUpJmtleT0kKGtleSkmaGFzaD0kKGV0YWcpJnNpemU9JChmc2l6ZSkmd2lkdGg9JChpbWFnZUluZm8ud2lkdGgpJmhlaWdodD0kKGltYWdlSW5mby5oZWlnaHQpJm1pbWV0eXBlPSQobWltZVR5cGUpJnNpZD0xODYxODE0Mjc2NCZ1aWQ9MTg2MTgxNDI3NjQmc291cmNlPSQoeDpzb3VyY2UpIiwiZGV0ZWN0TWltZSI6MX0=';
         var imgsrc = "",
             cityId = "",
@@ -480,20 +294,16 @@
                 end_date: end_date,
             };
             console.log(data);
-            postData(data);
+            if (postData(data)) {
+                location.href = "/adinteraction/examine?run=" + Math.random();
+            } else {
+                console.log("上传失败");
+
+            }
+
+
         }
-        //弹出窗口
-        function msgAlert(type, msg) {
-            $('.msg_' + type).html(msg);
-            $('.msg_' + type).animate({
-                'top': 0
-            }, 500);
-            setTimeout(function() {
-                $('.msg_' + type).animate({
-                    'top': '-0.3rem'
-                }, 500)
-            }, 2000);
-        }
+
         function postData(data) {
             $.ajax({
                 type: "post",
@@ -507,26 +317,59 @@
                 success: function(data) {
                     if (data.status == 0) {
                         console.log(data, '上传成功');
-                        location.href = "/adinteraction/examine";
+//                        location.href = "/adinteraction/examine?run=" + Math.random();
                     }
 
 
                 },
                 error: function(data) {
-                    console.log('上传失败');
+                    console.log('上传失败')
                     $("#uploadBox").hide();
+                    $("#error").css({
+                        "display": "flex"
+                    });
                     $("#error").show();
+                    return false;
                 }
             });
         }
+        //        window.config = {
+        //            'BASE_URL': "{{ settings.BASE_URL|autodomain }}",
+        //            'API': '{{ settings.PREFIX_API|autodomain }}',
+        //            'PAY': '{{ settings.PREFIX_PAY|autodomain }}',
+        //            "IMG": "{{ settings.PREFIX_IMG }}",
+        //            "FILE": "{{ settings.PREFIX_FILE }}",
+        //            "STORE": '{{ settings.PREFIX_STORE|autodomain }}'
+        //        };
+
         window.config = {
-            'BASE_URL': "{{ settings.BASE_URL|autodomain }}",
-            'API': '{{ settings.PREFIX_API|autodomain }}',
-            'PAY': '{{ settings.PREFIX_PAY|autodomain }}',
-            "IMG": "{{ settings.PREFIX_IMG }}",
-            "FILE": "{{ settings.PREFIX_FILE }}",
-            "STORE": '{{ settings.PREFIX_STORE|autodomain }}'
+            'API': '//api.dev.aimoge.com/v1'
         };
+        //弹出窗口
+        function msgAlert(type, msg) {
+            $('.msg_' + type).html(msg);
+            $('.msg_' + type).animate({
+                'top': 0
+            }, 500);
+            setTimeout(function() {
+                $('.msg_' + type).animate({
+                    'top': '-0.3rem'
+                }, 500)
+            }, 2000);
+        }
+
+        $(document).ready(function() {
+            var htmlstyle = "<style>body{padding:0;margin:0;}.msg{color:#FFF;width:100%;height:0.3rem;text-align:center;font-size:0.14rem;line-height:0.3rem;position:fixed;top:-0.3rem;z-index:20;}" +
+                ".msg_success{background-color:#1fcc6c;}" +
+                ".msg_warning{background-color:#e94b35;}" +
+                ".msg_primary{background-color:#337ab7;}" +
+                ".msg_info{background-color:#5bc0de;}</style>";
+            $('head').append(htmlstyle);
+            $('body').prepend('<div class="msg msg_success"></div>' +
+                '<div class="msg msg_warning"></div>' +
+                '<div class="msg msg_primary"></div>' +
+                '<div class="msg msg_info"></div>');
+        });
         //上传图片到七牛
         function post_img(data) {
             // $("#showshare img").attr("src",data);
@@ -562,12 +405,206 @@
 
 
         };
-        //        $.mobile.pageLoading(true);
+        $(function() {
+
+            //文字限制
+            $('#text').keyup(function() {
+                var len = $(this).val().length;
+                if (len > 139) {
+                    msgAlert("warning", "您输入超出了字数限制");
+                }
+                var num = 140 - len;
+                $("#word").text(len);
+            });
+            $("#upload").on("click", function() {
+                $(".htmleaf-container").fadeIn(300);
+
+                $("#photo").show();
+
+            });
+            $("#cancle").on("click", function() {
+                $(".htmleaf-container").fadeOut(300);
+                $("#photo").hide();
+            });
+
+            $(".txt1").on("click", function() {
+                $(this).hide();
+                $(".text_1").show();
+            });
+            //删除图片
+            $("#photo").on("click", function() {
+                $(this).empty();
+                $(".htmleaf-container").fadeIn(300);
+                $("#photo").show();
+                $("#file").click();
+            });
+            //        点击1.制作
+            $("#make_btn").on("click", function() {
+                $("#choice_btn").removeClass("active");
+                $(this).toggleClass("active");
+                if ($("#show").is(":hidden")) {
+                    $("#show").show();
+                    $("#cabinet").hide();
+                    $(".mui-title").text("制作中");
+                }
+
+            });
+            //      选择柜机
+            $("#choice_btn").on("click", function() {
+                $("#make_btn").removeClass("active");
+                $(this).toggleClass("active");
+                $("#show").hide();
+                $("#cabinet").show();
+                $(".mui-title").text("选择快递柜");
+            });
+            //      选择货栈
+            $("#choose").on("click", function() {
+                $("#goBack img").hide();
+                $("#two").hide();
+                $("#choice").show();
+                return false;
+            });
+            //获取城市id
+            $("#cityList>li").each(function() {
+                $(this).on("click", function() {
+                    cityId = $(this).val();
+                    $("#goBack img").show();
+                    $("#choose p").text($(this).text());
+                    $("#two").show();
+                    $("#choice .mui-h2").text($(this).text());
+                    $("#choice").hide();
+                    console.log(cityId);
+                    window.sessionStorage.setItem("id", $(this).val());
+                })
+            })
+            //        选择时间
+            $("#chooseDate").on("click", function() {
+                $("#time").show();
+                $("#time").animate({
+                    bottom: '0'
+                }, "slow");
+            });
+            //        取消选择时间
+            $("#NO").on("click", function() {
+                $("#time").animate({
+                    bottom: '-30%'
+                }, "slow", function() {
+                    $("#time").hide();
+                });
+                startDate = "";
+                endDate = "";
+                $("#chooseDate .mui-col-xs-4").eq(0).text("开始时间");
+                $("#chooseDate .mui-col-xs-4").eq(2).text("结束时间");
+
+            });
+            //确定选择时间
+            $("#confirm").on("click", function() {
+                $("#time").animate({
+                    bottom: '-30%'
+                }, "slow", function() {
+                    $("#time").hide();
+                });
+
+            });
+            //        返回上一个页面
+            $("#goBack").on("click", function() {
+                location.href = "/adinteraction";
+            });
+            //        同意协议
+
+            $("#agreement").on("click", function() {
+
+                if (!flag) {
+                    $("#agreement").attr({
+                        src: "//img.aimoge.com/FtRcBl62d6oHvi4N6OfL2xSYkREC",
+                        alt: "选中"
+                    });
+                    flag = true;
+                } else {
+                    $("#agreement").attr({
+                        src: "//img.aimoge.com/FhK_8jHkPbHUvC7yuZgnh5XzAmfy",
+                        alt: "不选中"
+                    });
+                    flag = false;
+                }
+            });
+            // 下一步 提交数据
+            $("#nextBtn").on("click", function() {
+
+                submit();
+            });
+            // 重试再次提交数据
+            $("#retry").on("click", function() {
+                submit();
+            });
+            //重新选择作品    
+            $("#reelect").on("click", function() {
+                $(".htmleaf-container").fadeIn(300);
+                $("#photo").show();
+                $("#file").on("click", function() {});
+            })
+            //裁剪图片
+            $("#clipArea").photoClip({
+                width: 290,
+                height: 310,
+                file: "#file",
+                view: "#view",
+                ok: "#finish",
+                loadStart: function() {
+                    console.log("照片读取中");
+                },
+                loadComplete: function() {
+                    console.log("照片读取完成");
+                },
+                clipFinish: function(dataURL) {
+                    post_img(dataURL);
+                }
+            });
+            $("#finish").on("click", function() {
+                $("#uploadBox").hide();
+                $("#photo").empty();
+                $('#photo').append('<img src="' + imgsource + '" align="absmiddle"  id="img_s">');
+                $("#error").hide();
+                $(".htmleaf-container").hide();
+            })
+            //把时间渲染到页面上
+            let week1 = setValAndReqNow(2);
+            let week2 = setValAndReqNow(3);
+            let week3 = setValAndReqNow(4);
+            let week4 = setValAndReqNow(5);
+            $("#week1 .mui-col-xs-5").eq(0).text(getFormatData(week1.monday));
+            $("#week1 .mui-col-xs-5").eq(1).text(getFormatData(week1.sunday));
+            $("#week2 .mui-col-xs-5").eq(0).text(getFormatData(week2.monday));
+            $("#week2 .mui-col-xs-5").eq(1).text(getFormatData(week2.sunday));
+            $("#week3 .mui-col-xs-5").eq(0).text(getFormatData(week3.monday));
+            $("#week3 .mui-col-xs-5").eq(1).text(getFormatData(week3.sunday));
+            $("#week4 .mui-col-xs-5").eq(0).text(getFormatData(week4.monday));
+            $("#week4 .mui-col-xs-5").eq(1).text(getFormatData(week4.sunday));
+            //选取日期
+            $("#date li").each(function() {
+
+                $(this).on("click", function() {
+                    $("#date li").each(function() {
+                        $("#date li").removeClass("dateActive");
+                    });
+                    $("#time").animate({
+                        bottom: '-30%'
+                    }, "slow", function() {
+                        $("#time").hide();
+                    });
+                    $(this).toggleClass("dateActive");
+                    startDate = $(this).children().children().eq(0).text();
+                    endDate = $(this).children().children().eq(2).text();
+                    $("#chooseDate .mui-col-xs-4").eq(0).text(startDate);
+                    $("#chooseDate .mui-col-xs-4").eq(2).text(endDate);
+                })
+            })
+        })
 
     </script>
 
 
-
+    <!--    </div>-->
 
     <!--
     <script type="text/javascript">
@@ -600,7 +637,7 @@
 
     </script>
 -->
-    <!--    </div>-->
+
 </body>
 
 </html>
