@@ -5,25 +5,11 @@
     <meta charset="UTF-8">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <!--    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />-->
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
     <title>大屏互动-制作中</title>
-    <link rel="stylesheet" href="../../static/interaction/mui/mui.min.css">
-    <link rel="stylesheet" href="../../static/interaction/css/common.css">
-    <link rel="stylesheet" href="../../static/interaction/css/make.css">
-    <script src="../../static/interaction/js/adaptive.js"></script>
-
-
-    <script>
-        // 设计图宽度
-        window['adaptive'].desinWidth = 375;
-        // body 字体大小
-        window['adaptive'].baseFont = 24;
-
-        window['adaptive'].scaleType = 3;
-        // 初始化
-        window['adaptive'].init();
-
-    </script>
+    <link rel="stylesheet" href="../interaction/mui/mui.min.css">
+    <link rel="stylesheet" href="../interaction/css/common.css">
+    <link rel="stylesheet" href="../interaction/css/make.css">
 </head>
 
 <body class="mui-ios mui-ios-9 mui-ios-9-1">
@@ -31,32 +17,23 @@
     <div class="htmleaf-container">
         <div id="clipArea"></div>
         <div class="footer">
-            <div class="mui-table-view-cell pd">
+            <div>
                 <div class="mui-row color_w">
-                    <div class="mui-col-xs-6 mui-text-left "><span id="cancle" class="font_14">取消</span></div>
-                    <div class="mui-col-xs-6 mui-text-right font_14"><span id="finish">完成</span></div>
+                    <div class="mui-col-xs-6 mui-text-left"><span id="cancle">取消</span></div>
+                    <div class="mui-col-xs-6 mui-text-right"><span id="finish">完成</span></div>
                 </div>
             </div>
-        </div>
-        <div id="view">
-
         </div>
     </div>
-
-    <div class="mui-content main">
-        <header>
-            <div class="mui-row">
-                <div class="mui-col-xs-1">
-                    <a class="mui-pull-left btn_share " id="goBack">
-                        <img src="//img.aimoge.com/FuGSEC9x9qNjuZhJ4gYjJ_81iPjf" alt="">
-                    </a>
-                </div>
-                <div class="mui-col-xs-11">
-                    <div class="mui-title">制作中</div>
-                </div>
-            </div>
-        </header>
-        <div id="two" class="mui-content">
+    <!--头部-->
+    <header>
+        <h1 class="mui-title">制作中</h1>
+        <a class="mui-pull-left btn_share" id="goBack">
+            <img src="//img.aimoge.com/FuGSEC9x9qNjuZhJ4gYjJ_81iPjf" alt="返回">
+        </a>
+    </header>
+    <div class="mui-content">
+        <div id="two">
             <div class="mui-content-padded">
                 <div class="mui-row">
                     <div class="mui-col-xs-5">
@@ -108,41 +85,39 @@
                 </div>
                 <div id="cabinet" class="margin45" style="display: none">
                     <ul class="mui-table-view line_h30">
-                        <li class="mui-table-view-cell pd">
+                        <li class="mui-table-view-cell">
                             <div class="mui-row ">
-                                <div class="mui-col-xs-1">
-                                    <div style="width:0.18rem;height:0.18rem">
+                                <div class="mui-col-xs-2 mui-text-center">
+                                    <div style="width:18px;height:18px; display: inline-block">
                                         <img class="mui-pull-left" src="//img.aimoge.com/FjHjVjKxuwijQBc6c_9jq9Ru0v9c" width="100%" height="100%">
                                     </div>
                                 </div>
-                                <div class="mui-col-xs-9 margin-5" id="choose">
+                                <div class="mui-col-xs-8 margin-5" id="choose">
                                     <p class="mui-ellipsis font_14">请选择城市</p>
                                 </div>
                                 <div class="mui-col-xs-2 mui-text-right">
-                                    <div style="width:0.18rem;height:0.18rem">
+                                    <div style="width:18px;height:18px;display: inline-block">
                                         <img src="//img.aimoge.com/FnvoecOAQ0w2pmYfw0BfkPjXlvHC" width="100%" height="100%">
                                     </div>
-
                                 </div>
                             </div>
                         </li>
                     </ul>
-                    <div class="height32"></div>
-                    <ul class="mui-table-view">
-                        <li class="mui-table-view-cell pd">
+                    <ul class="mui-table-view margin5">
+                        <li class="mui-table-view-cell">
                             <div class="mui-row">
-                                <div class="mui-col-xs-1">
-                                    <div style="width:0.18rem;height:0.18rem">
+                                <div class="mui-col-xs-2 mui-text-center">
+                                    <div style="width:18px;height: 18px; display: inline-block">
                                         <img src="//img.aimoge.com/FgsAPXW3eFt4MN3pHyGaq6_B-fjQ" alt="" width="100%" height="100%">
                                     </div>
 
                                 </div>
-                                <div class="mui-col-xs-11 margin5">
+                                <div class="mui-col-xs-10">
                                     <p class="font_14">选择展示日期</p>
                                 </div>
                             </div>
                         </li>
-                        <li class="mui-table-view-cell pd">
+                        <li class="mui-table-view-cell">
                             <div class="mui-row" id="chooseDate">
                                 <div class="mui-col-xs-4 mui-text-center">开始时间</div>
                                 <div class="mui-col-xs-4 mui-text-center">------</div>
@@ -152,11 +127,11 @@
                     </ul>
                     <div class="mui-row margin145">
                         <div class="mui-col-xs-3 mui-text-right">
-                            <div style="width: 0.16rem;height: 0.16rem;margin-left: 0.63rem;margin-top: -0.03rem">
+                            <div style="width:15px;height:15px; display: inline-block;margin-right: 5px;margin-top: 3px">
                                 <img src="//img.aimoge.com/FhK_8jHkPbHUvC7yuZgnh5XzAmfy" alt="" width="100%" height="100%" id="agreement">
                             </div>
                         </div>
-                        <div class="mui-col-xs-9 font_14">
+                        <div class="mui-col-xs-9">
                             <a href="#" class="agreement">同意柜机屏幕展示协议</a>
                         </div>
                     </div>
@@ -208,19 +183,18 @@
                 </ul>
             </div>
         </div>
-        <div id="choice" class="mui-content" style="display: none">
+        <div id="choice" class="mui-content" style="display: none;padding-top: 8%">
             <div class="mui-content-padded">
-                <div class="mui-row mui-text-center color_w font_18">
+                <div class="mui-row mui-text-center color_w">
                     <div class="mui-col-xs-4 mui-text-right">朕要包下全</div>
                     <div class="mui-col-xs-4 mui-h2">南京</div>
                     <div class="mui-col-xs-4 mui-text-left">格格货栈</div>
                 </div>
-                <div class="height32"></div>
-                <div class="show">
-                    <ul class="mui-table-view" id="cityList">
-                        <li class="mui-table-view-cell pd" value="3201">南京</li>
-                        <li class="mui-table-view-cell pd" value="1101">北京</li>
-                        <li class="mui-table-view-cell pd" value="3101">上海</li>
+                <div class="show margin8">
+                    <ul id="cityList">
+                        <li class="mui-table-view-cell" value="3201">南京</li>
+                        <li class="mui-table-view-cell" value="1101">北京</li>
+                        <li class="mui-table-view-cell" value="3101">上海</li>
                     </ul>
                 </div>
             </div>
@@ -228,29 +202,20 @@
         </div>
     </div>
     <script src="https://cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script>
-    <!--        <script src="http://apps.bdimg.com/libs/jquerymobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>-->
-    <script src="../../static/interaction/js/iscroll-zoom.js"></script>
-    <script src="../../static/interaction/js/hammer.js"></script>
-    <script src="../../static/interaction/js/jquery.photoclip.js"></script>
-    <!--    <script src="../../static/interaction/mui/mui.min.js"></script>-->
-    <script src="../../static/interaction/js/date.js"></script>
+    <script src="../interaction/js/iscroll-zoom.js"></script>
+    <script src="../interaction/js/hammer.js"></script>
+    <!--<script src="../interaction/js/jquery.photoclip.js"></script>-->
+    <!--<script src="../interaction/js/jquery.photoClip.min.js"></script>-->
+    <script src="../interaction/js/lrz.all.bundle.js"></script>
+    <script src="../interaction/js/jquery.photoClip1.js"></script>
+
+    <script src="../interaction/js/date.js"></script>
 
 
     <script type="text/javascript">
-        (function() {
-            var isIPhone = !!window.navigator.appVersion.match(/iphone/gi);
-            if (isIPhone && devicePixelRatio === 2) {
-                var testElem = document.createElement('div');
-                testElem.style.border = '.5px solid transparent';
-                document.body.appendChild(testElem);
-                if (testElem.offsetHeight == 1) {
-                    document.querySelector('html').classList.add('hairlines');
-                }
-                document.body.removeChild(testElem);
-            }
-        })();
         window.token = 'MlZsy_bZg4Sg5zLmdjBV4nZ35EWxXfwWIznsSViW:U4tfLAvt-rhNyyCweZhEJEAo30w=:eyJzY29wZSI6Im1vZ2UiLCJkZWFkbGluZSI6Mjg2MTExNTA3NCwiY2FsbGJhY2tVcmwiOiJodHRwOlwvXC9hcGkuYWltb2dlLmNvbVwvdjFcL3VwbG9hZFwvY2FsbGJhY2siLCJjYWxsYmFja0JvZHkiOiJuYW1lPSQoZm5hbWUpJmtleT0kKGtleSkmaGFzaD0kKGV0YWcpJnNpemU9JChmc2l6ZSkmd2lkdGg9JChpbWFnZUluZm8ud2lkdGgpJmhlaWdodD0kKGltYWdlSW5mby5oZWlnaHQpJm1pbWV0eXBlPSQobWltZVR5cGUpJnNpZD0xODYxODE0Mjc2NCZ1aWQ9MTg2MTgxNDI3NjQmc291cmNlPSQoeDpzb3VyY2UpIiwiZGV0ZWN0TWltZSI6MX0=';
         var imgsrc = "",
+            photo="",
             cityId = "",
             flag = false,
             startDate = "",
@@ -353,13 +318,13 @@
             }, 500);
             setTimeout(function() {
                 $('.msg_' + type).animate({
-                    'top': '-0.3rem'
+                    'top': '-30px'
                 }, 500)
             }, 2000);
         }
 
         $(document).ready(function() {
-            var htmlstyle = "<style>body{padding:0;margin:0;}.msg{color:#FFF;width:100%;height:0.3rem;text-align:center;font-size:0.14rem;line-height:0.3rem;position:fixed;top:-0.3rem;z-index:20;}" +
+            var htmlstyle = "<style>body{padding:0;margin:0;}.msg{color:#FFF;width:100%;height:30px;text-align:center;font-size:14px;line-height:30px;position:fixed;top: -30px;z-index:20;}" +
                 ".msg_success{background-color:#1fcc6c;}" +
                 ".msg_warning{background-color:#e94b35;}" +
                 ".msg_primary{background-color:#337ab7;}" +
@@ -537,18 +502,17 @@
             $("#retry").on("click", function() {
                 submit();
             });
-            //重新选择作品    
+            //重新选择作品
             $("#reelect").on("click", function() {
                 $(".htmleaf-container").fadeIn(300);
                 $("#photo").show();
                 $("#file").on("click", function() {});
-            })
-            //裁剪图片
-            $("#clipArea").photoClip({
-                width: 290,
-                height: 310,
+            });
+            var clipArea = new bjj.PhotoClip("#clipArea", {
+                size: [290, 310],
+                outputSize: [640, 640],
                 file: "#file",
-                view: "#view",
+                view: "#photo",
                 ok: "#finish",
                 loadStart: function() {
                     console.log("照片读取中");
@@ -557,16 +521,14 @@
                     console.log("照片读取完成");
                 },
                 clipFinish: function(dataURL) {
-                    post_img(dataURL);
+                   imgsrc=post_img(dataURL)
                 }
             });
             $("#finish").on("click", function() {
                 $("#uploadBox").hide();
-                $("#photo").empty();
-                $('#photo').append('<img src="' + imgsource + '" align="absmiddle"  id="img_s">');
                 $("#error").hide();
                 $(".htmleaf-container").hide();
-            })
+            });
             //把时间渲染到页面上
             let week1 = setValAndReqNow(2);
             let week2 = setValAndReqNow(3);
@@ -588,7 +550,7 @@
                         $("#date li").removeClass("dateActive");
                     });
                     $("#time").animate({
-                        bottom: '-30%'
+                        bottom: '-20%'
                     }, "slow", function() {
                         $("#time").hide();
                     });

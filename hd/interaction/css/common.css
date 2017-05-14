@@ -5,6 +5,10 @@
     /*-webkit-touch-callout: none;*/
     /*-webkit-user-select: none;*/
 /*}*/
+*{
+    margin: 0;
+    padding: 0;
+}
 body{
 
     background: -webkit-linear-gradient(top, #3d7eea, #022f79);
@@ -21,7 +25,7 @@ body{
 /*}*/
 
 .font_14 {
-    font-size: 0.14rem;
+    font-size: 12px;
 }
 
 .gray {
@@ -42,24 +46,19 @@ body{
     margin-top: -0.04rem;
 }
 
-.margin45 {
-    margin-top: 0.45rem;
+.margin8 {
+    margin-top:8%;
 }
-
-.margin10 {
-    margin-top: 0.1rem;
-}
-
 .margin20 {
     margin-top: 20px;
 }
 
-.margin16 {
-    margin-top: 16px;
+.margin5 {
+    margin-top:5%;
 }
 
 .margin145 {
-    margin-top: 1rem;
+    margin-top: 70%;
 }
 
 .height32 {
@@ -131,7 +130,7 @@ header {
 /*货栈信息列表*/
 
 .margin45 {
-    margin-top: 40px !important;
+    margin-top: 7% !important;
 }
 
 .pd_t16 {
@@ -150,8 +149,8 @@ header {
 .mui-btn-primary {
     border: 0.01px solid #4285f4;
     background-color: #4285f4;
-    font-size: 18px;
-    padding: 7px 0;
+    font-size: 15px;
+    padding: 4px 0;
     width: 100%;
     margin-top: 20%;
     border-radius: 4px;

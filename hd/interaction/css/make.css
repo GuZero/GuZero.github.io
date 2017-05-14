@@ -1,5 +1,8 @@
+.mui-title{
+
+}
 .pd_l{
-    padding-right: 0.05rem;
+    padding-right: 5px;
 }
 .btn{
     width: 100%;
@@ -12,12 +15,13 @@
 }
 .show{
     height: 60vh;
+    width: 100%;
 }
 /*上传图片部分样式*/
 .mui-card{
     width: 100%;
    margin: 16px 0 0 0;
-    border-radius: 0.05rem;
+    border-radius: 5px;
     height: 100%;
 }
 .mui-card-header{
@@ -30,13 +34,11 @@
     position: absolute;
     bottom: 0;
     width: 100%;
-    height: 0.01rem;
+    height: 1px;
     background-color: #ececec;
     transform: scale(1, .5);
 }
-.show{
-    width: 100%;
-}
+
 .show a input[type=file] {
     position: absolute;
     top: 0;
@@ -75,10 +77,10 @@
 .mui-card-content{
     height: 30%;
 }
-.mui-btn{
-    padding: 0.1rem 0.12rem;
-    font-size: 0.14rem;
-}
+/*.mui-btn{*/
+    /*padding: 10px 12px;*/
+    /*font-size: 14px;*/
+/*}*/
 .text {
     height: 100%;
     display: flex;
@@ -89,13 +91,8 @@
 #text {
     width: 100%;
     border: none;
-    font-size: 0.14rem;
-    padding: 0.15rem;
-    padding-right: 0px;
+    font-size: 12px;
     box-sizing: border-box;
-    height: 75%;
-    line-height: 0.14rem;
-    
 }
 .text .text_1 {
     width: 100%;
@@ -116,9 +113,10 @@
 }
 
 #error a {
-    margin-top: 0.20rem;
+    margin-top: 12px;
     text-align: center;
     position: relative;
+    color: #8f8f94;
 }
 #error div{
     width: 45%;
@@ -149,21 +147,22 @@
 .agreement{
     color: #ffffff;
     text-decoration: underline;
-    margin-left: 0.05rem;
+    font-size: 14px;
 }
 #time{
-
     width: 100%;
     background: #ececec;
     position: fixed;
-    bottom: -1.18rem;
+    bottom: -20%;
     display: none;
 }
 #time .mui-table-view-cell{
-    padding: 0.15rem 0.15rem;
+    padding: 2.5%;
 }
 #two{
     /*display: none;*/
+    height: 100%;
+    padding-top: 7%;
 }
 #choice .show .mui-table-view{
     height: 100%;
@@ -171,9 +170,7 @@
 #clipArea {
     height: 92%;
 }
-.mui-h2{
-    font-size: 0.3rem;
-}
+
 #time .mui-table-view {
 	border-radius: 0px;
 }
@@ -181,8 +178,17 @@
     background: #3777df;
     color: #fff;
 }
-.photo-clip-view{
-    width: 4.5rem important;
-    height: 4.5rem important;
-}
 
+#cityList{
+    background: #ffffff;
+    border-radius: 4px;
+    height: 100%;
+    font-size: 14px;
+}
+.footer{
+    height: 8%;
+    font-size: 14px;
+}
+.footer div{
+    padding: 1.5% 2%;
+}

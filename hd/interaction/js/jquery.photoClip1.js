@@ -1,8 +1,9 @@
 /**
- * jQuery photoClip v1.5.1
+ * jQuery photoClip v1.8.0
  * 依赖插件
  * - iscroll-zoom.js
  * - hammer.js
+ * - lrz.all.bundle.js
  *
  * @author 白俊杰 625603381@qq.com 2014/07/31
  * https://github.com/baijunjie/jQuery-photoClip
@@ -10,78 +11,89 @@
  * @brief	支持手势的裁图插件
  *			在移动设备上双指捏合为缩放，双指旋转可根据旋转方向每次旋转90度
  *			在PC设备上鼠标滚轮为缩放，每次双击则顺时针旋转90度
- * @option_param {number} width 截取区域的宽度
- * @option_param {number} height 截取区域的高度
+ * @option_param {array} size 截取框的宽和高组成的数组。默认值为[260,260]
+ * @option_param {array} outputSize 输出图像的宽和高组成的数组。默认值为[0,0]，表示输出图像原始大小
+ * //@option_param {string} outputType 指定输出图片的类型，可选 "jpg" 和 "png" 两种种类型，默认为 "jpg"
  * @option_param {string} file 上传图片的<input type="file">控件的选择器或者DOM对象
  * @option_param {string} view 显示截取后图像的容器的选择器或者DOM对象
  * @option_param {string} ok 确认截图按钮的选择器或者DOM对象
- * @option_param {string} outputType 指定输出图片的类型，可选 "jpg" 和 "png" 两种种类型，默认为 "jpg"
- * @option_param {boolean} strictSize 是否严格按照截取区域宽高裁剪。默认为false，表示截取区域宽高仅用于约束宽高比例。如果设置为true，则表示截取出的图像宽高严格按照截取区域宽高输出
  * @option_param {function} loadStart 开始加载的回调函数。this指向 fileReader 对象，并将正在加载的 file 对象作为参数传入
  * @option_param {function} loadComplete 加载完成的回调函数。this指向图片对象，并将图片地址作为参数传入
  * @option_param {function} loadError 加载失败的回调函数。this指向 fileReader 对象，并将错误事件的 event 对象作为参数传入
- * @option_param {function} clipFinish 裁剪完成的回调函数。this指向图片对象，会将裁剪出的图像数据DataURL作为参数传入
+ * @option_param {function} clipFinish 裁剪完成的回调函数。this指向原图片对象，会将裁剪出的图像数据DataURL作为参数传入
  */
-var imgsource ='';
+
 (function(root, factory) {
 	"use strict";
+
 	if (typeof define === "function" && define.amd) {
-		define(["jquery", "iscroll-zoom", "hammer"], factory);
+		define(["jquery", "iscroll-zoom", "hammer", "lrz"], factory);
 	} else if (typeof exports === "object") {
-		module.exports = factory(require("jquery"), require("iscroll-zoom"), require("hammer"));
+		module.exports = factory(require("jquery"), require("iscroll-zoom"), require("hammer"), require("lrz"));
 	} else {
-		factory(root.jQuery, root.IScroll, root.Hammer);
+		root.bjj = root.bjj || {};
+		root.bjj.PhotoClip = factory(root.jQuery, root.IScroll, root.Hammer, root.lrz);
 	}
 
-}(this, function($, IScroll, Hammer) {
+}(this, function($, IScroll, Hammer, lrz) {
 	"use strict";
 
-	$.fn.photoClip = function(option) {
+	var defaultOption = {
+		size: [260, 260],
+		outputSize: [0, 0],
+		//outputType: "jpg",
+		file: "",
+		view: "",
+		ok: "",
+		loadStart: function() {},
+		loadComplete: function() {},
+		loadError: function() {},
+		clipFinish: function() {}
+	}
+
+	function PhotoClip(container, option) {
 		if (!window.FileReader) {
 			alert("您的浏览器不支持 HTML5 的 FileReader API， 因此无法初始化图片裁剪插件，请更换最新的浏览器！");
 			return;
 		}
 
-		var defaultOption = {
-			width: 290,
-			height: 310,
-			file: "",
-			view: "",
-			ok: "",
-			outputType: "jpg",
-			strictSize: false,
-			loadStart: function() {},
-			loadComplete: function() {},
-			loadError: function() {},
-			clipFinish: function() {}
-		}
-		$.extend(defaultOption, option);
+		var opt = $.extend({}, defaultOption, option);
+		var returnValue = photoClip(container, opt);
 
-		this.each(function() {
-			photoClip(this, defaultOption);
-		});
-
-		return this;
+		this.destroy = returnValue.destroy;
 	}
 
 	function photoClip(container, option) {
-		var clipWidth = option.width*2,
-			clipHeight = option.height*2,
+		var size = option.size,
+			outputSize = option.outputSize,
 			file = option.file,
 			view = option.view,
 			ok = option.ok,
-			outputType = option.outputType || "image/jpeg",
-			strictSize = option.strictSize,
+			//outputType = option.outputType || "image/jpeg",
+			outputType = "image/jpeg",
 			loadStart = option.loadStart,
 			loadComplete = option.loadComplete,
 			loadError = option.loadError,
 			clipFinish = option.clipFinish;
 
-		if (outputType === "jpg") {
+		if (!isArray(size)) {
+			size = [260, 260];
+		}
+
+		if (!isArray(outputSize)) {
+			outputSize = [0, 0];
+		}
+
+		var clipWidth = size[0] || 260,
+			clipHeight = size[1] || 260,
+			outputWidth = Math.max(outputSize[0], 0),
+			outputHeight = Math.max(outputSize[1], 0);
+
+		/*if (outputType === "jpg") {
 			outputType = "image/jpeg";
 		} else if (outputType === "png") {
 			outputType = "image/png";
-		}
+		}*/
 
 		var $file = $(file);
 		if (!$file.length) return;
@@ -91,9 +103,10 @@ var imgsource ='';
 			imgLoaded; //图片是否已经加载完成
 
 		$file.attr("accept", "image/*");
-		$file.change(function() {
+		$file.on("change", function() {
 			if (!this.files.length) return;
-			if (!/image\/\w+/.test(this.files[0].type)) {
+			var files = this.files[0];
+			if (!/image\/\w+/.test(files.type)) {
 				alert("图片格式不正确，请选择正确格式的图片文件！");
 				return false;
 			} else {
@@ -102,39 +115,24 @@ var imgsource ='';
 					console.log((e.loaded / e.total * 100).toFixed() + "%");
 				};
 				fileReader.onload = function(e) {
-					var kbs = e.total / 1024;
-					if (kbs > 1024) {
-						// 图片大于1M，需要压缩
-						var quality = 1024 / kbs;
-						var $tempImg = $("<img>").hide();
-						$tempImg.load(function() {
-							// IOS 设备中，如果的照片是竖屏拍摄的，虽然实际在网页中显示出的方向也是垂直，但图片数据依然是以横屏方向展示
-							var sourceWidth = this.naturalWidth; // 在没有加入文档前，jQuery无法获得正确宽高，但可以通过原生属性来读取
-							$tempImg.appendTo(document.body);
-							var realityHeight = this.naturalHeight;
-							$tempImg.remove();
-							delete $tempImg[0];
-							$tempImg = null;
-							var angleOffset = 0;
-							if (sourceWidth == realityHeight) {
-								angleOffset = 90;
-							}
-							// 将图片进行压缩
-							var newDataURL = compressImg(this, quality, angleOffset, outputType);
-							createImg(newDataURL);
-						});
-						$tempImg.attr("src", this.result);
-					} else {
-						createImg(this.result);
-					}
+					lrz(files)
+					.then(function (rst) {
+						// 处理成功会执行
+						createImg(rst.base64);
+					})
+					.catch(function (err) {
+						// 处理失败会执行
+						alert("图片处理失败");
+						loadError.call(this, err);
+					});
 				};
 				fileReader.onerror = function(e) {
 					alert("图片加载失败");
 					loadError.call(this, e);
 				};
-				fileReader.readAsDataURL(this.files[0]); // 读取文件内容
+				fileReader.readAsDataURL(files); // 读取文件内容
 
-				loadStart.call(fileReader, this.files[0]);
+				loadStart.call(fileReader, files);
 			}
 		});
 
@@ -142,14 +140,13 @@ var imgsource ='';
 			this.value = "";
 		});
 
-
-
 		var $container, // 容器，包含裁剪视图层和遮罩层
 			$clipView, // 裁剪视图层，包含移动层
 			$moveLayer, // 移动层，包含旋转层
 			$rotateLayer, // 旋转层
 			$view, // 最终截图后呈现的视图容器
 			canvas, // 图片裁剪用到的画布
+			hammerManager,
 			myScroll, // 图片的scroll对象，包含图片的位置与缩放信息
 			containerWidth,
 			containerHeight;
@@ -240,7 +237,7 @@ var imgsource ='';
 			var is_mobile = !!navigator.userAgent.match(/mobile/i);
 
 			if (is_mobile) {
-				var hammerManager = new Hammer($moveLayer[0]);
+				hammerManager = new Hammer($moveLayer[0]);
 				hammerManager.add(new Hammer.Rotate());
 
 				var rotation, rotateDirection;
@@ -419,15 +416,12 @@ var imgsource ='';
 		}
 
 		function initClip() {
-
 			canvas = document.createElement("canvas");
-			canvas.width = clipWidth;
-			canvas.height = clipHeight;
 		}
 		function clipImg() {
 			if (!imgLoaded) {
 				alert("亲，当前没有图片可以裁剪!");
-				return ;
+				return;
 			}
 			var local = loaclToLoacl($moveLayer, $clipView);
 			var scale = myScroll.scale;
@@ -435,11 +429,13 @@ var imgsource ='';
 			ctx.clearRect(0, 0, canvas.width, canvas.height);
 			ctx.save();
 
-			if (strictSize) {
-				ctx.scale(scale, scale);
-			} else {
+			if (!outputWidth || !outputHeight) {
 				canvas.width = clipWidth / scale;
 				canvas.height = clipHeight / scale;
+			} else {
+				canvas.width = outputWidth;
+				canvas.height = outputHeight;
+				ctx.scale(outputWidth / clipWidth * scale, outputHeight / clipHeight * scale);
 			}
 
 			ctx.translate(curX - local.x / scale, curY - local.y / scale);
@@ -449,7 +445,6 @@ var imgsource ='';
 			ctx.restore();
 
 			var dataURL = canvas.toDataURL(outputType, 1);
-            imgsource =dataURL;
 			$view.css("background-image", "url("+ dataURL +")");
 			clipFinish.call($img[0], dataURL);
 		}
@@ -531,51 +526,17 @@ var imgsource ='';
 			myScroll.options.zoomMax = Math.max(1, myScroll.options.zoomMin);
 			myScroll.options.zoomStart = Math.min(myScroll.options.zoomMax, getScale(containerWidth, containerHeight, width, height));
 		}
-		function compressImg(sourceImgObj, quality, angleOffset, outputFormat){
-			quality = quality || .8;
-			angleOffset = angleOffset || 0;
-			var mimeType = outputFormat || "image/jpeg";
 
-			var drawWidth = sourceImgObj.naturalWidth,
-				drawHeight = sourceImgObj.naturalHeight;
-			// IOS 设备上 canvas 宽或高如果大于 1024，就有可能导致应用崩溃闪退
-			// 因此这里需要缩放
-			var maxSide = Math.max(drawWidth, drawHeight);
-			if (maxSide > 1024) {
-				var minSide = Math.min(drawWidth, drawHeight);
-				minSide = minSide / maxSide * 1024;
-				maxSide = 1024;
-				if (drawWidth > drawHeight) {
-					drawWidth = maxSide;
-					drawHeight = minSide;
-				} else {
-					drawWidth = minSide;
-					drawHeight = maxSide;
-				}
-			}
-
-			var cvs = document.createElement('canvas');
-			var ctx = cvs.getContext("2d");
-			if (angleOffset) {
-				cvs.width = drawHeight;
-				cvs.height = drawWidth;
-				ctx.translate(drawHeight, 0);
-				ctx.rotate(angleOffset * Math.PI / 180);
-			} else {
-				cvs.width = drawWidth;
-				cvs.height = drawHeight;
-			}
-
-			ctx.drawImage(sourceImgObj, 0, 0, drawWidth, drawHeight);
-			var newImageData = cvs.toDataURL(mimeType, quality || .8);
-			return newImageData;
-		}
-		function createImg(src) {
-			if ($img && $img.length) {
+		function clearImg() {
+			if ($img &&　$img.length) {
 				// 删除旧的图片以释放内存，防止IOS设备的webview崩溃
 				$img.remove();
 				delete $img[0];
 			}
+		}
+
+		function createImg(src) {
+			clearImg();
 			$img = $("<img>").css({
 				"user-select": "none",
 				"pointer-events": "none"
@@ -603,6 +564,11 @@ var imgsource ='';
 				fn.call(this);
 			});
 			$obj.css(prefix + "transform", "translateZ(0) translate(" + x + "px," + y + "px) rotate(" + angle + "deg)");
+		}
+
+		// 判断一个对象是否为数组
+		function isArray(obj) {
+			return Object.prototype.toString.call(obj) === "[object Array]";
 		}
 
 		function init() {
@@ -702,6 +668,40 @@ var imgsource ='';
 				});
 			}
 		}
+
+		function destroy() {
+			$file.off("change");
+			$file = null;
+
+			if (hammerManager) {
+				hammerManager.off("rotatemove");
+				hammerManager.off("rotateend");
+				hammerManager = null;
+			} else {
+				$moveLayer.off("dblclick");
+			}
+
+			myScroll.destroy();
+			myScroll = null;
+
+			$container.empty();
+			$container = null;
+			$clipView = null;
+			$moveLayer = null;
+			$rotateLayer = null;
+
+			$view.css({
+				"background-color": "",
+				"background-repeat": "",
+				"background-position": "",
+				"background-size": ""
+			});
+			$view = null;
+		}
+
+		return {
+			destroy: destroy
+		};
 	}
 
 	var prefix = '',
@@ -726,5 +726,5 @@ var imgsource ='';
 
 	})();
 
-	return $;
+	return PhotoClip;
 }));
