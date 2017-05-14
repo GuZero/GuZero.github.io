@@ -66,10 +66,10 @@
    margin-top: 0.16rem;
 }
 .upload_btn{
-    border: 0.01rem solid #4285f4;
+    border: 1px solid #4285f4;
     color: #4285f4;
     width: 100%;
-    font-size: 0.14rem;
+    font-size: 14px;
 }
 .mui-card-content{
     height: 30%;
