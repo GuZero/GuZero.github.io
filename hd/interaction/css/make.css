@@ -79,7 +79,7 @@
     /*font-size: 14px;*/
 /*}*/
 .text {
-    height: 100%;
+    height: 100px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -95,7 +95,8 @@
     width: 100%;
     display: none;
     z-index: 111;
-    height: 100%
+    height: 100%;
+
 }
 #error {
     width: 100%;
@@ -187,9 +188,11 @@
     font-size: 14px;
 }
 .footer div{
-    padding: 1.5% 2%;
+    padding: 1.2% 2%;
 }
 #num1{
-    margin-top: 14px;
     padding-right: 5px;
+}
+.mui-card-header.mui-card-media{
+    padding: 5px;
 }
