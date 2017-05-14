@@ -77,7 +77,7 @@
                                 <p class="txt1 font_14">点击输入文字</p>
                                 <div class="text_1">
                                     <textarea maxlength="140" id="text" rows="2"></textarea>
-                                    <p id="num1" class="pd_l mui-text-right font_14"><span id="word">0</span>/140</p>
+                                    <p id="num1" class="mui-text-right font_14"><span id="word">0</span>/140</p>
                                 </div>
                             </div>
                         </div>
@@ -93,7 +93,7 @@
                                     </div>
                                 </div>
                                 <div class="mui-col-xs-8 margin-5" id="choose">
-                                    <p class="mui-ellipsis font_14">请选择城市</p>
+                                    <p class="mui-ellipsis">请选择城市</p>
                                 </div>
                                 <div class="mui-col-xs-2 mui-text-right">
                                     <div style="width:18px;height:18px;display: inline-block">
@@ -113,7 +113,7 @@
 
                                 </div>
                                 <div class="mui-col-xs-10">
-                                    <p class="font_14">选择展示日期</p>
+                                    <p class="mui-ellipsis">选择展示日期</p>
                                 </div>
                             </div>
                         </li>
@@ -406,6 +406,7 @@
             //        点击1.制作
             $("#make_btn").on("click", function() {
                 $("#choice_btn").removeClass("active");
+                $(".mui-btn-primary").removeClass("margin12");
                 $(this).toggleClass("active");
                 if ($("#show").is(":hidden")) {
                     $("#show").show();
@@ -419,6 +420,7 @@
                 $("#make_btn").removeClass("active");
                 $(this).toggleClass("active");
                 $("#show").hide();
+                $(".mui-btn-primary").toggleClass("margin12");
                 $("#cabinet").show();
                 $(".mui-title").text("选择快递柜");
             });

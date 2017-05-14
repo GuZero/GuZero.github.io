@@ -1,9 +1,6 @@
 .mui-title{
 
 }
-.pd_l{
-    padding-right: 5px;
-}
 .btn{
     width: 100%;
     color: #ffffff;
@@ -191,4 +188,8 @@
 }
 .footer div{
     padding: 1.5% 2%;
+}
+#num1{
+    margin-top: 14px;
+    padding-right: 5px;
 }

@@ -38,9 +38,6 @@ body{
 .pd-t40{
     padding-top: 12%;
 }
-.margin5 {
-    margin-top: 0.05rem;
-}
 
 .margin-5 {
     margin-top: -0.04rem;
@@ -58,7 +55,7 @@ body{
 }
 
 .margin145 {
-    margin-top: 70%;
+    margin-top: 60%;
 }
 
 .height32 {
@@ -145,12 +142,15 @@ header {
 .mui-content-padded {
     margin: 8%;
 }
+.margin12{
+    margin-top: 12% !important;
+}
 
 .mui-btn-primary {
     border: 0.01px solid #4285f4;
     background-color: #4285f4;
     font-size: 15px;
-    padding: 4px 0;
+    padding: 7px 0;
     width: 100%;
     margin-top: 20%;
     border-radius: 4px;
@@ -272,4 +272,15 @@ header {
     .mui-btn-primary {
        margin-top: 10%;
     }
+}
+.mui-table-view:before {
+    position: absolute;
+    right: 0;
+    left: 0;
+    height: 0;
+    content: '';
+    -webkit-transform: scaleY(.5);
+    transform: scaleY(.5);
+    background-color: #c8c7cc;
+    top: -1px;
 }
