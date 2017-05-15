@@ -79,7 +79,7 @@
                             <div class="text">
                                 <p class="txt1 font_14">点击输入文字</p>
                                 <div class="text_1">
-                                    <textarea maxlength="140" id="text" rows="2"></textarea>
+                                    <textarea maxlength="140"  rows="2" id="textarea"></textarea>
                                     <p id="num1" class="mui-text-right font_14"><span id="word">0</span>/140</p>
                                 </div>
                             </div>
@@ -211,6 +211,7 @@
     <script src="../interaction/js/lrz.all.bundle.js"></script>
     <script src="../interaction/js/jquery.photoClip1.js"></script>
     <script src="../interaction/js/date.js"></script>
+    <script src="../interaction/mui/mui.min.js"></script>
 
 
 
@@ -370,7 +371,7 @@
         $(function() {
 
             //文字限制
-            $('#text').keyup(function() {
+            $('#textarea').keyup(function() {
                 var len = $(this).val().length;
                 if (len > 139) {
                     msgAlert("warning", "您输入超出了字数限制");
