@@ -3,43 +3,26 @@
 
 <head>
     <meta charset="UTF-8">
-    <!--    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />-->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
     <title>大屏互动--审核中</title>
-    <link rel="stylesheet" href="../interaction/mui/mui.min.css">
-    <link rel="stylesheet" href="../interaction/css/common.css">
-    <script src="../interaction/js/adaptive.js"></script>
+    <link rel="stylesheet" href="../../static/interaction/mui/mui.min.css">
+    <link rel="stylesheet" href="../../static/interaction/css/common.css">
 
-    <script>
-        // 设计图宽度
-        window['adaptive'].desinWidth = 375;
-        // body 字体大小
-        window['adaptive'].baseFont = 24;
-
-        window['adaptive'].scaleType = 3;
-        // 初始化
-        window['adaptive'].init();
-
-    </script>
 </head>
 
-<body>
-    <div class="mui-content main">
-        <header>
-            <div class="mui-row">
-                <div class="mui-col-xs-1">
-                    <a class="mui-pull-left btn_share" id="goBack">
-                        <img src="//img.aimoge.com/FuGSEC9x9qNjuZhJ4gYjJ_81iPjf" alt="">
-                    </a>
-                </div>
-                <div class="mui-col-xs-11">
-                    <div class="mui-title">制作中</div>
-                </div>
-            </div>
-        </header>
-        <div class="mui-content">
+<body class="mui-ios mui-ios-9 mui-ios-9-1">
+<header>
+    <h1 class="mui-title">审核状态</h1>
+    <a class="mui-pull-left btn_share" id="goBack">
+        <img src="//img.aimoge.com/FuGSEC9x9qNjuZhJ4gYjJ_81iPjf" alt="返回">
+    </a>
+</header>
+    <div class="mui-content pd10">
             <div class="mui-content-padded">
                 <div class="mui-text-center">
-                    <div style="width: 1.18rem;height:0.88rem;display: inline-block">
+                    <div style="width: 110px;height: 80px;display: inline-block;">
                         <img src="//img.aimoge.com/FusiskJqzeh-IeU39DPXStckIv-U" alt="" width="100%" height="100%">
                     </div>
                 </div>
@@ -52,9 +35,9 @@
                         凝视中...
                     </p>
                 </div>
-                <div class="mui-table-view weixi">
+                <div class="mui-table-view weixi pd10">
                     <div class="mui-row mui-text-center">
-                        <div style="width:1.06rem;height:1.06rem;display: inline-block;margin-top:0.5rem">
+                        <div style="width:105px;height:105px;display: inline-block;">
                             <img src="//img.aimoge.com/Fr57mf2VPXU-JXi3ABQY226rGXcl" alt="" width="100%" height="100%">
                         </div>
 
@@ -69,53 +52,40 @@
             </div>
         </div>
 
-    </div>
     <script src="https://cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script>
-    <script src="http://apps.bdimg.com/libs/jquerymobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
     <script>
-        (function() {
-            var isIPhone = !!window.navigator.appVersion.match(/iphone/gi);
-            if (isIPhone && devicePixelRatio === 2) {
-                var testElem = document.createElement('div');
-                testElem.style.border = '.5px solid transparent';
-                document.body.appendChild(testElem);
-                if (testElem.offsetHeight == 1) {
-                    document.querySelector('html').classList.add('hairlines');
-                }
-                document.body.removeChild(testElem);
-            }
-        })();
+
         window.config = {
-            'BASE_URL': "{{ settings.BASE_URL|autodomain }}",
-            'API': '{{ settings.PREFIX_API|autodomain }}',
-            'PAY': '{{ settings.PREFIX_PAY|autodomain }}',
-            "IMG": "{{ settings.PREFIX_IMG }}",
-            "FILE": "{{ settings.PREFIX_FILE }}",
-            "STORE": '{{ settings.PREFIX_STORE|autodomain }}'
+            'API': '//api.dev.aimoge.com/v1'
         };
-        var city_id=sessionStorage.getItem("id");
+        var city_id = sessionStorage.getItem("id");
         $(function() {
-            $("#goBack").click(function() {
-                location.href = "make.html";
+            $("#goBack").on("click", function() {
+                location.href = "/adinteraction/make";
             });
             $.ajax({
                 type: "GET",
-                url: window.config.API + "/media/adinteraction/info?city_id="+city_id,
+                url: window.config.API + "/media/adinteraction/info?city_id=" + city_id,
                 dataType: 'json',
                 xhrFields: {
                     withCredentials: true
                 },
                 success: function(data) {
                     console.log(data.data.city_count);
-                    data.data.city_count=100;
-                    var  count=data.data.city_count;
+                    var count
+                    if (data.data.city_count == null) {
+                        count = 0;
+                    } else {
+                        count = data.data.city_count;
+                    }
                     $("#city_count").text(count);
-                    
+
                 }
             });
         })
 
     </script>
+    <!--    </div>-->
 </body>
 
 </html>
