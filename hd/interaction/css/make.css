@@ -84,6 +84,10 @@
     justify-content: center;
     align-items: center;
     color: black;
+    height: 100%;
+}
+.txt1{
+    margin-bottom: 0px;
 }
 #text {
     width: 100%;
