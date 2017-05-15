@@ -8,12 +8,12 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
     <title>大屏互动-制作中</title>
 
-    <link rel="stylesheet" href="../../static/interaction/css/common.css">
-    <link rel="stylesheet" href="../../static/interaction/css/make.css">
+    <link rel="stylesheet" href="../interaction/css/common.css">
+    <link rel="stylesheet" href="../interaction/css/make.css">
 
-    <link rel="stylesheet" href="../../static/interaction/mui/mui.min.css">
-    <link rel="stylesheet" href="../../static/interaction/css/common.css">
-    <link rel="stylesheet" href="../../static/interaction/css/make.css">
+    <link rel="stylesheet" href="../interaction/mui/mui.min.css">
+    <link rel="stylesheet" href="../interaction/css/common.css">
+    <link rel="stylesheet" href="../interaction/css/make.css">
 
 </head>
 
@@ -207,25 +207,18 @@
         </div>
     </div>
     <script src="https://cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script>
-<<<<<<< HEAD
-    <script src="../../static/interaction/js/iscroll-zoom.js"></script>
     <script src="../../static/interaction/js/hammer.js"></script>
-=======
     <script src="../interaction/js/iscroll-zoom.js"></script>
     <script src="../interaction/js/hammer.js"></script>
-    <!--<script src="../interaction/js/jquery.photoclip.js"></script>-->
-    <!--<script src="../interaction/js/jquery.photoClip.min.js"></script>-->
->>>>>>> fc5b0b99071e0364ce54f5ef629cf82ba8da8208
     <script src="../interaction/js/lrz.all.bundle.js"></script>
     <script src="../interaction/js/jquery.photoClip1.js"></script>
-
     <script src="../interaction/js/date.js"></script>
 
 
     <script type="text/javascript">
         window.token = 'MlZsy_bZg4Sg5zLmdjBV4nZ35EWxXfwWIznsSViW:U4tfLAvt-rhNyyCweZhEJEAo30w=:eyJzY29wZSI6Im1vZ2UiLCJkZWFkbGluZSI6Mjg2MTExNTA3NCwiY2FsbGJhY2tVcmwiOiJodHRwOlwvXC9hcGkuYWltb2dlLmNvbVwvdjFcL3VwbG9hZFwvY2FsbGJhY2siLCJjYWxsYmFja0JvZHkiOiJuYW1lPSQoZm5hbWUpJmtleT0kKGtleSkmaGFzaD0kKGV0YWcpJnNpemU9JChmc2l6ZSkmd2lkdGg9JChpbWFnZUluZm8ud2lkdGgpJmhlaWdodD0kKGltYWdlSW5mby5oZWlnaHQpJm1pbWV0eXBlPSQobWltZVR5cGUpJnNpZD0xODYxODE0Mjc2NCZ1aWQ9MTg2MTgxNDI3NjQmc291cmNlPSQoeDpzb3VyY2UpIiwiZGV0ZWN0TWltZSI6MX0=';
         var imgsrc = "",
-            photo="",
+            photo = "",
             cityId = "",
             flag = false,
             startDate = "",
@@ -292,7 +285,7 @@
                 success: function(data) {
                     if (data.status == 0) {
                         console.log(data, '上传成功');
-//                        location.href = "/adinteraction/examine?run=" + Math.random();
+                        //                        location.href = "/adinteraction/examine?run=" + Math.random();
                     }
 
 
@@ -525,11 +518,14 @@
                     console.log("照片读取完成");
                 },
                 clipFinish: function(dataURL) {
-                   imgsrc=post_img(dataURL)
+                    imgsrc = post_img(dataURL)
                 }
             });
             $("#finish").on("click", function() {
-                $("#photo").css({'background-color':'none','background-size':'100%'});
+                $("#photo").css({
+                    'background-color': 'none',
+                    'background-size': '100%'
+                });
                 $("#uploadBox").hide();
                 $("#error").hide();
                 $(".htmleaf-container").hide();
