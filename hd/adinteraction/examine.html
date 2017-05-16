@@ -7,61 +7,70 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
     <title>大屏互动--审核中</title>
-    <link rel="stylesheet" href="../../static/interaction/css/common.css">
     <link rel="stylesheet" href="../../static/interaction/mui/mui.min.css">
     <link rel="stylesheet" href="../../static/interaction/css/common.css">
+
 </head>
 
 <body class="mui-ios mui-ios-9 mui-ios-9-1">
-<header>
-    <h1 class="mui-title">审核状态</h1>
-    <a class="mui-pull-left btn_share" id="goBack">
-        <img src="//img.aimoge.com/FuGSEC9x9qNjuZhJ4gYjJ_81iPjf" alt="返回">
-    </a>
-</header>
+    <header>
+        <h1 class="mui-title">正在审核</h1>
+        <a class="mui-pull-left btn_share" id="goBack">
+            <img src="//img.aimoge.com/FuGSEC9x9qNjuZhJ4gYjJ_81iPjf" alt="返回">
+        </a>
+    </header>
     <div class="mui-content pd10">
-            <div class="mui-content-padded">
-                <div class="mui-text-center">
-                    <div style="width: 110px;height: 80px;display: inline-block;">
-                        <img src="//img.aimoge.com/FusiskJqzeh-IeU39DPXStckIv-U" alt="" width="100%" height="100%">
-                    </div>
+        <div class="mui-content-padded">
+            <div class="mui-text-center">
+                <div style="width: 110px;height: 80px;display: inline-block;">
+                    <img src="//img.aimoge.com/FusiskJqzeh-IeU39DPXStckIv-U" alt="" width="100%" height="100%">
                 </div>
+            </div>
 
-                <div class="mui-text-center margin16">
-                    <p class="mui-h4 mui-ellipsis color_w line_h30">
-                        格格小编对着<span id="city_count">19000</span>作品
-                    </p>
-                    <p class="mui-h4 mui-ellipsis color_w line_h30">
-                        凝视中...
-                    </p>
+            <div class="mui-text-center margin16">
+                <p class="mui-h4 mui-ellipsis color_w line_h30">
+                    格格小编对着<span id="city_count">19000</span>作品
+                </p>
+                <p class="mui-h4 mui-ellipsis color_w line_h30">
+                    凝视中...
+                </p>
+            </div>
+            <div class="mui-table-view weixi pd10">
+                <div class="mui-row mui-text-center">
+                    <div style="width:105px;height:105px;display: inline-block;">
+                        <img src="//img.aimoge.com/Fr57mf2VPXU-JXi3ABQY226rGXcl" alt="" width="100%" height="100%">
+                    </div>
+
                 </div>
-                <div class="mui-table-view weixi pd10">
-                    <div class="mui-row mui-text-center">
-                        <div style="width:105px;height:105px;display: inline-block;">
-                            <img src="//img.aimoge.com/Fr57mf2VPXU-JXi3ABQY226rGXcl" alt="" width="100%" height="100%">
-                        </div>
-
-                    </div>
-                    <div class="mui-row mui-text-center font_14 line_h30 margin16">
-                        微信关注格格小区
-                    </div>
-                    <div class="mui-row mui-text-center font_14 line_h30">
-                        超能箱菜单查看互动作品的状态
-                    </div>
+                <div class="mui-row mui-text-center font_14 line_h30 margin16">
+                    微信关注格格小区
+                </div>
+                <div class="mui-row mui-text-center font_14 line_h30">
+                    超能箱菜单查看互动作品的状态
                 </div>
             </div>
         </div>
+    </div>
 
     <script src="https://cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script>
     <script>
-
         window.config = {
             'API': '//api.dev.aimoge.com/v1'
         };
         var city_id = sessionStorage.getItem("id");
+
+
         $(function() {
             $("#goBack").on("click", function() {
-                location.href = "/adinteraction/make";
+                let flag = sessionStorage.getItem("flag");
+                console.log(flag);
+                if (flag) {
+                    
+                    location.href = "/adinteraction";
+                    
+                } else {
+                    location.href = "/adinteraction/make";
+                }
             });
             $.ajax({
                 type: "GET",
@@ -85,6 +94,7 @@
         })
 
     </script>
+    <!--    </div>-->
 </body>
 
 </html>

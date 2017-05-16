@@ -7,12 +7,9 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
     <title>大屏互动-制作中</title>
-    <link rel="stylesheet" href="../interaction/css/common.css">
-    <link rel="stylesheet" href="../interaction/css/make.css">
-    <link rel="stylesheet" href="../interaction/mui/mui.min.css">
-    <link rel="stylesheet" href="../interaction/css/common.css">
-    <link rel="stylesheet" href="../interaction/css/make.css">
-
+    <link rel="stylesheet" href="../../static/interaction/mui/mui.min.css">
+    <link rel="stylesheet" href="../../static/interaction/css/common.css">
+    <link rel="stylesheet" href="../../static/interaction/css/make.css">
 </head>
 
 <body class="mui-ios mui-ios-9 mui-ios-9-1">
@@ -30,10 +27,11 @@
     </div>
     <!--头部-->
     <header>
-        <h1 class="mui-title">制作中</h1>
+
         <a class="mui-pull-left btn_share" id="goBack">
             <img src="//img.aimoge.com/FuGSEC9x9qNjuZhJ4gYjJ_81iPjf" alt="返回">
         </a>
+        <h1 class="mui-title">制作中</h1>
     </header>
     <div class="mui-content">
         <div id="two">
@@ -69,17 +67,15 @@
                                     <button type="button" class="mui-btn mui-btn-outlined upload_btn margin20" id="retry">重试</button>
                                 </div>
                                 <a href="javascript:void(0);" id="reelect" class="font_14"><label for="file">重选作品
-<!--                                <input id="file" type="file"  accept="image/*" multiple />-->
-
                             </label></a>
                             </div>
                             <div id="photo"></div>
                         </div>
                         <div class="mui-card-content">
-                            <div class="text">
+                            <div class="text ">
                                 <p class="txt1 font_14">点击输入文字</p>
                                 <div class="text_1">
-                                    <textarea maxlength="140"  rows="2" id="textarea"></textarea>
+                                    <textarea maxlength="140" id="text" rows="2"></textarea>
                                     <p id="num1" class="mui-text-right font_14"><span id="word">0</span>/140</p>
                                 </div>
                             </div>
@@ -135,13 +131,14 @@
                             </div>
                         </div>
                         <div class="mui-col-xs-9">
-                            <a href="#" class="agreement">同意柜机屏幕展示协议</a>
+                            <a href="/adinteraction/agreement" class="agreement">同意柜机屏幕展示协议</a>
                         </div>
                     </div>
 
                 </div>
 
                 <button type="button" class="mui-btn mui-btn-primary mui-btn-block bottom" id="nextBtn">下一步</button>
+                <button type="button" class="mui-btn mui-btn-primary mui-btn-block bottom" id="submit">确认提交</button>
             </div>
             <div id="time">
                 <div class="mui-row mui-table-view-cell">
@@ -205,14 +202,11 @@
         </div>
     </div>
     <script src="https://cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script>
-    <script src="../interaction/js/hammer.js"></script>
-    <script src="../interaction/js/iscroll-zoom.js"></script>
-    <script src="../interaction/js/hammer.js"></script>
-    <script src="../interaction/js/lrz.all.bundle.js"></script>
-    <script src="../interaction/js/jquery.photoClip1.js"></script>
-    <script src="../interaction/js/date.js"></script>
-    <script src="../interaction/mui/mui.min.js"></script>
-
+    <script src="../../static/interaction/js/iscroll-zoom.js"></script>
+    <script src="../../static/interaction/js/hammer.js"></script>
+    <script src="../../static/interaction/js/lrz.all.bundle.js"></script>
+    <script src="../../static/interaction/js/jquery.photoClip1.js"></script>
+    <script src="../../static/interaction/js/date.js"></script>
 
 
     <script type="text/javascript">
@@ -262,14 +256,7 @@
                 end_date: end_date,
             };
             console.log(data);
-            if (postData(data)) {
-                location.href = "/adinteraction/examine?run=" + Math.random();
-            } else {
-                console.log("上传失败");
-
-            }
-
-
+            postData(data);
         }
 
         function postData(data) {
@@ -283,12 +270,12 @@
                     withCredentials: true
                 },
                 success: function(data) {
+                    console.log(data);
                     if (data.status == 0) {
                         console.log(data, '上传成功');
-                        //                        location.href = "/adinteraction/examine?run=" + Math.random();
+                        location.href = "/adinteraction/examine";
+                         window.sessionStorage.setItem("flag", 0);
                     }
-
-
                 },
                 error: function(data) {
                     console.log('上传失败')
@@ -367,7 +354,7 @@
         $(function() {
 
             //文字限制
-            $('#textarea').keyup(function() {
+            $('#text').keyup(function() {
                 var len = $(this).val().length;
                 if (len > 139) {
                     msgAlert("warning", "您输入超出了字数限制");
@@ -406,17 +393,29 @@
                     $("#show").show();
                     $("#cabinet").hide();
                     $(".mui-title").text("制作中");
-                }
+                };
+                $("#nextBtn").show();
+                $("#submit").hide();
 
             });
             //      选择柜机
             $("#choice_btn").on("click", function() {
+                if ($("#text").val() == "") {
+                    msgAlert("warning", "请输入您想要说的话");
+                    return false;
+                };
+                if (imgsrc == "") {
+                    msgAlert("warning", "请您上传一张图片");
+                    return false;
+                };
                 $("#make_btn").removeClass("active");
                 $(this).toggleClass("active");
                 $("#show").hide();
                 $(".mui-btn-primary").toggleClass("margin12");
                 $("#cabinet").show();
                 $(".mui-title").text("选择快递柜");
+                  $("#nextBtn").hide();
+                $("#submit").show();
             });
             //      选择货栈
             $("#choose").on("click", function() {
@@ -491,7 +490,26 @@
             });
             // 下一步 提交数据
             $("#nextBtn").on("click", function() {
+                if ($("#text").val() == "") {
+                    msgAlert("warning", "请输入您想要说的话");
+                    return false;
+                };
+                if (imgsrc == "") {
+                    msgAlert("warning", "请您上传一张图片");
+                    return false;
+                };
+                $("#make_btn").removeClass("active");
+                $(this).toggleClass("active");
+                $("#show").hide();
+                $(".mui-btn-primary").toggleClass("margin12");
+                $("#cabinet").show();
+                $(".mui-title").text("选择快递柜");
+                $(this).hide();
+                $("#submit").show();
 
+            });
+            //提交数据
+              $("#submit").on("click", function() {
                 submit();
             });
             // 重试再次提交数据
@@ -506,7 +524,7 @@
             });
             //裁剪图片
             var clipArea = new bjj.PhotoClip("#clipArea", {
-                size: [290, 310],
+                size: [310, 290],
                 outputSize: [580, 620],
                 file: "#file",
                 view: "#photo",

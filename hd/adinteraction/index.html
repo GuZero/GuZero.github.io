@@ -17,32 +17,15 @@
         <a class="mui-pull-right btn_share">
             <img src="//img.aimoge.com/Fvp6_ACzFw9KhXBG06gEjT-id2R-" alt="分享">
         </a>
+        <a class="mui-pull-left btn_share" id="goBack" style="display:none">
+            <img src="//img.aimoge.com/FuGSEC9x9qNjuZhJ4gYjJ_81iPjf" alt="返回">
+        </a>
     </header>
     <div class="mui-content pd-t40">
         <div class="mui-content-padded">
             <div id="info">
-                <ul class="mui-table-view">
-                    <li class="mui-table-view-cell">
-                        <div class="mui-table">
-                            <div class="mui-table-cell mui-col-xs-10">
-                                <div class="mui-row line_h30">
-                                    <div class="mui-col-sm-2 mui-ellipsis gray ">屏幕：</div>
-                                    <div class="mui-col-sm-10 mui-ellipsis ">南京格格货栈</div>
-                                </div>
-                                <div class="mui-row line_h30">
-                                    <div class="mui-col-sm-2 mui-ellipsis gray">日期：</div>
-                                    <div class="mui-col-sm-10 line_h30">2017-05-12---2017-05-18</div>
-                                </div>
-                                <div class="mui-row line_h30">
-                                    <div class="mui-col-sm-2 mui-ellipsis gray ">审核：</div>
-                                    <div class="mui-col-sm-10 blue line_h30">等待审核</div>
-                                </div>
-                            </div>
-                            <div class="mui-table-cell mui-col-xs-2 mui-text-right">
-                                <a href="#"><img src="//img.aimoge.com/FnvoecOAQ0w2pmYfw0BfkPjXlvHC" alt="" width="24" height="22"></a>
-                            </div>
-                        </div>
-                    </li>
+                <ul class="mui-table-view" id="infoUl">
+
                 </ul>
             </div>
             <div id="no_work">
@@ -53,101 +36,159 @@
                     <p class="blue  margin16">暂无互动作品</p>
                 </div>
             </div>
+
+            <div id="is" style="display:none">
+                <div class="mui-text-center">
+                    <div style="width: 110px;height: 80px;display: inline-block;">
+                        <img src="//img.aimoge.com/Fs6naO0nMxyik9ojsi_TB77VR5GY" alt="" width="100%" height="100%">
+                    </div>
+                </div>
+
+                <div class="mui-text-center margin16">
+                    <p class="mui-h4 mui-ellipsis color_w line_h30">
+                        居然有人比您的作品有趣
+                    </p>
+                    <p class="mui-h4 mui-ellipsis color_w line_h30">
+                        一丢丢...
+                    </p>
+                </div>
+                <div class="mui-table-view weixi pd18 pd_lr">
+                    <div class="mui-row mui-text-center font_20 black">
+                        上屏通过小技巧
+                    </div>
+                    <div class="mui-row mui-text-left font-14 line_h30 margin20">
+                        1.天仙照！非主流扛霸自拍
+                    </div>
+                    <div class="mui-row mui-text-left font-14 line_h30">
+                        2.有趣有槽点
+                    </div>
+                    <div class="mui-row mui-text-left font-14 line_h30">
+                        3.结合城市、人文等风采
+                    </div>
+                    <div class="mui-row mui-text-left font-14 line_h30">
+                        4.放飞自我
+                    </div>
+                </div>
+
+            </div>
             <button type="button" class="mui-btn mui-btn-primary mui-btn-block" id="startBtn">开始制作</button>
         </div>
-        <div id="share1">
-            <div class="mui-text-center">分享</div>
-            <div class="itme margin20" id="share">
+    </div>
+
+    <div class="mui-popup-backdrop" style="display:none">
+        <div id="share">
+            <div class="lead_img">
+                <img src="//img.aimoge.com/FrIulbQ1YAi88BvSSb-Ojzw-UhDU" alt="" width="100%" height="100%">
             </div>
-            <div class="mui-text-center" id="shareCancel">取消</div>
+            <div>
+                <p class="mui-text-center">请点击右上角</p>
+                <p class="mui-text-center">将它发送给朋友</p>
+                <p class="mui-text-center">或者朋友圈</p>
+            </div>
         </div>
     </div>
-    <script src="../interaction/js/soshm.js"></script>
     <script src="https://cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script>
     <script>
-    soshm('#share', {
-        // 分享的链接，默认使用location.href
-        url: 'http://m.dev.aimoge.com/adinteraction',
-        // 分享的标题，默认使用document.title
-        title: '我是一个分享',
-        // 分享的摘要，默认使用<meta name="description" content="">content的值
-        digest: '',
-        // 分享的图片，默认获取本页面第一个img元素的src
-        pic: '',
-        // 默认显示的网站为以下六个个,支持设置的网站有
-        // weixin,weixintimeline,qq,qzone,yixin,weibo,tqq,renren,douban,tieba
-        sites: ['weixin', 'weixintimeline', 'qq', 'qzone']
-    });
-    </script>
-    <script>
-    window.config = {
-        'API': '//api.dev.aimoge.com/v1'
-    };
-    //$(function() {
-//        $("#startBtn").on("click", function() {
-//            location.href = "/adinteraction/make?run=" + Math.random();
-//        });
-
-
-     $(document).ready(function () {
-         //分享
-         $(".btn_share").on("click",function() {
-             $("#share1").show();
-             $("#share1").animate({
-                 bottom: '0'
-             }, "slow");
-         });
-         $("#shareCancel").on("click", function() {
-             let h = $("#share1").height();
-             $("#share1").animate({
-                 bottom: -h
-             }, "slow", function() {
-                 $("#share1").hide();
-             });
-         });
-        $.ajax({
-            type: "GET",
-            url: window.config.API + "/media/adinteraction",
-            dataType: 'json',
-            xhrFields: {
-                withCredentials: true
-            },
-            success: function(data) {
-                console.log(data);
-                if (data.data.adinteractions.length > 0) {
-                    $("#startBtn").css({
-                        "margin-top": "28%"
-                    });
-                    $("#no_work").hide();
-                    $("#info").show();
-                    var array = data.data.adinteractions;
-                    var html = "";
-                    $.each(array, function(index, obj) {
-                        switch (obj.status) {
-                            case 1:
-                                obj.status = '等待审核';
-                                break;
-                            case 11:
-                                obj.status = '通过审核';
-                                break;
-                            case 12:
-                                obj.status = '审核拒绝';
-                                break;
-                            default:
-                                obj.status = '等待审核';
-                                break;
-                        }
-                        html += '<li class="mui-table-view-cell"><div class="mui-table"><div class="mui-table-cell mui-col-xs-10"><div class="mui-row line_h30"><div class="mui-col-sm-2 mui-ellipsis gray ">屏幕：</div><div class="mui-col-sm-10 mui-ellipsis ">南京格格货栈</div></div><div class="mui-row line_h30"><div class="mui-col-sm-2 mui-ellipsis gray">日期：</div><div class="mui-col-sm-10 line_h30">' + obj.start_date.substring(0, 10) + '---' + obj.end_date.substring(0, 10) + '</div></div><div class="mui-row line_h30"><div class="mui-col-sm-2 mui-ellipsis gray ">审核：</div><div class="mui-col-sm-10 blue line_h30">' + obj.status + '</div></div></div><div class="mui-table-cell mui-col-xs-2 mui-text-right"><a href="#"><img src="//img.aimoge.com/FnvoecOAQ0w2pmYfw0BfkPjXlvHC" alt="" width="24" height="22"></a></div></div></li>';
-                    });
-                    $("#info>ul").append(html);
-                } else {
-                    $("#info").hide();
-                    $("#no_work").show();
-                }
+        window.config = {
+            'API': '//api.dev.aimoge.com/v1'
+        };
+        //判断是否在微信里面打开
+        function isWeixin() {
+            return window.navigator.userAgent.indexOf("MicroMessenger") > 0;
+        }
+        $(document).ready(function() {
+            //分享
+            if(!isWeixin()){
+                $('.btn_share').hide();
             }
-        });
+            else{
+                 $('.btn_share').show();
+            }
+            $(".btn_share").on("click", function() {
+                $('.mui-popup-backdrop').addClass('mui-active');
+                $('.mui-popup-backdrop').show();
 
-     })
+            });
+            $(".mui-popup-backdrop").on("click", function() {
+                $('.mui-popup-backdrop').removeClass('mui-active');
+                $(this).hide();
+            });
+            $.ajax({
+                type: "GET",
+                url: window.config.API + "/media/adinteraction",
+                dataType: 'json',
+                xhrFields: {
+                    withCredentials: true
+                },
+                success: function(data) {
+                    console.log(data);
+                    if (data.data.adinteractions.length > 0) {
+                        $("#startBtn").css({
+                            "margin-top": "28%"
+                        });
+                        $("#no_work").hide();
+                        $("#info").show();
+                        var array = data.data.adinteractions;
+                        var html = "";
+                        $.each(array, function(index, obj) {
+                            switch (obj.status) {
+                                case 1:
+                                    obj.status1 = '等待审核';
+                                    break;
+                                case 11:
+                                    obj.status1 = '通过审核';
+                                    break;
+                                case 12:
+                                    obj.status1 = '审核拒绝';
+                                    break;
+                                default:
+                                    obj.status1 = '等待审核';
+                                    break;
+                            }
+                            html += '<li class="mui-table-view-cell" value=' + obj.status + ' data-id=' + obj.city_id + '><div class="mui-table"><div class="mui-table-cell mui-col-xs-10"><div class="mui-row line_h30"><div class="mui-col-sm-2 mui-ellipsis gray ">屏幕：</div><div class="mui-col-sm-10 mui-ellipsis ">南京格格货栈</div></div><div class="mui-row line_h30"><div class="mui-col-sm-2 mui-ellipsis gray">日期：</div><div class="mui-col-sm-10 line_h30">' + obj.start_date.substring(0, 10) + '---' + obj.end_date.substring(0, 10) + '</div></div><div class="mui-row line_h30"><div class="mui-col-sm-2 mui-ellipsis gray ">审核：</div><div class="mui-col-sm-10 blue line_h30">' + obj.status1 + '</div></div></div><div class="mui-table-cell mui-col-xs-2 mui-text-right"><a href="#"><img src="//img.aimoge.com/FnvoecOAQ0w2pmYfw0BfkPjXlvHC" alt="" width="24" height="22"></a></div></div></li>';
+                        });
+                        $("#info>ul").append(html);
+                    } else {
+                        $("#info").hide();
+                        $("#no_work").show();
+                    }
+                    $("#infoUl>li").each(function() {
+                        $(this).on('click', function() {
+                            if ($(this).val() == '12') {
+                                console.log($(this).data('id'));
+                                $('.mui-title').text('未通过');
+                                $('.btn_share').hide();
+                                $('#goBack').show();
+                                $("#info").hide();
+                                $('#is').show();
+                                $('#startBtn').hide();
+                            } else if ($(this).val() == '1') {
+                                window.sessionStorage.setItem("id", $(this).data('id'));
+                                window.sessionStorage.setItem("flag", 1);
+                                location.href = "/adinteraction/examine";
+                            }
+
+                        })
+                    })
+                }
+            });
+            //开始制作
+            $("#startBtn").on("click", function() {
+                location.href = "/adinteraction/make?run=" + Math.random();
+            });
+            //返回主面
+            $('#goBack').on('click', function() {
+                $('.mui-title').text('大屏互动');
+                $('.btn_share').show();
+                $('#goBack').hide();
+                $("#info").show();
+                $('#is').hide();
+                $('#startBtn').show();
+                $("#share").hide();
+                return false;
+            })
+        })
+
     </script>
 </body>
 

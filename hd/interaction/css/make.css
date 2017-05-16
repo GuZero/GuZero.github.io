@@ -86,15 +86,15 @@
     color: black;
     height: 100%;
 }
-.txt1{
-    margin-bottom: 0px;
+.text .txt1{
+    margin-bottom: 0;
 }
-#textarea{
+#text {
     width: 100%;
     border: none;
     font-size: 12px;
     box-sizing: border-box;
-    height: 50%;
+    height: 55%;
 }
 .text .text_1 {
     width: 100%;
@@ -200,4 +200,7 @@
 }
 .mui-card-header.mui-card-media{
     padding: 5px;
+}
+#submit{
+    display: none;
 }
