@@ -222,9 +222,9 @@ header {
 #share {
     width: 300px;
     position: fixed;
-    top: 176px;
+    top: 180px;
     left: 50%;
-    margin-left: -50px;
+    margin-left: -150px;
 }
 .lead_img{
     height: 150px;
@@ -234,7 +234,7 @@ header {
     right: 64px;
 }
 #share p {
-    font-size: 18px;
+    font-size: 22px;
     color: #fff;
 }
 
