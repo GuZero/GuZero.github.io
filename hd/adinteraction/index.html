@@ -14,7 +14,7 @@
 <body class="mui-ios mui-ios-9 mui-ios-9-1">
     <header>
         <h1 class="mui-title">大屏互动</h1>
-        <a class="mui-pull-right btn_share">
+        <a class="mui-pull-right btn_share" id="btn_share">
             <img src="//img.aimoge.com/Fvp6_ACzFw9KhXBG06gEjT-id2R-" alt="分享">
         </a>
         <a class="mui-pull-left btn_share" id="goBack" style="display:none">
@@ -99,10 +99,10 @@
         $(document).ready(function() {
             //分享
             if(!isWeixin()){
-                $('.btn_share').hide();
+                $('#btn_share').hide();
             }
             else{
-                 $('.btn_share').show();
+                 $('#btn_share').show();
             }
             $(".btn_share").on("click", function() {
                 $('.mui-popup-backdrop').addClass('mui-active');

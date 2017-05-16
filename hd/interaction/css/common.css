@@ -220,9 +220,9 @@ header {
 }
 
 #share {
-    width: 100px;
+    width: 300px;
     position: fixed;
-    top: 150px;
+    top: 176px;
     left: 50%;
     margin-left: -50px;
 }
@@ -234,9 +234,8 @@ header {
     right: 64px;
 }
 #share p {
-    font-size: 24px;
+    font-size: 18px;
     color: #fff;
-    opacity: 1;
 }
 
 @media (max-height: 600px) {
