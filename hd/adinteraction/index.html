@@ -97,6 +97,8 @@
             return window.navigator.userAgent.indexOf("MicroMessenger") > 0;
         }
         $(document).ready(function() {
+            let h=$(window).height();
+            $('body').css({'height':h});
             //分享
             if(!isWeixin()){
                 $('#btn_share').hide();
