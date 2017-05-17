@@ -61,6 +61,8 @@
 
 
         $(function() {
+             let h=$(window).height();
+            $('body').css({'height':h});
             $("#goBack").on("click", function() {
                 let flag = sessionStorage.getItem("flag");
                 console.log(flag);

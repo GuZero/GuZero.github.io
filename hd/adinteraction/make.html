@@ -352,7 +352,8 @@
 
         };
         $(function() {
-
+             let h=$(window).height();
+            $('body').css({'height':h});
             //文字限制
             $('#text').keyup(function() {
                 var len = $(this).val().length;
