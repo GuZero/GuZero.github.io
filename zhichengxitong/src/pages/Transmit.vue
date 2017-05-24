@@ -12,7 +12,7 @@
         div.mt44.pt50.pb60
             div.empty.f16.rel(v-if="!result.length") 无搜索结果
             div.item.rel(v-if="result.length", v-for="item in result")
-                div.box.f16.rel {{ item.name }}
+                div.box.f16.rel(@click="deal(item)") {{ item.name }}
 </template>
 
 <script>
@@ -25,7 +25,8 @@
             return {
                 pageTitle: '转发',
                 username: '',
-                result: []
+                result: [],
+                userID: ''
             }
         },
         components: {
@@ -38,25 +39,37 @@
                 if (!this.username) {
                     this.result = [];
                 } else {
-                    // this.result = [{
-                    //         _id: '00001',
-                    //         username: 'jerry'
-                    //     },
-                    //     {
-                    //         _id: '00002',
-                    //         username: 'jsonay'
-                    //     },
-                    //     {
-                    //         _id: '00003',
-                    //         username: 'Linda'
-                    //     }
-                    // ];
-                    let that=this;
-                    axios.get(ajaxUrls.user+that.username).then(function(rsp){
-                      that.result=rsp.data.data;
-                      console.log(that.result);
+                    let that = this;
+                    axios.get(ajaxUrls.user + that.username).then(function(rsp) {
+                        that.result = rsp.data.data;
                     })
                 }
+            },
+            deal(item) {
+                this.userID = item.user_id;
+                console.log(this.userID);
+                let user_id = this.userID,
+                    action = 'forward',
+                    task_id = localStorage.task_id,
+                    that = this;
+                axios.post(ajaxUrls.orderinfo + task_id + '/deal', {
+                    user_id:user_id,
+                    action:action
+                }, {
+                    withCredentials: true,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then(function(rsp) {
+                    _util.hideSysLoading();
+                    let that=this;
+                    if (rsp.data.status == 0) {
+                        _util.showErrorTip(rsp.data.msg);
+                      window.history.go(-1);
+                    } else {
+                        _util.showErrorTip(rsp.data.msg);
+                    }
+                })
             }
         }
     }

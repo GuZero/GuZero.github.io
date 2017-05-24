@@ -3,7 +3,8 @@
         HeaderBar(
             :title="pageTitle"
         )
-        div.mt44.pb60(style="margin-top: 52px;")
+        div(style="margin-top:50px;padding-left:16px;color:#828282") {{name}}
+        div.pb60
             Field(
                 tag="现场现象",
                 v-model="scene",
@@ -13,18 +14,20 @@
                 :selectText="scene",
                 :select="true",
                 :arrow="true",
-                @input="getValue"
+                @input="getValue",
+                @changeCallback="change"
+
             )
             Field(
                 tag="问题原因",
                 v-model="problem",
                 placeholder="请选择（必选",
-                :optionJsonConfig="{valuename: 'id', textname: 'name', idname: 'id'}",
+                :optionJsonConfig="{valuename: 'id', textname: 'name', idname: 'name'}",
                 :options="problems",
                 :selectText="problem",
                 :select="true",
                 :arrow="true",
-                @input="getValue"
+
             )
             Field(
                 tag="故障分类",
@@ -61,6 +64,7 @@
 <script>
     import HeaderBar from '../components/common/Header'
     import Upload from '../components/common/Upload'
+
     import Field from '../components/elements/Field'
     import SubmitBtn from '../components/elements/SubmitBtn'
 
@@ -70,6 +74,7 @@
             return {
                 bodyBg: 'dark',
                 pageTitle: '处理结果',
+                name:'',
                 scene: '',
                 scenes: [],
                 problem: '',
@@ -92,7 +97,8 @@
             HeaderBar,
             Field,
             SubmitBtn,
-            Upload
+            Upload,
+            
         },
         created() {
             this.categroys = [{
@@ -118,15 +124,22 @@
                 }
             ];
             let that = this;
+            // 获取当前工单信息
+            axios.get(ajaxUrls.orderinfo+localStorage.task_id).then(function(rsp){
+              let d=rsp.data;
+              if(d.data.terminal_name==""){
+                that.name='幸福公寓格格货栈'
+              }else{
+                that.name=d.data.terminal_name;
+              }
+
+            })
             //获取现场现象
             axios.get(ajaxUrls.option).then(function(rsp) {
                 let d = rsp.data;
                 that.scenes = d.data.appearance;
             });
             //获取故障分类
-            this.$on('changeCallback', function(text){
-                console.log(text);
-            });
             if(!that.val==""){
               let that = this;
               axios.get(ajaxUrls.fault + that.val).then(function(rsp) {
@@ -193,9 +206,17 @@
             },
             getValue(val) {
                 this.val = val;
-                console.log(this.val);
-
+            },
+            change(){
+              let that = this;
+              axios.get(ajaxUrls.fault + that.val).then(function(rsp) {
+                  let d = rsp.data;
+                  that.problems = d.data;
+                  console.log(that.problems);
+              });
             }
+
+
 
         }
     }
