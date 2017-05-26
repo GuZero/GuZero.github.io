@@ -418,15 +418,15 @@
         };
         $(function() {
             getInfo();
-            setTimeout(function() {
-                console.log(info);
-                let html = ""
-                $.each(info, function(index, obj) {
-                    html += '<li><div class="item rel"><div><p><label for="" class="c_g">提取码：</label></p><p><label for="" class="c_g">格子：</label></p><p><label for="" class="c_g">取件地址：</label></p><p><label for="" class="c_g">送达时间：</label></p></div><div><p> <span class="c_b">' + obj.password + '</span> </p><p><span>' + obj.rack_name + obj.box_name + '</span></p><p><span>' + obj.terminal_name + '</span></p><p><span>2017-04-19 14:42</span></p></div><div class="contactBtn">联系快递员</div></div><div class="shadow"></div><div class="shadow2"></div></li>'
-                })
-                $(".info ul").empty();
-                $(".info ul").append(html);
-            }, 200)
+//            setTimeout(function() {
+//                console.log(info);
+//                let html = ""
+//                $.each(info, function(index, obj) {
+//                    html += '<li><div class="item rel"><div><p><label for="" class="c_g">提取码：</label></p><p><label for="" class="c_g">格子：</label></p><p><label for="" class="c_g">取件地址：</label></p><p><label for="" class="c_g">送达时间：</label></p></div><div><p> <span class="c_b">' + obj.password + '</span> </p><p><span>' + obj.rack_name + obj.box_name + '</span></p><p><span>' + obj.terminal_name + '</span></p><p><span>2017-04-19 14:42</span></p></div><div class="contactBtn">联系快递员</div></div><div class="shadow"></div><div class="shadow2"></div></li>'
+//                })
+//                $(".info ul").empty();
+//                $(".info ul").append(html);
+//            }, 200)
 
 
         })
