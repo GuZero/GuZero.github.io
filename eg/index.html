@@ -259,6 +259,9 @@
             width: 100%;
             box-sizing: border-box;
             padding: 2% 5% 3% 5%;
+            display: flex;
+            justify-content: flex-start;
+            font-size: 12px;
         }
         
         img {
@@ -293,19 +296,30 @@
             display: block;
         }
         
+        a {
+            text-decoration: none;
+        }
+        
         ul,
         li {
             margin: 0;
             padding: 0;
+            border: medium none;
             list-style: none;
-            border: none;
         }
-        .wid25{
-            width: 25%;
+        
+        .noinfo {
+            display: none;
         }
-        .wid75{
-             width: 75%;
+        
+        .noinfo p {
+            font-size: 18px;
+            text-align: center;
+            color: #c2e0ff;
+            height: 12vh;
+            line-height: 12vh;
         }
+
     </style>
 </head>
 
@@ -314,32 +328,47 @@
         <ul>
             <li>
                 <div class="item rel">
-                    <div class="">
+                    <div>
                         <p>
-                            <label for="" class="c_g wid">提取码：</label>
-                             <span class="c_b wid75">032053</span>
+                            <label for="" class="c_g">提取码：</label>
                         </p>
                         <p>
-                            <label for="" class="c_g wid">格子：</label>
-                            <span class="wid75">03组 01号门</span>
+                            <label for="" class="c_g">格子：</label>
                         </p>
                         <p>
-                            <label for="" class="c_g wid">取件地址：</label>
-                             <span class="wid75">国家广告产业园格格货栈(建邺区国家产业园C区4栋)</span>
+                            <label for="" class="c_g">取件地址：</label>
                         </p>
                         <p>
-                            <label for="" class="c_g wid">送达时间：</label>
-                             <span class="wid75">2017-04-19 14:42</span>
+                            <label for="" class="c_g">送达时间：</label>
                         </p>
                     </div>
-                    <a class="contactBtn" href="tel:15638229562">
+                    <div>
+                        <p>
+                            <span class="c_b">032053</span>
+                        </p>
+                        <p>
+                            <span>03组 01号门</span>
+                        </p>
+                        <p>
+                            <span>今日丽园格格货栈(5号楼旁边白色柜子)</span>
+                        </p>
+                        <p>
+                            <span>2017-04-19 14:42</span>
+                        </p>
+                    </div>
+                    <div class="contactBtn">
                         联系快递员
-                    </a>
+                    </div>
                 </div>
                 <div class="shadow"></div>
                 <div class="shadow2"></div>
             </li>
         </ul>
+        <div class="noinfo">
+            <p>无待收件</p>
+            <div class="shadow"></div>
+            <div class="shadow2"></div>
+        </div>
     </div>
 
     <div id="mgAlert" class="mgAlert"></div>
@@ -390,19 +419,22 @@
             location.href = "/ebox/egg";
         };
 
+        function url1(id) {
+            location.href = "/kuaidi/delivery/info/" + id
+        }
+
         function getInfo() {
-            let cursor = '';
-            let takeid = '';
             let that = this;
             $.ajax({
                 type: "GET",
-                url: window.config.API + "/user/delivery?cursor=" + cursor + "&istake=" + takeid,
+                url: window.config.API + "/user/delivery?cursor=&istake=",
                 dataType: 'json',
                 xhrFields: {
                     withCredentials: true
                 },
                 success: function(rsp) {
                     that.info = rsp.data.deliverys;
+                    that.info.length=0;
                 },
                 error: function(d) {
                     showMsg('网络错误，请稍后再试！', 1);
@@ -410,16 +442,24 @@
             })
         };
         $(function() {
-//            getInfo();
-//            setTimeout(function() {
-//                console.log(info);
-//                let html = ""
-//                $.each(info, function(index, obj) {
-//                    html += '<li><div class="item rel"><div><p><label for="" class="c_g">提取码：</label></p><p><label for="" class="c_g">格子：</label></p><p><label for="" class="c_g">取件地址：</label></p><p><label for="" class="c_g">送达时间：</label></p></div><div><p> <span class="c_b">' + obj.password + '</span> </p><p><span>' + obj.rack_name + obj.box_name + '</span></p><p><span>' + obj.terminal_name + '</span></p><p><span>2017-04-19 14:42</span></p></div><div class="contactBtn">联系快递员</div></div><div class="shadow"></div><div class="shadow2"></div></li>'
-//                })
-//                $(".info ul").empty();
-//                $(".info ul").append(html);
-//            }, 200)
+            getInfo();
+            setTimeout(function() {
+                let html = ""
+                if (info.length > 0) {
+                    $.each(info, function(index, obj) {
+                        html += '<li data-id=' + obj.order_id + '><div class="item rel"><div><p><label for="" class="c_g">提取码：</label></p><p><label for="" class="c_g">格子：</label></p><p><label for="" class="c_g">取件地址：</label></p><p><label for="" class="c_g">送达时间：</label></p></div><div><p> <span class="c_b">' + obj.password + '</span> </p><p><span>' + obj.rack_name + '&nbsp' + obj.box_name + '</span></p><p><span>' + obj.terminal_name + '(' + obj.terminal_address.slice(6) + ')' + '</span></p><p><span>' + obj.deliver_time + '</span></p></div><a class="contactBtn" href="tel:' + obj.operator_mobile + '">联系快递员</a></div><div class="shadow"></div><div class="shadow2"></div></li>'
+                    });
+                    $(".info ul").empty();
+                    $(".info ul").append(html);
+                } else {
+                    $(".info ul").hide();
+                    $(".noinfo").show();
+                }
+                $("ul li").on('click', function() {
+                    let id = $(this).data('id');
+                    url1(id);
+                })
+            }, 200)
 
 
         })
