@@ -160,7 +160,6 @@
             position: absolute;
             border-radius: 14px;
             font-size: 13px;
-        
         }
         
         .day {
@@ -170,7 +169,7 @@
             right: 5%;
             padding: 0 2%;
             border-radius: 22px;
-             background-color: rgba(40, 40, 40, 0.6);
+            background-color: rgba(40, 40, 40, 0.6);
             font-size: 13px;
             text-align: center;
             color: #fff;
@@ -259,7 +258,7 @@
         .info div.item {
             width: 100%;
             box-sizing: border-box;
-            padding: 2% 5% 3% 5%;
+            padding: 0 5% 3% 5%;
             display: flex;
             justify-content: flex-start;
         }
@@ -271,28 +270,34 @@
         .shadow {
             height: 15px;
             background: -webkit-linear-gradient(top, #e1e9f6, #fefefe 80%);
-            background:  -moz-linear-gradient(top, #e1e9f6, #fefefe 80%);
+            background: -moz-linear-gradient(top, #e1e9f6, #fefefe 80%);
         }
         
         .shadow2 {
             height: 15px;
             background: -webkit-linear-gradient(top, #fefefe 30%, #e1e9f6);
-            background:  -moz-linear-gradient(top, #fefefe 30%, #e1e9f6);
+            background: -moz-linear-gradient(top, #fefefe 30%, #e1e9f6);
         }
         
         .contactBtn {
             background: #4285f4;
             color: #fff;
-            padding: 0 5%; 
+            padding: 0 5%;
             text-align: center;
             height: 30px;
             line-height: 32px;
             border-radius: 16px;
             position: absolute;
-            bottom: 8%;
+            bottom: -12%;
             right: 5%;
             box-sizing: border-box;
             font-size: 15px;
+        }
+        
+        ul,
+        li {
+            margin: 0;
+            padding: 0;
         }
 
     </style>
@@ -300,48 +305,52 @@
 
 <body>
     <div class="info">
-        <div class="item">
-            <div>
-                <p>
-                    <label for="" class="c_g">提取码：</label>
-                </p>
-                <p>
-                    <label for="" class="c_g">格子：</label>
-                </p>
-                <p>
-                    <label for="" class="c_g">取件地址：</label>
-                </p>
-                <p>
-                    <label for="" class="c_g">送达时间：</label>
-                </p>
-            </div>
-            <div>
-                <p>
-                    <span class="c_b">032053</span>
-                </p>
-                <p>
-                    <span>03组 01号门</span>
-                </p>
-                <p>
-                    <span>今日丽园格格货栈(5号楼旁边白色柜子)</span>
-                </p>
-                <p>
-                    <span>2017-04-19 14:42</span>
-                </p>
-            </div>
-        </div>
-        <div class="contactBtn">
-            联系快递员
-        </div>
-        <div class="shadow"></div>
-        <div class="shadow2"></div>
+        <ul>
+            <li>
+                <div class="item rel">
+                    <div>
+                        <p>
+                            <label for="" class="c_g">提取码：</label>
+                        </p>
+                        <p>
+                            <label for="" class="c_g">格子：</label>
+                        </p>
+                        <p>
+                            <label for="" class="c_g">取件地址：</label>
+                        </p>
+                        <p>
+                            <label for="" class="c_g">送达时间：</label>
+                        </p>
+                    </div>
+                    <div>
+                        <p>
+                            <span class="c_b">032053</span>
+                        </p>
+                        <p>
+                            <span>03组 01号门</span>
+                        </p>
+                        <p>
+                            <span>今日丽园格格货栈(5号楼旁边白色柜子)</span>
+                        </p>
+                        <p>
+                            <span>2017-04-19 14:42</span>
+                        </p>
+                    </div>
+                    <div class="contactBtn">
+                        联系快递员
+                    </div>
+                </div>
+                <div class="shadow"></div>
+                <div class="shadow2"></div>
+            </li>
+        </ul>
     </div>
 
     <div id="mgAlert" class="mgAlert"></div>
     <div class="layer fixed" id="layer" onclick="hideRule();"></div>
-    
+
     <div id="container" class="container rel">
-       <div class="rule  center" id="rule" onclick="url();">购买规则></div>
+        <div class="rule  center" id="rule" onclick="url();">购买规则></div>
         <div class="img rel">
             <img src="//img.aimoge.com/FgsXp_pnquetOCrGU5JRoVLKfYgF" />
             <img src="//img.aimoge.com/Fs6jZvt97rJGt_k2pET-iThc_XZU" />
@@ -357,16 +366,68 @@
             <img src="//img.aimoge.com/FnpDpDb1mILtORIGz75X2JN86Emx" />
         </div>
         <div class="img rel">
-             <img src="//img.aimoge.com/Frlbx-HUSSilDbiFLOQ_AwoZxkCT">
-        </div>      
+            <img src="//img.aimoge.com/Frlbx-HUSSilDbiFLOQ_AwoZxkCT">
+        </div>
     </div>
     <script type="text/javascript">
-        function url(){
-             location.href = "/ebox/egg";
-        }
-        $(function(){
-           
+        window.config = {
+            'API': '{{ settings.PREFIX_API|autodomain }}'
+        };
+        var timer = null;
+        var info = [];
+
+        function showMsg(msg, type) {
+            var tclass = type == 1 ? 'mgAlert-error' : 'mgAlert-success',
+                dom = $('#mgAlert')[0];
+            dom.setAttribute('class', 'mgAlert ' + tclass + ' mshow');
+            dom.innerHTML = msg;
+            if (timer) {
+                clearTimeout(timer);
+            }
+            timer = setTimeout(function() {
+                dom.setAttribute('class', 'mgAlert');
+                dom.innerHTML = '';
+            }, 1500);
+        };
+
+        function url() {
+            location.href = "/ebox/egg";
+        };
+
+        function getInfo() {
+            let cursor = '';
+            let takeid = '';
+            let that = this;
+            $.ajax({
+                type: "GET",
+                url: window.config.API + "/user/delivery?cursor=" + cursor + "&istake=" + takeid,
+                dataType: 'json',
+                xhrFields: {
+                    withCredentials: true
+                },
+                success: function(rsp) {
+                    that.info = rsp.data.deliverys;
+                },
+                error: function(d) {
+                    showMsg('网络错误，请稍后再试！', 1);
+                }
+            })
+        };
+        $(function() {
+            getInfo();
+            setTimeout(function() {
+                console.log(info);
+                let html = ""
+                $.each(info, function(index, obj) {
+                    html += '<li><div class="item rel"><div><p><label for="" class="c_g">提取码：</label></p><p><label for="" class="c_g">格子：</label></p><p><label for="" class="c_g">取件地址：</label></p><p><label for="" class="c_g">送达时间：</label></p></div><div><p> <span class="c_b">' + obj.password + '</span> </p><p><span>' + obj.rack_name + obj.box_name + '</span></p><p><span>' + obj.terminal_name + '</span></p><p><span>2017-04-19 14:42</span></p></div><div class="contactBtn">联系快递员</div></div><div class="shadow"></div><div class="shadow2"></div></li>'
+                })
+                $(".info ul").empty();
+                $(".info ul").append(html);
+            }, 200)
+
+
         })
+
     </script>
 </body>
 
