@@ -61,7 +61,7 @@
         }
         
         p {
-            margin: 6px 0;
+            margin: 2px 0;
         }
         
         p.small {
@@ -163,7 +163,7 @@
         }
         
         .day {
-            bottom: 4px;
+            bottom: 20%;
             height: 28px;
             line-height: 28px;
             right: 5%;
@@ -173,74 +173,7 @@
             font-size: 13px;
             text-align: center;
             color: #fff;
-        }
-        
-        .ruleBox {
-            display: none;
-            background-color: rgba(0, 0, 0, 0.72);
-            z-index: 501;
-            top: 16%;
-            width: 80%;
-            left: 50%;
-            margin-left: -40%;
-            height: 400px;
-            border-radius: 22px;
-            box-sizing: border-box;
-            padding: 20px 6%;
-        }
-        
-        .ruleBox .content {
-            color: #fff;
-            overflow: auto;
-            height: 364px;
-            font-size: 14px;
-        }
-        
-        .ruleBox a {
-            color: #f60;
-        }
-        
-        .ruleBox .item {
-            padding-left: 78px;
-            margin-bottom: 12px;
-        }
-        
-        .ruleBox .tag {
-            left: 0;
-            top: 0;
-        }
-        
-        .ruleBox .p {
-            margin: 0;
-            margin-bottom: 8px;
-        }
-        
-        .ruleBox .close {
-            right: 4px;
-            top: 0;
-            color: #fff;
-            height: 34px;
-            width: 34px;
-            background: url('//img.aimoge.com/FoYNdTeVhz8nLlaSBU1zhcdO6ccd') no-repeat;
-            background-position: center center;
-            background-size: 17px 17px;
-        }
-        
-        ol {
-            padding-left: 20px;
-        }
-        
-        .a-img {
-            display: block;
-        }
-        
-        .coupon-img {
-            width: 50%;
-            float: left;
-        }
-        
-        .coupon-widget {
-            overflow: hidden;
+            z-index: 111;
         }
         
         .c_g {
@@ -286,13 +219,13 @@
             padding: 0 5%;
             text-align: center;
             height: 30px;
-            line-height: 32px;
+            line-height: 30px;
             border-radius: 16px;
             position: absolute;
-            bottom: -12%;
+            bottom: -14%;
             right: 5%;
             box-sizing: border-box;
-            font-size: 15px;
+            font-size: 14px;
             display: block;
         }
         
@@ -301,11 +234,20 @@
         }
         
         ul,
-        li {
+        li{
             margin: 0;
             padding: 0;
             border: medium none;
             list-style: none;
+        }
+        
+        .text {
+            display: block;
+            width: 80%;
+            word-break: keep-all;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         
         .noinfo {
@@ -319,7 +261,12 @@
             height: 12vh;
             line-height: 12vh;
         }
-
+        .w22{
+           width: 22%; 
+        }
+        .w78{
+           width: 78%; 
+        }
     </style>
 </head>
 
@@ -377,22 +324,25 @@
     <div id="container" class="container rel">
         <div class="rule  center" id="rule" onclick="url();">购买规则></div>
         <div class="img rel">
-            <img src="//img.aimoge.com/FgsXp_pnquetOCrGU5JRoVLKfYgF" />
-            <img src="//img.aimoge.com/Fs6jZvt97rJGt_k2pET-iThc_XZU" />
-            <img src="//img.aimoge.com/FinlIB2CWXbmjJpgzTXOoHSXS5fW" />
-            <img src="//img.aimoge.com/FmhV5PTnVNUcMPu9QeJo6ZiAH-IN" />
-            <img src="//img.aimoge.com/FuCIn4vceuT6qUa61FUHV9SfUPMs" />
+            <img src="//img.aimoge.com/Fg5FPb5NeydVe0PFaMqQ0zIibYM3" />
+            <img src="//img.aimoge.com/FnvDEaSRiEjJLIi1h47df0ucZC80" />
+            <img src="//img.aimoge.com/Fn3KCN_tEn4R1fuajiBgiFueYR6I" />
+            <img src="//img.aimoge.com/Fvd6vX67MQCisJij8EzRSn_Ixv4b" />
+<!--            <img src="//img.aimoge.com/FuCIn4vceuT6qUa61FUHV9SfUPMs" />-->
         </div>
-        <div class="img rel">
-            <img src="//img.aimoge.com/FokyD6pAgEuyAKsboX9zopo9bNhV" />
-            <div class="day abs center" onclick="url();">了解派送日></div>
+        <div class="day abs center" onclick="url();">了解派送日></div>
+        <div class="img rel " onclick="url();">
+            <img src="//img.aimoge.com/Fs4oaqZEteLgSA_RHGCAu2rYurYk" />
+           
         </div>
+<!--
         <div class="img rel" onclick="url();">
             <img src="//img.aimoge.com/FnpDpDb1mILtORIGz75X2JN86Emx" />
         </div>
         <div class="img rel">
             <img src="//img.aimoge.com/Frlbx-HUSSilDbiFLOQ_AwoZxkCT">
         </div>
+-->
     </div>
     <script type="text/javascript">
         window.config = {
@@ -447,7 +397,7 @@
                 let html = ""
                 if (info.length > 0) {
                     $.each(info, function(index, obj) {
-                        html += '<li data-id=' + obj.order_id + '><div class="item rel"><div><p><label for="" class="c_g">提取码：</label></p><p><label for="" class="c_g">格子：</label></p><p><label for="" class="c_g">取件地址：</label></p><p><label for="" class="c_g">送达时间：</label></p></div><div><p> <span class="c_b">' + obj.password + '</span> </p><p><span>' + obj.rack_name + '&nbsp' + obj.box_name + '</span></p><p><span>' + obj.terminal_name + '(' + obj.terminal_address.slice(6) + ')' + '</span></p><p><span>' + obj.deliver_time + '</span></p></div><a class="contactBtn" href="tel:' + obj.operator_mobile + '">联系快递员</a></div><div class="shadow"></div><div class="shadow2"></div></li>'
+                        html += '<li data-id=' + obj.order_id + '><div class="item rel"><div class="w22"><p><label for="" class="c_g">提取码：</label></p><p><label for="" class="c_g">格子：</label></p><p><label for="" class="c_g">取件地址：</label></p><p><label for="" class="c_g">送达时间：</label></p></div><div class="w78"><p> <span class="c_b">' + obj.password + '</span> </p><p><span>' + obj.rack_name + '&nbsp' + obj.box_name + '</span></p><p class="text"><span>' + obj.terminal_name + '(' + obj.terminal_address.slice(6) + ')' + '</span></p><p><span>' + obj.deliver_time + '</span></p></div><a class="contactBtn" href="tel:' + obj.operator_mobile + '">联系快递员</a></div><div class="shadow"></div><div class="shadow2"></div></li>'
                     });
                     $(".info ul").empty();
                     $(".info ul").append(html);
