@@ -266,6 +266,7 @@
         }
         .w78{
            width: 78%; 
+            position: fixed;
         }
     </style>
 </head>
@@ -403,6 +404,7 @@
                     $(".info ul").append(html);
                 } else {
                     $(".info ul").hide();
+                    $("#container").css({'position':'fixed','bottom':'0'})
                     $(".noinfo").show();
                 }
                 $("ul li").on('click', function() {
