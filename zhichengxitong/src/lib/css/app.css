@@ -33,7 +33,7 @@ body {
 }
 
 .rel {
-    position: relative;
+    position: relative ;
 }
 
 .abs {
@@ -600,7 +600,7 @@ body {
 
 /*终端详情*/
 .footer .basic {
-    
+
     background-image: url('//img.aimoge.com/Ft9NvBA28rPsjMzwoBjBAuLsXenk');
 }
 .footer .basic:after,

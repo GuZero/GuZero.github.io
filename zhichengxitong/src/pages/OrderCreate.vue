@@ -12,9 +12,10 @@
                 :options="ordertypes",
                 :selectText="ordertype",
                 :select="true",
-                :arrow="true"
+                :arrow="true",
+                @input="getID"
             )
-            Field(tag="终端名称", placeholder="请输入终端名称（必填）", v-model.trim="terminalName", :input="true")
+            Field(tag="终端名称", placeholder="请输入终端名称（必填）", v-model.trim="terminalName", :input="true", @focus="goInfo")
             Field(
                 tag="现场现象",
                 v-model="scene",
@@ -27,10 +28,9 @@
                 @input="getValue",
                 @changeCallback="testChange"
             )
-
             Field(tag="故障等级", :pvalue="fault", :p="true")
-            Field(tag="超时设置", :pvalue="overtime", :input="true")
-            Field(tag="问题描述", placeholder="请输入问题描述", v-model.trim="desc", :textarea="true")
+            Field(tag="超时设置", placeholder="请选择超时间", :input="true" v-model="overtime")
+            Field(tag="问题描述", placeholder="请输入问题描述", v-model.trim="desc", :textarea="true")           
         SubmitBtn(@submitCallback="submitFun", text="提交", theme="white")
 
 
@@ -40,6 +40,9 @@
     import HeaderBar from '../components/common/Header'
     import Field from '../components/elements/Field'
     import SubmitBtn from '../components/elements/SubmitBtn'
+    //    import calendar from '../components/common/calendar'
+
+
 
 
     export default {
@@ -54,26 +57,28 @@
                 scene: '',
                 scenes: [],
                 fault: '（系统根据现场现象自动选择）',
-                overtime: '（系统根据现场现象自动选择）',
+                overtime: '2017-05-31 14:35',
                 desc: '',
-                val: ''
+                val: '',
+                project_id: '',
+                state: ''
+
             }
         },
         components: {
             HeaderBar,
             Field,
-            SubmitBtn
+            SubmitBtn,
+
         },
         created() {
             //请求数据
             this.ordertypes = [{
-                    id: '001',
-                    value: '000001',
+                    id: '1',
                     name: '普通工单'
                 },
                 {
-                    id: '002',
-                    value: '000002',
+                    id: '2',
                     name: '运维工单'
                 }
             ];
@@ -83,7 +88,7 @@
             axios.get(ajaxUrls.option).then(function(rsp) {
                 let d = rsp.data;
                 that.scenes = d.data.appearance;
-                console.log(that.scenes);
+                //                console.log(that.scenes);
             });
         },
         methods: {
@@ -91,36 +96,85 @@
                 if (this.ordertype.indexOf('选择') > -1) {
                     _util.showErrorTip('请选择工单类型！');
                     return false;
-                }
+                };
                 if (!this.terminalName) {
                     _util.showErrorTip('请输入终端名称！');
                     return false;
-                }
+                };
                 if (this.scene.indexOf('选择') > -1) {
                     _util.showErrorTip('请选择现场现象！');
                     return false;
-                }
+                };
                 if (!this.desc) {
                     _util.showErrorTip('请输入问题描述！');
                     return false;
-                }
+                };
+                let project_id = this.project_id,
+                    terminal_code = this.terminalName,
+                    appearance = this.val,
+                    timeout = this.overtime,
+                    state = this.state,
+                    content = this.desc;
+
+                axios.post(ajaxUrls.task, {
+                    project_id: project_id,
+                    terminal_code: terminal_code,
+                    appearance: appearance,
+                    timeout: timeout,
+                    state: state,
+                    content: content
+                }, {
+                    withCredentials: true,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then(function(rsp) {
+                    _util.hideSysLoading();
+                    console.log(rsp.data)
+                    if (rsp.data.status == 0) {
+                        _util.showErrorTip(rsp.data.msg);
+                    } else {
+                        _util.showErrorTip(rsp.data.msg);
+                    }
+                })
             },
             testChange() {
                 for (let i = 0; i < this.scenes.length; i++) {
                     for (let item in this.scenes[i]) {
                         if (item == 'id') {
                             if (this.scenes[i].id == this.val) {
-                                this.fault = this.scenes[i].level;
-                                console.log(this.fault);
+                                this.state = this.scenes[i].level
+                                switch (this.state) {
+                                    case 1:
+                                        this.fault = '一级故障'
+                                        break;
+                                    case 1:
+                                        this.fault = '二级故障'
+                                        break;
+                                    case 1:
+                                        this.fault = '三级故障'
+                                        break;
+                                    default:
+                                        break;
+                                }
                             }
                         }
                     }
                 }
             },
+            //获取工单类型ID
+            getID(val) {
+                this.project_id = val;
+            },
             getValue(val) {
                 this.val = val;
-                console.log(this.val)
-            }
+                //                console.log(this.val)
+            },
+            goInfo() {
+                console.log("00");
+                this.url('/searchterminal');
+            },
+
         }
     }
 

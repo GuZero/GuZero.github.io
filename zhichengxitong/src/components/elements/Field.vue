@@ -54,7 +54,7 @@
             getOptionKey(value, optionJsonConfig, options) {
                 let result = null;
                 for (let i = 0, len = options.length; i < len; i++) {
-                    if (options[i][optionJsonConfig.valuename] == value) {
+                    if (options[i][optionJsonConfig.idname] == value) {
                         result = options[i][optionJsonConfig.textname];
                         break;
                     }

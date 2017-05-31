@@ -10,6 +10,8 @@ module.exports = {
     searchTerminal: window.config.API + '/v1/terminals?terminal_name=',
     //列出工单
     tasks: window.config.API+'/v1/tasks?',
+    //提交工单
+    task: window.config.API+'/v1/tasks',
     //列出我待办的工单数量
     num:window.config.API+'/v1/tasks/my',
     //查看工单详情
@@ -20,6 +22,8 @@ module.exports = {
     fault:window.config.API+'/v1/tasks/troubles?appearance_id=',
     //搜索用户
     user:window.config.API+'/v1/users?name=',
+    //搜索手机号或终端名称
+    search:window.config.API+'/v1/delivery/orders?'
 
 
 

@@ -22,11 +22,13 @@
                 tag="问题原因",
                 v-model="problem",
                 placeholder="请选择（必选",
-                :optionJsonConfig="{valuename: 'id', textname: 'name', idname: 'name'}",
+                :optionJsonConfig="{valuename: 'name', textname: 'name', idname: 'id'}",
                 :options="problems",
                 :selectText="problem",
                 :select="true",
                 :arrow="true",
+                @input="getValue1",
+                @changeCallback="change1"
 
             )
             Field(
@@ -37,7 +39,8 @@
                 :options="categroys",
                 :selectText="categroy",
                 :select="true",
-                :arrow="true"
+                :arrow="true",
+                @input="getValue2"
             )
             Field(
                 tag="处理结果",
@@ -54,7 +57,8 @@
                 :options="logs",
                 :selectText="log",
                 :select="true",
-                :arrow="true"
+                :arrow="true",
+                @input="getValue3"
             )
             Field(tag="处理方式", placeholder="请输入处理方式", v-model.trim="desc", :textarea="true")
             Upload(id="up1", ref="up1")
@@ -64,7 +68,6 @@
 <script>
     import HeaderBar from '../components/common/Header'
     import Upload from '../components/common/Upload'
-
     import Field from '../components/elements/Field'
     import SubmitBtn from '../components/elements/SubmitBtn'
 
@@ -74,7 +77,7 @@
             return {
                 bodyBg: 'dark',
                 pageTitle: '处理结果',
-                name:'',
+                name: '',
                 scene: '',
                 scenes: [],
                 problem: '',
@@ -90,7 +93,8 @@
                 reason: "",
                 yunwei_type: "",
                 hasCatchLogZh: "",
-                _id: this.$route.query._id || ''
+                _id: this.$route.query._id || '',
+                cause_id: ""
             }
         },
         components: {
@@ -98,22 +102,9 @@
             Field,
             SubmitBtn,
             Upload,
-            
+
         },
         created() {
-            this.categroys = [{
-                    id: '001',
-                    name: 'categroys1'
-                },
-                {
-                    id: '002',
-                    name: 'categroys2'
-                },
-                {
-                    id: '003',
-                    name: 'categroys3'
-                }
-            ];
             this.logs = [{
                     id: '1',
                     name: '是',
@@ -125,29 +116,22 @@
             ];
             let that = this;
             // 获取当前工单信息
-            axios.get(ajaxUrls.orderinfo+localStorage.task_id).then(function(rsp){
-              let d=rsp.data;
-              if(d.data.terminal_name==""){
-                that.name='幸福公寓格格货栈'
-              }else{
-                that.name=d.data.terminal_name;
-              }
+            axios.get(ajaxUrls.orderinfo + localStorage.task_id).then(function(rsp) {
+                let d = rsp.data;
+                if (d.data.terminal_name == "") {
+                    that.name = '幸福公寓格格货栈'
+                } else {
+                    that.name = d.data.terminal_name;
+                }
 
             })
             //获取现场现象
             axios.get(ajaxUrls.option).then(function(rsp) {
                 let d = rsp.data;
                 that.scenes = d.data.appearance;
+//                                console.log(that.scenes);
             });
-            //获取故障分类
-            if(!that.val==""){
-              let that = this;
-              axios.get(ajaxUrls.fault + that.val).then(function(rsp) {
-                  let d = rsp.data;
-                  that.problems = d.data;
-                  console.log(that.problems);
-              });
-            }
+
         },
 
         methods: {
@@ -176,12 +160,12 @@
                     _util.showErrorTip('请输入处理方式！');
                     return false;
                 }
-                if (!$(this.$refs.up1.$el).find('.uploadifive-queue-item.complete').length) {
-                    _util.showErrorTip('请上传图片！');
-                    return false;
-                };
+//                if (!$(this.$refs.up1.$el).find('.uploadifive-queue-item.complete').length) {
+//                    _util.showErrorTip('请上传图片！');
+//                    return false;
+//                };
                 let appearance = this.val,
-                    reason = this.reason,
+                    reason = this.cause_id,
                     yunwei_type = this.yunwei_type,
                     remark = this.result,
                     hasCatchLogZh = this.hasCatchLogZh,
@@ -189,7 +173,12 @@
                     task_id = localStorage.task_id,
                     that = this;
                 axios.post(ajaxUrls.orderinfo + task_id + '/close', {
-
+                    appearance:appearance,
+                    reason:reason,
+                    yunwei_type:yunwei_type,
+                    remark:remark,
+                    hasCatchLogZh:hasCatchLogZh,
+                    deal:deal                    
                 }, {
                     withCredentials: true,
                     headers: {
@@ -197,6 +186,7 @@
                     }
                 }).then(function(rsp) {
                     _util.hideSysLoading();
+                    console.log(rsp.data)
                     if (rsp.data.status == 0) {
                         _util.showErrorTip(rsp.data.msg);
                     } else {
@@ -204,16 +194,60 @@
                     }
                 })
             },
+            //获取现象原因的ID
             getValue(val) {
                 this.val = val;
+//                console.log(this.val);
             },
-            change(){
-              let that = this;
-              axios.get(ajaxUrls.fault + that.val).then(function(rsp) {
-                  let d = rsp.data;
-                  that.problems = d.data;
-                  console.log(that.problems);
-              });
+           //获取问题原因的ID
+            getValue1(val) {
+                this.cause_id = val;
+//                                console.log(this.cause_id);
+            },
+            //获取故障原因的ID
+            getValue2(val) {
+                 this.yunwei_type = val;
+//                                console.log(this.yunwei_type);
+            },
+            //是否抓取日志
+            getValue3(val){
+                this.hasCatchLogZh=val;
+//                console.log(this.hasCatchLogZh);
+            },
+            change() {
+                let that = this;
+                that.categroy = "";
+                //获取问题原因
+                axios.get(ajaxUrls.fault + that.val).then(function(rsp) {
+                    let d = rsp.data;
+                    that.problems = d.data;
+                    if (that.problems.length == 1) {
+                        that.getValue1(d.data[0].id)
+                        that.change1();
+                        that.problem = d.data[0].name;
+
+                    } else {
+                        that.problem = "";
+
+                    }
+                    //                    console.log(that.problems);
+                });
+            },
+            change1() {
+                let that = this;
+                //获取故障分类
+                axios.get(ajaxUrls.fault + that.cause_id).then(function(rsp) {
+                    let d = rsp.data;
+                    that.categroys = d.data;
+                    if (that.categroys.length == 1) {
+                        that.getValue2(d.data[0].id);
+                        that.categroy = d.data[0].name;
+                         
+                    } else {
+                        that.categroy = "";
+                    }
+//                    console.log(that.categroys);
+                });
             }
 
 

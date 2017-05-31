@@ -15,6 +15,7 @@ const AdInfo = r => require.ensure([], () => r(require('../pages/AdInfo')), 'AdI
 const EquipmentInfo = r => require.ensure([], () => r(require('../pages/EquipmentInfo')), 'EquipmentInfo');
 const Journal = r => require.ensure([], () => r(require('../pages/Journal')), 'Journal');
 const BasicInfo = r => require.ensure([], () => r(require('../pages/BasicInfo')), 'BasicInfo');
+const SearchTerminal = r => require.ensure([], () => r(require('../pages/SearchTerminal')), 'SearchTerminal');
 
 Vue.use(VueRouter)
 
@@ -65,11 +66,23 @@ export default new VueRouter({
             path: '/terminal/:code',
             name: 'TerminalInfo',
             component: TerminalInfo,
-            children:[
-                { path: '', component: BasicInfo,},
-                { path: 'equipmentinfo', component: EquipmentInfo },
-                { path: 'journal', component: Journal },
-                { path: 'adinfo', component: AdInfo },
+            children: [
+                {
+                    path: '',
+                    component: BasicInfo,
+                },
+                {
+                    path: 'equipmentinfo',
+                    component: EquipmentInfo
+                },
+                {
+                    path: 'journal',
+                    component: Journal
+                },
+                {
+                    path: 'adinfo',
+                    component: AdInfo
+                },
             ]
         }
         , {
@@ -89,6 +102,11 @@ export default new VueRouter({
             meta: {
                 requiresAuth: false
             }
+        }, {
+            path: '/searchterminal',
+            name: 'SearchTerminal',
+            component: SearchTerminal
         }
+
     ]
 })
