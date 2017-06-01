@@ -135,7 +135,7 @@
                 // console.log(localStorage.task_id);
                 setTimeout(function() {
                     axios.get(ajaxUrls.orderinfo + localStorage.task_id).then(function(rsp) {
-                        // console.log(rsp.data.data);
+                        console.log(rsp.data.data);
                         let d = rsp.data;
                         d.data.terminal_name='东亚逸品加装格格货栈';
                         d.data.level='一级故障';

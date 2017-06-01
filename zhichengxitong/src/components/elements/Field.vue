@@ -11,7 +11,8 @@
                 :value="value",
                 :type="type || 'text'",
                 :placeholder="placeholder",
-                :maxlength="maxlength"
+                :maxlength="maxlength",
+                @focus="$emit('changeCallback')"
             )
             textarea(
                 v-if="textarea",

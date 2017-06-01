@@ -13,11 +13,13 @@
             div.empty.f16.rel(v-if="!result.length") 无搜索结果
             div.item.rel(v-if="result.length", v-for="item in result")
                 div.box.f16.rel(@click="deal(item)") {{ item.name }}
+        ModalDialog(ref="showalert", @confirmCallback="deal")
 </template>
 
 <script>
     import HeaderBar from '../components/common/Header'
     import Search from '../components/common/Search'
+    import ModalDialog from '../components/elements/ModalDialog'
 
     export default {
         mixins: [require('../components/mixin/BodyBg')],
@@ -26,14 +28,15 @@
                 pageTitle: '转发',
                 username: '',
                 result: [],
-                userID: ''
+                userID: '',
+                name:''
             }
         },
         components: {
             HeaderBar,
-            Search
+            Search,
+            ModalDialog,
         },
-        mounted() {},
         methods: {
             searchByKey() {
                 if (!this.username) {
@@ -47,7 +50,7 @@
             },
             deal(item) {
                 this.userID = item.user_id;
-                console.log(this.userID);
+                this.name=item.name;
                 let user_id = this.userID,
                     action = 'forward',
                     task_id = localStorage.task_id,
@@ -62,15 +65,24 @@
                     }
                 }).then(function(rsp) {
                     _util.hideSysLoading();
-                    let that=this;
                     if (rsp.data.status == 0) {
                         _util.showErrorTip(rsp.data.msg);
-                      window.history.go(-1);
+                        that.goInfo(task_id);
                     } else {
                         _util.showErrorTip(rsp.data.msg);
                     }
                 })
-            }
+            },
+            showAlert(item){
+              this.$refs.showalert.showModal({
+                  title: item.name,
+                  hideText: true
+              });
+            },
+            goInfo(_id) {
+                this.url('/order/' + _id);
+            },
+
         }
     }
 

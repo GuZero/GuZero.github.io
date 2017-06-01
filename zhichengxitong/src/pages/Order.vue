@@ -67,13 +67,14 @@ div.home
                 num: '',
                 filter: '',
                 page: 1,
-								flag:true,
+                flag: true,
                 scroll_load_loading: false,
                 scroll_load_end: false,
                 list: [],
                 list1: [],
                 list2: [],
-                list3: []
+                list3: [],
+                searchInfo: []
             }
         },
         components: {
@@ -83,9 +84,22 @@ div.home
         },
         created() {
             this.fetchData();
+            this.searchInfo = [{
+                id: '01',
+                value: '存件订单'
+            }, {
+                id: '02',
+                value: '寄件订单'
+            }, {
+                id: '03',
+                value: '丰巢寄件'
+            }, {
+                id: '04',
+                value: '菜鸟寄件'
+            }]
         },
         mounted() {
-					  window.localStorage.setItem('task_id', '1');
+            window.localStorage.setItem('task_id', '1');
             window.addEventListener('scroll', this.handleScroll);
         },
         activated() { //开启<keep-alive>，会触发activated事件
@@ -167,7 +181,7 @@ div.home
             goInfo(_id) {
 
                 localStorage.task_id = _id;
-								this.flag=false;
+                this.flag = false;
                 this.url('/order/' + _id);
             },
             handleScroll() { //滚动加载监听事件
@@ -179,20 +193,20 @@ div.home
                 let that = this,
                     page = that.page;
                 if (that.activeTab == '0') {
-									if(this.flag){
-										that.showLoading();
-										that.scroll_load_loading = true;
-										axios.get(ajaxUrls.tasks + 'page=' + page).then(function(rsp) {
-												let d = rsp.data;
-												that.hideLoading();
-												for (let i = 0; i < d.data.length; i++) {
-														d.data[i].head = '//img.aimoge.com/FlJ81rMZKlvsiYP-EXr3P492r4ZS';
-												}
-												that.scroll_load_loading = false;
-												that.list = that.list.concat(d.data);
-												that.page += 1;										
-										})
-									}
+                    if (this.flag) {
+                        that.showLoading();
+                        that.scroll_load_loading = true;
+                        axios.get(ajaxUrls.tasks + 'page=' + page).then(function(rsp) {
+                            let d = rsp.data;
+                            that.hideLoading();
+                            for (let i = 0; i < d.data.length; i++) {
+                                d.data[i].head = '//img.aimoge.com/FlJ81rMZKlvsiYP-EXr3P492r4ZS';
+                            }
+                            that.scroll_load_loading = false;
+                            that.list = that.list.concat(d.data);
+                            that.page += 1;
+                        })
+                    }
                 }
 
 
@@ -226,7 +240,17 @@ div.home
     .pt50 {
         padding-top: 43px;
     }
-
+    
+    .search {
+        background: #8c8c8c;
+        position: absolute;
+        right: 0px;
+        li {
+            height: 25px;
+            color: #fff;
+        }
+    }
+    
     .nav {
         background-color: #fff;
         border-bottom: 1px $cf solid;
@@ -256,7 +280,7 @@ div.home
             }
         }
     }
-
+    
     .add {
         background: url(//img.aimoge.com/Fq2jHaTMAD8ds8JCcZjYEXHBAERN) 0 0 no-repeat;
         background-size: 100%;
@@ -271,7 +295,7 @@ div.home
             opacity: .6;
         }
     }
-
+    
     .item {
         padding: 0 0 0 0;
         &:active {

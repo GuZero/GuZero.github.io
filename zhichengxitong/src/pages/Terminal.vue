@@ -356,7 +356,7 @@
                         if (this.scroll_load_end && this.$refs.loading) {
                             return this.showLoadEnd();
                         } else {
-                            console.log('开始加载');
+                           
                             if (this.tabIndex == 2) this.loadTerminalData();
                         }
                     }

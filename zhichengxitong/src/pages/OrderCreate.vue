@@ -15,7 +15,7 @@
                 :arrow="true",
                 @input="getID"
             )
-            Field(tag="终端名称", placeholder="请输入终端名称（必填）", v-model.trim="terminalName", :input="true", @focus="goInfo")
+            Field(tag="终端名称", placeholder="请输入终端名称（必填）", v-model="terminalName", :input="true", @changeCallback="goInfo")
             Field(
                 tag="现场现象",
                 v-model="scene",
@@ -30,7 +30,7 @@
             )
             Field(tag="故障等级", :pvalue="fault", :p="true")
             Field(tag="超时设置", placeholder="请选择超时间", :input="true" v-model="overtime")
-            Field(tag="问题描述", placeholder="请输入问题描述", v-model.trim="desc", :textarea="true")           
+            Field(tag="问题描述", placeholder="请输入问题描述", v-model.trim="desc", :textarea="true")
         SubmitBtn(@submitCallback="submitFun", text="提交", theme="white")
 
 
@@ -53,23 +53,22 @@
                 pageTitle: '创建/修改工单',
                 ordertype: '',
                 ordertypes: [],
-                terminalName: '',
+                terminalName:"",
                 scene: '',
                 scenes: [],
                 fault: '（系统根据现场现象自动选择）',
-                overtime: '2017-05-31 14:35',
+                overtime: '2017-06-2 14:35',
                 desc: '',
                 val: '',
                 project_id: '',
-                state: ''
-
+                state: '',
+                flag:false
             }
         },
         components: {
             HeaderBar,
             Field,
             SubmitBtn,
-
         },
         created() {
             //请求数据
@@ -82,7 +81,12 @@
                     name: '运维工单'
                 }
             ];
-
+            if(localStorage.terminal_name){
+                this.terminalName="";
+            }else{
+              window.localStorage.setItem('terminal_name',"");
+              window.localStorage.setItem('terminal_code',"");
+            }
             let that = this;
             //获取现场现象
             axios.get(ajaxUrls.option).then(function(rsp) {
@@ -90,6 +94,9 @@
                 that.scenes = d.data.appearance;
                 //                console.log(that.scenes);
             });
+        },
+        watch:{
+          '$route':'setName'
         },
         methods: {
             submitFun() {
@@ -110,7 +117,7 @@
                     return false;
                 };
                 let project_id = this.project_id,
-                    terminal_code = this.terminalName,
+                    terminal_code =localStorage.terminal_code,
                     appearance = this.val,
                     timeout = this.overtime,
                     state = this.state,
@@ -171,9 +178,12 @@
                 //                console.log(this.val)
             },
             goInfo() {
-                console.log("00");
                 this.url('/searchterminal');
             },
+            setName(){
+
+              this.terminalName=localStorage.terminal_name;
+            }
 
         }
     }
