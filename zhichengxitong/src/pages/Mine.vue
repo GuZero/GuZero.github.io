@@ -9,12 +9,8 @@
             div.user.center.rel.graybt8
                 img(src="//img.aimoge.com/FlJ81rMZKlvsiYP-EXr3P492r4ZS")
                 p jerry
-            div.meta.rel.graybt8.none.pass(@click.stop.prevent="goToPassword")
+            div.meta.rel.graybt2.none.pass(@click.stop.prevent="goToPassword")
                 label.rel 修改密码
-            div.meta.rel.clear(@click.stop.prevent="clearCache")
-                label.rel 清除缓存
-            div.meta.rel.about(@click.stop.prevent="aboutApp")
-                label.rel 关于
         FooterBar(:footerconfig="footerconfig")
         ModalDialog(ref="logoutModal", @confirmCallback="confirmLogut")
         ModalDialog(ref="aboutModal")
@@ -75,7 +71,8 @@
                     if (rsp.data.status == 0) {
                         window.userJson = null;
                         window.is_logged = false;
-                        that.url('/login');
+                        // that.url('/login');
+                        window.location.href ="itsupport:///Login";
                     } else {
                         if (rsp.data.msg) _util.showErrorTip(rsp.data.msg);
                     }
@@ -107,7 +104,7 @@
     }
     
     .meta {
-        background-image: url(//img.aimoge.com/Fn0wLikUitDAUkJTBe8EQYMgKxnD);
+        background-image: url('//img.aimoge.com/Fn0wLikUitDAUkJTBe8EQYMgKxnD');
         background-repeat: no-repeat;
         border-bottom: 1px #cfcfcf solid;
         padding: 16px 0 16px 54px;
@@ -157,6 +154,12 @@
                 display: none;
             }
             margin-bottom: 8px;
+        }
+        &.graybt2 {
+            &:before {
+                display: none;
+            }
+            margin-bottom: 2px;
         }
         &.none {
             border: none;

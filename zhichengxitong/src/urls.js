@@ -30,7 +30,6 @@ module.exports = {
     search3:window.config.API+'/v1/fengchao/orders?search=',
     //搜索菜鸟寄件
     search4:window.config.API+'/v1/cainiao/orders?search=',
-
-
-
+    //搜索用户
+    users:window.config.API+'/v1/users'
 };

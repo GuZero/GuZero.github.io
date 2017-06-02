@@ -27,8 +27,15 @@ router.beforeEach((to, from, next) => {
 Vue.config.devtools = true;
 
 //url handle
-Vue.prototype.goback = function () {
-    window.history.back();
+Vue.prototype.goback = function (origin) {
+    if (origin == "terminal") {
+        this.$router.push({
+            path: '/terminal',
+            query:{}
+        });
+    }else{
+        window.history.back();
+    }
 };
 
 Vue.prototype.url = function (path, query) {

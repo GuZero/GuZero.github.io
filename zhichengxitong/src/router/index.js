@@ -16,11 +16,13 @@ const EquipmentInfo = r => require.ensure([], () => r(require('../pages/Equipmen
 const Journal = r => require.ensure([], () => r(require('../pages/Journal')), 'Journal');
 const BasicInfo = r => require.ensure([], () => r(require('../pages/BasicInfo')), 'BasicInfo');
 const SearchTerminal = r => require.ensure([], () => r(require('../pages/SearchTerminal')), 'SearchTerminal');
+const Allocation = r => require.ensure([], () => r(require('../pages/Allocation')), 'Allocation');
+const EditEquipment = r => require.ensure([], () => r(require('../pages/EditEquipment')), 'EditEquipment');
 
 Vue.use(VueRouter)
 
 export default new VueRouter({
-    //    mode: 'history',
+    // mode: 'history',
     routes: [
         {
             path: '/',
@@ -64,26 +66,33 @@ export default new VueRouter({
         }
         , {
             path: '/terminal/:code',
-            name: 'TerminalInfo',
-            component: TerminalInfo,
-            children: [
-                {
-                    path: '',
-                    component: BasicInfo,
-                },
-                {
-                    path: 'equipmentinfo',
-                    component: EquipmentInfo
-                },
-                {
-                    path: 'journal',
-                    component: Journal
-                },
-                {
-                    path: 'adinfo',
-                    component: AdInfo
-                },
-            ]
+            name: 'BasicInfo',
+            component: BasicInfo
+        }
+        ,{
+            path: '/terminal/:code/equipmentinfo',
+            name: 'EquipmentInfo',
+            component: EquipmentInfo
+        }
+        ,{
+            path: '/terminal/:code/journal',
+            name: 'Journal',
+            component: Journal
+        }
+        ,{
+            path: '/terminal/:code/adinfo',
+            name: 'AdInfo',
+            component: AdInfo
+        }
+        , {
+            path: '/terminal/:code/allocation',
+            name: 'Allocation',
+            component: Allocation
+        }
+        , {
+            path: '/terminal/:code/equipmentinfo/edit',
+            name: 'EditEquipment',
+            component: EditEquipment
         }
         , {
             path: '/mine',

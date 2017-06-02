@@ -57,7 +57,8 @@ module.exports = {
         if (!state) {
             isInfo ? (window.location.href = '/forum', window.history.replaceState(null, "", indexUrl)) : window.history.back();
         } else {
-            window.history.back();
+            // window.history.back();
+            router.go(-1);
         }
     }
 
@@ -121,7 +122,19 @@ module.exports = {
     , isWeixin: function () {
         return window.navigator.userAgent.indexOf("MicroMessenger") > 0;
     }
-
+    ,isApp: function() {
+        return window.navigator.userAgent.indexOf("itsupport") >= 0;
+    }
+    ,isIOS: function() {
+        var info = window.navigator.userAgent.substring(window.navigator.userAgent.indexOf("(") + 1);
+        info = info.substring(0, info.indexOf(")"));
+        return info.indexOf("iPhone") >= 0;
+    }
+    ,isAndriod: function() {
+        var info = window.navigator.userAgent.substring(window.navigator.userAgent.indexOf("(") + 1);
+        info = info.substring(0, info.indexOf(")"));
+        return info.indexOf("Android") >= 0;
+    }
     , addLinkTouchEvent: function () {
         setTimeout(function () {
             var a = document.getElementsByTagName('a');

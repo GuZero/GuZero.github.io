@@ -1,101 +1,149 @@
-<!-- //- <template lang="jade"> -->
-<!-- //-   div.div
-//- 	  div.nav
-//- 		    h3.title {{terminal_name}}
-//- 	  div.item
-//- 		    p {{code}}
-//- 		    p {{terminal_code}}
-//- </template> -->
-<template>
-  <div class="div">
-    <div class="nav">
-      <h3 class="title">{{terminal_name}}</h3>
-    </div>
-    <div class="item">
-      <p>{{code}}</p>
-      <p>{{terminal_code}}</p>
-    </div>
-    <div class="item">
-      <p>{{code}}</p>
-      <p>{{terminal_code}}</p>
-    </div>
-    <div class="item item_btn">
-        <div>
-            <p>{{code}}</p>
-            <p><a href="#">位置浏览</a></p>
-        </div>
-        <div class="btn">采集</div>
-    </div>
-    <div class="manage">
-        <div class="title">
-            管理员
-        </div>
-        <div class="item item_btn">
-            <div>
-                <p class="gray_1">运维管理员</p>
-                <p class="black">高乔乔（15910239327）</p>
-            </div>
-            <div class="btn">分配</div>
-        </div>
-        <div class="item item_btn">
-            <div>
-                <p class="gray_1">运维管理员</p>
-                <p>高乔乔（15910239327）</p>
-            </div>
-            <div class="btn">分配</div>
-        </div>
-    </div>
-  </div>
+<template lang="jade">
+    div.basicinfo
+        HeaderBar(
+        :title="pageTitle",
+        origin="terminal"
+        )
+        div.content.mt44
+            div.nav
+                div.title {{terminal_name}}
+            div.item
+                p.gray 终端标识
+                p.black {{terminal_code}}
+            div.item.item_btn
+                div
+                    div(:class="{ active: isActive }" @click.stop.prevent="getLocation('check')" ) 位置预览
+                div.btn(@click.stop.prevent="getLocation" ) 采集
+        div.manage
+            div.item.info 管理员
+            div.rel(v-for="t in maintain_manager")
+                div.item.item_btn
+                    div
+                        p.gray 运维管理员
+                        a.black(href="#" v-if="t.name") {{ t.name }}
+                            lable(href="#" v-if="t.telephone")（{{ t.telephone }}）
+                    div.btn(@click.stop.prevent="goToAllocation(t.user_id,'1')" ) 分配
+            div.rel(v-for="t in operate_manager")
+                div.item.item_btn
+                    div
+                        p.gray 运营管理员
+                        a.black(href="#" v-if="t.name") {{ t.name }} 
+                            lable(href="#" v-if="t.telephone")（{{ t.telephone }}）
+                    div.btn(@click.stop.prevent="goToAllocation(t.user_id,'2')" ) 分配
+        TransmitFooter(:footerconfig="footerconfig",:terminal_id="terminal_id")
+
 </template>
 <script>
+    import HeaderBar from '../components/common/Header'
+    import TransmitFooter from '../components/common/TransmitFooter'
     export default {
+        mixins: [require('../components/mixin/BodyBg')],
         data() {
             return {
-                terminal_name: '',
-                code: '终端 code',
-                terminal_code: "0010080074",
-                footerconfig: {
-                    isflag: true,
+                terminal_name: '格格货栈',
+                terminal_code: '00000283921',
+                terminal_id: this.$route.params.code,
+                pageTitle: '终端详情',
+                bodyBg: 'gray',
+                location:{
+                    "latitude": 0,
+                    "longitude": 0
                 },
+                maintain_manager:  [
+                    {
+                        "name": "",
+                        "telephone": ""
+                    }
+                ],
+                operate_manager:  [
+                    {
+                        "name": "",
+                        "telephone": ""
+                    }
+                ],
+                footerconfig: {
+                    isbasic: true
+                },
+                isActive: false
             }
         },
         created() {
-            let that = this;
-            // window.addEventListener('scroll', that.handleScroll);
-            axios.get(ajaxUrls.basic + localStorage.terminal_id + '?info=basic&mack='+Math.random())
-                .then(function(rsp) {
-                    console.log(rsp.data.data);
-                    that.terminal_name = rsp.data.data.terminal_name;
-                })
+            this.fetchData();
         },
+        components: {
+            HeaderBar,
+            TransmitFooter
+        },
+        watch: {
+          '$route': 'fetchData'
+        },
+        methods:{
+            fetchData(){
+                let that = this;
+                if (that.$route.path == '/terminal') {
+                    return false;
+                }
+                that.terminal_id = that.$route.params.code;
+                setTimeout(function () {
+                    axios.get(ajaxUrls.basic + that.$route.params.code + '?info=basic')
+                        .then(function(rsp) {
+                            let tempData = rsp.data.data;
+                            that.terminal_name = tempData.terminal_name;
+                            that.terminal_code = tempData.terminal_code;
+                            that.location = tempData.location;
 
+                            if (tempData.location && tempData.location.latitude && tempData.location.longitude) {
+                               that.isActive = true;
+                            }
+                            that.maintain_manager = tempData.operator1.length > 0 ?tempData.operator1:that.maintain_manager;
+                            that.operate_manager = tempData.operator2.length > 0 ?tempData.operator2:that.operate_manager;
+                        })
+                },0);
+            },
+            getLocation(action_type) {
+                var type = 1;
+                if (action_type == 'check') {
+                    if (!this.isActive) {
+                        return false;
+                    }
+                    type = 0;
+                }
+                window.location.href = "/TerminalGeo?terminal_id="+that.$route.params.code+"&type="+type;
+            },
+            goToAllocation(old_userid,operator) {
+                    this.url('/terminal/'+this.$route.params.code+'/allocation',{old_userid:old_userid,operator:operator});
+            }
+        }
     }
 
 </script>
 
 <style lang="sass" scoped>
     .black {
-        color: #6a6a6a;
+        color: #323232;
     }
-
-    .gray_1 {
-        color: #aaaaaa;
+    .active{
+        color: #07689f;
     }
-
-    .nav {
-        background-color: #fff;
-        color: #4d4d4d;
-        font-size: 16px;
-        padding: 16px 0px;
-        width: 100%;
-        .title {
-            font-size: 18px;
-            text-align: center;
-            color: #323232;
-            font-weight: 700;
+    .gray {
+        color: #6e6e6e;
+    }
+    .content{
+        border: 1px #cfcfcf solid;
+        .nav {
+            background-color: #fff;
+            color: #4d4d4d;
+            font-size: 16px;
+            padding: 16px 0px;
+            width: 100%;
+            .title {
+                font-size: 18px;
+                text-align: center;
+                color: #323232;
+            }
         }
     }
-
+   
     .item:before {
         content: '';
         display: block;
@@ -103,14 +151,14 @@
         top: 0;
         width: 90%;
         height: 1px;
-        background-color: #979797;
+        background-color: #eee;
         transform: scale(1, .5);
     }
 
     .item {
         background-color: #fff;
         color: #4d4d4d;
-        font-size: 16px;
+        font-size: 14px;
         overflow: hidden;
         padding: 10px 16px;
         width: 100%;
@@ -145,46 +193,14 @@
 
     .manage {
         margin-top: 8px;
-        height: 30vh;
         position: relative;
         bottom: 0px;
         background: #fff;
         overflow: auto;
-        padding: 0 16px;
-        .title {
-            padding: 8px 0;
+        .item.info {
+            padding: 10px 16px;
             color: #6e6e6e;
             font-size: 12px;
-            position: relative;
-        }
-        .title:before {
-            content: '';
-            display: block;
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            height: 1px;
-            background-color: #979797;
-            transform: scale(1, .5);
-        }
-        .item {
-            padding: 8px 0px;
-            p{
-                font-size: 12px;
-            }
-        }
-        .item:before {
-            height: 0px;
-        }
-        .item:after {
-            content: '';
-            display: block;
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            height: 1px;
-            background-color: #979797;
-            transform: scale(1, .5);
         }
     }
 

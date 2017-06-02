@@ -77,7 +77,7 @@ div.home
                 list2: [],
                 list3: [],
                 searchInfo: [],
-                searchFlag:false
+                searchFlag: false
             }
         },
         components: {
@@ -128,7 +128,7 @@ div.home
         },
         methods: {
             fetchData(index) {
-                this.searchFlag=false;
+                this.searchFlag = false;
                 index > -1 ? this.activeTab = index : void 0;
                 //getDataByTabIndex post ajax
                 let that = this;
@@ -176,10 +176,10 @@ div.home
                 }, 500);
             },
             isSearch() {
-                this.searchFlag=!this.searchFlag;
+                this.searchFlag = !this.searchFlag;
             },
-             goToSearch(item) {
-                localStorage.express_id=item.id 
+            goToSearch(item) {
+                localStorage.express_id = item.id
                 this.url('/search/')
             },
             goToMsg() {
@@ -189,7 +189,6 @@ div.home
                 this.url('/order/edit');
             },
             goInfo(_id) {
-
                 localStorage.task_id = _id;
                 this.flag = false;
                 this.url('/order/' + _id);
@@ -277,7 +276,7 @@ div.home
     }
     
     .nav {
-        background-color: #fff;
+        background-color: #fafafa;
         border-bottom: 1px $cf solid;
         width: 100%;
         box-sizing: border-box;

@@ -1,16 +1,20 @@
 <template lang="jade">
     div.create-order
         HeaderBar(
-        :title="pageTitle"
+        :title="pageTitle",
+        origin="terminal"
         )
         div.mt44
             router-view
-        TransmitFooter(:footerconfig="footerconfig")
+        TransmitFooter(:footerconfig="footerconfig",:terminal_id="terminal_id")
+        ModalDialog(ref="aboutModal")
+
 </template>
 
 <script>
     import HeaderBar from '../components/common/Header'
     import TransmitFooter from '../components/common/TransmitFooter'
+    import ModalDialog from '../components/elements/ModalDialog'
 
     export default {
         mixins: [require('../components/mixin/BodyBg')],
@@ -21,23 +25,28 @@
                 footerconfig: {
                     isorder: true
                 },
-
+                terminal_id: this.$route.params.code
             }
         },
         components: {
             HeaderBar,
-            TransmitFooter
+            TransmitFooter,
+            ModalDialog
         },
-        // created() {
-        //        this.url('/terminal/foo');
-        //  }
-        methods: {}
+        watch: {
+          '$route': 'fetchData'
+        },
+        methods: {
+            fetchData() {
+                let that = this;
+                this.terminal_id = this.$route.params.code;
+            }
+        }
     }
     //$route.params.code
 
 </script>
 
 <style lang="sass" scoped>
-
 
 </style>

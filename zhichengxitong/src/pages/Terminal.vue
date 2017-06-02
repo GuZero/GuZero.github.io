@@ -120,7 +120,6 @@
         },
         mounted() {
             window.addEventListener('scroll', this.handleScroll);
-            window.localStorage.setItem('terminal_id','225');
             this.resetScrollTop();
             this.loadAreaData();
         },
@@ -138,8 +137,7 @@
         },
         methods: {
             goToInfo(terminal) {
-              localStorage.terminal_id=terminal.terminal_id;
-                this.url('/terminal/foo');
+                this.url('/terminal/'+terminal.terminal_id);
             },
             resetScrollTop(showLoadEnd) {
                 if (showLoadEnd) this.showLoadEnd();
@@ -356,7 +354,7 @@
                         if (this.scroll_load_end && this.$refs.loading) {
                             return this.showLoadEnd();
                         } else {
-                           
+                            console.log('开始加载');
                             if (this.tabIndex == 2) this.loadTerminalData();
                         }
                     }

@@ -3,7 +3,7 @@
         div.title.center.ellipsis.f16.abs {{ title }}
         a.icgoback(
             v-if="hideGoback? false: true",
-            @click="goback",
+            @click="goback(origin)",
             style="left: 0;"
         )
         a.icclock(
@@ -24,7 +24,8 @@
         )
         a.icfinish(
             v-if="hasConfig? btnconfig.isfinish: false",
-            @click.prevent.stop="$emit('finishBtnCallback')"
+            @click.prevent.stop="$emit('finishBtnCallback')",
+            style="right: 0;"
         )
         a.iclogout(
             v-if="hasConfig? btnconfig.islogout: false",
@@ -37,13 +38,13 @@
         data() {
             let configs = this.$props.btnconfig,
                 hasConfig = configs && Object.keys(configs).length,
-                hideGoback = hasConfig && (configs.isgoback === false || configs.isgoback <= 0)
+                hideGoback = hasConfig && (configs.isgoback === false || configs.isgoback <= 0);
             return {
                 hasConfig: hasConfig,
                 hideGoback: hideGoback
             };
         },
-        props: ["title", "btnconfig", "noborder"]
+        props: ["title", "btnconfig", "noborder","origin"]
     }
 
 </script>
