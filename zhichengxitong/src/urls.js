@@ -31,5 +31,6 @@ module.exports = {
     //搜索菜鸟寄件
     search4:window.config.API+'/v1/cainiao/orders?search=',
     //搜索用户
-    users:window.config.API+'/v1/users'
+    users:window.config.API+'/v1/users',
+    messages:window.config.API+'/v1/messages/'
 };

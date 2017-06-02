@@ -1,4 +1,3 @@
-
 <template lang="jade">
     div.equipmentinfo
         HeaderBar(

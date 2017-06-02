@@ -12,10 +12,12 @@
             v-focus
         )
         div.content.mt90
-            p.rel.item(v-if="nameList.length <= 0") 无搜索结果
-            ul.rel(v-else v-for="item in nameList")
-                li.rel.item(@click.stop.prevent="chooseOperator(item.user_id,item.name)") {{item.name}} 
-                    label(v-if="item.mobile")（{{item.mobile}}）
+            template(v-if="nameList.length <= 0")
+                p.rel.item 无搜索结果
+            template(v-else)
+                ul.rel(v-for="item in nameList")
+                    li.rel.item(@click.stop.prevent="chooseOperator(item.user_id,item.name)") {{item.name}} 
+                        label(v-if="item.mobile") （{{item.mobile}}）
         ModalDialog(ref="confirmModal", @confirmCallback="confirmChoose")
 </template>
 

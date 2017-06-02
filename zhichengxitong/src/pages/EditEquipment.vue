@@ -8,6 +8,7 @@
         div.mt44
             div.input.rel
                 input(placeholder="请输入终端设备信息", v-model="asset_num" type="text" v-focus)
+                label.clear-btn(@click.stop.prevent ='clearInput') 清空
 </template>
 
 <script>
@@ -52,6 +53,10 @@
                     finishUrl = '',
                     postData ={};
                 if (_util.getById('sysLoading').style.display == 'block') return false;
+                if (!that.asset_num.replace(/(^\s*)|(\s*$)/g, "")) {
+                    _util.showErrorTip('请输入终端设备信息！');
+                    return false;
+                }
                 if (that.rack_id) {
                     finishUrl = ajaxUrls.basic +  that.$route.params.code + '/bins';
                     postData ={
@@ -79,6 +84,9 @@
                         if (rsp.data.msg) _util.showErrorTip(rsp.data.msg);
                     }
                 });
+            },
+            clearInput() {
+                this.asset_num = '';
             }
         }
     }
@@ -90,12 +98,21 @@
         font-size: 14px;
         padding: 16px;
         background: #fff;
+        box-sizing: border-box;
+        -webkit-box-sizing: border-box;
         input {
             border: none;
             font-size: 14px;
             width: 100%;
             height: 20px;
             line-height: 20px;
+        }
+        .clear-btn{
+            position: absolute;
+            top: 0;
+            right: 16px;
+            height: 52px;
+            line-height: 52px;
         }
     }
 

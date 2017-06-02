@@ -16,32 +16,47 @@
                 div.btn(@click.stop.prevent="getLocation" ) 采集
         div.manage
             div.item.info 管理员
-            div.rel(v-for="t in maintain_manager")
-                div.item.item_btn
-                    div
-                        p.gray 运维管理员
-                        a.black(href="#" v-if="t.name") {{ t.name }}
-                            lable(href="#" v-if="t.telephone")（{{ t.telephone }}）
-                    div.btn(@click.stop.prevent="goToAllocation(t.user_id,'1')" ) 分配
-            div.rel(v-for="t in operate_manager")
-                div.item.item_btn
-                    div
-                        p.gray 运营管理员
-                        a.black(href="#" v-if="t.name") {{ t.name }} 
-                            lable(href="#" v-if="t.telephone")（{{ t.telephone }}）
-                    div.btn(@click.stop.prevent="goToAllocation(t.user_id,'2')" ) 分配
+            template(v-if="maintain_manager.length > 0")
+                div.rel(v-for="t in maintain_manager")
+                    div.item.item_btn
+                        div
+                            p.gray 运维管理员
+                            a.black(href="#" v-if="t.name") {{ t.name }}
+                                label(href="#" v-if="t.telephone") （{{ t.telephone }}）
+                        div.btn(@click.stop.prevent="goToAllocation('1',t.user_id)" v-if="is_yunwei_manager == '0'") 分配
+            template(v-else)
+                div.rel
+                    div.item.item_btn
+                        div
+                            p.gray 运维管理员
+                        div.btn(@click.stop.prevent="goToAllocation('1')" v-if="is_yunwei_manager == '0'") 分配
+            template(v-if="operate_manager.length> 0")
+                div.rel(v-for="t in operate_manager")
+                    div.item.item_btn
+                        div
+                            p.gray 运营管理员
+                            a.black(href="#" v-if="t.name") {{ t.name }} 
+                                label(href="#" v-if="t.telephone") （{{ t.telephone }}）
+                        div.btn(@click.stop.prevent="goToAllocation('2',t.user_id)"  v-if="is_yunying_manager == '0'") 分配
+            template(v-else)
+                div.rel
+                    div.item.item_btn
+                        div
+                            p.gray 运营管理员
+                        div.btn(@click.stop.prevent="goToAllocation('2')" v-if="is_yunying_manager == '0'") 分配
         TransmitFooter(:footerconfig="footerconfig",:terminal_id="terminal_id")
 
 </template>
 <script>
     import HeaderBar from '../components/common/Header'
     import TransmitFooter from '../components/common/TransmitFooter'
+    import DataLoading from '../components/common/DataLoading'
     export default {
         mixins: [require('../components/mixin/BodyBg')],
         data() {
             return {
                 terminal_name: '格格货栈',
-                terminal_code: '00000283921',
+                terminal_code: '',
                 terminal_id: this.$route.params.code,
                 pageTitle: '终端详情',
                 bodyBg: 'gray',
@@ -49,35 +64,39 @@
                     "latitude": 0,
                     "longitude": 0
                 },
-                maintain_manager:  [
-                    {
-                        "name": "",
-                        "telephone": ""
-                    }
-                ],
-                operate_manager:  [
-                    {
-                        "name": "",
-                        "telephone": ""
-                    }
-                ],
+                maintain_manager:  [],
+                operate_manager:  [],
+                is_yunwei_manager: '0',
+                is_yunying_manager: '0',
                 footerconfig: {
                     isbasic: true
                 },
-                isActive: false
+                isActive: false,
+                scroll_load_loading: false,
+                scroll_load_end: false
             }
         },
-        created() {
+        mounted() {
             this.fetchData();
         },
         components: {
             HeaderBar,
-            TransmitFooter
+            TransmitFooter,
+            DataLoading
+
         },
         watch: {
           '$route': 'fetchData'
         },
         methods:{
+            showLoading() { //显示正在加载数据状态
+                this.scroll_load_loading = true;
+                this.$refs.loading && this.$refs.loading.showLoading();
+            },
+            hideLoading() { //隐藏正在加载数据状态
+                this.scroll_load_loading = false;
+                this.$refs.loading && this.$refs.loading.hideLoading();
+            },
             fetchData(){
                 let that = this;
                 if (that.$route.path == '/terminal') {
@@ -91,12 +110,13 @@
                             that.terminal_name = tempData.terminal_name;
                             that.terminal_code = tempData.terminal_code;
                             that.location = tempData.location;
-
                             if (tempData.location && tempData.location.latitude && tempData.location.longitude) {
                                that.isActive = true;
                             }
-                            that.maintain_manager = tempData.operator1.length > 0 ?tempData.operator1:that.maintain_manager;
-                            that.operate_manager = tempData.operator2.length > 0 ?tempData.operator2:that.operate_manager;
+                            that.maintain_manager = tempData.operator1;
+                            that.operate_manager = tempData.operator2;
+                            that.is_yunwei_manager = tempData.is_yunwei_manager;
+                            that.is_yunying_manager = tempData.is_yunying_manager;
                         })
                 },0);
             },
@@ -108,9 +128,9 @@
                     }
                     type = 0;
                 }
-                window.location.href = "/TerminalGeo?terminal_id="+that.$route.params.code+"&type="+type;
+                window.location.href = "itsupport:///TerminalGeo?terminal_id="+this.$route.params.code+"&type="+type;
             },
-            goToAllocation(old_userid,operator) {
+            goToAllocation(operator,old_userid) {
                     this.url('/terminal/'+this.$route.params.code+'/allocation',{old_userid:old_userid,operator:operator});
             }
         }

@@ -73,12 +73,16 @@ module.exports = {
         mgAlert.style.top = '35%';
         mgAlert.setAttribute('class', 'mgAlert center fixed f14 mgAlert-error showAlert');
         mgAlert.innerHTML = txt;
-        setTimeout(function () {
+        if (window.errorTimer) {
+            clearTimeout(window.errorTimer);
+            window.errorTimer = null;
+        }
+        window.errorTimer = setTimeout(function () {
             mgAlert.setAttribute('class', 'mgAlert center fixed f14');
             setTimeout(function () {
                 mgAlert.style.top = '-35%';
             }, 300);
-        }, 2500);
+        }, 2000);
     }
 
     , showSuccessTip: function (txt) {
