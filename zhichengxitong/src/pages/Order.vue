@@ -5,8 +5,10 @@ div.home
 		:btnconfig="btnconfig",
 		:noborder="true",
 		@msgBtnCallback="goToMsg",
-		@searchBtnCallback="goToSearch"
+		@searchBtnCallback="isSearch"
 	)
+	div.search(v-if="searchFlag")
+		div.item(v-for="d in searchInfo", @click.stop.prevent="goToSearch(d)") {{d.value}}
 	div.nav.top44.fixed
 		div.left.tab.rel(:class="{active: activeTab == 0}", @click="fetchData(0)")
 			div
@@ -74,7 +76,8 @@ div.home
                 list1: [],
                 list2: [],
                 list3: [],
-                searchInfo: []
+                searchInfo: [],
+                searchFlag:false
             }
         },
         components: {
@@ -100,6 +103,8 @@ div.home
         },
         mounted() {
             window.localStorage.setItem('task_id', '1');
+            //设置搜索订单的ID
+            window.localStorage.setItem('express_id', '01');
             window.addEventListener('scroll', this.handleScroll);
         },
         activated() { //开启<keep-alive>，会触发activated事件
@@ -123,6 +128,7 @@ div.home
         },
         methods: {
             fetchData(index) {
+                this.searchFlag=false;
                 index > -1 ? this.activeTab = index : void 0;
                 //getDataByTabIndex post ajax
                 let that = this;
@@ -169,8 +175,12 @@ div.home
 
                 }, 500);
             },
-            goToSearch() {
-                this.url('/search');
+            isSearch() {
+                this.searchFlag=!this.searchFlag;
+            },
+             goToSearch(item) {
+                localStorage.express_id=item.id 
+                this.url('/search/')
             },
             goToMsg() {
                 this.url('/message');
@@ -245,9 +255,24 @@ div.home
         background: #8c8c8c;
         position: absolute;
         right: 0px;
-        li {
-            height: 25px;
+        z-index: 9999;
+        .item {
+            height: 30px;
+            line-height: 30px;
+            margin: 0px 10px;
             color: #fff;
+            box-sizing: border-box;
+            position: relative;
+        }
+        .item:after {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 1px;
+            background-color: #fff;
+            transform: scale(1, .5);
         }
     }
     

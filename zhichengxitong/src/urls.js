@@ -22,8 +22,14 @@ module.exports = {
     fault:window.config.API+'/v1/tasks/troubles?appearance_id=',
     //搜索用户
     user:window.config.API+'/v1/users?name=',
-    //搜索手机号或终端名称
-    search:window.config.API+'/v1/delivery/orders?'
+    //搜索存件订单
+    search1:window.config.API+'/v1/delivery/orders?search=',
+    //搜索寄存订单
+    search2:window.config.API+'/v1/deposite/orders?search=',
+    //搜索丰巢寄件
+    search3:window.config.API+'/v1/fengchao/orders?search=',
+    //搜索菜鸟寄件
+    search4:window.config.API+'/v1/cainiao/orders?search=',
 
 
 

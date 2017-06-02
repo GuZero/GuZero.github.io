@@ -65,66 +65,7 @@
             // this.resetScrollTop();
             window.addEventListener('scroll', this.handleScroll);
         },
-
-        methods: {
-          // searchTerminal(isFirst) {
-          //     let that = this,
-          //         page = 1,
-          //         _key = that.terminalName;
-          //     if (isFirst) {
-          //         that.tn_page = 1;
-          //         that.tn_pageList = [];
-          //         that.tn_terminals = [];
-          //         that.tn_scrollTop = 0;
-          //         that.tn_scroll_load_loading = false;
-          //         that.tn_scroll_load_end = false;
-          //         document.body.scrollTop = 0;
-          //     }
-          //     page = that.tn_page;
-          //     if (!_key || !_key.trim()) {
-          //         that.resetScrollTop(1);
-          //         return false;
-          //     }
-          //     if (that.tn_delay) {
-          //         return false;
-          //     }
-          //     if (that.tn_scroll_load_loading || that.isLoading()) {
-          //         return false;
-          //     }
-          //     if (that.tn_scroll_load_end) {
-          //         return false;
-          //     }
-          //     if (that.tn_pageList.indexOf(page) > -1) {
-          //         return false;
-          //     }
-          //     //延时350ms触发搜索事件
-          //     that.tn_delay = setTimeout(function() {
-          //         window.clearTimeout(that.tn_delay);
-          //         that.tn_delay = null;
-          //         that.showLoading();
-          //         that.tn_scroll_load_loading = true;
-          //         axios.get(ajaxUrls.searchTerminal + _key.trim() + '&page=' + page)
-          //             .then(function(rsp) {
-          //                 let d = rsp.data;
-          //                 that.hideLoading();
-          //                 that.tn_scroll_load_loading = false;
-          //                 if (d.status == 0 && d.data && d.data.length) {
-          //                     that.tn_terminals = that.tn_terminals.concat(d.data);
-          //                     that.tn_page += 1;
-          //                     that.tn_pageList = that.tn_pageList.concat([page]);
-          //
-          //                     if (d.data.length < that.numPerPage) {
-          //                         that.tn_scroll_load_end = true;
-          //                     }
-          //                 } else {
-          //                     that.tn_scroll_load_end = true;
-          //                     if (isFirst) {
-          //                         that.showLoadEnd();
-          //                     }
-          //                 }
-          //             });
-          //     }, 350);
-          // },
+        methods: {         
           handleScroll() { //滚动加载监听事件
               if (document.body.scrollTop + window.innerHeight >= document.body.scrollHeight - 1) {
                   this.loadTerminalData();
@@ -143,7 +84,6 @@
               if (that.pageList.indexOf(page) > -1) {
                   return false;
               }
-
               that.showLoading();
               that.scroll_load_loading = true;
               axios.get(ajaxUrls.searchTerminal + _key.trim() + "&page="+page)
@@ -199,7 +139,6 @@
               }
               //延时350ms触发搜索事件
               that.tn_delay = setTimeout(function() {
-
                   window.clearTimeout(that.tn_delay);
                   that.tn_delay = null;
                   that.showLoading();
