@@ -12,8 +12,8 @@
         div.mt44.pt50.pb60
             div.empty.f16.rel(v-if="!result.length") 无搜索结果
             div.item.rel(v-if="result.length", v-for="item in result")
-                div.box.f16.rel(@click="deal(item)") {{ item.name }}
-        ModalDialog(ref="showalert", @confirmCallback="deal")
+                div.box.f16.rel(@click.stop.prevent="showAlert(item)") {{ item.name }}
+        ModalDialog(ref="confirmModal", @confirmCallback="deal")
 </template>
 
 <script>
@@ -37,6 +37,14 @@
             Search,
             ModalDialog,
         },
+        directives: {
+            focus: {
+                inserted: function (el) {
+                    // 聚焦元素
+                    el.focus()
+                }
+            }
+        },
         methods: {
             searchByKey() {
                 if (!this.username) {
@@ -48,9 +56,7 @@
                     })
                 }
             },
-            deal(item) {
-                this.userID = item.user_id;
-                this.name=item.name;
+            deal() {
                 let user_id = this.userID,
                     action = 'forward',
                     task_id = localStorage.task_id,
@@ -74,10 +80,11 @@
                 })
             },
             showAlert(item){
-              this.$refs.showalert.showModal({
-                  title: item.name,
-                  hideText: true
-              });
+                this.userID = item.user_id;
+                this.name=item.name;
+                this.$refs.confirmModal.showModal({
+                    text: '确认是否转发给'+item.name+'为处理？'
+                });
             },
             goInfo(_id) {
                 this.url('/order/' + _id);

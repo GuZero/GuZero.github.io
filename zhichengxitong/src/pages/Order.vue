@@ -52,6 +52,7 @@ div.home
     import FooterBar from '../components/common/Footer'
     import DataLoading from '../components/common/DataLoading'
 
+
     export default {
         mixins: [require('../components/mixin/BodyBg')],
         data() {
@@ -249,15 +250,14 @@ div.home
     .pt50 {
         padding-top: 43px;
     }
-    
     .search {
         background: #8c8c8c;
         position: absolute;
         right: 0px;
         z-index: 9999;
         .item {
-            height: 30px;
-            line-height: 30px;
+            height: 32px;
+            line-height: 32px;
             margin: 0px 10px;
             color: #fff;
             box-sizing: border-box;
@@ -267,7 +267,6 @@ div.home
             content: '';
             display: block;
             position: absolute;
-            top: 0;
             width: 100%;
             height: 1px;
             background-color: #fff;

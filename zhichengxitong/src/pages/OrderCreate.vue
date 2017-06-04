@@ -35,15 +35,10 @@
 
 
 </template>
-
 <script>
     import HeaderBar from '../components/common/Header'
     import Field from '../components/elements/Field'
     import SubmitBtn from '../components/elements/SubmitBtn'
-    //    import calendar from '../components/common/calendar'
-
-
-
 
     export default {
         mixins: [require('../components/mixin/BodyBg')],
@@ -62,7 +57,8 @@
                 val: '',
                 project_id: '',
                 state: '',
-                flag:false
+                flag:false,
+                value1:""
             }
         },
         components: {
@@ -150,16 +146,16 @@
                     for (let item in this.scenes[i]) {
                         if (item == 'id') {
                             if (this.scenes[i].id == this.val) {
-                                this.state = this.scenes[i].level
+                                this.state = this.scenes[i].level;
                                 switch (this.state) {
                                     case 1:
-                                        this.fault = '一级故障'
+                                        this.fault = '一级故障';
                                         break;
                                     case 1:
-                                        this.fault = '二级故障'
+                                        this.fault = '二级故障';
                                         break;
                                     case 1:
-                                        this.fault = '三级故障'
+                                        this.fault = '三级故障';
                                         break;
                                     default:
                                         break;

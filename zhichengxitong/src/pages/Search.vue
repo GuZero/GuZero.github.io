@@ -12,7 +12,7 @@
         div.mt44.pt50.pb60
            div.pd_16
                 div.item 搜索结果：共
-                    span.c_b &nbsp{{num}} 
+                    span.c_b(v-model="num") &nbsp{{num}}
                     条 
                 div.img(v-if="flag")
                  img( src="//img.aimoge.com/FuBwJB9xafDv2zrrJWQDq3sKYXyp" width="100%" height="100%")
@@ -40,7 +40,9 @@
                                 lable 11111
                             span(style="font-size:10px")    
                                 label.c_g1 取件码：
-                                lable 1111    
+                                lable 1111
+                div(v-if="!flag")
+                    DataLoading(ref="loading")
             div.pd_16(v-if="isFlag2")                
                 div.list(v-for="d in result" v-if="!flag")
                     div
@@ -68,6 +70,8 @@
                             span(style="font-size:10px")    
                                 label.c_g1 寄存码：
                                 lable 1111
+                div(v-if="!flag")
+                    DataLoading(ref="loading")
             div.pd_16(v-if="isFlag3")                
                 div.list(v-for="d in result" v-if="!flag")
                     div
@@ -79,7 +83,9 @@
                     div
                        label.c_g1 寄件人手机号：
                        lable {{d.fetch_at}}
-             div.pd_16(v-if="isFlag4")                
+                div(v-if="!flag")
+                    DataLoading(ref="loading")
+            div.pd_16(v-if="isFlag4")
                 div.list(v-for="d in result" v-if="!flag")
                     div
                        label.c_g1 寄件状态：
@@ -95,7 +101,7 @@
            
         
 </template>
-
+<!--<script src="https://unpkg.com/element-ui/lib/index.js"></script>-->
 <script>
     import HeaderBar from '../components/common/Header'
     //    import FooterBar from '../components/common/Footer'
@@ -116,7 +122,7 @@
                 isFlag2: false,
                 isFlag3: false,
                 isFlag4: false,
-                num: '0',
+                num: 0,
                 result: [],
                 url: '',
                 //终端列表状态
@@ -130,8 +136,14 @@
                 tn_scroll_load_loading: false,
                 tn_scroll_load_end: false,
                 tn_delay: null,
-
-
+            }
+        },
+        directives: {
+            focus: {
+                inserted: function (el) {
+                    // 聚焦元素
+                    el.focus()
+                }
             }
         },
         components: {
@@ -145,7 +157,8 @@
             window.addEventListener('scroll', this.handleScroll);
         },
         watch: {
-            '$route': 'getUrl'
+            '$route': 'getUrl',
+
         },
         activated() { //开启<keep-alive>，会触发activated事件
             // this.resetScrollTop();
@@ -192,6 +205,7 @@
                         that.scroll_load_loading = false;
                         if (d.status == 0 && d.data && d.data.length) {
                             that.result = that.result.concat(d.data);
+                            that.num=that.result.length;
                             that.page += 1;
                             if (d.data.length < that.numPerPage) {
                                 that.scroll_load_end = true;
@@ -218,6 +232,8 @@
                 }
                 page = that.tn_page;
                 if (!_key || !_key.trim()) {
+                    that.flag = true;
+                    that.num = 0;
                     that.resetScrollTop(1);
                     return false;
                 }
@@ -230,10 +246,7 @@
                 if (that.tn_scroll_load_end) {
                     return false;
                 }
-                if (this.terminalName == "") {
-                    that.flag = true;
-                    that.num = 0;
-                } else {
+                if(that.isFlag1||that.isFlag2||that.isFlag3||that.isFlag4){
                     axios.get(that.url + _key.trim() + "&page=" + page)
                         .then(function(rsp) {
                             let d = rsp.data;
@@ -261,7 +274,7 @@
                             }
 
                         });
-                };
+                }
                 console.log(this.terminalName);
             },
             getUrl() {
@@ -270,24 +283,39 @@
                     case '01':
                         this.url = ajaxUrls.search1;
                         this.isFlag1 = true;
+                        this.isFlag2 = false;
+                        this.isFlag3 = false;
+                        this.isFlag4 = false;
                         break;
                     case '02':
                         this.url = ajaxUrls.search2;
                         this.isFlag2 = true;
+                        this.isFlag1 = false;
+                        this.isFlag3 = false;
+                        this.isFlag4 = false;
                         break;
                     case '03':
-                        this.url = ajaxUrls.search3
+                        this.url = ajaxUrls.search3;
                         this.isFlag3 = true;
+                        this.isFlag1 = false;
+                        this.isFlag2 = false;
+                        this.isFlag4 = false;
                         break;
                     case '04':
-                        this.url = ajaxUrls.search4
+                        this.url = ajaxUrls.search4;
                         this.isFlag4 = true;
+                        this.isFlag2 = false;
+                        this.isFlag3 = false;
+                        this.isFlag1 = false;
                         break;
                     default:
-                        this.url = ajaxUrls.search1
+                        this.url = ajaxUrls.search1;
                         break;
                 }
-                console.log(this.url);
+                this.terminalName="";
+                this.result=[];
+                this.num=0;
+                this.flag=true;
             },
             isLoading() { //是否已显示“正在加载数据状态”节点
                 this.$refs.loading && this.$refs.loading.isLoading();
