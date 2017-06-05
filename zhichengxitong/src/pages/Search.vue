@@ -5,74 +5,74 @@
         )
         Search(
             class="top44 fixed",
-            placeholder="搜索手机号",
+            placeholder="搜索手机号/终端名称",
             v-model="terminalName",
             @changeCallback="searchByKey(1)"
         )
         div.mt44.pt50.pb60
            div.pd_16
                 div.item 搜索结果：共
-                    span.c_b(v-model="num") &nbsp{{num}}
-                    条 
+                    span.c_b &nbsp {{num}}
+                    span 条
                 div.img(v-if="flag")
                  img( src="//img.aimoge.com/FuBwJB9xafDv2zrrJWQDq3sKYXyp" width="100%" height="100%")
                  p.c_g(style="text-align: center") 暂无搜索结果
-            div.pd_16(v-if="isFlag1")     
+            div.pd_16(v-if="isFlag1")
                 div.list(v-for="d in result" v-if="!flag")
                     div
                        label.c_g1 订单状态：
                        lable {{d.state}}
-                    div
-                       label.c_g1 存件时间：
-                       lable {{d.order_at}}
-                    div
-                       label.c_g1 取件时间：
-                       lable {{d.order_at}}   
-                    div
-                       label.c_g1 用户手机号：
-                       lable {{d.user}}   
-                    div
-                       label.c_g1 快递员手机号：
-                       lable {{d.user}}
-                    div.num
-                            span(style="font-size:10px") 
-                                label.c_g1 箱门号编码： 
-                                lable 11111
-                            span(style="font-size:10px")    
-                                label.c_g1 取件码：
-                                lable 1111
-                div(v-if="!flag")
-                    DataLoading(ref="loading")
-            div.pd_16(v-if="isFlag2")                
-                div.list(v-for="d in result" v-if="!flag")
-                    div
-                       label.c_g1 订单状态：
-                       lable {{d.state}}
-                    div
-                       label.c_g1 下单时间：
-                       lable {{d.delivery_at}}
                     div
                        label.c_g1 存件时间：
                        lable {{d.fetch_at}}
                     div
                        label.c_g1 取件时间：
-                       lable {{d.fetch_at}}   
-                    div
-                       label.c_g1 过期时间：
-                       lable {{d.operator_telephone}}   
+                       lable {{d.delivery_at}}
                     div
                        label.c_g1 用户手机号：
+                       lable {{d.receiver_telephone}}
+                    div
+                       label.c_g1 快递员手机号：
                        lable {{d.operator_telephone}}
                     div.num
-                            span(style="font-size:10px") 
-                                label.c_g1 箱门号编码： 
-                                lable 11111
-                            span(style="font-size:10px")    
-                                label.c_g1 寄存码：
-                                lable 1111
+                            span(style="font-size:10px")
+                                label.c_g1 箱门号编码：
+                                lable {{d.box}}
+                            span(style="font-size:10px")
+                                label.c_g1 取件码：
+                                lable {{d.password}}
                 div(v-if="!flag")
                     DataLoading(ref="loading")
-            div.pd_16(v-if="isFlag3")                
+            div.pd_16(v-if="isFlag2")
+                div.list(v-for="d in result" v-if="!flag")
+                    div
+                       label.c_g1 订单状态：
+                       lable {{d.status}}
+                    div
+                       label.c_g1 下单时间：
+                       lable {{d.order_at}}
+                    div
+                       label.c_g1 存件时间：
+                       lable {{d.deliver_at}}
+                    div
+                       label.c_g1 取件时间：
+                       lable {{d.fetch_at}}
+                    div
+                       label.c_g1 过期时间：
+                       lable {{d.expried_at}}
+                    div
+                       label.c_g1 用户手机号：
+                       lable {{d.user}}
+                    div.num
+                            span(style="font-size:10px")
+                                label.c_g1 箱门号编码：
+                                lable {{d.box}}
+                            span(style="font-size:10px")
+                                label.c_g1 寄存码：
+                                lable {{d.password}}
+                div(v-if="!flag")
+                    DataLoading(ref="loading")
+            div.pd_16(v-if="isFlag3")
                 div.list(v-for="d in result" v-if="!flag")
                     div
                        label.c_g1 寄件状态：
@@ -95,11 +95,11 @@
                        lable {{d.begin_time}}
                     div
                        label.c_g1 寄件人手机号：
-                       lable {{d.mobile}}                                          
-                div(v-if="!flag")       
-                    DataLoading(ref="loading")                
-           
-        
+                       lable {{d.mobile}}
+                div(v-if="!flag")
+                    DataLoading(ref="loading")
+
+
 </template>
 <!--<script src="https://unpkg.com/element-ui/lib/index.js"></script>-->
 <script>
@@ -140,7 +140,7 @@
         },
         directives: {
             focus: {
-                inserted: function (el) {
+                inserted: function(el) {
                     // 聚焦元素
                     el.focus()
                 }
@@ -158,7 +158,10 @@
         },
         watch: {
             '$route': 'getUrl',
-
+        },
+         beforeRouteLeave(to, from, next) {
+            this.terminalName=''; 
+            next();
         },
         activated() { //开启<keep-alive>，会触发activated事件
             // this.resetScrollTop();
@@ -166,7 +169,7 @@
         },
         methods: {
             handleScroll() { //滚动加载监听事件
-                if (!this.result.lenght <16) {
+                if (!this.result.lenght < 16) {
                     if (document.body.scrollTop + window.innerHeight >= document.body.scrollHeight - 1) {
                         if (this.terminalName) {
                             this.loadTerminalData();
@@ -205,7 +208,7 @@
                         that.scroll_load_loading = false;
                         if (d.status == 0 && d.data && d.data.length) {
                             that.result = that.result.concat(d.data);
-                            that.num=that.result.length;
+                            that.num = that.result.length;
                             that.page += 1;
                             if (d.data.length < that.numPerPage) {
                                 that.scroll_load_end = true;
@@ -246,14 +249,14 @@
                 if (that.tn_scroll_load_end) {
                     return false;
                 }
-                if(that.isFlag1||that.isFlag2||that.isFlag3||that.isFlag4){
+                if (that.isFlag1 || that.isFlag2 || that.isFlag3 || that.isFlag4) {
                     axios.get(that.url + _key.trim() + "&page=" + page)
                         .then(function(rsp) {
                             let d = rsp.data;
                             that.hideLoading();
                             that.tn_scroll_load_loading = false;
                             console.log(d.data);
-                            if (d.status == 0 && d.data && d.data.length) {
+                            if (d.data) {
                                 that.flag = false;
                                 if (d.data.length == 0) {
                                     that.num = 0;
@@ -275,7 +278,6 @@
 
                         });
                 }
-                console.log(this.terminalName);
             },
             getUrl() {
                 let id = localStorage.express_id;
@@ -312,10 +314,10 @@
                         this.url = ajaxUrls.search1;
                         break;
                 }
-                this.terminalName="";
-                this.result=[];
-                this.num=0;
-                this.flag=true;
+                if(!this.terminalName=='') this.terminalName ='';                
+                this.result = [];
+                this.num = 0;
+                this.flag = true;
             },
             isLoading() { //是否已显示“正在加载数据状态”节点
                 this.$refs.loading && this.$refs.loading.isLoading();

@@ -132,7 +132,6 @@
             },
             getData() {
                 let that = this;
-                // console.log(localStorage.task_id);
                 setTimeout(function() {
                     axios.get(ajaxUrls.orderinfo + localStorage.task_id).then(function(rsp) {
                         console.log(rsp.data.data);

@@ -29,17 +29,25 @@
                 @changeCallback="testChange"
             )
             Field(tag="故障等级", :pvalue="fault", :p="true")
-            Field(tag="超时设置", placeholder="请选择超时间", :input="true" v-model="overtime")
+            div.filed.rel
+                div.text.abs.center 超时设置               
+                DatePicker.box.rel(field="myDate", placeholder="选择日期",:no-today="true",v-model="date",format="yyyy-mm-dd", :forward="true")
+            Time(:hideClearButton="true")    
             Field(tag="问题描述", placeholder="请输入问题描述", v-model.trim="desc", :textarea="true")
         SubmitBtn(@submitCallback="submitFun", text="提交", theme="white")
 
 
 </template>
+
 <script>
     import HeaderBar from '../components/common/Header'
     import Field from '../components/elements/Field'
     import SubmitBtn from '../components/elements/SubmitBtn'
+    import DatePicker from '../components/common/datepicker-2'
+    import Time from '../components/common/Time'
 
+
+    /*Field(tag="超时设置", placeholder="请选择超时间", :input="true" v-model="overtime")*/
     export default {
         mixins: [require('../components/mixin/BodyBg')],
         data() {
@@ -48,7 +56,7 @@
                 pageTitle: '创建/修改工单',
                 ordertype: '',
                 ordertypes: [],
-                terminalName:"",
+                terminalName: "",
                 scene: '',
                 scenes: [],
                 fault: '（系统根据现场现象自动选择）',
@@ -57,14 +65,16 @@
                 val: '',
                 project_id: '',
                 state: '',
-                flag:false,
-                value1:""
+                flag: false,
+                date: ''
             }
         },
         components: {
             HeaderBar,
             Field,
             SubmitBtn,
+            DatePicker,
+            Time
         },
         created() {
             //请求数据
@@ -77,11 +87,11 @@
                     name: '运维工单'
                 }
             ];
-            if(localStorage.terminal_name){
-                this.terminalName="";
-            }else{
-              window.localStorage.setItem('terminal_name',"");
-              window.localStorage.setItem('terminal_code',"");
+            if (localStorage.terminal_name) {
+                this.terminalName = "";
+            } else {
+                window.localStorage.setItem('terminal_name', "");
+                window.localStorage.setItem('terminal_code', "");
             }
             let that = this;
             //获取现场现象
@@ -91,8 +101,8 @@
                 //                console.log(that.scenes);
             });
         },
-        watch:{
-          '$route':'setName'
+        watch: {
+            '$route': 'setName'
         },
         methods: {
             submitFun() {
@@ -113,7 +123,7 @@
                     return false;
                 };
                 let project_id = this.project_id,
-                    terminal_code =localStorage.terminal_code,
+                    terminal_code = localStorage.terminal_code,
                     appearance = this.val,
                     timeout = this.overtime,
                     state = this.state,
@@ -146,16 +156,16 @@
                     for (let item in this.scenes[i]) {
                         if (item == 'id') {
                             if (this.scenes[i].id == this.val) {
-                                this.state = this.scenes[i].level;
+                                this.state = this.scenes[i].level
                                 switch (this.state) {
                                     case 1:
-                                        this.fault = '一级故障';
+                                        this.fault = '一级故障'
                                         break;
                                     case 1:
-                                        this.fault = '二级故障';
+                                        this.fault = '二级故障'
                                         break;
                                     case 1:
-                                        this.fault = '三级故障';
+                                        this.fault = '三级故障'
                                         break;
                                     default:
                                         break;
@@ -176,12 +186,45 @@
             goInfo() {
                 this.url('/searchterminal');
             },
-            setName(){
+            setName() {
 
-              this.terminalName=localStorage.terminal_name;
+                this.terminalName = localStorage.terminal_name;
             }
 
         }
     }
 
 </script>
+
+<style lang="sass" scoped>
+    .filed {
+        background-color: #fff;
+        min-height: 54px;
+        box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        margin-top: 8px;
+        .text {
+            left: 0;
+            top: 0;
+            width: 88px;
+            padding: 16px 0;
+        }
+        .box {
+            margin-left: 88px;
+            min-height: 54px;
+        }
+    }
+    
+    .rel {
+        position: relative;
+    }
+    
+    .abs {
+        position: absolute;
+    }
+    
+    .center {
+        text-align: center;
+    }
+
+</style>

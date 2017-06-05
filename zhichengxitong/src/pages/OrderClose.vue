@@ -114,26 +114,11 @@
                     name: '否',
                 }
             ];
-            let that = this;
-            // 获取当前工单信息
-            axios.get(ajaxUrls.orderinfo + localStorage.task_id).then(function(rsp) {
-                let d = rsp.data;
-                if (d.data.terminal_name == "") {
-                    that.name = '幸福公寓格格货栈'
-                } else {
-                    that.name = d.data.terminal_name;
-                }
-
-            })
-            //获取现场现象
-            axios.get(ajaxUrls.option).then(function(rsp) {
-                let d = rsp.data;
-                that.scenes = d.data.appearance;
-//                                console.log(that.scenes);
-            });
-
+            this.getInfo();
         },
-
+        watch: {
+            '$route': 'getInfo'
+        },
         methods: {
             submitFun() {
                 if (this.scene.indexOf('选择') > -1) {
@@ -160,10 +145,10 @@
                     _util.showErrorTip('请输入处理方式！');
                     return false;
                 }
-//                if (!$(this.$refs.up1.$el).find('.uploadifive-queue-item.complete').length) {
-//                    _util.showErrorTip('请上传图片！');
-//                    return false;
-//                };
+                //                if (!$(this.$refs.up1.$el).find('.uploadifive-queue-item.complete').length) {
+                //                    _util.showErrorTip('请上传图片！');
+                //                    return false;
+                //                };
                 let appearance = this.val,
                     reason = this.cause_id,
                     yunwei_type = this.yunwei_type,
@@ -173,12 +158,12 @@
                     task_id = localStorage.task_id,
                     that = this;
                 axios.post(ajaxUrls.orderinfo + task_id + '/close', {
-                    appearance:appearance,
-                    reason:reason,
-                    yunwei_type:yunwei_type,
-                    remark:remark,
-                    hasCatchLogZh:hasCatchLogZh,
-                    deal:deal                    
+                    appearance: appearance,
+                    reason: reason,
+                    yunwei_type: yunwei_type,
+                    remark: remark,
+                    hasCatchLogZh: hasCatchLogZh,
+                    deal: deal
                 }, {
                     withCredentials: true,
                     headers: {
@@ -186,9 +171,9 @@
                     }
                 }).then(function(rsp) {
                     _util.hideSysLoading();
-                    console.log(rsp.data)
                     if (rsp.data.status == 0) {
                         _util.showErrorTip(rsp.data.msg);
+                        that.url('/')
                     } else {
                         _util.showErrorTip(rsp.data.msg);
                     }
@@ -197,22 +182,18 @@
             //获取现象原因的ID
             getValue(val) {
                 this.val = val;
-//                console.log(this.val);
             },
-           //获取问题原因的ID
+            //获取问题原因的ID
             getValue1(val) {
                 this.cause_id = val;
-//                                console.log(this.cause_id);
             },
             //获取故障原因的ID
             getValue2(val) {
-                 this.yunwei_type = val;
-//                                console.log(this.yunwei_type);
+                this.yunwei_type = val;
             },
             //是否抓取日志
-            getValue3(val){
-                this.hasCatchLogZh=val;
-//                console.log(this.hasCatchLogZh);
+            getValue3(val) {
+                this.hasCatchLogZh = val;
             },
             change() {
                 let that = this;
@@ -242,11 +223,30 @@
                     if (that.categroys.length == 1) {
                         that.getValue2(d.data[0].id);
                         that.categroy = d.data[0].name;
-                         
+
                     } else {
                         that.categroy = "";
                     }
-//                    console.log(that.categroys);
+                    //                    console.log(that.categroys);
+                });
+            },
+            //获取信息
+            getInfo() {
+                let that = this;
+                // 获取当前工单信息
+                axios.get(ajaxUrls.orderinfo + localStorage.task_id).then(function(rsp) {
+                    let d = rsp.data;
+                    if (d.data.terminal_name == "") {
+                        that.name = '幸福公寓格格货栈'
+                    } else {
+                        that.name = d.data.terminal_name;
+                    }
+
+                })
+                //获取现场现象
+                axios.get(ajaxUrls.option).then(function(rsp) {
+                    let d = rsp.data;
+                    that.scenes = d.data.appearance;
                 });
             }
 
