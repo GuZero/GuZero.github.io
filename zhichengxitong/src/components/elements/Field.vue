@@ -17,7 +17,8 @@
             textarea(
                 v-if="textarea",
                 :placeholder="placeholder",
-                :maxlength="maxlength"
+                :maxlength="maxlength",
+                @focus="$emit('changeCallback')"
             )
             .select.rel(
                 v-if="select",

@@ -217,8 +217,6 @@ div.home
                         })
                     }
                 }
-
-
             },
             showLoading() { //显示正在加载数据状态
                 this.scroll_load_loading = true;

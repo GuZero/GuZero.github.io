@@ -22,6 +22,9 @@
 							<span>{{ d }}</span>
 						</td>
 					</tr>
+					<tr class="tr-abs" style="border-top:0px solid #EEE">
+					   <label for="">时间：</label><VueTimepicker v-model="yourTimeValue" format="HH:mm" @change="setTime($event)"></VueTimepicker> 
+					</tr>
 					</tbody>
 				</table>
 			</div>
@@ -51,10 +54,11 @@
 </template>
 
 <script>
+    import VueTimepicker from './vue-timepicker'
     'use strict';
 
     //	日期格式化输出
-    function dateFormat(y, m, d, fm) {
+    function dateFormat(y, m, d,h, fm) {
         if (!fm) {
             fm = 'yyyy-mm-dd';
         }
@@ -150,8 +154,22 @@
                 isMouseOver: false,
                 year,
                 month,
-                day
+                day,
+                yourTimeValue: {
+                    HH: "10",
+                    mm: "00"
+                },
             };
+
+        },
+        components: {
+            VueTimepicker
+        },
+        created() {
+            if (!localStorage.HH) {
+                window.localStorage.setItem('HH', '');
+                window.localStorage.setItem('MM', '');
+            }
         },
         computed: {
             //	日期二维数组（3*4），渲染用
@@ -241,7 +259,6 @@
                         row++;
                     }
                 }
-
                 return dayArr;
             },
             today() {
@@ -400,15 +417,27 @@
                     month,
                     format
                 } = this;
+                
                 if (d && this.dateIsValid({
                         year,
                         month,
                         day: d
                     })) {
                     this.day = d;
-                    this.$emit('input', dateFormat(year, month, d, format));
+                     let date = this.value.substring(0, 10),
+                        time = '';
+                    time = date + ' ' + this.yourTimeValue.HH + ':' + this.yourTimeValue.mm;
+                    this.value = time;
+                    this.$emit('input', dateFormat(year, month, d, format));                   
                     this.immEndChoice();
+                }else{
+                    let date = this.value.substring(0, 10),
+                        time = '';
+                    time = date + ' ' + this.yourTimeValue.HH + ':' + this.yourTimeValue.mm;
+                    this.value = time;
                 }
+
+
             },
             // 鼠标离开日期选择区域时超过一定时间，关闭日期面板
             endChoice(e) {
@@ -431,7 +460,18 @@
                 this.isMouseOver = true;
                 this.dayPanelIsShow = false;
                 this.monthPanelIsShow = false;
+            },
+            //设置时间
+            setTime(eventData) {
+
+                let date = this.value.substring(0, 10),
+                    time = '';
+                time = date + ' ' + this.yourTimeValue.HH + ':' + this.yourTimeValue.mm;
+                localStorage.HH = this.yourTimeValue.HH;
+                localStorage.MM = this.yourTimeValue.mm;
+                this.value = time;
             }
+
         }
     }
 
@@ -630,6 +670,17 @@
         display: block;
         height: 22.75px;
         line-height: 22.75px;
+    }
+    
+    .tr-abs {
+        position: absolute;
+        bottom: 2px;
+        right: 8px;
+    }
+    
+    .tr-abs label {
+        width: 30px;
+        text-align: center;
     }
 
 </style>

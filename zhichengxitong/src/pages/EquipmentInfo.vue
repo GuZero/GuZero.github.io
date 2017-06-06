@@ -60,13 +60,15 @@
         methods:{
             fetchData() {
                 let that = this;
-                if (that.$route.path == '/terminal') {
+                if (!(that.$route.path == ('/terminal/'+that.$route.params.code+'/equipmentinfo'))) {
                     return false;
                 }
+                _util.showSysLoading();
                 that.terminal_id = that.$route.params.code;
                 setTimeout(function () {
                     axios.get(ajaxUrls.basic +  that.$route.params.code + '?info=device')
                         .then(function(rsp) {
+                            _util.hideSysLoading();
                             that.bins = rsp.data.data.bins;
                             that.other=rsp.data.data.other;
                         })

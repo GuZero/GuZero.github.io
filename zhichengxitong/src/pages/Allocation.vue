@@ -12,12 +12,13 @@
             v-focus
         )
         div.content.mt90
-            template(v-if="nameList.length <= 0")
+            template(v-if="nameList.length <= 0 && !isSearch")
                 p.rel.item 无搜索结果
             template(v-else)
                 ul.rel(v-for="item in nameList")
                     li.rel.item(@click.stop.prevent="chooseOperator(item.user_id,item.name)") {{item.name}} 
                         label(v-if="item.mobile") （{{item.mobile}}）
+            DataLoading(ref="loading")
         ModalDialog(ref="confirmModal", @confirmCallback="confirmChoose")
 </template>
 
@@ -25,6 +26,7 @@
     import HeaderBar from '../components/common/Header'
     import Search from '../components/common/Search'
     import ModalDialog from '../components/elements/ModalDialog'
+    import DataLoading from '../components/common/DataLoading'
 
     export default {
         mixins: [require('../components/mixin/BodyBg')],
@@ -54,7 +56,11 @@
         components: {
             HeaderBar,
             Search,
+            DataLoading,
             ModalDialog
+        },
+        mounted() {
+            this.hideLoading();
         },
         watch: {
           '$route': function (route) {
@@ -65,6 +71,18 @@
             }
         },
         methods: {
+            showLoading() { //显示正在加载数据状态
+                this.scroll_load_loading = true;
+                this.$refs.loading && this.$refs.loading.showLoading();
+            },
+            hideLoading() { //隐藏正在加载数据状态
+                this.scroll_load_loading = false;
+                this.$refs.loading && this.$refs.loading.hideLoading();
+            },
+            showLoadEnd() { //显示没有更多数据状态
+                this.hideLoading();
+                this.$refs.loading && this.$refs.loading.showEnd();
+            },
             searchOperator() {
                 let that = this,
                     name = that.operator_name.replace(/(^\s*)|(\s*$)/g, "");
@@ -74,14 +92,17 @@
                 if (that.isSearch) {
                     return false;
                 }
+                that.showLoading();
                 that.isSearch = true;
+                that.nameList = [];
                 setTimeout(function () {
                     axios.get(ajaxUrls.users + '?name='+name)
                         .then(function(rsp) {
+                            that.hideLoading();
                             that.isSearch = false;
                             that.nameList = rsp.data.data;
                         })
-                },50);
+                },150);
             },
             chooseOperator(user_id,user_name) {
                 let type = '';

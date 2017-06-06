@@ -96,8 +96,9 @@
                     div
                        label.c_g1 寄件人手机号：
                        lable {{d.mobile}}
-                div(v-if="!flag")
-                    DataLoading(ref="loading")
+            div.pd_20
+                DataLoading(ref="loading")
+
 
 
 </template>
@@ -155,12 +156,13 @@
         mounted() {
             this.getUrl();
             window.addEventListener('scroll', this.handleScroll);
+            this.hideLoading();
         },
         watch: {
             '$route': 'getUrl',
         },
-         beforeRouteLeave(to, from, next) {
-            this.terminalName=''; 
+        beforeRouteLeave(to, from, next) {
+            this.terminalName='';
             next();
         },
         activated() { //开启<keep-alive>，会触发activated事件
@@ -238,6 +240,8 @@
                     that.flag = true;
                     that.num = 0;
                     that.resetScrollTop(1);
+                    that.hideLoading();
+                    that.result=[];
                     return false;
                 }
                 if (that.tn_delay) {
@@ -249,6 +253,7 @@
                 if (that.tn_scroll_load_end) {
                     return false;
                 }
+                this.showLoading();
                 if (that.isFlag1 || that.isFlag2 || that.isFlag3 || that.isFlag4) {
                     axios.get(that.url + _key.trim() + "&page=" + page)
                         .then(function(rsp) {
@@ -261,7 +266,10 @@
                                 if (d.data.length == 0) {
                                     that.num = 0;
                                     that.flag = true;
-                                } else {
+                                }else if(d.data.length<16){
+                                    that.showLoadEnd();
+                                }
+                                else {
                                     that.num = d.data.length;
                                 }
                                 that.result = that.result.concat(d.data);
@@ -360,7 +368,9 @@
             margin: 0 auto;
         }
     }
-    
+    .pd_20{
+        padding-top: 20px;
+    }
     .empty {
         padding: 16px;
         color: #4d4d4d;

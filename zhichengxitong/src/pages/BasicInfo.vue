@@ -43,7 +43,7 @@
                     div.item.item_btn
                         div
                             p.gray 运营管理员
-                        div.btn(@click.stop.prevent="goToAllocation('2')" v-if="is_yunying_manager == '0'") 分配
+                        div.btn(@click.stop.prevent="goToAllocation('2')" v-if="is_yunying_manager == '1'") 分配
         TransmitFooter(:footerconfig="footerconfig",:terminal_id="terminal_id")
 
 </template>
@@ -99,13 +99,15 @@
             },
             fetchData(){
                 let that = this;
-                if (that.$route.path == '/terminal') {
+                if (!(that.$route.path == ('/terminal/'+that.$route.params.code))) {
                     return false;
                 }
+                _util.showSysLoading();
                 that.terminal_id = that.$route.params.code;
                 setTimeout(function () {
                     axios.get(ajaxUrls.basic + that.$route.params.code + '?info=basic')
                         .then(function(rsp) {
+                            _util.hideSysLoading();
                             let tempData = rsp.data.data;
                             that.terminal_name = tempData.terminal_name;
                             that.terminal_code = tempData.terminal_code;
@@ -121,7 +123,7 @@
                 },0);
             },
             getLocation(action_type) {
-                var type = 1;
+                let type = 1;
                 if (action_type == 'check') {
                     if (!this.isActive) {
                         return false;

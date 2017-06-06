@@ -31,9 +31,8 @@
             Field(tag="故障等级", :pvalue="fault", :p="true")
             div.filed.rel
                 div.text.abs.center 超时设置               
-                DatePicker.box.rel(field="myDate", placeholder="选择日期",:no-today="true",v-model="date",format="yyyy-mm-dd", :forward="true")
-            Time(:hideClearButton="true")    
-            Field(tag="问题描述", placeholder="请输入问题描述", v-model.trim="desc", :textarea="true")
+                DatePicker.box.rel( placeholder="选择日期",:no-today="true",v-model="date",format="yyyy-mm-dd", :forward="true")    
+            Field(tag="问题描述", placeholder="请输入问题描述", v-model.trim="desc", :textarea="true" @changeCallback="testChange1")
         SubmitBtn(@submitCallback="submitFun", text="提交", theme="white")
 
 
@@ -44,9 +43,8 @@
     import Field from '../components/elements/Field'
     import SubmitBtn from '../components/elements/SubmitBtn'
     import DatePicker from '../components/common/datepicker-2'
-    import Time from '../components/common/Time'
 
-
+    
     /*Field(tag="超时设置", placeholder="请选择超时间", :input="true" v-model="overtime")*/
     export default {
         mixins: [require('../components/mixin/BodyBg')],
@@ -60,13 +58,12 @@
                 scene: '',
                 scenes: [],
                 fault: '（系统根据现场现象自动选择）',
-                overtime: '2017-06-2 14:35',
                 desc: '',
                 val: '',
                 project_id: '',
                 state: '',
                 flag: false,
-                date: ''
+                date: '2017-06-06 10:00'
             }
         },
         components: {
@@ -74,7 +71,6 @@
             Field,
             SubmitBtn,
             DatePicker,
-            Time
         },
         created() {
             //请求数据
@@ -122,13 +118,13 @@
                     _util.showErrorTip('请输入问题描述！');
                     return false;
                 };
+                
                 let project_id = this.project_id,
                     terminal_code = localStorage.terminal_code,
                     appearance = this.val,
-                    timeout = this.overtime,
+                    timeout = this.date.substring(0, 10)+' '+localStorage.HH+':'+localStorage.MM,
                     state = this.state,
                     content = this.desc;
-
                 axios.post(ajaxUrls.task, {
                     project_id: project_id,
                     terminal_code: terminal_code,
@@ -175,6 +171,10 @@
                     }
                 }
             },
+            testChange1(){
+                let time=this.date+' '+localStorage.HH+':'+localStorage.MM;                    
+                this.date=time.substring(0,16);
+            },
             //获取工单类型ID
             getID(val) {
                 this.project_id = val;
@@ -187,7 +187,6 @@
                 this.url('/searchterminal');
             },
             setName() {
-
                 this.terminalName = localStorage.terminal_name;
             }
 
