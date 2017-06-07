@@ -28,7 +28,7 @@
 <script>
     import HeaderBar from '../components/common/Header'
     import TransmitFooter from '../components/common/TransmitFooter'
-    import ModalDialog from '../components/elements/ModalDialog'
+    import ModalDialog from '../components/elements/ModalDialog';
     export default {
         mixins: [require('../components/mixin/BodyBg')],
         data() {
@@ -85,26 +85,30 @@
                 this.current_type = type;
                 this.current_id=_id;
                 this.current_index=index;
+                let that = this;
+                window.QRScanSuccess = function(result){
+                    that.saveEquipment(result);
+                    window.QRScanSuccess = undefined;
+                };
+                window.QRScanFailed = function(msg){
+                    _util.showErrorTip(msg);
+                    window.QRScanFailed = undefined;
+                };
                 if (_util.isIOS()) {
                     if (window.webkit && window.webkit.messageHandlers) {
                         window.webkit.messageHandlers.startQRScan.postMessage();
                     }
                 }else{
-                    if (window.mogeDelivery) {
-                        window.mogeDelivery.startQRScan();
+                    if (window.mogeItsupport) {
+                        window.mogeItsupport.startQRScan();
                     }
                 }
-            },
-            QRScanSuccess(result) {
-                saveEquipment(result);
-            },
-            QRScanFailed(msg) {
-                _util.showErrorTip(msg);
             },
             saveEquipment(asset_num) {
                 let that = this;
                 let finishUrl = '';
                 let postData ={};
+
                 if (that.current_type == 'rack_id') {
                     finishUrl = ajaxUrls.basic +  that.$route.params.code + '/bins';
                     postData ={
@@ -117,7 +121,11 @@
                         device_id: current_id,
                         asset_num: asset_num
                     }
+                 _util.showErrorTip(postData);
+                    
                 }
+                 _util.showErrorTip(asset_num);
+
                 _util.showSysLoading();
                 axios.post(finishUrl, postData, {
                     withCredentials: true,
@@ -126,14 +134,16 @@
                     }
                 }).then(function(rsp) {
                     _util.hideSysLoading();
+                 _util.showErrorTip("1222");
+
                     if (rsp.data.status == 0) {
                         if (that.current_type == 'rack_id') {
                             let item = that.bins[that.current_index];
-                                item.asset_num = "32423423423";
+                                item.asset_num = asset_num;
                             that.bins.splice(that.current_index,1,item);
                         }else if (that.current_type == 'device_id') {
                             let item = that.other[that.current_index];
-                                item.asset_num = "32423423423";
+                                item.asset_num = asset_num;
                             that.other.splice(that.current_index,1,item);
                         }
                     } else {
@@ -141,6 +151,9 @@
                             _util.showErrorTip(rsp.data.msg);
                         }
                     }
+                }).catch(function(error) {
+                    _util.showErrorTip(error);
+                    
                 });
             }
 

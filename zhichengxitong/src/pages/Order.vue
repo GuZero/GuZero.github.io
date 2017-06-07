@@ -7,7 +7,7 @@ div.home
 		@msgBtnCallback="goToMsg",
 		@searchBtnCallback="isSearch"
 	)
-	div.search(v-if="searchFlag")
+	div.search.fixed(v-if="searchFlag")
 		div.item(v-for="d in searchInfo", @click.stop.prevent="goToSearch(d)") {{d.value}}
 	div.nav.top44.fixed
 		div.left.tab.rel(:class="{active: activeTab == 0}", @click="fetchData(0)")
@@ -69,7 +69,6 @@ div.home
                 num: '',
                 filter: '',
                 page: 1,
-                flag: true,
                 scroll_load_loading: false,
                 scroll_load_end: false,
                 list: [],
@@ -112,7 +111,7 @@ div.home
             window.addEventListener('scroll', this.handleScroll);
         },
         watch: {
-            '$route': 'fetchData'
+            '$route': 'fetchData(2)'
         },
         beforeRouteEnter(to, from, next) {
             next();
@@ -130,6 +129,7 @@ div.home
             fetchData(index) {
                 this.searchFlag = false;
                 index > -1 ? this.activeTab = index : void 0;
+                if (typeof(index) == 'object') this.activeTab = 2;
                 //getDataByTabIndex post ajax
                 let that = this;
                 that.page = 1;
@@ -153,7 +153,6 @@ div.home
                             that.filter = 'handle'
                             break;
                     }
-
                     //获取待办工单数量
                     axios.get(ajaxUrls.num)
                         .then(function(rsp) {
@@ -162,17 +161,13 @@ div.home
                     that.$refs.loading && that.$refs.loading.showLoading();
                     axios.get(ajaxUrls.tasks + 'filter=' + that.filter)
                         .then(function(rsp) {
-
                             for (let i = 0; i < rsp.data.data.length; i++) {
                                 rsp.data.data[i].head = '//img.aimoge.com/FlJ81rMZKlvsiYP-EXr3P492r4ZS';
                             }
                             that.list2 = rsp.data.data;
                             that.list = that.list2;
-
                             that.showLoadEnd();
                         });
-
-
                 }, 500);
             },
             isSearch() {
@@ -190,33 +185,48 @@ div.home
             },
             goInfo(_id) {
                 localStorage.task_id = _id;
-                this.flag = false;
                 this.url('/order/' + _id);
             },
             handleScroll() { //滚动加载监听事件
-                if (document.body.scrollTop + window.innerHeight >= document.body.scrollHeight - 1) {
-                    this.loadTerminalData();
+               if (!this.list.length < 16) {
+                    if (document.body.scrollTop + window.innerHeight >= document.body.scrollHeight - 1) {
+                        this.loadTerminalData();
+                    }
                 }
             },
             loadTerminalData() {
                 let that = this,
                     page = that.page;
-                if (that.activeTab == '0') {
-                    if (this.flag) {
-                        that.showLoading();
-                        that.scroll_load_loading = true;
-                        axios.get(ajaxUrls.tasks + 'page=' + page).then(function(rsp) {
-                            let d = rsp.data;
-                            that.hideLoading();
-                            for (let i = 0; i < d.data.length; i++) {
-                                d.data[i].head = '//img.aimoge.com/FlJ81rMZKlvsiYP-EXr3P492r4ZS';
-                            }
-                            that.scroll_load_loading = false;
-                            that.list = that.list.concat(d.data);
-                            that.page += 1;
-                        })
-                    }
+                 switch (this.activeTab) {
+                    case 0:
+                        that.filter = 'all'
+                        break;
+                    case 1:
+                        that.filter = 'create'
+                        break;
+                    case 2:
+                        that.filter = 'handle'
+                        break;
+                    case 3:
+                        that.filter = 'finish'
+                        break;
+                    default:
+                        that.filter = 'handle'
+                        break;
                 }
+                that.showLoading();
+                that.scroll_load_loading = true;
+                axios.get(ajaxUrls.tasks + 'filter=' + that.filter + '&page=' + page).then(function(rsp) {
+                    let d = rsp.data;
+                    that.hideLoading();
+                    for (let i = 0; i < d.data.length; i++) {
+                        d.data[i].head = '//img.aimoge.com/FlJ81rMZKlvsiYP-EXr3P492r4ZS';
+                    }
+                    that.scroll_load_loading = false;
+                    that.list = that.list.concat(d.data);
+                    that.showLoadEnd();
+                    that.page += 1;
+                })
             },
             showLoading() { //显示正在加载数据状态
                 this.scroll_load_loading = true;
@@ -250,7 +260,7 @@ div.home
     
     .search {
         background: #8c8c8c;
-        position: absolute;
+        top: 6%;
         right: 0px;
         z-index: 9999;
         .item {

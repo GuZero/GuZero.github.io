@@ -81,6 +81,8 @@
                     ismsg: 1,
                     issearch: 1
                 },
+                version: '1',
+                isGoHome: false,
                 activeTab: 1,
                 warn_num: '0',
                 task_num: '0',
@@ -88,9 +90,10 @@
                 contract_num: '0',
                 filter: '',
                 page: 1,
+                total_page: 1,
                 scroll_load_loading: false,
-                isFirst: true,
                 scroll_load_end: false,
+                isFirst: true,
                 list: [],
                 list0: [],
                 list1: [],
@@ -107,12 +110,25 @@
             this.switchTab(1);
             window.addEventListener('scroll', this.handleScroll);
         },
-        activated() { 
+        activated() {
+            if (this.isGoHome) {
+                if (window.localStorage.messageToHome === '1') {
+                    this.activeTab= 1;
+                    this.warn_num= '0';
+                    this.task_num= '0';
+                    this.alarm_num= '0';
+                    this.contract_num= '0';
+                    this.filter= '';
+                    this.resetData();
+                    this.switchTab(1);
+
+                }
+            }else{
+                document.body.scrollTop = window.localStorage.messageScrollTop;
+            }
+            window.localStorage.removeItem('messageScrollTop');
             window.addEventListener('scroll', this.handleScroll);
         },
-       watch: {
-         '$route': 'fetchData'
-       },
         beforeRouteEnter(to, from, next) {
             next();
         },
@@ -120,8 +136,18 @@
             this;
         },
         beforeRouteLeave(to, from, next) {
+            if (to.path === '/') {
+                this.isGoHome = true;
+                window.localStorage.setItem('messageToHome','1');
+            }else{
+                window.localStorage.removeItem('messageToHome');
+                window.localStorage.setItem('messageScrollTop', document.body.scrollTop);
+                document.body.scrollTop = 0;
+            }
+
             next();
         },
+       
         destroyed() {
             this;
         },
@@ -181,7 +207,7 @@
                 // var t = Y +'-'+ m +'-'+ d;
                 return t;
             },
-            converReadTime: function (value) {
+            converReadTime(value) {
                 if (!value) return '';
                 value = value.toString();
                 if (value.substring(0,1) == '-' || value.substring(0,4) == '0000') {
@@ -202,9 +228,6 @@
                 this.list3 = [];
             },
             switchTab(index) {
-                if (!(this.$route.path == '/message')) {
-                    return false;
-                }
                 if (index == 0 || index == 2 || index == 3 ) {
                     _util.showErrorTip('敬请期待！');
                     return false;
@@ -231,58 +254,86 @@
                 this.fetchData();
             },
             fetchData() {
+                if (!(this.$route.path == '/message')) {
+                    return false;
+                }
                 let that = this;
+                if (that.total_page < that.page) {
+                    that.showLoadEnd();
+                    return false;
+                }
                 if (that.scroll_load_loading) {
                     return false;
                 }
                 if (that.scroll_load_end) {
                     return false;
                 }
- 
+                if (that.page == 1) {
+                    document.body.scrollTop = 0;
+                }
+                if (that.isFirst) {
+                    that.getAjaxRequest("message_cache",ajaxUrls.messages + 'numbers',that.version,function (response) {
+                        if (response.status == 0) {
+                            that.warn_num =  response.data.warn;
+                            that.task_num =  response.data.task;
+                            that.alarm_num =  response.data.alarm;
+                            that.contract_num =  response.data.contract;                                
+                        }else {
+                            if (response.msg) _util.showErrorTip(rsp.data.msg);
+                        }
+                    },function (error) {
+                        _util.showErrorTip(error);
+                    })
+                }
                 that.showLoading();
-                axios.get(ajaxUrls.messages + that.filter + "?page=" + that.page)
-                    .then(function(rsp) {
+                that.getAjaxRequest("message_cache",ajaxUrls.messages + that.filter + "?page=" + that.page,that.version,function (response) {
+                    if (response.status == 0) {
                         switch (that.activeTab) {
                             case 0:
-                                that.list0 = that.list0.concat(rsp.data.data.news);
+                                that.list0 = that.list0.concat(response.data.news);
                                 that.list = that.list0;
-                                that.warn_num =  that.list0.length;
                                 break;
                             case 1:
-                                that.list1 = that.list1.concat(rsp.data.data.news);
+                                that.list1 = that.list1.concat(response.data.news);
                                 that.list = that.list1;
-                                that.task_num =  that.list1.length;
 
                                 break;
                             case 2:
-                                that.list2 = that.list2.concat(rsp.data.data.news);
+                                that.list2 = that.list2.concat(response.data.news);
                                 that.list = that.list2;
-                                that.alarm_num =  that.list2.length;
                                 break;
                             case 3:
-                                that.list3 = that.list3.concat(rsp.data.data.news);
+                                that.list3 = that.list3.concat(response.data.news);
                                 that.list = that.list3;
-                                that.contract_num =  that.list3.length;
                                 break;
                             default:
-                                that.list1 = that.list1.concat(rsp.data.data.news);
+                                that.list1 = that.list1.concat(response.data.news);
                                 that.list = that.list1;
-                                that.task_num =  that.list1.length;
                                 break;
                         }
+                        that.total_page = response.total_page;
                         that.isFirst = false;
                         that.page += 1;
-                        if (rsp.data.data.news.length < 5) {
+                        if (response.data.news.length < 5 || that.page > response.total_page) {
                             that.showLoadEnd();
-                            
                         }else{
                             that.hideLoading();
                         }
-                    });
+                    }else {
+                        if (response.msg) _util.showErrorTip(response.msg);
+                        that.hideLoading();
+                    }
+                },function (error) {
+                    _util.showErrorTip(error);
+                })
             },
             goDetail(_id,href,index) {
                 let that = this;
                 let item = that.list[index];
+                if (!href) {
+                    _util.showErrorTip('您的工单已被删除');
+                    return false;
+                }
                 if (!that.converReadTime(item.readed_at)) {
                     that.url(href);
                     return false;

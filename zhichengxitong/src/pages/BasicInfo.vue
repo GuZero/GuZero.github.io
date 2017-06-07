@@ -43,7 +43,7 @@
                     div.item.item_btn
                         div
                             p.gray 运营管理员
-                        div.btn(@click.stop.prevent="goToAllocation('2')" v-if="is_yunying_manager == '1'") 分配
+                        div.btn(@click.stop.prevent="goToAllocation('2')" v-if="is_yunying_manager == '0'") 分配
         TransmitFooter(:footerconfig="footerconfig",:terminal_id="terminal_id")
 
 </template>
