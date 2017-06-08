@@ -12,9 +12,9 @@
 <body>
     <div>
         <input type="time">
-        <input type="datetime-local" value="2015-03-27 10:41" id="str">
+        <input type="datetime-local"  id="str">
         <input type="datetime">
-        <p></p>
+        <input type="text" id="text">   
         <button id="btn">格式化时间</button>
     </div>
     <script>
@@ -26,7 +26,7 @@
                 hour = x.substring(11, 13),
                 minute = x.substring(14),
                 format = year + "-" + day + "-" + month + ' ' + hour + ':' + minute;
-            document.getElementsByTagName('p').innerHTML=format;
+            document.getElementById("text").value=format;
         }
 
     </script>
