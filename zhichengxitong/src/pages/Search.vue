@@ -154,15 +154,21 @@
             DataLoading
         },
         mounted() {
+            window.canGoBack = true;
+            window.origin = null;
             this.getUrl();
             window.addEventListener('scroll', this.handleScroll);
             this.hideLoading();
+        },
+        activated() {
+            window.canGoBack = true;
+            window.origin = null;
         },
         watch: {
             '$route': 'getUrl',
         },
         beforeRouteLeave(to, from, next) {
-            this.terminalName='';
+            this.terminalName = '';
             next();
         },
         activated() { //开启<keep-alive>，会触发activated事件
@@ -203,16 +209,15 @@
                 }
                 that.showLoading();
                 that.scroll_load_loading = true;
-                axios.get(that.url + _key.trim() + "&page=" + page)
-                    .then(function(rsp) {
-                        let d = rsp.data;
+                that.getAjaxRequest("searchPage_cache", that.url + _key.trim() + "&page=" + page, that.version, 30 * 1000, 6 * 60 * 60 * 1000, function(response) {
+                    if (response.status == 0) {
                         that.hideLoading();
                         that.scroll_load_loading = false;
-                        if (d.status == 0 && d.data && d.data.length) {
-                            that.result = that.result.concat(d.data);
+                        if (response.status == 0 && response.data && response.data.length) {
+                            that.result = that.result.concat(response.data);
                             that.num = that.result.length;
                             that.page += 1;
-                            if (d.data.length < that.numPerPage) {
+                            if (response.data.length < that.numPerPage) {
                                 that.scroll_load_end = true;
                             }
                         } else {
@@ -221,7 +226,13 @@
                                 that.showLoadEnd();
                             }
                         }
-                    })
+                        that.showLoadEnd();
+                    } else {
+                        if (response.msg) _util.showErrorTip(response.data.msg);
+                    }
+                }, function(error) {
+                    _util.showErrorTip(error);
+                });
             },
             searchByKey(isFirst) {
                 let that = this,
@@ -241,7 +252,7 @@
                     that.num = 0;
                     that.resetScrollTop(1);
                     that.hideLoading();
-                    that.result=[];
+                    that.result = [];
                     return false;
                 }
                 if (that.tn_delay) {
@@ -255,25 +266,52 @@
                 }
                 this.showLoading();
                 if (that.isFlag1 || that.isFlag2 || that.isFlag3 || that.isFlag4) {
-                    axios.get(that.url + _key.trim() + "&page=" + page)
-                        .then(function(rsp) {
-                            let d = rsp.data;
+                    //                    axios.get(that.url + _key.trim() + "&page=" + page)
+                    //                        .then(function(rsp) {
+                    //                            let d = rsp.data;
+                    //                            that.hideLoading();
+                    //                            that.tn_scroll_load_loading = false;
+                    //                            console.log(d.data);
+                    //                            if (d.data) {
+                    //                                that.flag = false;
+                    //                                if (d.data.length == 0) {
+                    //                                    that.num = 0;
+                    //                                    that.flag = true;
+                    //                                }else if(d.data.length<16){
+                    //                                    that.showLoadEnd();
+                    //                                }
+                    //                                else {
+                    //                                    that.num = d.data.length;
+                    //                                }
+                    //                                that.result = that.result.concat(d.data);
+                    //                                if (d.data.length < that.numPerPage) {
+                    //                                    that.tn_scroll_load_end = true;
+                    //                                }
+                    //                            } else {
+                    //                                that.flag = true;
+                    //                                that.tn_scroll_load_end = true;
+                    //                                if (isFirst) {
+                    //                                    that.showLoadEnd();
+                    //                                }
+                    //                            }
+                    //
+                    //                        });
+                    that.getAjaxRequest("search_cache", that.url + _key.trim() + "&page=" + page, that.version, 20 * 1000, 6 * 60 * 60 * 1000, function(response) {
+                        if (response.status == 0) {
                             that.hideLoading();
                             that.tn_scroll_load_loading = false;
-                            console.log(d.data);
-                            if (d.data) {
+                            if (response.data) {
                                 that.flag = false;
-                                if (d.data.length == 0) {
+                                if (response.data.length == 0) {
                                     that.num = 0;
                                     that.flag = true;
-                                }else if(d.data.length<16){
+                                } else if (response.data.length < 16) {
                                     that.showLoadEnd();
+                                } else {
+                                    that.num = response.data.length;
                                 }
-                                else {
-                                    that.num = d.data.length;
-                                }
-                                that.result = that.result.concat(d.data);
-                                if (d.data.length < that.numPerPage) {
+                                that.result = that.result.concat(response.data);
+                                if (response.data.length < that.numPerPage) {
                                     that.tn_scroll_load_end = true;
                                 }
                             } else {
@@ -283,8 +321,12 @@
                                     that.showLoadEnd();
                                 }
                             }
-
-                        });
+                        } else {
+                            if (response.msg) _util.showErrorTip(response.data.msg);
+                        }
+                    }, function(error) {
+                        _util.showErrorTip(error);
+                    });
                 }
             },
             getUrl() {
@@ -322,7 +364,7 @@
                         this.url = ajaxUrls.search1;
                         break;
                 }
-                if(!this.terminalName=='') this.terminalName ='';                
+                if (!this.terminalName == '') this.terminalName = '';
                 this.result = [];
                 this.num = 0;
                 this.flag = true;
@@ -368,9 +410,11 @@
             margin: 0 auto;
         }
     }
-    .pd_20{
+    
+    .pd_20 {
         padding-top: 20px;
     }
+    
     .empty {
         padding: 16px;
         color: #4d4d4d;

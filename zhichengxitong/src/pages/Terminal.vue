@@ -55,6 +55,7 @@
                 footerconfig: {
                     isterminal: true
                 },
+                version: '1',
                 //搜索文本框字段
                 terminalName: '',
                 tabIndex: 0,
@@ -86,6 +87,14 @@
                 tn_scroll_load_end: false,
                 tn_delay: null
             }
+        },
+        created() {
+            window.canGoBack = false;
+            window.origin = null;
+        },
+        activated() {
+            window.canGoBack = false;
+            window.origin = null;
         },
         components: {
             HeaderBar,
@@ -216,13 +225,18 @@
                 that.resetDefaultConfig();
                 that.citys = [];
                 that.showLoading();
-                axios.get(ajaxUrls.citys + data.ar_id)
-                    .then(function(rsp) {
+                that.getAjaxRequest("terminal_cache",ajaxUrls.citys + data.ar_id,that.version,2*60*1000,6*60*60*1000,
+                    function (response) {
                         that.hideLoading();
-                        if (rsp.data.status == 0) {
-                            that.citys = rsp.data.data;
+                        if (response.status == 0) {
+                            that.citys = response.data;                           
+                        }else {
+                            if (response.msg) _util.showErrorTip(response.msg);
                         }
-
+                    },
+                    function (error) {
+                        that.hideLoading();
+                        _util.showErrorTip(error);
                     })
             },
             loadTerminals(data, e) {
@@ -238,13 +252,19 @@
                 let that = this;
                 if (that.areas && !that.areas.length) {
                     that.showLoading();
-                    axios.get(ajaxUrls.areas)
-                        .then(function(rsp) {
+                    that.getAjaxRequest("terminal_cache",ajaxUrls.areas,that.version,2*60*1000,6*60*60*1000,
+                        function (response) {
                             that.hideLoading();
-                            if (rsp.data.status == 0) {
-                                that.areas = rsp.data.data;
+                            if (response.status == 0) {
+                                that.areas = response.data;                           
+                            }else {
+                                if (response.msg) _util.showErrorTip(response.msg);
                             }
-                        });
+                        },
+                        function (error) {
+                            that.hideLoading();
+                            _util.showErrorTip(error);
+                        })
                 }
             },
             loadTerminalData(isFirst) {
@@ -262,17 +282,17 @@
 
                 that.showLoading();
                 that.scroll_load_loading = true;
-                axios.get(ajaxUrls.terminals + that.ar_id + '/citys/' + that.city_id + '?page=' + page)
-                    .then(function(rsp) {
-                        let d = rsp.data;
+
+                that.getAjaxRequest("terminal_cache",ajaxUrls.terminals + that.ar_id + '/citys/' + that.city_id + '?page=' + page,that.version,2*60*1000,6*60*60*1000,
+                    function (response) {
                         that.hideLoading();
                         that.scroll_load_loading = false;
-                        if (d.status == 0 && d.data && d.data.length) {
-                            that.terminals = that.terminals.concat(d.data);
+                        if (response.status == 0 && response.data && response.data.length) {
+                            that.terminals = that.terminals.concat(response.data);
                             that.page += 1;
                             that.pageList = that.pageList.concat([page]);
 
-                            if (d.data.length < that.numPerPage) {
+                            if (response.data.length < that.numPerPage) {
                                 that.scroll_load_end = true;
                             }
                         } else {
@@ -280,7 +300,14 @@
                             if (isFirst) {
                                 that.showLoadEnd();
                             }
+                            if(response.status != 0){
+                                if (response.msg) _util.showErrorTip(response.msg);
+                            }
                         }
+                    },
+                    function (error) {
+                        that.hideLoading();
+                        _util.showErrorTip(error);
                     })
             },
             searchTerminal(isFirst) {
@@ -319,16 +346,14 @@
                     that.tn_delay = null;
                     that.showLoading();
                     that.tn_scroll_load_loading = true;
-                    axios.get(ajaxUrls.searchTerminal + _key.trim() + '&page=' + page)
-                        .then(function(rsp) {
-                            let d = rsp.data;
+                    that.getAjaxRequest("terminal_cache",ajaxUrls.searchTerminal + _key.trim() + '&page=' + page,that.version,2*60*1000,6*60*60*1000,
+                        function (response) {
                             that.hideLoading();
                             that.tn_scroll_load_loading = false;
-                            if (d.status == 0 && d.data && d.data.length) {
+                            if (response.status == 0 && response.data && response.data.length) {
                                 that.tn_terminals = that.tn_terminals.concat(d.data);
                                 that.tn_page += 1;
                                 that.tn_pageList = that.tn_pageList.concat([page]);
-
                                 if (d.data.length < that.numPerPage) {
                                     that.tn_scroll_load_end = true;
                                 }
@@ -337,8 +362,15 @@
                                 if (isFirst) {
                                     that.showLoadEnd();
                                 }
+                                if(response.status != 0){
+                                    if (response.msg) _util.showErrorTip(response.msg);
+                                }
                             }
-                        });
+                        },
+                        function (error) {
+                            that.hideLoading();
+                            _util.showErrorTip(error);
+                        })
                 }, 350);
             },
             handleScroll() { //滚动加载监听事件

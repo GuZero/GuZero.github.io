@@ -107,10 +107,14 @@
             DataLoading
         },
         mounted() {
+            window.canGoBack = true;
+            window.origin = null;
             this.switchTab(1);
             window.addEventListener('scroll', this.handleScroll);
         },
         activated() {
+            window.canGoBack = true;
+            window.origin = null;
             if (this.isGoHome) {
                 if (window.localStorage.messageToHome === '1') {
                     this.activeTab= 1;
@@ -272,21 +276,24 @@
                     document.body.scrollTop = 0;
                 }
                 if (that.isFirst) {
-                    that.getAjaxRequest("message_cache",ajaxUrls.messages + 'numbers',that.version,function (response) {
-                        if (response.status == 0) {
-                            that.warn_num =  response.data.warn;
-                            that.task_num =  response.data.task;
-                            that.alarm_num =  response.data.alarm;
-                            that.contract_num =  response.data.contract;                                
-                        }else {
-                            if (response.msg) _util.showErrorTip(rsp.data.msg);
-                        }
-                    },function (error) {
-                        _util.showErrorTip(error);
-                    })
+                    that.getAjaxRequest("message_cache",ajaxUrls.messages + 'numbers',that.version,2*60*1000,6*60*60*1000,
+                        function (response) {
+                            if (response.status == 0) {
+                                that.warn_num =  response.data.warn;
+                                that.task_num =  response.data.task;
+                                that.alarm_num =  response.data.alarm;
+                                that.contract_num =  response.data.contract;                                
+                            }else {
+                                if (response.msg) _util.showErrorTip(response.msg);
+                            }
+                        },
+                        function (error) {
+                            _util.showErrorTip(error);
+                        })
                 }
                 that.showLoading();
-                that.getAjaxRequest("message_cache",ajaxUrls.messages + that.filter + "?page=" + that.page,that.version,function (response) {
+                that.getAjaxRequest("message_cache",ajaxUrls.messages + that.filter + "?page=" + that.page,that.version,30*1000,6*60*60*1000,
+                    function (response) {
                     if (response.status == 0) {
                         switch (that.activeTab) {
                             case 0:
@@ -320,10 +327,11 @@
                             that.hideLoading();
                         }
                     }else {
-                        if (response.msg) _util.showErrorTip(response.msg);
                         that.hideLoading();
+                        if (response.msg) _util.showErrorTip(response.msg);
                     }
-                },function (error) {
+                },
+                function (error) {
                     _util.showErrorTip(error);
                 })
             },

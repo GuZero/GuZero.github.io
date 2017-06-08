@@ -48,20 +48,19 @@
         mixins: [require('../components/mixin/BodyBg')],
         data() {
             return {
-
                 pageTitle: '工单详情',
                 username: 'jerry',
                 completed: 0, //工单完成
                 isAuthor: 0, //发布者身份
                 isAdmin: 1, //审核者身份
-                status:'',
+                status: '',
                 data: {
                     terminalName: '东亚逸品加装格格货栈',
                     grade: '一级故障',
                     scene: '系统错误，请稍后再试！',
                     desc: '运单号：24352346326，M0406/06号门，业主一键开柜丢件，调监控时间是2017-02-26 19:20:12，联系业主'
                 },
-                history:[]
+                history: []
             }
         },
         computed: {
@@ -75,8 +74,17 @@
             ModalDialog,
             SubmitBtn
         },
-        created() {
+        watch: {
+            '$route': 'getData'
+        },
+        mounted() {
+            window.canGoBack = true;
+            window.origin = null;
             this.getData()
+        },
+        activated() {
+            window.canGoBack = true;
+            window.origin = null;
         },
         methods: {
             doAlertEvent() {
@@ -132,24 +140,17 @@
             },
             getData() {
                 let that = this;
-                setTimeout(function() {
-                    axios.get(ajaxUrls.orderinfo + localStorage.task_id).then(function(rsp) {
-                        console.log(rsp.data.data);
-                        let d = rsp.data;
-                        d.data.terminal_name='东亚逸品加装格格货栈';
-                        d.data.level='一级故障';
-                        d.data.appearance='系统错误，请稍后再试';
-                        d.data.content='运单号：24352346326，M0406/06号门，业主一键开柜丢件，调监控时间是2017-02-26 19:20:12，联系业主';
-                        that.username = d.data.creator;
-                        that.data.terminalName = d.data.terminal_name;
-                        that.data.grade = d.data.level
-                        that.data.scene = d.data.appearance;
-                        that.data.desc = d.data.content;
-                        that.data.status = d.data.status;
-                        that.history=d.data.history;
-
-                    })
-                }, 500)
+                that.getAjaxRequest("orderinfo_cache", ajaxUrls.orderinfo + localStorage.task_id, that.version, 2 * 60 * 1000, 6 * 60 * 60 * 1000, function(response) {
+                    if (response.status == 0) {
+                        that.username = response.data.creator;
+                        that.data.terminalName = response.data.terminal_name;
+                        that.data.grade = response.data.level;
+                        that.data.scene = response.data.appearance;
+                        that.data.desc = response.data.content;
+                        that.data.status = response.data.status;
+                        that.history = response.data.history;
+                    }
+                });
             }
 
         }
@@ -161,7 +162,7 @@
     .pb60 {
         padding: 16px 0 60px 0;
     }
-
+    
     .user {
         margin: 0 16px 0 16px;
         padding-bottom: 12px;
@@ -203,7 +204,7 @@
             }
         }
     }
-
+    
     .keys {
         padding: 16px 0 12px 0;
         margin: 0 16px 8px 16px;
@@ -212,7 +213,7 @@
             margin-bottom: 4px;
         }
     }
-
+    
     .info {
         padding: 5px 0 0 0;
         border-left: 2px #f3f3f3 solid;
@@ -255,7 +256,7 @@
             }
         }
     }
-
+    
     .btnGroup {
         border-top: 1px #cfcfcf solid;
         background-color: #f9f9f9;

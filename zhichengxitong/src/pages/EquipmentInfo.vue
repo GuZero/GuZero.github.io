@@ -10,7 +10,7 @@
                 li.item(v-for='(a,index) in bins')
                     div.item-info
                         label.label {{a.position}}
-                        p.info(@click.stop.prevent="goToEidtEquipment('rack_id',a.rack_id,a.asset_num)" v-if="a.asset_num") {{a.asset_num}}
+                        p.info.ellipsis(@click.stop.prevent="goToEidtEquipment('rack_id',a.rack_id,a.asset_num)" v-if="a.asset_num") {{a.asset_num}}
                         p.info.unactive(@click.stop.prevent="goToEidtEquipment('rack_id',a.rack_id,a.asset_num)" v-else) 未填写
                         i.scan(@click.stop.prevent="goToScan('rack_id',a.rack_id,index)")
         div.device
@@ -19,7 +19,7 @@
                 li.item(v-for='(a,index) in other')
                     div.item-info
                         label.label {{a.name}}
-                        p.info(@click.stop.prevent="goToEidtEquipment('device_id',a.id,a.asset_num)" v-if="a.asset_num") {{a.asset_num}}
+                        p.info.ellipsis(@click.stop.prevent="goToEidtEquipment('device_id',a.id,a.asset_num)" v-if="a.asset_num") {{a.asset_num}}
                         p.info.unactive(@click.stop.prevent="goToEidtEquipment('device_id',a.id,a.asset_num)" v-else) 未填写
                         i.scan(@click.stop.prevent="goToScan('device_id',a.id,index)")
         TransmitFooter(:footerconfig="footerconfig",:terminal_id="terminal_id")
@@ -37,6 +37,7 @@
                 other:[],
                 terminal_id: this.$route.params.code,
                 pageTitle: '终端详情',
+                version: '1',
                 bodyBg: 'gray',
                 current_id: '',
                 current_type: '',
@@ -48,6 +49,12 @@
         },
         created() {
             this.fetchData();
+            window.canGoBack = true;
+            window.origin = "terminal";
+        },
+        activated() {
+            window.canGoBack = true;
+            window.origin = "terminal";
         },
         components: {
             HeaderBar,
@@ -66,11 +73,19 @@
                 _util.showSysLoading();
                 that.terminal_id = that.$route.params.code;
                 setTimeout(function () {
-                    axios.get(ajaxUrls.basic +  that.$route.params.code + '?info=device')
-                        .then(function(rsp) {
+                    that.getAjaxRequest("terminal_cache",ajaxUrls.basic + that.$route.params.code + '?info=device',that.version,20*1000,6*60*60*1000,
+                        function (response) {
+                               _util.hideSysLoading();
+                            if (response.status == 0) {
+                               that.bins = response.data.bins;
+                               that.other= response.data.other;                    
+                            }else {
+                                if (response.msg) _util.showErrorTip(response.msg);
+                            }
+                        },
+                        function (error) {
                             _util.hideSysLoading();
-                            that.bins = rsp.data.data.bins;
-                            that.other=rsp.data.data.other;
+                            _util.showErrorTip(error);
                         })
                 },0);
             },
@@ -86,14 +101,6 @@
                 this.current_id=_id;
                 this.current_index=index;
                 let that = this;
-                window.QRScanSuccess = function(result){
-                    that.saveEquipment(result);
-                    window.QRScanSuccess = undefined;
-                };
-                window.QRScanFailed = function(msg){
-                    _util.showErrorTip(msg);
-                    window.QRScanFailed = undefined;
-                };
                 if (_util.isIOS()) {
                     if (window.webkit && window.webkit.messageHandlers) {
                         window.webkit.messageHandlers.startQRScan.postMessage();
@@ -103,6 +110,14 @@
                         window.mogeItsupport.startQRScan();
                     }
                 }
+                window.QRScanSuccess = function(result){
+                    window.QRScanSuccess = undefined;
+                    that.saveEquipment(result);
+                };
+                window.QRScanFailed = function(msg){
+                    window.QRScanFailed = undefined;
+                    _util.showErrorTip(msg);
+                };
             },
             saveEquipment(asset_num) {
                 let that = this;
@@ -118,13 +133,11 @@
                 }else if (that.current_type == 'device_id') {
                     finishUrl = ajaxUrls.basic +  that.$route.params.code + '/other';
                     postData ={
-                        device_id: current_id,
+                        device_id: that.current_id,
                         asset_num: asset_num
                     }
-                 _util.showErrorTip(postData);
-                    
+
                 }
-                 _util.showErrorTip(asset_num);
 
                 _util.showSysLoading();
                 axios.post(finishUrl, postData, {
@@ -134,8 +147,6 @@
                     }
                 }).then(function(rsp) {
                     _util.hideSysLoading();
-                 _util.showErrorTip("1222");
-
                     if (rsp.data.status == 0) {
                         if (that.current_type == 'rack_id') {
                             let item = that.bins[that.current_index];

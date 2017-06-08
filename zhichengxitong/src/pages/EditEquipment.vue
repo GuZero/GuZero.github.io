@@ -37,6 +37,14 @@
             }
           }
         },
+        created() {
+            window.canGoBack = true;
+            window.origin = null;
+        },
+        activated() {
+            window.canGoBack = true;
+            window.origin = null;
+        },
         components: {
             HeaderBar
         },

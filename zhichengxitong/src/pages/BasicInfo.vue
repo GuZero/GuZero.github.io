@@ -60,6 +60,7 @@
                 terminal_id: this.$route.params.code,
                 pageTitle: '终端详情',
                 bodyBg: 'gray',
+                version: '1',
                 location:{
                     "latitude": 0,
                     "longitude": 0
@@ -76,8 +77,15 @@
                 scroll_load_end: false
             }
         },
-        mounted() {
+        created() {
             this.fetchData();
+            window.canGoBack = true;
+            window.origin = "terminal";
+
+        },
+        activated() {
+            window.canGoBack = true;
+            window.origin = "terminal";
         },
         components: {
             HeaderBar,
@@ -105,20 +113,28 @@
                 _util.showSysLoading();
                 that.terminal_id = that.$route.params.code;
                 setTimeout(function () {
-                    axios.get(ajaxUrls.basic + that.$route.params.code + '?info=basic')
-                        .then(function(rsp) {
-                            _util.hideSysLoading();
-                            let tempData = rsp.data.data;
-                            that.terminal_name = tempData.terminal_name;
-                            that.terminal_code = tempData.terminal_code;
-                            that.location = tempData.location;
-                            if (tempData.location && tempData.location.latitude && tempData.location.longitude) {
-                               that.isActive = true;
+                    that.getAjaxRequest("terminal_cache",ajaxUrls.basic + that.$route.params.code + '?info=basic',that.version,20*1000,6*60*60*1000,
+                        function (response) {
+                               _util.hideSysLoading();
+                            if (response.status == 0) {
+                                let tempData = response.data;
+                                that.terminal_name = tempData.terminal_name;
+                                that.terminal_code = tempData.terminal_code;
+                                that.location = tempData.location;
+                                if (tempData.location && tempData.location.latitude && tempData.location.longitude) {
+                                    that.isActive = true;
+                                }
+                                that.maintain_manager = tempData.operator1;
+                                that.operate_manager = tempData.operator2;
+                                that.is_yunwei_manager = tempData.is_yunwei_manager;
+                                that.is_yunying_manager = tempData.is_yunying_manager;                     
+                            }else {
+                                if (response.msg) _util.showErrorTip(response.msg);
                             }
-                            that.maintain_manager = tempData.operator1;
-                            that.operate_manager = tempData.operator2;
-                            that.is_yunwei_manager = tempData.is_yunwei_manager;
-                            that.is_yunying_manager = tempData.is_yunying_manager;
+                        },
+                        function (error) {
+                            _util.hideSysLoading();
+                            _util.showErrorTip(error);
                         })
                 },0);
             },

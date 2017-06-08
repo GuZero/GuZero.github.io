@@ -61,7 +61,6 @@
                 @input="getValue3"
             )
             Field(tag="处理方式", placeholder="请输入处理方式", v-model.trim="desc", :textarea="true")
-            Upload(id="up1", ref="up1")
         SubmitBtn(@submitCallback="submitFun", text="提交", theme="white")
 </template>
 
@@ -70,7 +69,7 @@
     import Upload from '../components/common/Upload'
     import Field from '../components/elements/Field'
     import SubmitBtn from '../components/elements/SubmitBtn'
-
+    /*Upload(id="up1", ref="up1")*/
     export default {
         mixins: [require('../components/mixin/BodyBg')],
         data() {
@@ -105,6 +104,8 @@
 
         },
         created() {
+            window.canGoBack = true;
+            window.origin = null;
             this.logs = [{
                     id: '1',
                     name: '是',
@@ -115,6 +116,10 @@
                 }
             ];
             this.getInfo();
+        },
+        activated() {
+            window.canGoBack = true;
+            window.origin = null;
         },
         watch: {
             '$route': 'getInfo'
@@ -199,54 +204,56 @@
                 let that = this;
                 that.categroy = "";
                 //获取问题原因
-                axios.get(ajaxUrls.fault + that.val).then(function(rsp) {
-                    let d = rsp.data;
-                    that.problems = d.data;
+                that.getAjaxRequest("problems_cache", ajaxUrls.fault + that.val, that.version, 20 * 1000, 6 * 60 * 60 * 1000, function(response) {
+                    that.problems = response.data;
                     if (that.problems.length == 1) {
-                        that.getValue1(d.data[0].id)
+                        that.getValue1(response.data[0].id);
                         that.change1();
-                        that.problem = d.data[0].name;
-
+                        that.problem = response.data[0].name;
                     } else {
                         that.problem = "";
-
                     }
-                    //                    console.log(that.problems);
+                }, function(error) {
+                    _util.showErrorTip(error);
                 });
             },
             change1() {
                 let that = this;
                 //获取故障分类
-                axios.get(ajaxUrls.fault + that.cause_id).then(function(rsp) {
-                    let d = rsp.data;
-                    that.categroys = d.data;
+                that.getAjaxRequest("faultsName_cache", ajaxUrls.fault + that.cause_id, that.version, 20 * 1000, 6 * 60 * 60 * 1000, function(response) {
+                    that.categroys = response.data;
                     if (that.categroys.length == 1) {
-                        that.getValue2(d.data[0].id);
-                        that.categroy = d.data[0].name;
-
+                        that.getValue2(response.data[0].id);
+                        that.categroy = response.data[0].name;
                     } else {
                         that.categroy = "";
                     }
-                    //                    console.log(that.categroys);
+                }, function(error) {
+                    _util.showErrorTip(error);
                 });
             },
             //获取信息
             getInfo() {
                 let that = this;
                 // 获取当前工单信息
-                axios.get(ajaxUrls.orderinfo + localStorage.task_id).then(function(rsp) {
-                    let d = rsp.data;
-                    if (d.data.terminal_name == "") {
-                        that.name = '幸福公寓格格货栈'
+                that.getAjaxRequest("orderName_cache", ajaxUrls.orderinfo + localStorage.task_id, that.version, 20 * 1000, 6 * 60 * 60 * 1000, function(response) {
+                    if (response.status == 0) {
+                        that.name = response.data.terminal_name;
                     } else {
-                        that.name = d.data.terminal_name;
+                        if (response.msg) _util.showErrorTip(response.msg);
                     }
-
-                })
+                }, function(error) {
+                    _util.showErrorTip(error);
+                });
                 //获取现场现象
-                axios.get(ajaxUrls.option).then(function(rsp) {
-                    let d = rsp.data;
-                    that.scenes = d.data.appearance;
+                that.getAjaxRequest("option_cache", ajaxUrls.option, that.version, 20 * 1000, 6 * 60 * 60 * 1000, function(response) {
+                    if (response.status == 0) {
+                        that.scenes = response.data.appearance;
+                    } else {
+                        if (response.msg) _util.showErrorTip(response.msg);
+                    }
+                }, function(error) {
+                    _util.showErrorTip(error);
                 });
             }
 

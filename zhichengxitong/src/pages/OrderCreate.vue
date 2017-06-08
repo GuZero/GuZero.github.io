@@ -29,10 +29,8 @@
                 @changeCallback="testChange"
             )
             Field(tag="故障等级", :pvalue="fault", :p="true")
-            div.filed.rel
-                div.text.abs.center 超时设置               
-                DatePicker.box.rel( placeholder="选择日期",:no-today="true",v-model="date",format="yyyy-mm-dd", :forward="true")    
-            Field(tag="问题描述", placeholder="请输入问题描述", v-model.trim="desc", :textarea="true" @changeCallback="testChange1")
+            Field(tag="超时设置", placeholder="请选择超时间", :input="true", v-model="date", type="datetime-local")
+            Field(tag="问题描述", placeholder="请输入问题描述", v-model.trim="desc", :textarea="true")
         SubmitBtn(@submitCallback="submitFun", text="提交", theme="white")
 
 
@@ -42,10 +40,7 @@
     import HeaderBar from '../components/common/Header'
     import Field from '../components/elements/Field'
     import SubmitBtn from '../components/elements/SubmitBtn'
-    import DatePicker from '../components/common/datepicker-2'
 
-    
-    /*Field(tag="超时设置", placeholder="请选择超时间", :input="true" v-model="overtime")*/
     export default {
         mixins: [require('../components/mixin/BodyBg')],
         data() {
@@ -63,16 +58,17 @@
                 project_id: '',
                 state: '',
                 flag: false,
-                date: '2017-06-06 10:00'
+                date: ''
             }
         },
         components: {
             HeaderBar,
             Field,
             SubmitBtn,
-            DatePicker,
         },
         created() {
+            window.canGoBack = true;
+            window.origin = null;
             //请求数据
             this.ordertypes = [{
                     id: '1',
@@ -89,13 +85,12 @@
                 window.localStorage.setItem('terminal_name', "");
                 window.localStorage.setItem('terminal_code', "");
             }
-            let that = this;
             //获取现场现象
-            axios.get(ajaxUrls.option).then(function(rsp) {
-                let d = rsp.data;
-                that.scenes = d.data.appearance;
-                //                console.log(that.scenes);
-            });
+            this.getInfo();
+        },
+        activated() {
+            window.canGoBack = true;
+            window.origin = null;
         },
         watch: {
             '$route': 'setName'
@@ -118,13 +113,13 @@
                     _util.showErrorTip('请输入问题描述！');
                     return false;
                 };
-                
                 let project_id = this.project_id,
                     terminal_code = localStorage.terminal_code,
                     appearance = this.val,
-                    timeout = this.date.substring(0, 10)+' '+localStorage.HH+':'+localStorage.MM,
+                    timeout = this.setDate(this.date),
                     state = this.state,
-                    content = this.desc;
+                    content = this.desc,
+                    that=this;
                 axios.post(ajaxUrls.task, {
                     project_id: project_id,
                     terminal_code: terminal_code,
@@ -139,9 +134,10 @@
                     }
                 }).then(function(rsp) {
                     _util.hideSysLoading();
-                    console.log(rsp.data)
+                    //                    console.log(rsp.data)
                     if (rsp.data.status == 0) {
                         _util.showErrorTip(rsp.data.msg);
+                        that.url('/')
                     } else {
                         _util.showErrorTip(rsp.data.msg);
                     }
@@ -157,23 +153,20 @@
                                     case 1:
                                         this.fault = '一级故障'
                                         break;
-                                    case 1:
+                                    case 2:
                                         this.fault = '二级故障'
                                         break;
-                                    case 1:
+                                    case 3:
                                         this.fault = '三级故障'
                                         break;
                                     default:
+                                        this.fault = '一级故障'
                                         break;
                                 }
                             }
                         }
                     }
                 }
-            },
-            testChange1(){
-                let time=this.date+' '+localStorage.HH+':'+localStorage.MM;                    
-                this.date=time.substring(0,16);
             },
             //获取工单类型ID
             getID(val) {
@@ -188,8 +181,30 @@
             },
             setName() {
                 this.terminalName = localStorage.terminal_name;
+            },
+            setDate(str) {
+                let x = str,
+                    year = x.substring(0, 4),
+                    month = x.substring(5, 7),
+                    day = x.substring(8, 10),
+                    hour = x.substring(11, 13),
+                    minute = x.substring(14),
+                    format = year + "-" + day + "-" + month + ' ' + hour + ':' + minute;
+                return format;
+            },
+            getInfo() {
+                let that = this;
+                //获取现场现象
+                that.getAjaxRequest("option_cache_create", ajaxUrls.option, that.version, 20 * 1000, 6 * 60 * 60 * 1000, function(response) {
+                    if (response.status == 0) {
+                        that.scenes = response.data.appearance;
+                    } else {
+                        if (response.msg) _util.showErrorTip(response.msg);
+                    }
+                }, function(error) {
+                    _util.showErrorTip(error);
+                });
             }
-
         }
     }
 

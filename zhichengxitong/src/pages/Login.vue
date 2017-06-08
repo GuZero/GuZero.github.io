@@ -36,6 +36,14 @@
                     }
                 });
         },
+        created() {
+            window.canGoBack = false;
+            window.origin = null;
+        },
+        activated() {
+            window.canGoBack = false;
+            window.origin = null;
+        },
         methods: {
             login() {
                 let query = this.$route.query,

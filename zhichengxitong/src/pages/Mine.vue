@@ -40,6 +40,14 @@
             FooterBar,
             ModalDialog
         },
+        created() {
+            window.canGoBack = false;
+            window.origin = null;
+        },
+        activated() {
+            window.canGoBack = false;
+            window.origin = null;
+        },
         methods: {
             goToPassword() {
                 this.url('/mine/password');

@@ -37,7 +37,6 @@ Vue.prototype.goback = function (origin) {
         this.$router.go(-1);
     }
 };
-
 Vue.prototype.url = function (path, query) {
     this.$router.push({
         path: path,
@@ -57,6 +56,7 @@ Vue.prototype.emptyJson = function (json) {
     if (Object.keys(json).length) flag = false;
     return flag;
 };
+//设置缓存
 Vue.prototype.setStore = function (storeName,urlKey,data,headers,version){
     let now_ts = (new Date()).getTime();
     let storeValue = window.localStorage[storeName] ? JSON.parse(window.localStorage[storeName] || null) : {};
@@ -69,29 +69,30 @@ Vue.prototype.setStore = function (storeName,urlKey,data,headers,version){
     window.localStorage.setItem(storeName,JSON.stringify(storeValue));                
 };
 
-Vue.prototype.checkStore = function (storeName,urlKey,version){
+Vue.prototype.checkStore = function (storeName,urlKey,version,free_ts,overdue_ts){
     let cacheObj = window.localStorage[storeName]?JSON.parse(window.localStorage[storeName]):null,
         now_ts = (new Date()).getTime();
     if (cacheObj && !this.emptyJson(cacheObj)) {
         if (cacheObj[urlKey]) {
-            if ( now_ts - cacheObj[urlKey].ts > 6 * 60 * 60 * 1000 || cacheObj[urlKey].v !== version ) {
+            if ( now_ts - cacheObj[urlKey].ts > overdue_ts || cacheObj[urlKey].v !== version ) {
                 cacheObj[urlKey] = null;
                 window.localStorage.setItem(storeName,JSON.stringify(cacheObj));                
                 return {"rsp": null,"canUseCache": false,"isUseAjax": true}; //此向数据作废，若没有网络，则提示断开网络
-            }else if ((now_ts - cacheObj[urlKey].ts < 6 * 60 * 60 * 1000 )&&(now_ts - cacheObj[urlKey].ts > 2 * 60 * 1000 )){
+            }else if ((now_ts - cacheObj[urlKey].ts < overdue_ts )&&(now_ts - cacheObj[urlKey].ts > free_ts )){
                 return {"rsp": cacheObj[urlKey],"canUseCache": true,"isUseAjax": true};//若没有网络，则填充缓存里的内容,若有网络，更替缓存内容，直接使用网络返回值进行内容填充。
-            }else if (now_ts - cacheObj[urlKey].ts < 2 * 60 * 1000 ){
-                return {"rsp": cacheObj[urlKey],"canUseCache": true,"isUseAjax": false};//相差2分钟内，不用使用ajax请求，直接使用缓存。
+            }else if (now_ts - cacheObj[urlKey].ts < free_ts ){
+                return {"rsp": cacheObj[urlKey],"canUseCache": true,"isUseAjax": false};//相差free_ts分钟内，不用使用ajax请求，直接使用缓存。
             }
         }
     }
     return {"urlItem": null,"canUseCache": false,"isUseAjax": true};//当缓存中没有内容时,若没有网络，则提示断开网络
 };
 
-Vue.prototype.getAjaxRequest = function (storeName,url,version,success_callback,error_callback) {
+//storeName：缓存名称；url：请求链接；version:版本号；free_ts：免请求 时间；overdue_ts：过期时间。
+Vue.prototype.getAjaxRequest = function (storeName,url,version,free_ts,overdue_ts,success_callback,error_callback) {
     let that = this,
         stroeInfo = {};
-    stroeInfo = that.checkStore(storeName,url,version);
+    stroeInfo = that.checkStore(storeName,url,version,free_ts,overdue_ts);
     if (!stroeInfo.isUseAjax) {
         return success_callback(stroeInfo.rsp.data);
     }
@@ -120,6 +121,17 @@ new Vue({
         _util.initDomEvents();
     },
     mounted() {
-        _util.addLinkTouchEvent()
+        let that = this;
+        _util.addLinkTouchEvent();
+        window.canGoBack = false; //是否可以回退
+        window.origin = null; //此页面的来源
+        window.goBack = function () {
+            if (window.canGoBack) {
+                that.goback(window.origin);
+            }
+        }
+        window.canBack = function () {
+            return window.canGoBack;
+        }
     }
 })

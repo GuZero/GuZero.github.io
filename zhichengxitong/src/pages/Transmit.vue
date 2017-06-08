@@ -29,8 +29,16 @@
                 username: '',
                 result: [],
                 userID: '',
-                name:''
+                name: ''
             }
+        },
+        created() {
+            window.canGoBack = true;
+            window.origin = null;
+        },
+        activated() {
+            window.canGoBack = true;
+            window.origin = null;
         },
         components: {
             HeaderBar,
@@ -39,7 +47,7 @@
         },
         directives: {
             focus: {
-                inserted: function (el) {
+                inserted: function(el) {
                     // 聚焦元素
                     el.focus()
                 }
@@ -51,9 +59,11 @@
                     this.result = [];
                 } else {
                     let that = this;
-                    axios.get(ajaxUrls.user + that.username).then(function(rsp) {
-                        that.result = rsp.data.data;
-                    })
+                    that.getAjaxRequest("searchUsernmae_cache", ajaxUrls.user + that.username, that.version, 20 * 1000, 6 * 60 * 60 * 1000, function(response) {
+                        that.result = response.data;
+                    }, function(error) {
+                        _util.showErrorTip(error);
+                    });
                 }
             },
             deal() {
@@ -62,8 +72,8 @@
                     task_id = localStorage.task_id,
                     that = this;
                 axios.post(ajaxUrls.orderinfo + task_id + '/deal', {
-                    user_id:user_id,
-                    action:action
+                    user_id: user_id,
+                    action: action
                 }, {
                     withCredentials: true,
                     headers: {
@@ -79,11 +89,11 @@
                     }
                 })
             },
-            showAlert(item){
+            showAlert(item) {
                 this.userID = item.user_id;
-                this.name=item.name;
+                this.name = item.name;
                 this.$refs.confirmModal.showModal({
-                    text: '确认是否转发给'+item.name+'为处理？'
+                    text: '确认是否转发给' + item.name + '为处理？'
                 });
             },
             goInfo(_id) {
@@ -99,7 +109,7 @@
         padding: 16px;
         color: #4d4d4d;
     }
-
+    
     .item {
         padding: 0 0 0 16px;
         color: #4d4d4d;

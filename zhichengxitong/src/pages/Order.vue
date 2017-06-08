@@ -10,19 +10,19 @@ div.home
 	div.search.fixed(v-if="searchFlag")
 		div.item(v-for="d in searchInfo", @click.stop.prevent="goToSearch(d)") {{d.value}}
 	div.nav.top44.fixed
-		div.left.tab.rel(:class="{active: activeTab == 0}", @click="fetchData(0)")
+		div.left.tab.rel(:class="{active: activeTab == 0}", @click="switchTab(0)")
 			div
 				label 所有任务
 				label
-		div.left.tab.rel(:class="{active: activeTab == 1}", @click="fetchData(1)")
+		div.left.tab.rel(:class="{active: activeTab == 1}", @click="switchTab(1)")
 			div
 				label 我创建的
 				label
-		div.left.tab.rel(:class="{active: activeTab == 2}", @click="fetchData(2)")
+		div.left.tab.rel(:class="{active: activeTab == 2}", @click="switchTab(2)")
 			div
 				label 我的待办
 				label ({{num}})
-		div.left.tab.rel(:class="{active: activeTab == 3}", @click="fetchData(3)")
+		div.left.tab.rel(:class="{active: activeTab == 3}", @click="switchTab(3)")
 			div
 				label 我的已办
 				label
@@ -69,9 +69,11 @@ div.home
                 num: '',
                 filter: '',
                 page: 1,
+                isFirst: true,
                 scroll_load_loading: false,
                 scroll_load_end: false,
                 list: [],
+                list0: [],
                 list1: [],
                 list2: [],
                 list3: [],
@@ -85,7 +87,6 @@ div.home
             DataLoading
         },
         created() {
-            this.fetchData();
             this.searchInfo = [{
                 id: '01',
                 value: '存件订单'
@@ -101,6 +102,7 @@ div.home
             }]
         },
         mounted() {
+            this.switchTab(2);
             window.localStorage.setItem('task_id', '1');
             //设置搜索订单的ID
             window.localStorage.setItem('express_id', '01');
@@ -111,7 +113,7 @@ div.home
             window.addEventListener('scroll', this.handleScroll);
         },
         watch: {
-            '$route': 'fetchData(2)'
+            //            '$route': 'fetchData'
         },
         beforeRouteEnter(to, from, next) {
             next();
@@ -126,49 +128,102 @@ div.home
             this;
         },
         methods: {
-            fetchData(index) {
+            fetchData() {
+                let that = this;
+                if (that.scroll_load_loading) {
+                    return false;
+                }
+                if (that.scroll_load_end) {
+                    return false;
+                }
+                if (that.page == 1) {
+                    document.body.scrollTop = 0;
+                }
+                //获取待办工单数量
+                if (that.isFirst) {
+                    that.getAjaxRequest("orderNum_cache", ajaxUrls.num, that.version, 30 * 1000, 6 * 60 * 60 * 1000, function(response) {
+                        if (response.status == 0) {
+                            that.num = response.data.task_numbers;
+                        } else {
+                            if (response.msg) _util.showErrorTip(response.data.msg);
+                        }
+                    },function(error){
+                       _util.showErrorTip(error); 
+                    });
+                };
+                that.showLoading();
+                that.scroll_load_loading = true;
+                that.getAjaxRequest("order_cache", ajaxUrls.tasks + 'filter=' + that.filter + '&page=' + that.page, that.version, 30 * 1000, 6 * 60 * 60 * 1000, function(response) {
+                    if (response.status == 0) {
+                        //测试用
+                        for (let i = 0; i < response.data.length; i++) {
+                            response.data[i].head = '//img.aimoge.com/FlJ81rMZKlvsiYP-EXr3P492r4ZS';
+                        }
+                        switch (that.activeTab) {
+                            case 0:
+                                that.list0 = that.list0.concat(response.data);
+                                that.list = that.list0;
+                                break;
+                            case 1:
+                                that.list1 = that.list1.concat(response.data);
+                                that.list = that.list1;
+
+                                break;
+                            case 2:
+                                that.list2 = that.list2.concat(response.data);
+                                that.list = that.list2;
+                                break;
+                            case 3:
+                                that.list3 = that.list3.concat(response.data);
+                                that.list = that.list3;
+                                break;
+                            default:
+                                that.list2 = that.list2.concat(response.data);
+                                that.list = that.list2;
+                                break;
+                        }
+                        that.isFirst = false;
+                        that.showLoadEnd();
+                    } else {
+                        if (response.msg) _util.showErrorTip(response.data.msg);
+                    }
+                }, function(error) {
+                    _util.showErrorTip(error);
+                });
+            },
+            resetData() {
+                this.page = 1;
+                this.isFirst = true;
+                this.scroll_load_loading = false;
+                this.scroll_load_end = false;
+                this.list = [];
+                this.list0 = [];
+                this.list1 = [];
+                this.list2 = [];
+                this.list3 = [];
+            },
+            switchTab(index) {
                 this.searchFlag = false;
                 index > -1 ? this.activeTab = index : void 0;
-                if (typeof(index) == 'object') this.activeTab = 2;
-                //getDataByTabIndex post ajax
-                let that = this;
-                that.page = 1;
-                that.list = [];
-                that.$refs.loading && that.$refs.loading.showLoading();
-                setTimeout(function() {
-                    switch (index) {
-                        case 0:
-                            that.filter = 'all'
-                            break;
-                        case 1:
-                            that.filter = 'create'
-                            break;
-                        case 2:
-                            that.filter = 'handle'
-                            break;
-                        case 3:
-                            that.filter = 'finish'
-                            break;
-                        default:
-                            that.filter = 'handle'
-                            break;
-                    }
-                    //获取待办工单数量
-                    axios.get(ajaxUrls.num)
-                        .then(function(rsp) {
-                            that.num = rsp.data.data.task_numbers;
-                        });
-                    that.$refs.loading && that.$refs.loading.showLoading();
-                    axios.get(ajaxUrls.tasks + 'filter=' + that.filter)
-                        .then(function(rsp) {
-                            for (let i = 0; i < rsp.data.data.length; i++) {
-                                rsp.data.data[i].head = '//img.aimoge.com/FlJ81rMZKlvsiYP-EXr3P492r4ZS';
-                            }
-                            that.list2 = rsp.data.data;
-                            that.list = that.list2;
-                            that.showLoadEnd();
-                        });
-                }, 500);
+                switch (index) {
+                    case 0:
+                        this.filter = 'all'
+                        break;
+                    case 1:
+                        this.filter = 'create'
+                        break;
+                    case 2:
+                        this.filter = 'handle'
+                        break;
+                    case 3:
+                        this.filter = 'finish'
+                        break;
+                    default:
+                        this.filter = 'handle'
+                        break;
+                };
+                this.resetData();
+                this.fetchData();
             },
             isSearch() {
                 this.searchFlag = !this.searchFlag;
@@ -184,11 +239,12 @@ div.home
                 this.url('/order/edit');
             },
             goInfo(_id) {
+                this.searchFlag = false;
                 localStorage.task_id = _id;
                 this.url('/order/' + _id);
             },
             handleScroll() { //滚动加载监听事件
-               if (!this.list.length < 16) {
+                if (!this.list.length < 16) {
                     if (document.body.scrollTop + window.innerHeight >= document.body.scrollHeight - 1) {
                         this.loadTerminalData();
                     }
@@ -197,7 +253,7 @@ div.home
             loadTerminalData() {
                 let that = this,
                     page = that.page;
-                 switch (this.activeTab) {
+                switch (this.activeTab) {
                     case 0:
                         that.filter = 'all'
                         break;
@@ -216,17 +272,23 @@ div.home
                 }
                 that.showLoading();
                 that.scroll_load_loading = true;
-                axios.get(ajaxUrls.tasks + 'filter=' + that.filter + '&page=' + page).then(function(rsp) {
-                    let d = rsp.data;
-                    that.hideLoading();
-                    for (let i = 0; i < d.data.length; i++) {
-                        d.data[i].head = '//img.aimoge.com/FlJ81rMZKlvsiYP-EXr3P492r4ZS';
+                that.getAjaxRequest("order_cache", ajaxUrls.tasks + 'filter=' + that.filter + '&page=' + that.page, that.version, 30 * 1000, 6 * 60 * 60 * 1000, function(response) {
+                    if (response.status == 0) {
+                        that.hideLoading();
+                        //测试用
+                        for (let i = 0; i < response.data.length; i++) {
+                            response.data[i].head = '//img.aimoge.com/FlJ81rMZKlvsiYP-EXr3P492r4ZS';
+                        }
+                        that.scroll_load_loading = false;
+                        that.list = that.list.concat(response.data);
+                        that.showLoadEnd();
+                        that.page += 1;
+                    } else {
+                        if (response.msg) _util.showErrorTip(response.data.msg);
                     }
-                    that.scroll_load_loading = false;
-                    that.list = that.list.concat(d.data);
-                    that.showLoadEnd();
-                    that.page += 1;
-                })
+                }, function(error) {
+                    _util.showErrorTip(error);
+                });
             },
             showLoading() { //显示正在加载数据状态
                 this.scroll_load_loading = true;

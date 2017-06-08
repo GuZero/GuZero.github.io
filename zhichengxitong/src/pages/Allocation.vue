@@ -37,6 +37,7 @@
                     isgoback: 1,
                     isfinish: 1
                 },
+                version: '1',
                 operator_name: '',
                 old_userid: this.$route.query.old_userid,
                 operator: this.$route.query.operator,
@@ -61,6 +62,13 @@
         },
         mounted() {
             this.hideLoading();
+            window.canGoBack = true;
+            window.origin = null;
+
+        },
+        activated() {
+            window.canGoBack = true;
+            window.origin = null;
         },
         watch: {
           '$route': function (route) {
@@ -96,11 +104,20 @@
                 that.isSearch = true;
                 that.nameList = [];
                 setTimeout(function () {
-                    axios.get(ajaxUrls.users + '?name='+name)
-                        .then(function(rsp) {
+                    that.getAjaxRequest("terminal_cache",ajaxUrls.users + '?name='+name,that.version,2*60*1000,6*60*60*1000,
+                        function (response) {
                             that.hideLoading();
                             that.isSearch = false;
-                            that.nameList = rsp.data.data;
+                            if (response.status == 0) {
+                               that.nameList = response.data;                 
+                            }else {
+                                if (response.msg) _util.showErrorTip(response.msg);
+                            }
+                        },
+                        function (error) {
+                            that.isSearch = false;
+                            that.hideLoading();
+                            _util.showErrorTip(error);
                         })
                 },150);
             },

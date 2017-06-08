@@ -9,7 +9,6 @@ const OrderClose = r => require.ensure([], () => r(require('../pages/OrderClose'
 const EditPassword = r => require.ensure([], () => r(require('../pages/EditPassword')), 'EditPassword');
 const Transmit = r => require.ensure([], () => r(require('../pages/Transmit')), 'Transmit');
 const Terminal = r => require.ensure([], () => r(require('../pages/Terminal')), 'Terminal');
-const TerminalInfo = r => require.ensure([], () => r(require('../pages/TerminalInfo')), 'TerminalInfo');
 const Message = r => require.ensure([], () => r(require('../pages/Message')), 'Message');
 const AdInfo = r => require.ensure([], () => r(require('../pages/AdInfo')), 'AdInfo');
 const EquipmentInfo = r => require.ensure([], () => r(require('../pages/EquipmentInfo')), 'EquipmentInfo');
