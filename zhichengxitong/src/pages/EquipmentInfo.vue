@@ -73,7 +73,7 @@
                 _util.showSysLoading();
                 that.terminal_id = that.$route.params.code;
                 setTimeout(function () {
-                    that.getAjaxRequest("terminal_cache",ajaxUrls.basic + that.$route.params.code + '?info=device',that.version,20*1000,6*60*60*1000,
+                    getAjaxRequest("terminal_cache",ajaxUrls.basic + that.$route.params.code + '?info=device',that.version,20*1000,6*60*60*1000,
                         function (response) {
                                _util.hideSysLoading();
                             if (response.status == 0) {
@@ -101,15 +101,15 @@
                 this.current_id=_id;
                 this.current_index=index;
                 let that = this;
-                if (_util.isIOS()) {
-                    if (window.webkit && window.webkit.messageHandlers) {
-                        window.webkit.messageHandlers.startQRScan.postMessage();
-                    }
-                }else{
+//                if (_util.isIOS()) {
+//                    if (window.webkit && window.webkit.messageHandlers) {
+//                        window.webkit.messageHandlers.startQRScan.postMessage();
+//                    }
+//                }else{
                     if (window.mogeItsupport) {
                         window.mogeItsupport.startQRScan();
                     }
-                }
+//                }
                 window.QRScanSuccess = function(result){
                     window.QRScanSuccess = undefined;
                     that.saveEquipment(result);
@@ -233,7 +233,7 @@
                 }
                 .scan {
                     content: '';
-                    background: url('http://img.aimoge.com/Fl1S3WqI_mdGIBD2toXw4pqk62g-') 0 0 no-repeat;
+                    background: url('//img.aimoge.com/Fl1S3WqI_mdGIBD2toXw4pqk62g-') 0 0 no-repeat;
                     background-position: center center;
                     background-size: 14px auto;
                     display: block;

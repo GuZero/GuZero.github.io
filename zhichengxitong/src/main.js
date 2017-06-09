@@ -5,18 +5,25 @@ router.beforeEach((to, from, next) => {
         })) {
         axios.get(ajaxUrls.isLogin)
             .then(function (rsp) {
-                if (rsp.data.status != 0) {
+                if (rsp.data.status !==0) {
                     window.is_logged = false;
-                    next({
-                        path: '/login',
-                        query: {
-                            next_url: decodeURIComponent(to.path)
-                        }
-                    });
-                } else {
+                    if (_util.isApp()) {
+                        window.location.href ="itsupport:///Login";
+                    }else{
+                        next({
+                            path: '/login',
+                            query: {
+                                next_url: decodeURIComponent(to.path)
+                            }
+                        });
+                    }
+                } else{
                     next();
                 }
-            });
+            })
+            .catch(function(){
+                next();
+            })
     } else {
         next();
     }
@@ -50,14 +57,24 @@ Vue.prototype.replaceUrl = function (path, query) {
         query: query ? query : {}
     });
 };
-
+Vue.prototype.itsupportFunc = function (message,params) {
+    if (_util.isIOS()) {
+        if (window.webkit && window.webkit.messageHandlers) {
+            window.webkit.messageHandlers.startQRScan[message]();
+        }
+    }else{
+        if (window.mogeItsupport) {
+            window.mogeItsupport[message]();
+        }
+    }
+}
 Vue.prototype.emptyJson = function (json) {
     let flag = true;
     if (Object.keys(json).length) flag = false;
     return flag;
 };
 //设置缓存
-Vue.prototype.setStore = function (storeName,urlKey,data,headers,version){
+window.setStore = function (storeName,urlKey,data,headers,version){
     let now_ts = (new Date()).getTime();
     let storeValue = window.localStorage[storeName] ? JSON.parse(window.localStorage[storeName] || null) : {};
     storeValue[urlKey] = {
@@ -69,10 +86,10 @@ Vue.prototype.setStore = function (storeName,urlKey,data,headers,version){
     window.localStorage.setItem(storeName,JSON.stringify(storeValue));                
 };
 
-Vue.prototype.checkStore = function (storeName,urlKey,version,free_ts,overdue_ts){
+window.checkStore = function (storeName,urlKey,version,free_ts,overdue_ts){
     let cacheObj = window.localStorage[storeName]?JSON.parse(window.localStorage[storeName]):null,
         now_ts = (new Date()).getTime();
-    if (cacheObj && !this.emptyJson(cacheObj)) {
+    if (cacheObj) {
         if (cacheObj[urlKey]) {
             if ( now_ts - cacheObj[urlKey].ts > overdue_ts || cacheObj[urlKey].v !== version ) {
                 cacheObj[urlKey] = null;
@@ -89,26 +106,31 @@ Vue.prototype.checkStore = function (storeName,urlKey,version,free_ts,overdue_ts
 };
 
 //storeName：缓存名称；url：请求链接；version:版本号；free_ts：免请求 时间；overdue_ts：过期时间。
-Vue.prototype.getAjaxRequest = function (storeName,url,version,free_ts,overdue_ts,success_callback,error_callback) {
-    let that = this,
-        stroeInfo = {};
-    stroeInfo = that.checkStore(storeName,url,version,free_ts,overdue_ts);
+window.getAjaxRequest = function (storeName,url,version,free_ts,overdue_ts,success_callback,error_callback) {
+    let stroeInfo = {};
+    stroeInfo = checkStore(storeName,url,version,free_ts,overdue_ts);
     if (!stroeInfo.isUseAjax) {
-        return success_callback(stroeInfo.rsp.data);
+        return (success_callback?success_callback(stroeInfo.rsp.data):null);
     }
     axios.get(url)
         .then(function(rsp) {
-            that.setStore(storeName,url,rsp.data,rsp.headers,version);
-            return success_callback(rsp.data);
+            setStore(storeName,url,rsp.data,rsp.headers,version);
+            return (success_callback?success_callback(rsp.data):null);
         })
         .catch(function (error) {
             if (stroeInfo.canUseCache) {
-                return success_callback(stroeInfo.urlItem);
+                return (success_callback?success_callback(stroeInfo.urlItem):null);
             }else{
-                return error_callback(error);
+                return (error_callback ? error_callback(error): null);
             }
         });
 };
+window.applicationCache.addEventListener('updateready', function(e) {
+    if (window.applicationCache.status == window.applicationCache.UPDATEREADY) {
+        window.applicationCache .swapCache();
+        window.location.reload();
+   }
+ }, false);
 new Vue({
     el: '#app',
     router,
@@ -133,5 +155,6 @@ new Vue({
         window.canBack = function () {
             return window.canGoBack;
         }
+
     }
 })

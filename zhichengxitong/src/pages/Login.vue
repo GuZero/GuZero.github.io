@@ -29,12 +29,12 @@
                 query = this.$route.query,
                 next_url = query && query.next_url ? query.next_url : '/';
             axios.get(ajaxUrls.isLogin)
-                .then(function(rsp) {
+                .then(function (rsp) {
                     if (rsp.data.status == 0) {
                         window.is_logged = true;
                         that.url(decodeURIComponent(next_url));
                     }
-                });
+                })
         },
         created() {
             window.canGoBack = false;
@@ -86,8 +86,8 @@
 </script>
 
 <style lang="sass" scoped>
-    $mobile: '//img.aimoge.com/Fseye1socv7wcHZNiEca2JGzTrGz';
-    $pass: '//img.aimoge.com/Fj6ivplQiYNceEuZ5yE2vMPnVuaF';
+    $mobile: 'https://img.aimoge.com/Fseye1socv7wcHZNiEca2JGzTrGz';
+    $pass: 'https://img.aimoge.com/Fj6ivplQiYNceEuZ5yE2vMPnVuaF';
     $blue: #3099ff;
     $disabledblue: rgba(48, 153, 255, 0.53);
     $btnactivecolor: #2876c2;

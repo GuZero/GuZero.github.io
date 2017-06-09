@@ -72,11 +72,7 @@
             //请求数据
             this.ordertypes = [{
                     id: '1',
-                    name: '普通工单'
-                },
-                {
-                    id: '2',
-                    name: '运维工单'
+                    name: '柜子运维'
                 }
             ];
             if (localStorage.terminal_name) {
@@ -195,7 +191,7 @@
             getInfo() {
                 let that = this;
                 //获取现场现象
-                that.getAjaxRequest("option_cache_create", ajaxUrls.option, that.version, 20 * 1000, 6 * 60 * 60 * 1000, function(response) {
+                getAjaxRequest("option_cache_create", ajaxUrls.option, that.version, 20 * 1000, 6 * 60 * 60 * 1000, function(response) {
                     if (response.status == 0) {
                         that.scenes = response.data.appearance;
                     } else {

@@ -209,7 +209,7 @@
                 }
                 that.showLoading();
                 that.scroll_load_loading = true;
-                that.getAjaxRequest("searchPage_cache", that.url + _key.trim() + "&page=" + page, that.version, 30 * 1000, 6 * 60 * 60 * 1000, function(response) {
+                getAjaxRequest("searchPage_cache", that.url + _key.trim() + "&page=" + page, that.version, 30 * 1000, 6 * 60 * 60 * 1000, function(response) {
                     if (response.status == 0) {
                         that.hideLoading();
                         that.scroll_load_loading = false;
@@ -266,37 +266,7 @@
                 }
                 this.showLoading();
                 if (that.isFlag1 || that.isFlag2 || that.isFlag3 || that.isFlag4) {
-                    //                    axios.get(that.url + _key.trim() + "&page=" + page)
-                    //                        .then(function(rsp) {
-                    //                            let d = rsp.data;
-                    //                            that.hideLoading();
-                    //                            that.tn_scroll_load_loading = false;
-                    //                            console.log(d.data);
-                    //                            if (d.data) {
-                    //                                that.flag = false;
-                    //                                if (d.data.length == 0) {
-                    //                                    that.num = 0;
-                    //                                    that.flag = true;
-                    //                                }else if(d.data.length<16){
-                    //                                    that.showLoadEnd();
-                    //                                }
-                    //                                else {
-                    //                                    that.num = d.data.length;
-                    //                                }
-                    //                                that.result = that.result.concat(d.data);
-                    //                                if (d.data.length < that.numPerPage) {
-                    //                                    that.tn_scroll_load_end = true;
-                    //                                }
-                    //                            } else {
-                    //                                that.flag = true;
-                    //                                that.tn_scroll_load_end = true;
-                    //                                if (isFirst) {
-                    //                                    that.showLoadEnd();
-                    //                                }
-                    //                            }
-                    //
-                    //                        });
-                    that.getAjaxRequest("search_cache", that.url + _key.trim() + "&page=" + page, that.version, 20 * 1000, 6 * 60 * 60 * 1000, function(response) {
+                    getAjaxRequest("search_cache", that.url + _key.trim() + "&page=" + page, that.version, 20 * 1000, 6 * 60 * 60 * 1000, function(response) {
                         if (response.status == 0) {
                             that.hideLoading();
                             that.tn_scroll_load_loading = false;

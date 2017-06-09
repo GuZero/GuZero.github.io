@@ -31,7 +31,7 @@ div.home
 			img.abs(:src="item.head")
 			div.div
 				div.title.rel
-					label.user.ellipsis.rel {{ item.creator }}发起的柜子运维工单
+					label.user.ellipsis.rel {{ item.creator }} 发起的柜子运维工单
 					label.time.f12.abs {{ item.time }}
 				div.line.f12.rel
 					label.gray.rel 终端名称:
@@ -40,7 +40,7 @@ div.home
 					label.gray.rel 创建时间:
 					label {{ item.created_at }}
 				div.status.f12.s1.rel(v-if="item.status_code == 1") {{ item.status }}
-				div.status.f12.s2.rel(v-if="item.status_code == 4"){{ item.status }}
+				div.status.f12.s2.rel(v-if="item.status_code == 4") {{ item.status }}
 				div.status.f12.s3.rel(v-if="item.status_code == 2") {{ item.status }}
 		DataLoading(ref="loading")
 	div.add.f12.center.fixed(@click="addOne") 创建
@@ -86,7 +86,10 @@ div.home
             FooterBar,
             DataLoading
         },
-        created() {
+        mounted() {
+            this.switchTab(2);
+            window.localStorage.setItem('task_id', '1');
+            //设置搜索订单的ID
             this.searchInfo = [{
                 id: '01',
                 value: '存件订单'
@@ -100,11 +103,6 @@ div.home
                 id: '04',
                 value: '菜鸟寄件'
             }]
-        },
-        mounted() {
-            this.switchTab(2);
-            window.localStorage.setItem('task_id', '1');
-            //设置搜索订单的ID
             window.localStorage.setItem('express_id', '01');
             window.addEventListener('scroll', this.handleScroll);
         },
@@ -141,23 +139,23 @@ div.home
                 }
                 //获取待办工单数量
                 if (that.isFirst) {
-                    that.getAjaxRequest("orderNum_cache", ajaxUrls.num, that.version, 30 * 1000, 6 * 60 * 60 * 1000, function(response) {
+                    getAjaxRequest("orderNum_cache", ajaxUrls.num, that.version, 30 * 1000, 6 * 60 * 60 * 1000, function(response) {
                         if (response.status == 0) {
                             that.num = response.data.task_numbers;
                         } else {
                             if (response.msg) _util.showErrorTip(response.data.msg);
                         }
-                    },function(error){
-                       _util.showErrorTip(error); 
+                    }, function(error) {
+                        _util.showErrorTip(error);
                     });
                 };
                 that.showLoading();
                 that.scroll_load_loading = true;
-                that.getAjaxRequest("order_cache", ajaxUrls.tasks + 'filter=' + that.filter + '&page=' + that.page, that.version, 30 * 1000, 6 * 60 * 60 * 1000, function(response) {
+                getAjaxRequest("order_cache", ajaxUrls.tasks + 'filter=' + that.filter + '&page=' + that.page, that.version, 30 * 1000, 6 * 60 * 60 * 1000, function(response) {
                     if (response.status == 0) {
-                        //测试用
+                         //测试用 //img.aimoge.com/FlJ81rMZKlvsiYP-EXr3P492r4ZS
                         for (let i = 0; i < response.data.length; i++) {
-                            response.data[i].head = '//img.aimoge.com/FlJ81rMZKlvsiYP-EXr3P492r4ZS';
+                            response.data[i].head = '//img.aimoge.com/FgEMgxglGfI7DWuyL0-DQAQ1mhE8';
                         }
                         switch (that.activeTab) {
                             case 0:
@@ -229,7 +227,8 @@ div.home
                 this.searchFlag = !this.searchFlag;
             },
             goToSearch(item) {
-                localStorage.express_id = item.id
+                localStorage.express_id = item.id;
+                this.searchFlag = false;
                 this.url('/search/')
             },
             goToMsg() {
@@ -272,12 +271,12 @@ div.home
                 }
                 that.showLoading();
                 that.scroll_load_loading = true;
-                that.getAjaxRequest("order_cache", ajaxUrls.tasks + 'filter=' + that.filter + '&page=' + that.page, that.version, 30 * 1000, 6 * 60 * 60 * 1000, function(response) {
+                getAjaxRequest("order_cache", ajaxUrls.tasks + 'filter=' + that.filter + '&page=' + that.page, that.version, 30 * 1000, 6 * 60 * 60 * 1000, function(response) {
                     if (response.status == 0) {
                         that.hideLoading();
-                        //测试用
+                         //测试用 //img.aimoge.com/FlJ81rMZKlvsiYP-EXr3P492r4ZS
                         for (let i = 0; i < response.data.length; i++) {
-                            response.data[i].head = '//img.aimoge.com/FlJ81rMZKlvsiYP-EXr3P492r4ZS';
+                            response.data[i].head = '//img.aimoge.com/FgEMgxglGfI7DWuyL0-DQAQ1mhE8';
                         }
                         that.scroll_load_loading = false;
                         that.list = that.list.concat(response.data);

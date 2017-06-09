@@ -113,7 +113,7 @@
                 _util.showSysLoading();
                 that.terminal_id = that.$route.params.code;
                 setTimeout(function () {
-                    that.getAjaxRequest("terminal_cache",ajaxUrls.basic + that.$route.params.code + '?info=basic',that.version,20*1000,6*60*60*1000,
+                    getAjaxRequest("terminal_cache",ajaxUrls.basic + that.$route.params.code + '?info=basic',that.version,20*1000,6*60*60*1000,
                         function (response) {
                                _util.hideSysLoading();
                             if (response.status == 0) {

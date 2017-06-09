@@ -84,7 +84,7 @@
                 }
                 that.showLoading();
                 that.scroll_load_loading = true;
-                that.getAjaxRequest("searchTerminal_cache", ajaxUrls.searchTerminal + _key.trim() + "&page=" + page, that.version, 30 * 1000, 6 * 60 * 60 * 1000, function(response) {
+                getAjaxRequest("searchTerminal_cache", ajaxUrls.searchTerminal + _key.trim() + "&page=" + page, that.version, 30 * 1000, 6 * 60 * 60 * 1000, function(response) {
                     if (response.status == 0) {
                         that.hideLoading();
                         that.scroll_load_loading = false;

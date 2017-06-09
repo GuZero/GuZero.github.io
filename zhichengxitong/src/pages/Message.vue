@@ -27,7 +27,7 @@
         div.mt44.pt50
             template(v-if="list.length <= 0 && !isFirst")
                 div.empty
-                    img.empty-img(src='http://img.aimoge.com/FgP3EthHIeL0e8AaMRJSqj5mZKas')
+                    img.empty-img(src='//img.aimoge.com/FuBwJB9xafDv2zrrJWQDq3sKYXyp')
                     div.empty-info 暂无消息通知
             template(v-if="list.length > 0")
                 template(v-if="activeTab == 1")
@@ -276,7 +276,7 @@
                     document.body.scrollTop = 0;
                 }
                 if (that.isFirst) {
-                    that.getAjaxRequest("message_cache",ajaxUrls.messages + 'numbers',that.version,2*60*1000,6*60*60*1000,
+                    getAjaxRequest("message_cache",ajaxUrls.messages + 'numbers',that.version,2*60*1000,6*60*60*1000,
                         function (response) {
                             if (response.status == 0) {
                                 that.warn_num =  response.data.warn;
@@ -292,7 +292,7 @@
                         })
                 }
                 that.showLoading();
-                that.getAjaxRequest("message_cache",ajaxUrls.messages + that.filter + "?page=" + that.page,that.version,30*1000,6*60*60*1000,
+                getAjaxRequest("message_cache",ajaxUrls.messages + that.filter + "?page=" + that.page,that.version,30*1000,6*60*60*1000,
                     function (response) {
                     if (response.status == 0) {
                         switch (that.activeTab) {
@@ -321,7 +321,7 @@
                         that.total_page = response.total_page;
                         that.isFirst = false;
                         that.page += 1;
-                        if (response.data.news.length < 5 || that.page > response.total_page) {
+                        if (response.data.news.length < 16 || that.page > response.total_page) {
                             that.showLoadEnd();
                         }else{
                             that.hideLoading();

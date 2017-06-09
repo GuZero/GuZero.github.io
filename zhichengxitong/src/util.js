@@ -127,7 +127,7 @@ module.exports = {
         return window.navigator.userAgent.indexOf("MicroMessenger") > 0;
     }
     ,isApp: function() {
-        return window.navigator.userAgent.indexOf("itsupport") >= 0;
+        return window.navigator.userAgent.indexOf("gegemis") >= 0;
     }
     ,isIOS: function() {
         var info = window.navigator.userAgent.substring(window.navigator.userAgent.indexOf("(") + 1);

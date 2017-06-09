@@ -42,7 +42,6 @@
     import FooterBar from '../components/common/Footer'
     import Search from '../components/common/Search'
     import DataLoading from '../components/common/DataLoading'
-
     export default {
         mixins: [require('../components/mixin/BodyBg')],
 
@@ -225,7 +224,7 @@
                 that.resetDefaultConfig();
                 that.citys = [];
                 that.showLoading();
-                that.getAjaxRequest("terminal_cache",ajaxUrls.citys + data.ar_id,that.version,2*60*1000,6*60*60*1000,
+                getAjaxRequest("terminal_cache",ajaxUrls.citys + data.ar_id,that.version,2*60*1000,6*60*60*1000,
                     function (response) {
                         that.hideLoading();
                         if (response.status == 0) {
@@ -252,7 +251,7 @@
                 let that = this;
                 if (that.areas && !that.areas.length) {
                     that.showLoading();
-                    that.getAjaxRequest("terminal_cache",ajaxUrls.areas,that.version,2*60*1000,6*60*60*1000,
+                    getAjaxRequest("terminal_cache",ajaxUrls.areas,that.version,2*60*1000,6*60*60*1000,
                         function (response) {
                             that.hideLoading();
                             if (response.status == 0) {
@@ -283,7 +282,7 @@
                 that.showLoading();
                 that.scroll_load_loading = true;
 
-                that.getAjaxRequest("terminal_cache",ajaxUrls.terminals + that.ar_id + '/citys/' + that.city_id + '?page=' + page,that.version,2*60*1000,6*60*60*1000,
+                getAjaxRequest("terminal_cache",ajaxUrls.terminals + that.ar_id + '/citys/' + that.city_id + '?page=' + page,that.version,2*60*1000,6*60*60*1000,
                     function (response) {
                         that.hideLoading();
                         that.scroll_load_loading = false;
@@ -346,7 +345,7 @@
                     that.tn_delay = null;
                     that.showLoading();
                     that.tn_scroll_load_loading = true;
-                    that.getAjaxRequest("terminal_cache",ajaxUrls.searchTerminal + _key.trim() + '&page=' + page,that.version,2*60*1000,6*60*60*1000,
+                    getAjaxRequest("terminal_cache",ajaxUrls.searchTerminal + _key.trim() + '&page=' + page,that.version,2*60*1000,6*60*60*1000,
                         function (response) {
                             that.hideLoading();
                             that.tn_scroll_load_loading = false;

@@ -59,7 +59,7 @@
                     this.result = [];
                 } else {
                     let that = this;
-                    that.getAjaxRequest("searchUsernmae_cache", ajaxUrls.user + that.username, that.version, 20 * 1000, 6 * 60 * 60 * 1000, function(response) {
+                    getAjaxRequest("searchUsernmae_cache", ajaxUrls.user + that.username, that.version, 20 * 1000, 6 * 60 * 60 * 1000, function(response) {
                         that.result = response.data;
                     }, function(error) {
                         _util.showErrorTip(error);

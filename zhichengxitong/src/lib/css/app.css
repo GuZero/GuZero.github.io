@@ -172,7 +172,7 @@ p.small {
     display: block;
     width: 40px;
     height: 40px;
-    background-image: url(//img.aimoge.com/Fklf55k94DKYun6WI2_BqGlBh1r0);
+    background-image: url('//img.aimoge.com/Fklf55k94DKYun6WI2_BqGlBh1r0');
     background-size: 100% 100%;
     background-repeat: no-repeat;
     position: relative;
@@ -428,7 +428,7 @@ body {
     width: 78px;
     height: 78px;
     margin: 0 auto;
-    background: url(//img.aimoge.com/FjmANRvf07CVvfV-21eJlqTNHC3u) no-repeat;
+    background: url('//img.aimoge.com/FjmANRvf07CVvfV-21eJlqTNHC3u') no-repeat;
     background-size: 100%;
 }
 
@@ -604,8 +604,6 @@ body {
 .footer .mine.active {
     background-image: url('//img.aimoge.com/Fu6ilW1o5KmKb7tNdsQD-GCJbTYL');
 }
-
-
 /*终端详情*/
 .footer .basic {
     

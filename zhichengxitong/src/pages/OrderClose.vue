@@ -66,7 +66,7 @@
 
 <script>
     import HeaderBar from '../components/common/Header'
-    import Upload from '../components/common/Upload'
+//    import Upload from '../components/common/Upload'
     import Field from '../components/elements/Field'
     import SubmitBtn from '../components/elements/SubmitBtn'
     /*Upload(id="up1", ref="up1")*/
@@ -100,7 +100,7 @@
             HeaderBar,
             Field,
             SubmitBtn,
-            Upload,
+//            Upload,
 
         },
         created() {
@@ -204,7 +204,7 @@
                 let that = this;
                 that.categroy = "";
                 //获取问题原因
-                that.getAjaxRequest("problems_cache", ajaxUrls.fault + that.val, that.version, 20 * 1000, 6 * 60 * 60 * 1000, function(response) {
+                getAjaxRequest("problems_cache", ajaxUrls.fault + that.val, that.version, 20 * 1000, 6 * 60 * 60 * 1000, function(response) {
                     that.problems = response.data;
                     if (that.problems.length == 1) {
                         that.getValue1(response.data[0].id);
@@ -220,7 +220,7 @@
             change1() {
                 let that = this;
                 //获取故障分类
-                that.getAjaxRequest("faultsName_cache", ajaxUrls.fault + that.cause_id, that.version, 20 * 1000, 6 * 60 * 60 * 1000, function(response) {
+                getAjaxRequest("faultsName_cache", ajaxUrls.fault + that.cause_id, that.version, 20 * 1000, 6 * 60 * 60 * 1000, function(response) {
                     that.categroys = response.data;
                     if (that.categroys.length == 1) {
                         that.getValue2(response.data[0].id);
@@ -236,7 +236,7 @@
             getInfo() {
                 let that = this;
                 // 获取当前工单信息
-                that.getAjaxRequest("orderName_cache", ajaxUrls.orderinfo + localStorage.task_id, that.version, 20 * 1000, 6 * 60 * 60 * 1000, function(response) {
+                getAjaxRequest("orderName_cache", ajaxUrls.orderinfo + localStorage.task_id, that.version, 20 * 1000, 6 * 60 * 60 * 1000, function(response) {
                     if (response.status == 0) {
                         that.name = response.data.terminal_name;
                     } else {
@@ -246,7 +246,7 @@
                     _util.showErrorTip(error);
                 });
                 //获取现场现象
-                that.getAjaxRequest("option_cache", ajaxUrls.option, that.version, 20 * 1000, 6 * 60 * 60 * 1000, function(response) {
+                getAjaxRequest("option_cache", ajaxUrls.option, that.version, 20 * 1000, 6 * 60 * 60 * 1000, function(response) {
                     if (response.status == 0) {
                         that.scenes = response.data.appearance;
                     } else {

@@ -79,8 +79,11 @@
                     if (rsp.data.status == 0) {
                         window.userJson = null;
                         window.is_logged = false;
-                        // that.url('/login');
-                        window.location.href ="itsupport:///Login";
+                        if (_util.isApp()) {
+                            window.location.href ="itsupport:///Login";
+                        }else{
+                            that.url('/login');
+                        }
                     } else {
                         if (rsp.data.msg) _util.showErrorTip(rsp.data.msg);
                     }

@@ -104,7 +104,7 @@
                 that.isSearch = true;
                 that.nameList = [];
                 setTimeout(function () {
-                    that.getAjaxRequest("terminal_cache",ajaxUrls.users + '?name='+name,that.version,2*60*1000,6*60*60*1000,
+                    getAjaxRequest("terminal_cache",ajaxUrls.users + '?name='+name,that.version,2*60*1000,6*60*60*1000,
                         function (response) {
                             that.hideLoading();
                             that.isSearch = false;

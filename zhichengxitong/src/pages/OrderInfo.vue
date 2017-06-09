@@ -5,7 +5,7 @@
         )
         div.mt44.pb60
             div.user.center.rel
-                img(src="//img.aimoge.com/FlJ81rMZKlvsiYP-EXr3P492r4ZS")
+                img(src="//img.aimoge.com/FgEMgxglGfI7DWuyL0-DQAQ1mhE8")
                 p.bold {{ username }}的运维工单
                 div.f12.status.in(v-if="!completed")
                     label.rel 等待{{ username }}处理
@@ -13,10 +13,10 @@
                     label.rel 已完成
             div.graybt8.rel
                 div.keys.rel
-                    TextFiled(tag="终端名称：", :text="data.terminalName")
-                    TextFiled(tag="故障等级：", :text="data.grade")
-                    TextFiled(tag="现场现象：", :text="data.scene", v-if="!completed")
-                    TextFiled(tag="现场现象（客服）：", :text="data.scene", v-if="completed", marginleft="130")
+                    TextFiled.h22(tag="终端名称：", :text="data.terminalName")
+                    TextFiled.h22(tag="故障等级：", :text="data.grade")
+                    TextFiled.h22(tag="现场现象：", :text="data.scene", v-if="!completed")
+                    TextFiled.h22(tag="现场现象（客服）：", :text="data.scene", v-if="completed", marginleft="130")
                     TextFiled(tag="问题描述：", :text="data.desc")
                 div.keys.rel(v-if="completed")
                     TextFiled(tag="现场现象（运维）：", :text="data.terminalName", marginleft="130")
@@ -123,31 +123,49 @@
                 _util.showErrorTip('delete');
             },
             agree() {
+                if(this.status=="已完成"){
+                    _util.showErrorTip('该工单已完成');
+                    return false;
+                }
                 _util.showErrorTip('agree');
             },
             refuse() {
+                if(this.status=="已完成"){
+                    _util.showErrorTip('该工单已完成');
+                    return false;
+                }
                 _util.showErrorTip('refuse');
             },
             close() {
+                console.log(this.status);
+                if(this.status=="已完成"){
+                    _util.showErrorTip('该工单已完成');
+                    return false;
+                }
                 this.url('/order/close', {
                     _id: this.$route.params.id
                 });
             },
             share() {
+                if(this.status=="已完成"){
+                    _util.showErrorTip('该工单已完成');
+                    return false;
+                }
                 this.url('/transmit', {
                     _id: this.$route.params.id
                 });
             },
             getData() {
                 let that = this;
-                that.getAjaxRequest("orderinfo_cache", ajaxUrls.orderinfo + localStorage.task_id, that.version, 2 * 60 * 1000, 6 * 60 * 60 * 1000, function(response) {
+                getAjaxRequest("orderinfo_cache", ajaxUrls.orderinfo + localStorage.task_id, that.version, 2 * 60 * 1000, 6 * 60 * 60 * 1000, function(response) {
                     if (response.status == 0) {
+                        console.log(response.data)
                         that.username = response.data.creator;
                         that.data.terminalName = response.data.terminal_name;
                         that.data.grade = response.data.level;
                         that.data.scene = response.data.appearance;
                         that.data.desc = response.data.content;
-                        that.data.status = response.data.status;
+                        that.status = response.data.status;
                         that.history = response.data.history;
                     }
                 });
@@ -162,7 +180,9 @@
     .pb60 {
         padding: 16px 0 60px 0;
     }
-    
+    .h22{
+        height: 22px;
+    }
     .user {
         margin: 0 16px 0 16px;
         padding-bottom: 12px;
@@ -211,6 +231,7 @@
         border-top: 1px #ececec solid;
         .text {
             margin-bottom: 4px;
+           
         }
     }
     
