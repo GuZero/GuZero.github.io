@@ -137,7 +137,6 @@
                 _util.showErrorTip('refuse');
             },
             close() {
-                console.log(this.status);
                 if(this.status=="已完成"){
                     _util.showErrorTip('该工单已完成');
                     return false;
@@ -159,7 +158,6 @@
                 let that = this;
                 getAjaxRequest("orderinfo_cache", ajaxUrls.orderinfo + localStorage.task_id, that.version, 2 * 60 * 1000, 6 * 60 * 60 * 1000, function(response) {
                     if (response.status == 0) {
-                        console.log(response.data)
                         that.username = response.data.creator;
                         that.data.terminalName = response.data.terminal_name;
                         that.data.grade = response.data.level;
