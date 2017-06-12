@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+</head>
+
+<body>
+   <script>        
+        function a(array){
+            var arr1=[];
+            var json={};
+            for(var i=0;i<array.length;i++){
+                if(!json[array[i]]){
+                    arr1.push(array[i]);
+                    json[array[i]]=1;
+                }
+            }
+            return arr1;
+        }
+        function b(array){
+            var arr1=[];
+            for(var i=0;i<array.length;i++){
+                if(arr1.indexOf(array[i]==-1)){
+                    arr1.push(array[i]);
+                    
+                }
+            }
+            return arr1;
+        }
+        function c(n){
+            var arr1=[];
+            if(!n) return arr1;
+            if(!typeof(num)=="number") return arr1;
+            for(var i=0;i<n;i++){
+                var rnd =getRand(2,32);
+                arr1.push(rnd);
+            }
+            return b(arr1);
+        }
+        function getRand(Min,Max){
+            var Range=Max-Min;
+            var Rand=Math.random();
+            return(Min+Math.round(Rand*Range));
+        }
+        console.log(c(3));
+    </script>
+</body>
+
+</html>
