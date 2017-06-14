@@ -8,25 +8,26 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
     <title>大屏互动-制作中</title>
     <style>
-        input[type="datetime-local"]{
+        input[type="datetime-local"] {
             background-color: transparent;
-        color: #fff;
-        FILTER: alpha(opacity=0);
-        /*androd*/
-        appearance: none;
-        /*下拉框去掉右侧图标*/
-        -moz-appearance: none;
-        -webkit-appearance: none;
+            color: #000;
+            FILTER: alpha(opacity=0);
+            /*androd*/
+            appearance: none;
+            /*下拉框去掉右侧图标*/
+            -moz-appearance: none;
+            -webkit-appearance: none;
         }
+
     </style>
 </head>
 
 <body>
     <div>
         <input type="time">
-        <input type="datetime-local"  id="str">
+        <input type="datetime-local" id="str">
         <input type="datetime">
-        <input type="text" id="text">   
+        <input type="text" id="text">
         <button id="btn">格式化时间</button>
     </div>
     <script>
@@ -38,7 +39,7 @@
                 hour = x.substring(11, 13),
                 minute = x.substring(14),
                 format = year + "-" + day + "-" + month + ' ' + hour + ':' + minute;
-            document.getElementById("text").value=format;
+            document.getElementById("text").value = format;
         }
 
     </script>
