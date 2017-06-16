@@ -6,12 +6,15 @@
         )
         Search(
             ref="searchBar",
-            class="top44 fixed",
+            class="top44",
             placeholder="搜索终端名称",
             v-model="terminalName",
-            @changeCallback="searchTerminal(1)"
+            @changeCallback="searchTerminal(1)",
+            @changeCallback1="isFlag1()",
+            @changeCallback2="isFlag2()",
+            :class="{fixed:flag,abs:!flag}"
         )
-        div.nav.fixed(v-if="!terminalName")
+        div.nav(v-if="!terminalName", :class="{fixed:flag,abs:!flag}")
             div.tag.none.rel(@click="loadAreas(tab0, $event)", :class="{active: tabActive0}") {{ tab0.ar_name }}
             div.tag.rel(@click="loadCitys(tab1, $event)", v-if="tabData1", :class="{active: tabActive1}") {{ tab1.ar_name }}
             div.tag.rel(@click="loadTerminals(tab2, $event)", v-if="tabData2") {{ tab2.ar_name }}
@@ -24,7 +27,7 @@
                 div.areas.rel(v-for="t in terminals", @click.stop.prevent="goToInfo(t)")
                     div.div
                        div.title.rel {{ t.terminal_name }}
-                       div.line.rel {{ t.region }}{{ t.place }}{{ t.terminal_code }}
+                       div.line.rel {{ t.region }}，{{ t.place }}，{{ t.terminal_code }}
             DataLoading(ref="loading")
         div.nav.fixed(v-if="terminalName")
             div.tag.none.rel 全国
@@ -32,7 +35,7 @@
             div.areas.rel(v-for="t in tn_terminals", @click.stop.prevent="goToInfo(t)")
                 div.div
                    div.title.rel {{ t.terminal_name }}
-                   div.line.rel {{ t.region }}{{ t.place }}{{ t.terminal_code }}
+                   div.line.rel {{ t.region }}，{{ t.place }}，{{ t.terminal_code }}
             DataLoading(ref="loading")
         FooterBar(:footerconfig="footerconfig")
 </template>
@@ -84,7 +87,9 @@
                 tn_scrollTop: 0,
                 tn_scroll_load_loading: false,
                 tn_scroll_load_end: false,
-                tn_delay: null
+                tn_delay: null,
+                flag:true
+                
             }
         },
         created() {
@@ -394,6 +399,12 @@
                     if (this.tabIndex == 2) this.scrollTop = document.body.scrollTop + 2;
                 }
             },
+            isFlag1(){
+                this.flag=false;
+            },
+            isFlag2(){
+                this.flag=true;
+            },
             isLoading() { //是否已显示“正在加载数据状态”节点
                 this.$refs.loading && this.$refs.loading.isLoading();
             },
@@ -454,6 +465,7 @@
         left: 0;
         top: 90px;
         z-index: 300;
+        box-sizing: border-box;
         .tag {
             float: left;
             padding-left: 32px;
@@ -485,6 +497,8 @@
 
     .areas {
         font-size: 16px;
+        box-sizing: border-box;
+        overflow: hidden;
         &:before {
             margin-left: 16px;
         }

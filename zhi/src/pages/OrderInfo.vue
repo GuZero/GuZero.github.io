@@ -7,8 +7,12 @@
             div.user.center.rel
                 img(src="//img.aimoge.com/FgEMgxglGfI7DWuyL0-DQAQ1mhE8")
                 p.bold {{ username }}的运维工单
-                div.f12.status.in(v-if="!completed")
-                    label.rel 等待{{ username }}处理
+                div.status.f12(v-if="data.status_code == 1")
+                    label.rel.s1 {{ data.status }}
+                div.status.f12(v-if="data.status_code == 4")
+                    label.rel.s2 {{ data.status }}
+                div.status.f12(v-if="data.status_code == 2")
+                    label.rel.s3 {{ data.status }}        
                 div.f12.status(v-if="completed")
                     label.rel 已完成
             div.graybt8.rel
@@ -31,8 +35,8 @@
                     div.tms.f12.rel {{item.created_at}}
             SubmitBtn(v-if="isAuthor && !completed", text="删除", @submitCallback="showAlert('delete')") 删除
             div.btnGroup.fixed.flex(v-if="isAdmin && !completed")
-                div.flexmodel.rel(@click="showAlert('agree')") 同意
-                div.flexmodel.rel(@click="showAlert('refuse')") 拒绝
+                div.flexmodel.rel(@click="agree()") 同意
+                div.flexmodel.rel(@click="refuse()") 拒绝
                 div.flexmodel.rel(@click="showAlert('close')") 关闭
                 div.flexmodel.rel.none(@click="showAlert('share')") 转发
         ModalDialog(ref="showalert", @confirmCallback="doAlertEvent")
@@ -58,7 +62,9 @@
                     terminalName: '东亚逸品加装格格货栈',
                     grade: '一级故障',
                     scene: '系统错误，请稍后再试！',
-                    desc: '运单号：24352346326，M0406/06号门，业主一键开柜丢件，调监控时间是2017-02-26 19:20:12，联系业主'
+                    desc: '运单号：24352346326，M0406/06号门，业主一键开柜丢件，调监控时间是2017-02-26 19:20:12，联系业主',
+                    status_code: '',
+                    status: ''
                 },
                 history: []
             }
@@ -123,21 +129,21 @@
                 _util.showErrorTip('delete');
             },
             agree() {
-                if(this.status=="已完成"){
+                if (this.status == "已完成") {
                     _util.showErrorTip('该工单已完成');
                     return false;
                 }
-                _util.showErrorTip('agree');
+                _util.showErrorTip('敬请期待！');
             },
             refuse() {
-                if(this.status=="已完成"){
+                if (this.status == "已完成") {
                     _util.showErrorTip('该工单已完成');
                     return false;
                 }
-                _util.showErrorTip('refuse');
+                _util.showErrorTip('敬请期待！');
             },
             close() {
-                if(this.status=="已完成"){
+                if (this.status == "已完成") {
                     _util.showErrorTip('该工单已完成');
                     return false;
                 }
@@ -146,7 +152,7 @@
                 });
             },
             share() {
-                if(this.status=="已完成"){
+                if (this.status == "已完成") {
                     _util.showErrorTip('该工单已完成');
                     return false;
                 }
@@ -156,20 +162,26 @@
             },
             getData() {
                 let that = this;
+                if (!(that.$route.path == ('/order/' + that.$route.params.id))) {
+                    return false;
+                }
                 _util.showSysLoading();
-                getAjaxRequest("order_cache", ajaxUrls.orderinfo + localStorage.task_id, that.version, 2 * 60 * 1000, 0.5 * 60 * 60 * 1000, function(response) {
-                     _util.hideSysLoading();
+                getAjaxRequest("order_cache", ajaxUrls.orderinfo + that.$route.params.id, that.version, 10 * 1000, 0.5 * 60 * 60 * 1000, function(response) {
+                    _util.hideSysLoading();
                     if (response.status == 0) {
                         that.username = response.data.creator;
                         that.data.terminalName = response.data.terminal_name;
                         that.data.grade = response.data.level;
                         that.data.scene = response.data.appearance;
                         that.data.desc = response.data.content;
+                        that.data.desc = response.data.content;
+                        that.data.status_code = response.data.status_code;
+                        that.data.status = response.data.status;
                         that.status = response.data.status;
                         that.history = response.data.history;
                     }
                 }, function(error) {
-                     _util.hideSysLoading();
+                    _util.hideSysLoading();
                     _util.showErrorTip('当前无网络，请检查您的网络状态！');
                 });
             }
@@ -183,9 +195,11 @@
     .pb60 {
         padding: 16px 0 60px 0;
     }
-    .h22{
+    
+    .h22 {
         height: 22px;
     }
+    
     .user {
         margin: 0 16px 0 16px;
         padding-bottom: 12px;
@@ -199,7 +213,7 @@
             padding: 5px 0 5px 0;
         }
         .status {
-            label {
+            .s3 {
                 display: inline-block;
                 text-indent: 20px;
                 color: #acda57;
@@ -213,6 +227,42 @@
                     background-size: 100%;
                     background-position: 0 center;
                     background-image: url(//img.aimoge.com/FoSwqghIf_uF504pPDsAEWTbBTJ_);
+                    width: 15px;
+                    height: 15px;
+                }
+            }
+            .s1 {
+                display: inline-block;
+                text-indent: 20px;
+                color: #e4b358;
+                &:after {
+                    content: '';
+                    display: block;
+                    position: absolute;
+                    left: 0;
+                    top: 3px;
+                    background-repeat: no-repeat;
+                    background-size: 100%;
+                    background-position: 0 center;
+                    background-image: url(//img.aimoge.com/FsSDETnGMxWOFzvF15BLkL9an2M-);
+                    width: 15px;
+                    height: 15px;
+                }
+            }
+            .s2 {
+                display: inline-block;
+                text-indent: 20px;
+                color: #d75a48;
+                &:after {
+                    content: '';
+                    display: block;
+                    position: absolute;
+                    left: 0;
+                    top: 3px;
+                    background-repeat: no-repeat;
+                    background-size: 100%;
+                    background-position: 0 center;
+                    background-image: url(//img.aimoge.com/Fs3sPZGoiBl2zPIi_FS7yOrCw_15);
                     width: 15px;
                     height: 15px;
                 }
@@ -234,7 +284,6 @@
         border-top: 1px #ececec solid;
         .text {
             margin-bottom: 4px;
-           
         }
     }
     

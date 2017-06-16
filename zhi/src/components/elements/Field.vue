@@ -12,6 +12,7 @@
                 :type="type || 'text'",
                 :placeholder="placeholder",
                 :maxlength="maxlength",
+                :readonly="readonly"
                 @focus="$emit('changeCallback')"
             )
             textarea(
@@ -26,7 +27,7 @@
             )
                 label.abs.ellipsis {{ getOptionKey(selectText, optionJsonConfig, options) }}
                 select.abs(@change="$emit('changeCallback')")
-                    option &nbsp;
+                    option 请选择（必选）
                     option(v-for="o in options", :value="o.id") {{ o.name }}
 </template>
 
@@ -38,6 +39,7 @@
             "type",
             "placeholder",
             "maxlength",
+            "readonly",
             "input",
             "textarea",
             "p",

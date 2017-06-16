@@ -90,7 +90,7 @@ div.home
         },
         mounted() {
             this.switchTab(2);
-            window.localStorage.setItem('task_id', '1');
+            window.localStorage.setItem('task_id', '01');
             window.canGoBack = false;
             window.origin = null;
             //设置搜索订单的ID
@@ -108,6 +108,7 @@ div.home
                 value: '菜鸟寄件'
             }]
             window.localStorage.setItem('express_id', '01');
+            window.localStorage.setItem('tab_id', 2);
             window.addEventListener('scroll', this.handleScroll);
         },
         activated() { //开启<keep-alive>，会触发activated事件
@@ -125,7 +126,10 @@ div.home
             next();
         },
         watch: {
-            //            '$route': 'fetchData'
+            '$route': function() {
+                let tab_id = parseInt(localStorage.tab_id);
+                this.switchTab(tab_id);
+            }
         },
         beforeRouteEnter(to, from, next) {
             next();
@@ -151,7 +155,7 @@ div.home
                 if (that.page == 1) {
                     document.body.scrollTop = 0;
                 }
-
+                that.showLoading();
                 //获取待办工单数量
                 if (that.isFirst) {
                     getAjaxRequest("order_cache", ajaxUrls.num, that.version, 30 * 1000, 0.5 * 60 * 60 * 1000, function(response) {
@@ -165,8 +169,8 @@ div.home
                     });
                 };
                 that.scroll_load_loading = true;
-                getAjaxRequest("order_cache", ajaxUrls.tasks + 'filter=' + that.filter + '&page=' + that.page, that.version, 30 * 1000, 0.5 * 60 * 60 * 1000, function(response) {
-                    _util.hideSysLoading();
+                getAjaxRequest("order_cache", ajaxUrls.tasks + 'filter=' + that.filter + '&page=' + that.page, that.version, 1 * 1000, 0.5 * 60 * 60 * 1000, function(response) {
+                    that.hideLoading();
                     if (response.status == 0) {
                         //测试用 //img.aimoge.com/FlJ81rMZKlvsiYP-EXr3P492r4ZS
                         for (let i = 0; i < response.data.length; i++) {
@@ -237,6 +241,7 @@ div.home
                 };
                 this.resetData();
                 this.fetchData();
+                localStorage.tab_id = index;
             },
             isSearch() {
                 this.searchFlag = !this.searchFlag;
@@ -254,7 +259,6 @@ div.home
             },
             goInfo(_id) {
                 this.searchFlag = false;
-                localStorage.task_id = _id;
                 this.url('/order/' + _id);
             },
             handleScroll() { //滚动加载监听事件
@@ -289,7 +293,7 @@ div.home
                 }
                 that.showLoading();
                 that.scroll_load_loading = true;
-                getAjaxRequest("order_cache", ajaxUrls.tasks + 'filter=' + that.filter + '&page=' + that.page, that.version, 30 * 1000, 6 * 60 * 60 * 1000, function(response) {
+                getAjaxRequest("order_cache", ajaxUrls.tasks + 'filter=' + that.filter + '&page=' + that.page, that.version, 1 * 1000, 0.5 * 60 * 60 * 1000, function(response) {
                     if (response.status == 0) {
                         that.hideLoading();
                         //测试用 //img.aimoge.com/FlJ81rMZKlvsiYP-EXr3P492r4ZS

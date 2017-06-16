@@ -122,7 +122,11 @@
             window.origin = null;
         },
         watch: {
-            '$route': 'getInfo'
+            '$route':function(){
+                if(this.$route.path==('/order/close?_id'+this.$route.query._id) ){
+                    this.getInfo();
+                }
+            }
         },
         methods: {
             submitFun() {
@@ -160,9 +164,8 @@
                     remark = this.result,
                     hasCatchLogZh = this.hasCatchLogZh,
                     deal = this.desc,
-                    task_id = localStorage.task_id,
                     that = this;
-                axios.post(ajaxUrls.orderinfo + task_id + '/close', {
+                axios.post(ajaxUrls.orderinfo + that.$route.query._id+ '/close', {
                     appearance: appearance,
                     reason: reason,
                     yunwei_type: yunwei_type,
@@ -239,8 +242,8 @@
             //获取信息
             getInfo() {
                 let that = this;
-                // 获取当前工单信息
-                getAjaxRequest("order_cache", ajaxUrls.orderinfo + localStorage.task_id, that.version, 20 * 1000, 0.5 * 60 * 60 * 1000, function(response) {
+                // 获取当前工单信息        
+                getAjaxRequest("order_cache", ajaxUrls.orderinfo +that.$route.query._id, that.version, 20 * 1000, 0.5 * 60 * 60 * 1000, function(response) {
                     if (response.status == 0) {
                         that.name = response.data.terminal_name;
                     } else {

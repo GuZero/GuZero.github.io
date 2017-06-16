@@ -35,6 +35,12 @@
         created() {
             window.canGoBack = true;
             window.origin = null;
+            let that = this;
+            getAjaxRequest("order_cache", ajaxUrls.user + '', that.version, 2 * 60 * 1000, 6 * 60 * 60 * 1000, function(response) {
+                that.result = response.data;
+            }, function(error) {
+                _util.showErrorTip('当前无网络，请检查您的网络状态！');
+            });
         },
         activated() {
             window.canGoBack = true;
@@ -69,9 +75,8 @@
             deal() {
                 let user_id = this.userID,
                     action = 'forward',
-                    task_id = localStorage.task_id,
                     that = this;
-                axios.post(ajaxUrls.orderinfo + task_id + '/deal', {
+                axios.post(ajaxUrls.orderinfo + that.$route.query._id+ '/deal', {
                     user_id: user_id,
                     action: action
                 }, {
@@ -90,7 +95,7 @@
                 }).catch(function(error) {
                     _util.hideSysLoading();
                     _util.showErrorTip('当前无网络，请检查您的网络状态！');
-                    
+
                 })
             },
             showAlert(item) {

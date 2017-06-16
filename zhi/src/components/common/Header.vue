@@ -8,6 +8,7 @@
         )
         a.icclock(
             v-if="hasConfig? btnconfig.ismsg: false",
+            :class="{active: unreadNum > 0}"
             @click.prevent.stop="$emit('msgBtnCallback')"
         )
         a.icsearch(
@@ -39,10 +40,36 @@
             let configs = this.$props.btnconfig,
                 hasConfig = configs && Object.keys(configs).length,
                 hideGoback = hasConfig && (configs.isgoback === false || configs.isgoback <= 0);
+            let ismsg = hasConfig && configs.ismsg ? configs.ismsg:null;
             return {
                 hasConfig: hasConfig,
-                hideGoback: hideGoback
+                version: '1',
+                hideGoback: hideGoback,
+                unreadNum: 0,
+                ismsg : ismsg
             };
+        },
+        created() {
+            if (this.ismsg) {
+                this.fetchData();
+            }
+        },
+        methods:{
+            fetchData() {
+                let that = this;
+                getAjaxRequest("message_cache",ajaxUrls.messages + 'unread',that.version,20*1000,6*60*60*1000,
+                    function (response) {
+                        _util.hideSysLoading();
+                        if (response.status == 0) {
+                           that.unreadNum = response.data.numbers;
+                        }else {
+                            if (response.msg) _util.showErrorTip(response.msg);
+                        }
+                    },
+                    function (error) {
+                        
+                    })
+            },
         },
         props: ["title", "btnconfig", "noborder","origin"]
     }

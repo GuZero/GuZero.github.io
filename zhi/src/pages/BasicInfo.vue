@@ -24,31 +24,57 @@
                 p.black {{heartbeat}}
             div.item.pd5
                 p.gray 网点
-                p.black {{terminal_code}}
+                p.black {{dot}}
             div.item.pd5
                 p.gray 状态
-                p.black {{terminal_code}}                          
-            div.item.item_btn
-                div
-                    div(:class="{ active: isActive }" @click.stop.prevent="getLocation('check')" ) 位置预览
-                div.btn(@click.stop.prevent="getLocation" ) 采集
+                p.black {{status_desc}}                          
+           
         div.edition
             p 版本信息 
             div.item.pd5
                 p.gray  主程序
-                p.black {{launched_at}}
+                p.black {{manager_version}}
             div.item.pd5
                 p.gray  后台服务
-                p.black {{launched_at}}
+                p.black {{behind_version}}
             div.item.pd5
                 p.gray  image版本号
-                p.black {{launched_at}}
+                p.black {{image_version}}
             div.item.pd5
                 p.gray  android版本号
-                p.black {{launched_at}}
+                p.black {{android_version}}
             div.item.pd5
                 p.gray  监控程序
-                p.black {{launched_at}}                     
+                p.black {{monitor_version}}
+        div.edition
+            p 业务配置 
+            div.item.pd5
+                p.gray  超时时间
+                p.black {{manager_version}}
+            div.item.pd5
+                p.gray  是否计费
+                p.black {{behind_version}}
+            div.item.pd5
+                p.gray  计费详情
+                p.black {{image_version}}
+            div.item.pd5
+                p.gray  是否绑定微信
+                p.black {{android_version}}
+         div.edition
+            p 位置信息 
+            div.item.pd5
+                p.gray  区域
+                p.black {{manager_version}}
+            div.item.pd5
+                p.gray  区域名称
+                p.black {{behind_version}}
+            div.item.pd5
+                p.gray  小区地址
+                p.black {{image_version}}
+            div.item.item_btn
+                div
+                    div(:class="{ active: isActive }" @click.stop.prevent="getLocation('check')" ) 位置预览
+                div.btn(@click.stop.prevent="getLocation" ) 采集                                      
         div.manage
             div.item.info 管理员
             template(v-if="maintain_manager.length > 0")
@@ -98,6 +124,25 @@
                 launched_at:'',
                 boot_time:'',
                 heartbeat:'',
+                dot:'',//网点
+                status_desc:'',//状态
+                //版本信息
+                manager_version:'',//版本信息 主程序
+                behind_version:'',//版本信息 后台服务
+                image_version:'',//版本信息 image 
+                android_version:'',//版本信息 Android
+                monitor_version:'',//版本信息 监控程序
+                //业务配置
+                delay_time:'',//超时时间
+                account_info:'',//是否计费
+                rule:'',//计费详情
+                is_weixin:'',//是否绑定微信
+                //位置信息
+                area:'',//区域
+                community:'',//小区
+                community_address:'',//小区地址
+                position:'',//柜子位置
+                
                 bodyBg: 'gray',
                 version: '1',
                 location: {
@@ -157,12 +202,31 @@
                             _util.hideSysLoading();
                             if (response.status == 0) {
                                 let tempData = response.data;
-                                console.log(tempData);
+                                //终端详情的基本信息
                                 that.terminal_name = tempData.terminal_name;
                                 that.terminal_code = tempData.terminal_code;
                                 that.launched_at=tempData.launched_at;
                                 that.boot_time=tempData.boot_time;
                                 that.heartbeat=tempData.heartbeat;
+                                that.dot=tempData.dot;
+                                that.status_desc=tempData.status_desc;
+                                //版本信息
+                                that.manager_version=tempData.manager_version;
+                                that.behind_version=tempData.behind_version;
+                                that.image_version=tempData.image_version;
+                                that.android_version=tempData.android_version;
+                                that.monitor_version=tempData.monitor_version;
+                                //业务配置
+                                that.delay_time=tempData.delay_time;
+                                that.account_info=tempData.account_info;
+                                that.rule=tempData.rule;
+                                that.is_weixin=tempData.is_weixin;
+                                //位置信息
+                                that.area=tempData.area;
+                                that.community=tempData.community;
+                                that.community_address=tempData.community_address;
+                                that.position=tempData.position;
+                                
                                 that.location = tempData.location;
                                 if (tempData.location && tempData.location.latitude && tempData.location.longitude) {
                                     that.isActive = true;

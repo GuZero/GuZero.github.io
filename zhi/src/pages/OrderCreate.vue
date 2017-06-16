@@ -15,7 +15,7 @@
                 :arrow="true",
                 @input="getID"
             )
-            Field(tag="终端名称", placeholder="请输入终端名称（必填）", v-model="terminalName", :input="true", @changeCallback="goInfo")
+            Field(tag="终端名称", placeholder="请输入终端名称（必填）", v-model="terminalName", :input="true", @changeCallback="goInfo", readonly="readonly")
             Field(
                 tag="现场现象",
                 v-model="scene",
@@ -58,7 +58,8 @@
                 project_id: '',
                 state: '',
                 flag: false,
-                date: ''
+                date: '',
+                input:true
             }
         },
         components: {
@@ -106,6 +107,10 @@
                 };
                 if (!this.desc) {
                     _util.showErrorTip('请输入问题描述！');
+                    return false;
+                };
+                if (!this.date) {
+                    _util.showErrorTip('请输入超时时间！');
                     return false;
                 };
                 let project_id = this.project_id,
@@ -230,28 +235,10 @@
             min-height: 54px;
         }
     }
-    
-    .rel {
-        position: relative;
+    .input{
+        font-size: 16px;
+        readonly:"readonly";
     }
     
-    .abs {
-        position: absolute;
-    }
-    
-    .center {
-        text-align: center;
-    }
-    
-    input[type="datetime-local"] {
-        background-color: transparent;
-        color: #fff;
-        FILTER: alpha(opacity=0);
-        /*androd*/
-        appearance: none;
-        /*下拉框去掉右侧图标*/
-        -moz-appearance: none;
-        -webkit-appearance: none;
-    }
 
 </style>

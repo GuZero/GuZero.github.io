@@ -1,24 +1,24 @@
 CACHE MANIFEST
-# 2017-06-13 v1.2.15
+# 2017-06-16 v1.2.20
 
-dist/js/OrderInfo.d8c72753.js
-dist/js/OrderCreate.8651d48d.js
-dist/js/EquipmentInfo.015e6f48.js
-dist/js/Transmit.aeb85e31.js
-dist/js/Allocation.c57297e5.js
-dist/js/OrderClose.03143d77.js
-dist/js/Mine.4a765432.js
-dist/js/EditPassword.d06b9e4c.js
-dist/js/BasicInfo.4c170a36.js
-dist/js/Terminal.0d47432c.js
-dist/js/SearchTerminal.abdfd303.js
-dist/js/Search.7efff588.js
-dist/js/Message.56ba1cff.js
-dist/js/Login.eb2b7c7b.js
-dist/js/Journal.e89f03e9.js
-dist/js/EditEquipment.3cd3cda5.js
-dist/js/AdInfo.cac58d59.js
-dist/js/bundle.54ebd4ab.js
+dist/js/OrderInfo.f04daf26.js
+dist/js/OrderCreate.dbdfc651.js
+dist/js/EquipmentInfo.f8832a9e.js
+dist/js/Transmit.6eff07d9.js
+dist/js/Allocation.38141449.js
+dist/js/OrderClose.7023318e.js
+dist/js/Mine.c1378162.js
+dist/js/EditPassword.c7d7c393.js
+dist/js/BasicInfo.dbfa04e3.js
+dist/js/Terminal.b1f528c9.js
+dist/js/SearchTerminal.14b229ba.js
+dist/js/Search.d982f51c.js
+dist/js/Message.69836908.js
+dist/js/Login.ae1f1e91.js
+dist/js/Journal.fd226251.js
+dist/js/EditEquipment.fac5d092.js
+dist/js/AdInfo.2af21941.js
+dist/js/bundle.4944a743.js
 
 CACHE:
 src/lib/css/app.css

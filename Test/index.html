@@ -9,14 +9,32 @@
     <title>大屏互动-制作中</title>
     <style>
         input[type="datetime-local"] {
-            background-color: transparent;
-            color: #000;
+            /*            background-color: transparent;*/
+            background-color: #fff;
             FILTER: alpha(opacity=0);
             /*androd*/
             appearance: none;
             /*下拉框去掉右侧图标*/
             -moz-appearance: none;
             -webkit-appearance: none;
+            border: none;
+        }
+        
+         ::-webkit-datetime-local-edit {
+            background-color: #fff;
+        }
+        
+         ::-webkit-inner-spin-button {
+/*            visibility: hidden;*/
+        }
+        
+         ::-webkit-calendar-picker-indicator {
+            border:none;
+            border-radius: 2px;
+            box-shadow: inset 0 1px #fff, 0 1px #eee;
+            background-color: #eee;
+            background-image: -webkit-linear-gradient(top, #f0f0f0, #e6e6e6);
+            color: #666;
         }
 
     </style>

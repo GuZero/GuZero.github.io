@@ -318,6 +318,7 @@ pre {
 .pb60 {
     padding-bottom: 60px;
 }
+
 .graybt2:after {
     content: '';
     display: block;
@@ -328,6 +329,7 @@ pre {
     bottom: -2px;
     right: 0;
 }
+
 .graybt8:after {
     content: '';
     display: block;
@@ -525,6 +527,16 @@ body {
 .icclock:before {
     background-image: url('//img.aimoge.com/Fo4ghwdR7Qmg7UcAYZMkYQ3y6AzC');
 }
+.gege-header .active:after{
+    content: '';
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 6px;
+    height: 6px;
+    border-radius: 100%;
+    background-color: #d75a48;
+}
 
 .icsearch:before {
     background-image: url('//img.aimoge.com/Fvl8P6rvilSrSn_U0h3Jpja70JGw');
@@ -537,6 +549,7 @@ body {
 .icedit:before {
     background-image: url('//img.aimoge.com/FplSaRX6mmWSi_i6_gF-KCnZ1tzg');
 }
+
 .icfinish:before {
     background-image: url('//img.aimoge.com/FnL-WpHNd6pm7vn75TnNq97gkNGN');
 }
@@ -604,36 +617,47 @@ body {
 .footer .mine.active {
     background-image: url('//img.aimoge.com/Fu6ilW1o5KmKb7tNdsQD-GCJbTYL');
 }
+
+
 /*终端详情*/
+
 .footer .basic {
-    
     background-image: url('//img.aimoge.com/Ft9NvBA28rPsjMzwoBjBAuLsXenk');
 }
+
 .footer .basic:after,
 .footer .basic.active {
     background-image: url('//img.aimoge.com/Fu9ui9C6CT4tBPFfhlNW5Yx1-h1S');
 }
+
 .footer .equipment {
     background-image: url('//img.aimoge.com/Fhc0R4XcMoW3gizVnDoGdgMhmk6j');
 }
+
 .footer .equipment:after,
 .footer .equipment.active {
     background-image: url('//img.aimoge.com/Fq35orxmH4AOqqBL5HmkUDOvYdZC');
 }
-.footer .ad{
+
+.footer .ad {
     background-image: url('//img.aimoge.com/FozNTCDg9xuGUHwELdxGs5zbjZ6F');
 }
+
 .footer .ad:after,
 .footer .ad.active {
     background-image: url('//img.aimoge.com/FkwsWQ9SRSpwDli406FywWcnbsHL');
 }
-.footer .journal{
+
+.footer .journal {
     background-image: url('//img.aimoge.com/Fj807yViKPo-gR_ZbDSoRfCnj_g6');
 }
+
 .footer .journal:after,
 .footer .journal.active {
     background-image: url('//img.aimoge.com/Fh2dDpoOg-OlYiyh9GhU61hIwakC');
 }
+
+
 /** content **/
 
 
@@ -667,4 +691,15 @@ body {
     height: 100%;
     z-index: 99900;
     display: none;
+}
+
+input[type="datetime-local"] {
+    background-color: #fff;
+    FILTER: alpha(opacity=0);
+    /*androd*/
+    appearance: none;
+    /*下拉框去掉右侧图标*/
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    border: none;
 }
