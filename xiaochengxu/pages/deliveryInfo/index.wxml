@@ -1,0 +1,39 @@
+
+<!--pages/deliveryInfo/index.wxml-->
+<view class="container">
+  <view class="companyinfo">
+    <view class="company-info">
+      <view class="header">快递信息</view>
+      <view class="info">
+        <view class="code-text rel">运 单 号
+          <text class="abs right-info">{{code}}</text>
+        </view>
+        <view class="rel">快递公司
+          <text class="abs right-info">{{companyName}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="detailinfo">
+    <view class="header">物流信息</view>
+    <block wx:if="{{showResult && logistics.length > 0}}">
+      <view class="delivery">
+        <view class="list rel " wx:for="{{logistics}}">
+          <view class="i abs">
+            <view class="inner"></view>
+            <view class="outer"></view>
+          </view>
+          <view class="text {{index == 0? 'on' : ''}}">{{item.time}}</view>
+          <view class="tag text {{index == 0? 'on' : ''}}">{{item.message}}</view>
+        </view>
+      </view>
+    </block>
+    <view class="emptyImg rel" wx:if="{{scroll_load_end && (!showResult || !logistics.length)}}">
+      <image src="https://img.aimoge.com/FryQ0LNGmTrzqLeQp0uwwpgTFSr4" mode="aspectFit"></image>
+    </view>
+    <view class="mgLoadingWarp rel" wx:if="{{!scroll_load_end}}">
+      <span><i class="icon ion-loading-c rel"></i>加载中...</span> 
+    </view>
+  </view>
+  <view class="gege-tip fixed" animation="{{animOfNoneNetWork}}">{{animMsg}}</view>
+</view>

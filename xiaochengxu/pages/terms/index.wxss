@@ -1,0 +1,21 @@
+.container {
+  padding: 70rpx 28rpx 30rpx;
+}
+
+.header {
+  margin-bottom: 40rpx;
+  font-size: 37rpx;
+  color: #000;
+}
+
+.title {
+  margin: 40rpx 0 10px;
+  font-size: 34rpx;
+  color: #000;
+}
+
+.content {
+  font-size: 28rpx;
+  color: #353535;
+  margin-bottom: 8rpx;
+}

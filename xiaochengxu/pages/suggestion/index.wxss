@@ -1,0 +1,29 @@
+page {
+  background-color: #efeff4;
+  height: 100%;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.content {
+  padding: 20rpx 32rpx 24rpx 32rpx;
+  margin-bottom: 60rpx;
+  background-color: #fff;
+}
+
+.textarea textarea {
+  font-size: 34rpx;
+  height: 234rpx;
+  width: 100%;
+}
+
+.number {
+  margin: 0 8rpx 0 32rpx;
+  text-align: right;
+  color: #b2b2b2;
+  font-size: 32rpx;
+}
+
+button {
+  margin: 0 42rpx;
+}

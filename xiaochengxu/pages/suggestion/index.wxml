@@ -1,0 +1,10 @@
+<view>
+  <View class="content rel">
+    <View class="textarea rel">
+      <textarea bindinput="textChange" placeholder="有效充实的建议，小格会优先回访您哟~" placeholder-class="gege-gray" />
+    </View>
+    <view class="number rel">{{textLen}}/140</view>
+  </View>
+  <button bindtap="submitData" class="button button-blue rel  {{ disabled? 'disabled': '' }}">提交</button>
+  <view class="gege-tip fixed" animation="{{animOfNoneNetWork}}">{{animMsg}}</view>
+</view>

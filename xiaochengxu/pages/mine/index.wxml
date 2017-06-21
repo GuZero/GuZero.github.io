@@ -1,0 +1,10 @@
+<View class="meta aw-r user rel" bindtap="showLogoutLayer">
+  <View class="warp none rel">{{userInfo ? userInfo.username :'未获取到个人信息'}}</View>
+</View>
+<View class="meta aw-r suggestion none rel" bindtap="linkToSuggestion">
+  <View class="warp rel">小格建议箱</View>
+</View>
+<View class="meta aw-r customer rel" bindtap="takePhoneCall">
+  <View class="warp none rel">小格客服</View>
+</View>
+<view class="gege-tip fixed" animation="{{animOfNoneNetWork}}">{{animMsg}}</view>

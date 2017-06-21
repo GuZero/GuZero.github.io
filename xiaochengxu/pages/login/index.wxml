@@ -1,0 +1,37 @@
+
+<!--pages/login/index.wxml-->
+<view class="container">
+  <view class="logintext">
+    <text class="login-text">格格货栈 • 24小时自助快递柜</text>
+  </view>
+  <view class="loginform">
+    <view class="formitem">
+      <view class="form-item form-text">手机号码</view>
+      <view class="form-item percent_40">
+        <input placeholder="输入手机号码" maxlength="11" placeholder-class="gege-placeholder" class="form-input" type="number" bindinput="bindInput" style="{{ isUsernameError ? 'color:#e64340' : ''}}" />
+      </view>
+      <view class="form-item code-btn last-item {{isDisabled?'is-code-disabled': ''}}" bindtap="getcode">{{tips}}</view>
+    </view>
+    <view class="formitem">
+      <view class="form-item form-text">验证码</view>
+      <view class="form-item last-item">
+        <input placeholder="输入验证码" maxlength="6" placeholder-class="gege-placeholder" class="form-input code-input" type="number" bindinput="bindInputCode" style="{{ iserror ? 'color:#e64340' : ''}}" />
+      </view>
+    </view>
+    <view class="">
+      <view class="inblock formradio" bindtap="radioChange">
+        <view class="radio-icon">
+          <view class="radio-icon-checked" style="opacity:{{isRadioChecked ? 1: 0}}"></view>
+        </view>
+        <view class="inblock">已阅读并同意</view>
+      </view>
+      <view class="inblock navigator" bindtap="gotoTerms">《格格使用条款》</view>
+    </view>
+    <view class=" loginbtn" bindtap="login">
+      <button class="button button-blue {{isActiveBtn ? '' : 'disabled' }} " loading="{{isLogining}}">
+        {{isLogining ? "登录中" : "登录"}}
+      </button>
+    </view>
+  </view>
+  <view class="gege-tip fixed" animation="{{animOfNoneNetWork}}">{{animMsg}}</view>
+</view>

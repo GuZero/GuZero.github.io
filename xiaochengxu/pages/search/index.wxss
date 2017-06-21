@@ -1,0 +1,58 @@
+/**search.wxss**/
+
+page {
+  background-color: #efeff4;
+}
+
+.container {
+  padding-top: 30rpx;
+}
+
+.gege-form {
+  background-color: #fff;
+  border-top: 1rpx #e5e5e5 solid;
+}
+
+.gege-form-field-p::after {
+  right: 0;
+  top: 28rpx;
+}
+
+.button {
+  margin: 60rpx 30rpx 0 30rpx;
+}
+
+.history {
+  margin: 88rpx 30rpx 0 30rpx;
+}
+
+.history .h3 {
+  color: #888;
+  font-size: 28rpx;
+}
+
+.history .list {
+  margin-top: 40rpx;
+}
+
+.history .meta {
+  color: #fff;
+  background-color: #d2d2d2;
+  font-size: 32rpx;
+  padding: 0 32rpx;
+  height: 64rpx;
+  line-height: 64rpx;
+  display: table;
+  border-radius: 50rpx;
+  margin-bottom: 32rpx;
+}
+
+.history .meta:active {
+  background-color: #bbb;
+}
+
+.empty {
+  font-size: 32rpx;
+  color: #353535;
+  padding: 16rpx 0 0 0;
+}

@@ -1,0 +1,17 @@
+<view class="search flex fixed">
+  <view class="tag rel">
+  </view>
+  <view class="input">
+    <input type="text" placeholder="输入快递公司名称" placeholder-class="gege-gray" bindinput="change" />
+  </view>
+</view>
+<view class="content rel">
+  <view class="item rel" wx:for="{{companys}}" data-deliverytype="{{item.delivery_type}}" data-company="{{item.name}}" bindtap="choose">
+    <image class="abs" src="{{item.logo_href}}"></image>
+    <view class="h3 rel">{{item.name}}</view>
+    <view class="rel">{{item.delivery_type}}</view>
+  </view>
+</view>
+<view class="mgLoadingWarp abs" wx:if="{{!scroll_load_end}}">
+  <span><i class="icon ion-loading-c rel"></i>加载中...</span> 
+</view>

@@ -1,0 +1,54 @@
+page {
+  background-color: #efeff4;
+  height: 100%;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.meta, .warp {
+  border-bottom: 1rpx #e5e5e5 solid;
+  background-color: #fff;
+  font-size: 34rpx;
+  color: #353535;
+}
+
+.meta.none, .warp.none {
+  border-bottom: none;
+}
+
+.meta:active, .warp:active {
+  background-color: #fafafa;
+}
+
+.meta.user {
+  margin-bottom: 30rpx;
+}
+
+.meta.suggestion {
+  border-top: 1rpx #e5e5e5 solid;
+}
+
+.meta.aw-r::after {
+  top: 30rpx;
+  right: 30rpx;
+}
+
+.warp {
+  padding: 25rpx 0 25rpx 80rpx;
+  margin: 0 0 0 32rpx;
+  background-position: 0 center;
+  background-repeat: no-repeat;
+  background-size: 60rpx 60rpx;
+}
+
+.user .warp {
+  background-image: url("//img.aimoge.com/Fmmdp-VxX8ePBCkTUuu_MbJhW8Uu");
+}
+
+.suggestion .warp {
+  background-image: url("//img.aimoge.com/FsQrsS_Bp1W5KB2q0iZFtqbPjbUb");
+}
+
+.customer .warp {
+  background-image: url("//img.aimoge.com/Ft4Ncwj0gT463uh7UW5y0IsBmVmB");
+}

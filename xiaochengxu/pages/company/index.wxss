@@ -1,0 +1,73 @@
+page {
+  background-color: #efeff4;
+  height: 100%;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.content {
+  padding: 96rpx 0 0 0;
+}
+
+.item {
+  background-color: #fff;
+  margin-bottom: 10rpx;
+  padding: 30rpx 0 30rpx 130rpx;
+  font-size: 28rpx;
+  color: #888;
+}
+
+.item:active {
+  background-color: #fafafa;
+}
+
+.item image {
+  width: 90rpx;
+  height: 90rpx;
+  top: 20rpx;
+  left: 20rpx;
+  border-radius: 100%;
+}
+
+.item .h3 {
+  font-size: 32rpx;
+  color: #353535;
+  padding: 4rpx 0 10rpx 0;
+}
+
+.search {
+  margin: 0;
+  top: 0;
+  z-index: 300;
+  width: 100%;
+  background-color: #fff;
+  height: 90rpx;
+  line-height: 90rpx;
+  font-size: 32rpx;
+  color: #c3c3c3;
+  border-bottom: 1rpx #eee solid;
+}
+
+.search .tag {
+  background-image: url('//img.aimoge.com/FgfwVyhZsfYRH3JZMlGzjDwyvVPT');
+  background-repeat: no-repeat;
+  background-size: auto 56rpx;
+  background-position: center 16rpx;
+  width: 100rpx;
+  height: 90rpx;
+}
+
+.search .input {
+  flex: 1;
+}
+
+.search input {
+  color: #666;
+  font-size: 32rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+}
+
+.mgLoadingWarp {
+  top: 80rpx;
+}

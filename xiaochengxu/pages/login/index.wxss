@@ -1,0 +1,117 @@
+/* pages/login/index.wxss */
+
+page {
+  background-color: #efeff4;
+}
+
+.container {
+  background-color: #efeff4;
+}
+
+.logintext {
+  padding: 32rpx;
+  color: #888;
+  font-size: 28rpx;
+}
+
+.formitem {
+  display: flex;
+  flex-direction: row;
+  padding-left: 32rpx;
+  height: 90rpx;
+  box-sizing: border-box;
+  border-bottom: 1rpx solid #e5e5e5;
+  background-color: #fff;
+  font-size: 34rpx;
+  color: #353535;
+}
+
+.form-item {
+  display: flex;
+  align-items: center;
+}
+
+.form-text {
+  width: 170rpx;
+}
+
+.percent_40 {
+  width: 40%;
+}
+
+.form-input {
+  height: 100%;
+}
+
+.last-item {
+  flex: 1;
+}
+
+.code-btn {
+  justify-content: center;
+  color: #4285f4;
+  border-left: 1rpx solid #e5e5e5;
+}
+
+.code-btn:active {
+  background-color: #fafafa;
+}
+
+.is-code-disabled {
+  color: #888;
+}
+
+.formitem::last-child {
+  border-bottom: none;
+}
+
+.code-input {
+  width: 100%;
+}
+
+.formradio {
+  padding: 24rpx 0 0 40rpx;
+  font-size: 28rpx;
+}
+
+.inblock {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.radio-icon {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 10px;
+  width: 36rpx;
+  height: 36rpx;
+  background: #fcfff4;
+  border-radius: 8rpx;
+}
+
+.radio-icon-checked {
+  position: absolute;
+  left: 8rpx;
+  top: 10rpx;
+  width: 18rpx;
+  height: 8rpx;
+  border: 4rpx solid #09bb07;
+  border-top: none;
+  border-right: none;
+  -moz-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+
+.navigator {
+  color: #576b95;
+  padding-top: 24rpx;
+    font-size: 28rpx;
+}
+
+.loginbtn {
+  width: 90%;
+  margin: 60rpx auto 0;
+}

@@ -1,0 +1,23 @@
+<view class="container">
+  <view class="gege-form">
+    <view class="gege-form-item flex">
+      <view class="gege-form-tag">运单号</view>
+      <view class="gege-form-field rel">
+        <input type="number" bindinput="bindCode" placeholder="输入运单号" placeholder-class="gege-placeholder" value="{{code}}" />
+      </view>
+    </view>
+    <view class="gege-form-item gege-tap flex" bindtap="linkToCompany">
+      <view class="gege-form-tag">快递公司</view>
+      <view class="gege-form-field-p rel aw-r {{company?'' :'gray'}}">{{company?company:'选择'}}</view>
+    </view>
+  </view>
+  <button bindtap="searchInfo" class="button button-blue rel {{ disabled? 'disabled': '' }}" >查询物流</button>
+  <View class="history rel">
+    <View class="h3">最近查询</View>
+    <View class="list rel" wx:if="{{hasHistory}}">
+      <View class="meta rel" wx:for="{{historys}}" wx:key="_id" data-company="{{item.name}}"data-deliverytype="{{item.company}}" data-code="{{item.number}}" bindtap="linkToKuaidiInfo">{{item.number}} {{item.name}}</View>
+    </View>
+    <view class="empty rel" wx:if="{{!hasHistory}}">暂无查询记录</view>
+  </View>
+</view>
+<view class="gege-tip fixed" animation="{{animOfNoneNetWork}}">{{animMsg}}</view>

@@ -1,0 +1,129 @@
+/* pages/deliveryInfo/index.wxss */
+
+page {
+  background-color: #fff;
+}
+
+.companyinfo:before, .companyinfo:after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 40rpx;
+  background-color: #efeff4;
+}
+
+.detailinfo, .company-info {
+  padding-left: 40rpx;
+  border-top: 1rpx solid #e5e5e5;
+}
+
+.info {
+  color: #353535;
+  font-size: 30rpx;
+  padding: 30rpx 0;
+}
+
+.code-text {
+  margin-bottom: 20rpx;
+}
+
+.right-info {
+  right: 40rpx;
+  top: 0;
+  display: block;
+}
+
+.header {
+  padding: 36rpx 0;
+  font-size: 30rpx;
+  color: #7f8389;
+  border-bottom: 1rpx solid #e5e5e5;
+}
+
+.delivery {
+  margin: 0;
+  padding: 40rpx 32rpx 0 32rpx;
+  position: relative;
+}
+
+.delivery.empty {
+  margin: 0;
+  padding: 40rpx 140rpx 16rpx 140rpx;
+}
+
+.delivery.empty img {
+  background: none;
+  max-width: 100%;
+}
+
+.list {
+  border-left: 2rpx #4285f4 dotted;
+  padding: 0 0 10rpx 0;
+  margin: 0;
+  font-size: 30rpx;
+}
+
+.list .text {
+  padding: 0 0 24rpx 32rpx;
+  line-height: 30rpx;
+  color: #888;
+  font-size: 24rpx;
+}
+
+.list .text.tag {
+  color: #353535;
+  font-size: 28rpx;
+  line-height: 44rpx;
+  padding: 10rpx 0 30rpx 46rpx;
+}
+
+.list .on.text {
+  color: #4285f4;
+}
+
+.list .i {
+  width: 48rpx;
+  height: 48rpx;
+  border-radius: 100%;
+  top: 0;
+  left: -24rpx;
+}
+
+.list .i .inner {
+  border-radius: 100%;
+  display: none;
+  position: absolute;
+  z-index: 4;
+}
+
+.list .i .outer {
+  border-radius: 100%;
+  width: 12rpx;
+  height: 12rpx;
+  left: 16.9rpx;
+  top: 8rpx;
+  background-color: #4285f4;
+  position: absolute;
+  z-index: 3;
+}
+
+.list.on .i .outer {
+  background-color: #4285f4;
+  width: 24rpx;
+  height: 24rpx;
+  top: 0px;
+  left: 10.6prx;
+}
+
+.list:last-child {
+  border-left-color: #fff;
+}
+
+.list:last-child .i {
+  top: -6rpx;
+}
+
+.emptyImg {
+  margin: 30rpx 150rpx 0 150rpx;
+  padding: 0;
+}
