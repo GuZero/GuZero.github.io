@@ -1,6 +1,6 @@
 {
   "pages": [
-    "pages/depositOrder/index",
+    "pages/depoitOrder/index",
     "pages/index/index",
     "pages/login/index",
     "pages/search/index",
