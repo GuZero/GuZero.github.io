@@ -65,7 +65,13 @@ function next_send_tick() {
     }
 }
 
-function getcode(mobile, callback, tick_callback) {
+function getcaptchacode(callback) {
+  app.ajax("GET", "/captcha/code", null, function (data) {
+    callback(data.statusCode = 200 && data.data.status == 0, data.data.data.image_name || '');
+  });
+};
+
+function getcode(mobile, callback, tick_callback, captchacode, captchacode_callback) {
     if (send_code_delay != 0) {
         return callback(false, "不可以重复发送");
     }
@@ -79,7 +85,7 @@ function getcode(mobile, callback, tick_callback) {
     if (!code) {
         return callback(false, "网络错误");
     }
-    app.ajax("GET", "/mobile/send/code/" + mobile + "?source=login&retry=" + send_code_retry + "&timestamp=" + code.timestamp + "&codex=" + code.x + "&codey=" + code.y, null, function (data) {
+    app.ajax("GET", "/mobile/send/code/" + mobile + "?source=login&retry=" + send_code_retry + "&timestamp=" + code.timestamp + "&codex=" + code.x + "&codey=" + code.y + "&captcha_code=" + captchacode, null, function (data) {
         if (data.statusCode = 200) {
             if (data.data.status == 0) {
                 send_code_type = 1;
@@ -89,7 +95,10 @@ function getcode(mobile, callback, tick_callback) {
                 next_send_tick();
                 return callback(true);
             }
-            else if (data.status == 301) {
+            else if(data.data.status == 310){
+              return captchacode_callback();
+            }
+            else if (data.data.status == 301) {
                 return callback(false, data.data.msg, true);
             }
             return callback(false, data.data.msg);
@@ -99,7 +108,7 @@ function getcode(mobile, callback, tick_callback) {
     });
 };
 
-function getvoicecode(mobile, callback, tick_callback) {
+function getvoicecode(mobile, callback, tick_callback, captchacode, captchacode_callback) {
     if (send_code_delay != 0) {
         return callback(false, "不可以重复发送");
     }
@@ -114,7 +123,7 @@ function getvoicecode(mobile, callback, tick_callback) {
         return callback(false, "网络错误");
     }
 
-    app.ajax("GET", "/mobile/voice/send/code/" + mobile + "?source=login&retry=" + send_voice_code_retry + "&timestamp=" + code.timestamp + "&codex=" + code.x + "&codey=" + code.y, null, function (data) {
+    app.ajax("GET", "/mobile/voice/send/code/" + mobile + "?source=login&retry=" + send_voice_code_retry + "&timestamp=" + code.timestamp + "&codex=" + code.x + "&codey=" + code.y + "&captcha_code=" + captchacode, null, function (data) {
 
         if (data.statusCode = 200) {
             if (data.data.status == 0) {
@@ -124,6 +133,9 @@ function getvoicecode(mobile, callback, tick_callback) {
                 send_tick_callback = tick_callback;
                 next_send_tick();
                 return callback(true);
+            }
+            else if (data.data.status == 310) {
+              return captchacode_callback();
             }
             else if (data.data.status == 301) {
                 return callback(false, data.data.msg, true);
@@ -287,6 +299,7 @@ module.exports = {
     unbindUser: unbindUser,
     next_send_tick: next_send_tick,
     checkMobile: checkMobile,
+    getcaptchacode: getcaptchacode,
     getcode: getcode,
     getvoicecode: getvoicecode,
     login: login,

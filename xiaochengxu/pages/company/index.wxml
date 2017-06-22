@@ -6,7 +6,7 @@
   </view>
 </view>
 <view class="content rel">
-  <view class="item rel" wx:for="{{companys}}" data-deliverytype="{{item.delivery_type}}" data-company="{{item.name}}" bindtap="choose">
+  <view class="item rel" wx:for="{{companys}}" data-deliverytype="{{item.delivery_type}}" data-company="{{item.name}}" bindtap="choose"  wx:key="item._id">
     <image class="abs" src="{{item.logo_href}}"></image>
     <view class="h3 rel">{{item.name}}</view>
     <view class="rel">{{item.delivery_type}}</view>

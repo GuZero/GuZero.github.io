@@ -1,0 +1,66 @@
+<scroll-view class="deposit" scroll-y="true" bindscrolltolower="scrolltolower" style="height:{{scrollHeight}}px;">
+    <view class="banner rel">
+        <image src="/images/deposit/img_deposit.png" mode="aspectFit"></image>
+        <view class="desc">寄存在格格，出门一身轻</view>
+        <view class=" search-btn" bindtap="linkToDepositOrder">我要寄存</view>
+    </view>
+    <view wx:if="{{items.length > 0}}">
+        <view class="list" wx:for="{{items}}" wx:key="{{order_id}}">
+            <view class="item">
+                <view class="item-info">
+                    <view class="info-row info-first rel">
+                        <view class="abs info-row-left info-row-status" wx:if="{{item.statusIndex == 1}}">
+                            待支付
+                        </view>
+                        <view class=" abs info-row-left info-row-status" wx:if="{{item.statusIndex== 2 }}">
+                            待存入
+                        </view>
+                        <view class="abs info-row-left info-row-status " wx:if="{{item.statusIndex== 3 }}">
+                            待取出
+                        </view>
+                        <view class="abs info-row-left info-row-status" wx:if="{{item.statusIndex == 4}}">
+                            已取出
+                        </view>
+                        <view class=" abs info-row-left info-row-status" wx:if="{{item.statusIndex==5 }}">
+                            已取消
+                        </view>
+                        <span wx:if="{{item.statusIndex != 1 && item.statusIndex != 4 && item.statusIndex != 5}}">
+                            {{item.password}}
+                        </span>
+                    </view>
+                    <view class="info-row info-sec">
+                        <view class="row rel" wx:if="{{item.statusIndex== 3 }}">
+                            <view class="abs info-row-left">入柜时间</view>
+                             {{item.deliverAt}}
+                        </view>
+                        <view class="row rel" wx:if="{{item.statusIndex== 4 }}">
+                            <view class="abs info-row-left">取出时间</view>
+                             {{item.fetchAt}}
+                        </view>
+                        <view class="row rel" wx:if="{{item.statusIndex== 5 }}">
+                            <view class="abs info-row-left">取消时间</view>
+                            {{item.cancelAt}}
+                        </view>
+                        <view class="row rel">
+                            <view class="abs info-row-left">寄存箱格</view>
+                            {{item.rack_name}}{{item.box_name}}({{item.boxSize}})
+                        </view>
+                        <view class="row row-last rel">
+                            <view class="abs info-row-left">寄存地址</view>
+                            {{item.terminal_name}}
+                        </view>
+                    </view>
+                </view>
+                <view class="item-btn flex">
+                    <!--<view class="item-btn-field flexmode item-btn-left" wx:if="{{item.statusIndex == 4 || item.statusIndex == 5}}">删除订单</view>-->
+                    <view class="item-btn-field flexmode item-btn-left" wx:if="{{item.statusIndex == 1}}"  data-orderId="{{item.order_id}}" bindtap="pay">去支付</view>
+                    <view class="item-btn-field flexmode" data-orderid="{{item.order_id}}"  bindtap="goToInfo">查看详情</view>
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class="mgLoadingWarp rel" wx:if="{{scroll_load_loading}}">
+        <span><i class="icon ion-loading-c rel"></i>加载中...</span>
+    </view>
+     <view class="gege-tip fixed" animation="{{animOfNoneNetWork}}">{{animMsg}}</view>
+</scroll-view>

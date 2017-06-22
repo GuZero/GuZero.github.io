@@ -17,11 +17,25 @@ Page({
     isLogining: false,
     isRadioChecked: true,
     isInOtherPage: false,
-    uid: ''
+    isShowImgCode: false,
+    imgCodeValue: '',
+    imgCodeSrc: '',
+    uid: '',
+    next_send_action: false
   },
   onLoad: function () {
     var that = this
     that.getNetworkType()
+    app.authenticated(function () {
+        wx.redirectTo({
+            url: '../index/index',
+            success: function (res) {
+                that.setData({
+                    isInOtherPage: true
+                })
+            }
+        })
+    });
   },
   onPullDownRefresh: function () {
     this.onLoad()
@@ -51,7 +65,51 @@ Page({
     })
     return true;
   },
+  showImgCode: function () {
+    this.setData({
+      isShowImgCode: true
+    })
+  },
+  hideImgCode: function () {
+    this.setData({
+      isShowImgCode: false
+    })
+  },
+  loadCaptchacodeIamge: function () {
+    var that = this;
+    that.setData({
+      imgCodeValue: '',
+      imgCodeSrc: ''
+    });
 
+    MGUser.getcaptchacode(function (is_succed, image_name) {
+      if (is_succed) {
+        that.setData({
+          imgCodeSrc: "https://img.aimoge.com/" + image_name.substring(0, 28)
+        });
+      } else {
+        app.showErrorTip(that, '网络错误，请检查您的网络设置！');
+      }
+    })
+  },
+
+  doNextSendAction: function () {
+    var that = this
+    if (that.data.next_send_action) {
+      if (!that.data.imgCodeValue) {
+        return showErrorTip('验证码不可以空!');
+      }
+      that.data.next_send_action(that.data.imgCodeValue);
+      that.data.next_send_action = false;
+      that.hideImgCode();
+    }
+  },
+  bindInputImgCode: function (e) {
+    var that = this
+    that.setData({
+      imgCodeValue: e.detail.value
+    });
+  },
   showVoiceTip: function () {
     var that = this
     wx.showModal({
@@ -63,12 +121,12 @@ Page({
       content: '试试接收语音来电验证码',
       success: function (res) {
         if (res.confirm) {
-          that.confirmVoiceCode()
+          that.confirmVoiceCode();
         } else {
-          that.cancelVoiceCode()
+          that.cancelVoiceCode();
         }
       }
-    })
+    });
   },
 
   confirmVoiceCode: function () {
@@ -94,7 +152,15 @@ Page({
         isDisabled: false
       })
       if (send_code_type == 1 && !this.data.isInOtherPage) {
-        that.showVoiceTip()
+        that.setData({
+          btnType: 1
+        });
+        that.showVoiceTip();
+      }
+      else{
+        that.setData({
+          btnType: 0
+        });
       }
     } else {
       that.setData({
@@ -103,7 +169,7 @@ Page({
       })
     }
   },
-  getcode: function () {
+  getcode: function (captcha_code) {
     var that = this
     if (!that.getNetworkType()) {
       return false
@@ -125,10 +191,14 @@ Page({
         }.bind(that), 3000)
         app.showErrorTip(that, msg)
       }
-    }, that.changeStatus.bind(that))
+    }, that.changeStatus.bind(that), captcha_code || '', function(){
+      that.data.next_send_action = that.getcode;
+      that.loadCaptchacodeIamge();
+      that.showImgCode();
+    });
   },
 
-  getvoicecode: function () {
+  getvoicecode: function (captcha_code) {
     var that = this
     if (!that.getNetworkType()) {
       return false
@@ -140,7 +210,11 @@ Page({
       else {
         app.showErrorTip(that, msg)
       }
-    }, that.changeStatus.bind(that))
+    }, that.changeStatus.bind(that), captcha_code || '', function () {
+      that.data.next_send_action = that.getvoicecode;
+      that.loadCaptchacodeIamge();
+      that.showImgCode();
+    });
   },
   sendCode: function () {
     var that = this
@@ -153,7 +227,7 @@ Page({
       that.getvoicecode()
     }
   },
-  changeLoginBtnBtnState: function () {
+  changeLoginBtnState: function () {
     var that = this
     that.setData({
       isActiveBtn: false
@@ -209,7 +283,7 @@ Page({
         code: that.data.user.code
       }
     })
-    that.changeLoginBtnBtnState();
+    that.changeLoginBtnState();
   },
   bindInputCode: function (e) {
     var that = this
@@ -219,14 +293,14 @@ Page({
         username: that.data.user.username
       }
     })
-    that.changeLoginBtnBtnState();
+    that.changeLoginBtnState();
   },
   radioChange: function (e) {
     var that = this
     that.setData({
       isRadioChecked: !that.data.isRadioChecked
     })
-    that.changeLoginBtnBtnState();
+    that.changeLoginBtnState();
   },
   gotoTerms: function () {
     var that = this
@@ -238,11 +312,11 @@ Page({
         })
       }
     })
-    that.changeLoginBtnBtnState();
+    that.changeLoginBtnState();
   },
   goIndex: function () {
     var that = this
-    wx.switchTab({
+    wx.redirectTo({
       url: '../index/index',
       success: function (res) {
         that.setData({

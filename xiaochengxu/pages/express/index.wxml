@@ -1,0 +1,79 @@
+<!--index.wxml-->
+<scroll-view scroll-y="true" bindscrolltolower="scrolltolower" style="height:{{scrollHeight}}px;">
+  <view class="tabBox flex rel">
+    <view id="tab0" class="tab rel {{tabIndex == 0? 'active': ''}}" bindtap="switchTab">待取件</view>
+    <view id="tab1" class="tab rel {{tabIndex == 1? 'active': ''}}" bindtap="switchTab">已取件</view>
+  </view>
+  <view class="content rel" wx:if="{{tabIndex == 0 && !dataOneEmpty}}">
+    <view class="item rel" wx:for="{{items0}}" wx:key="order_id">
+      <View class="warp rel" data-deliverytype="{{item.delivery_type}}" data-company="{{item.delivery_name}}" data-code="{{item.number || ''}}" bindtap="linkToInfo">
+        <View class="meta head flex rel">
+          <View class="mText abs">提取码</View>
+          <View class="mValue large">{{item.password}}</View>
+        </View>
+        <View class="meta flex rel">
+          <View class="mText abs">存放箱格</View>
+          <View class="mValue">{{item.rack_name}}{{item.box_name}}号</View>
+        </View>
+        <View class="meta flex rel">
+          <View class="mText abs">入柜时间</View>
+          <View class="mValue">{{item.deliver_time || '-'}}</View>
+        </View>
+        <View class="meta flex rel" wx:if="{{item.terminal_village_address}}">
+          <View class="mText abs">取件地址</View>
+          <View class="mValue">{{item.terminal_name}}（{{item.terminal_village_address}}）</View>
+        </View>
+        <View class="meta flex rel" wx:if="{{!item.terminal_village_address}}">
+          <View class="mText abs">取件地址</View>
+          <View class="mValue">{{item.terminal_name}}</View>
+        </View>
+      </View>
+      <View class="btn flex rel">
+        <View class="tap rel" data-deliverytype="{{item.delivery_type}}" data-company="{{item.delivery_name}}" data-code="{{item.number || ''}}" bindtap="linkToInfo">查看运单</View>
+        <View class="tap blue rel" data-mobile="{{item.operator_mobile}}" bindtap="takePhoneCall">联系快递员</View>
+      </View>
+    </view>
+  </view>
+  <view class="content rel" wx:if="{{tabIndex == 1 && !dataTwoEmpty}}">
+    <view class="item rel" wx:for="{{items0}}"  wx:key="order_id">
+      <View class="warp rel" data-deliverytype="{{item.delivery_type}}" data-company="{{item.delivery_name}}" data-code="{{item.number || ''}}" bindtap="linkToInfo">
+        <View class="meta head flex rel">
+          <View class="mText abs">快递状态</View>
+          <View class="mValue large">{{item.verbose_state}}</View>
+        </View>
+        <View class="meta flex rel">
+          <View class="mText abs">存放箱格</View>
+          <View class="mValue">{{item.rack_name}}{{item.box_name}}</View>
+        </View>
+        <View class="meta flex rel">
+          <View class="mText abs">取件时间</View>
+          <View class="mValue">{{item.fetch_time || '-'}}</View>
+        </View>
+        <View class="meta flex rel" wx:if="{{item.terminal_village_address}}">
+          <View class="mText abs">取件地址</View>
+          <View class="mValue">{{item.terminal_name}}（{{item.terminal_village_address}}）</View>
+        </View>
+        <View class="meta flex rel" wx:if="{{!item.terminal_village_address}}">
+          <View class="mText abs">取件地址</View>
+          <View class="mValue">{{item.terminal_name}}</View>
+        </View>
+      </View>
+      <View class="btn flex rel">
+        <View class="tap rel" data-deliverytype="{{item.delivery_type}}" data-company="{{item.delivery_name}}" data-code="{{item.number || ''}}" bindtap="linkToInfo">查看运单</View>
+        <View class="tap blue rel" data-mobile="{{item.operator_mobile}}" bindtap="takePhoneCall">联系快递员</View>
+      </View>
+    </view>
+    <view class="mgLoadingWarp rel" wx:if="{{!scroll_load_end}}">
+      <span><i class="icon ion-loading-c rel"></i>加载中...</span>
+    </view>
+  </view>
+  <view class="empty rel" wx:if="{{tabIndex == 0 && dataOneEmpty}}">
+    <image src="/images/express/waiting_for_picking.png" mode="aspectFit"></image>
+    <view class="text rel">暂无待取件</view>
+  </view>
+  <view class="empty rel" wx:if="{{tabIndex == 1 && dataTwoEmpty}}">
+    <image src="/images/express/picking.png" mode="aspectFit"></image>
+    <view class="text rel">暂无已取件</view>
+  </view>
+  <view class="gege-tip fixed" animation="{{animOfNoneNetWork}}">{{animMsg}}</view>
+</scroll-view>

@@ -10,7 +10,7 @@
       <view class="form-item percent_40">
         <input placeholder="输入手机号码" maxlength="11" placeholder-class="gege-placeholder" class="form-input" type="number" bindinput="bindInput" style="{{ isUsernameError ? 'color:#e64340' : ''}}" />
       </view>
-      <view class="form-item code-btn last-item {{isDisabled?'is-code-disabled': ''}}" bindtap="getcode">{{tips}}</view>
+      <view class="form-item code-btn last-item {{isDisabled?'is-code-disabled': ''}}" bindtap="sendCode">{{tips}}</view>
     </view>
     <view class="formitem">
       <view class="form-item form-text">验证码</view>
@@ -34,4 +34,19 @@
     </view>
   </view>
   <view class="gege-tip fixed" animation="{{animOfNoneNetWork}}">{{animMsg}}</view>
+  <view class="code-dialog fixed" style="display:{{isShowImgCode ? 'block' : 'none'}}">
+    <view class="imgCode abs">
+      <image src="https://img.aimoge.com/FgSgIducS7NfJNk-ZqN933p7JEaJ" class="abs closePic" bindtap="hideImgCode"></image>
+      <view class="pic rel">
+        <view class="div rel">
+          <image src="{{imgCodeSrc}}"></image>
+          <view class="reflush abs" bindtap="loadCaptchacodeIamge"></view>
+        </view>
+        <view class="picode rel">
+          <input type="text" placeholder="填写验证码" bindinput="bindInputImgCode"/>
+        </view>
+        <view class="ok rel" bindtap="doNextSendAction">提交</view>
+      </view>
+    </view>
+  </view>
 </view>

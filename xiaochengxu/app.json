@@ -1,54 +1,36 @@
 {
-  "pages": [
-    "pages/depoitOrder/index",
-    "pages/index/index",
-    "pages/login/index",
-    "pages/search/index",
-    "pages/mine/index",
-    "pages/terms/index",
-    "pages/company/index",
-    "pages/deliveryInfo/index",
-    "pages/suggestion/index"
-  ],
-  "window": {
-    "navigationBarBackgroundColor": "#4285f4",
-    "navigationBarTextStyle": "white",
-    "enablePullDownRefresh": true,
-    "backgroundColor": "#efeff4",
-    "backgroundTextStyle": "dark",
-    "navigationBarTitleText": "格格快递柜"
-  },
-  "tabBar": {
-    "color": "#888",
-    "backgroundColor": "#f7f7fa",
-    "selectedColor": "#4285f4",
-    "borderStyle": "white",
-    "position": "bottom",
-    "list": [
-      {
-        "pagePath": "pages/search/index",
-        "text": "查询",
-        "iconPath": "images/tab_search.png",
-        "selectedIconPath": "images/tab_search_select.png"
-      },
-      {
-        "pagePath": "pages/index/index",
-        "text": "我的快递",
-        "iconPath": "images/tab_box.png",
-        "selectedIconPath": "images/tab_box_select.png"
-      },
-      {
-        "pagePath": "pages/mine/index",
-        "text": "我的",
-        "iconPath": "images/tab_mine.png",
-        "selectedIconPath": "images/tab_mine_select.png"
-      }
-    ]
-  },
-  "networkTimeout": {
-    "connectSocket": 5000,
-    "request": 60000,
-    "downloadFile": 120000
-  },
-  "debug": false
+
+    "pages": [
+        "pages/chooseTerminal/index",
+        "pages/index/index",
+        "pages/orderInfo/index",
+        "pages/deposit/index",
+        
+        "pages/login/index",
+        "pages/terms/index",
+        "pages/express/index",
+        "pages/search/index",
+        "pages/company/index",
+        "pages/deliveryInfo/index",
+        "pages/mine/index",
+        "pages/suggestion/index",
+        "pages/depositOrder/index",
+        "pages/service/index"
+
+    ],
+    "window": {
+        "navigationBarBackgroundColor": "#4285f4",
+        "navigationBarTextStyle": "white",
+        "enablePullDownRefresh": true,
+        "backgroundColor": "#efeff4",
+        "backgroundTextStyle": "dark",
+        "navigationBarTitleText": "格格快递柜"
+    },
+    "networkTimeout": {
+        "connectSocket": 5000,
+        "request": 60000,
+        "downloadFile": 120000
+    },
+    "debug": false
+
 }

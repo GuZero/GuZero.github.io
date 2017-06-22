@@ -1,0 +1,113 @@
+<!--pages/deliveryInfo/index.wxml-->
+<view class="orderInfo">
+    <view class="status">
+        <view class="status-info" wx:if="{{item.statusIndex == 1}}">
+            <view class="">待支付</view>
+            <view class="tip">请在15分钟之内完成支付</view>
+        </view>
+        <view class="status-info" wx:if="{{item.statusIndex== 2 }}">
+            <view class="">待存入</view>
+            <view class="tip">前往柜机→超能箱→寄存→输入寄存码</view>
+        </view>
+         <view class="status-info" wx:if="{{item.statusIndex== 3 }}">
+            <view class="">待取出</view>
+            <view class="tip">前往柜机→取件→输入取件码</view>
+        </view>
+         <view class="status-info" wx:if="{{item.statusIndex== 4 }}">
+            <view class="">已取出</view>
+            <view class="tip">感谢使用格格货栈！</view>
+        </view>
+         <view class="status-info" wx:if="{{item.statusIndex== 5 }}">
+            <view class="">已取消</view>
+            <view class="tip">由于超时未支付/未使用，订单已取消</view>
+        </view>
+    </view>
+    <view class="item">
+        <view class="item-info">
+            <view class="info-row info-first rel"  wx:if="{{item.statusIndex == 1}}">
+                <view class="abs info-row-left info-row-status">
+                    寄存码
+                </view>
+                <span>
+                    --
+                </span>
+            </view>
+            <view class="info-row info-first rel"  wx:if="{{item.statusIndex == 2}}">
+                <view class="abs info-row-left info-row-status">
+                    寄存码
+                </view>
+                <span>
+                    {{item.password}}
+                </span>
+            </view>
+            <view class="info-row info-first rel"  wx:if="{{item.statusIndex == 3}}">
+                <view class="abs info-row-left info-row-status">
+                    寄存码
+                </view>
+                <span>
+                    {{item.password}}
+                </span>
+            </view>
+            <view class="info-row info-first rel"  wx:if="{{item.statusIndex == 4}}">
+                <view class="abs info-row-left info-row-status">
+                    取件时间
+                </view>
+                <span>
+                    {{item.fetchAt}}
+                </span>
+            </view>
+            <view class="info-row info-first rel"  wx:if="{{item.statusIndex == 5}}">
+                <view class="abs info-row-left info-row-status">
+                    取消时间
+                </view>
+                <span>
+                    {{item.cancelAt}}
+                </span>
+            </view>
+            <view class="info-row info-sec">
+                <view class="row rel" wx:if="{{item.statusIndex== 3 }}">
+                    <view class="abs info-row-left">寄存时间</view>
+                    {{item.deliverAt}}
+                </view>
+
+                <view class="row rel" wx:if="{{item.statusIndex== 4 }}">
+                    <view class="abs info-row-left">寄存时间</view>
+                    {{item.deliverAt}}
+                </view>
+                <view class="row rel">
+                    <view class="abs info-row-left">寄存箱格</view>
+                    {{item.rack_name}}{{item.box_name}}({{item.boxSize}})
+                </view>
+                <view class="row row-last rel">
+                    <view class="abs info-row-left">寄存地址</view>
+                    {{item.terminal_name}}
+                </view>
+            </view>
+        </view>
+        <view class="info-row item-detail">
+            <view class="row rel">
+                <view class="abs info-row-left">订单编号</view>
+                {{item.order_id}}
+            </view>
+            <view class="row rel">
+                <view class="abs info-row-left">下单时间</view>
+                {{item.createAt}}
+            </view>
+            <view class="row row-last rel">
+                <view class="abs info-row-left">支付金额</view>
+                {{item.fee/100}}元
+            </view>
+        </view>
+        <view class="item-btn flex" wx:if="{{item.statusIndex == 1}}">
+            <view class="item-btn-field flexmode item-btn-left"  data-orderId="{{item.order_id}}" bindtap="cancelOrder">
+                取消订单
+            </view>
+            <view class="item-btn-field flexmode" data-orderid="{{item.order_id}}" bindtap="pay">继续支付</view>
+        </view>
+         <view class="item-btn flex" wx:if="{{item.statusIndex == 4 || item.statusIndex == 5}}">
+            <view class="item-btn-field flexmode" data-orderid="{{item.order_id}}" bindtap="linkToDepositOrder">再次下单</view>
+        </view>
+
+    </view>
+    <view class="gege-tip fixed" animation="{{animOfNoneNetWork}}">{{animMsg}}</view>
+</view>

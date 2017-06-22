@@ -115,3 +115,74 @@ page {
   width: 90%;
   margin: 60rpx auto 0;
 }
+.code-dialog{
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.57);
+    z-index: 30000;  
+}
+.imgCode {
+    /*display: none;*/
+    width: 280px;
+    height: 180px;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    background-color: #fff;
+    left: 50%;
+    margin-left: -140px;
+    top: 20%;
+    padding: 23px 35px;
+    border-radius: 8px;
+    z-index: 30000;      
+}
+.closePic {
+    background: transparent;
+    width: 20px;
+    height: 20px;
+    top: 8px;
+    left: 15px;
+}
+.div {
+    width: 150px;
+    height: 50px;
+    margin: 0 auto;
+}
+.div img {
+    width: 150px;
+    height: 50px;
+    border: none;
+}
+.picode {
+    margin: 12px 0 0 0;
+    border-bottom: 1px #4d4d4d solid;
+    height: 28px;
+    line-height: 28px;
+}
+.reflush {
+    background: url(https://img.aimoge.com/FvsVMv1Umg5JsDSN0Uz-vZE2EYqs) center center no-repeat;
+    background-size: 12px;
+    width: 30px;
+    height: 50px;
+    top: 0;
+    right: -33px;
+}
+.picode input {
+    color: #4d4d4d;
+    height: 24px;
+    width: 100%;
+    line-height: 24px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.ok {
+    color: #4285f4;
+    border: 1px #4285f4 solid;
+    text-align: center;
+    border-radius: 22px;
+    height: 35px;
+    line-height: 35px;
+    margin-top: 15px;
+}

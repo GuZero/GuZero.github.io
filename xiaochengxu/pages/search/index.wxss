@@ -56,3 +56,13 @@ page {
   color: #353535;
   padding: 16rpx 0 0 0;
 }
+
+.scan-btn {
+  display: flex;
+  align-items: center;
+  width: 54rpx;
+  height:90rpx;
+  color: #4285f4;
+  background: url('//img.aimoge.com/FnFoRiz83bU0gBffha4zMm7whTRU') no-repeat right center;
+  background-size:  27rpx 27rpx;
+}

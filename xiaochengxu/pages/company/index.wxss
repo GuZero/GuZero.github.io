@@ -49,7 +49,7 @@ page {
 }
 
 .search .tag {
-  background-image: url('//img.aimoge.com/FgfwVyhZsfYRH3JZMlGzjDwyvVPT');
+  background-image: url('https://img.aimoge.com/FgfwVyhZsfYRH3JZMlGzjDwyvVPT');
   background-repeat: no-repeat;
   background-size: auto 56rpx;
   background-position: center 16rpx;

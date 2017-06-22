@@ -18,6 +18,7 @@ page, .container {
 
 .flex {
   display: flex;
+  display: -webkit-flex;
 }
 
 image {
@@ -205,3 +206,8 @@ image {
   -o-transform-origin: right bottom;
   margin-top: -32px;
 }
+
+
+
+
+

@@ -1,0 +1,105 @@
+/** index.wxss **/
+
+page {
+  background-color: #efeff4;
+  height: 100%;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.status {
+  background-color: #4285f4;
+  padding: 50rpx 32rpx;
+  font-size: 72rpx;
+  color: #fff;
+  font-weight: 700;
+}
+
+.status .tip {
+  padding-top: 32rpx;
+  font-size: 32rpx;
+  font-weight: 400;
+}
+
+.item {
+  padding: 0;
+  border-top: 1px solid #e5e5e5;
+  border-bottom: 1px solid #e5e5e5;
+  color: #888;
+  font-size: 28rpx;
+  margin-bottom: 30rpx;
+}
+
+.item .item-info {
+  padding-left: 40rpx;
+  border-bottom: 1px solid #e5e5e5;
+  background: #fff;
+}
+.item-info .info-first {
+  height: 128rpx;
+  line-height: 128rpx;
+  padding: 0 40rpx 0 130rpx;
+  font-size: 48rpx;
+  font-weight: 700;
+  color: #000;
+  border-bottom: 1px solid #e5e5e5;
+  background: #fff;
+}
+.info-row {
+  text-align: right;
+  box-sizing: border-box;
+}
+
+.info-row.info-sec {
+  padding: 32rpx 40rpx 32rpx 0;
+}
+
+.info-row .info-row-left {
+  left: 0;
+  width: 130rpx;
+  text-align: left;
+}
+
+.info-first .info-row-status {
+  top: 0;
+  height: 128rpx;
+  line-height: 128rpx;
+  font-size: 30rpx;
+  font-weight: 400;
+  color: #888;
+}
+
+.info-row .row {
+  padding-bottom: 20rpx;
+  padding-left: 130rpx;
+  min-height: 32rpx;
+}
+
+.info-row .row-last {
+  padding-bottom: 0;
+}
+.item-detail {
+  padding: 32rpx 40rpx;
+  background: #fff;
+  margin-top: 32rpx;
+}
+.item-btn {
+  border-top: 1px solid #e5e5e5;
+  background: #fff;
+  margin-top: 0;
+}
+
+.item-btn .item-btn-field {
+  padding: 32rpx;
+  text-align: center;
+  color: #4285f4;
+  font-size: 30rpx;
+}
+
+.flexmode {
+  flex: 1;
+}
+
+.item-btn .item-btn-left {
+  border-right: 1px solid #e5e5e5;
+}

@@ -30,7 +30,6 @@ App({
   },
   checkSession: function () {
     var that = this;
-
     if(!this.globalData.session){
       return that.login();
     }

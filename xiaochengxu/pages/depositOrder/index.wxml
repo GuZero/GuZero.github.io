@@ -3,8 +3,8 @@
     <image src="https://img.aimoge.com/Fi7keeAH_hoAfbUFnvUVGgB5ET6Y"></image>
   </view>
   <view class="input">
-    <input type="text" auto-focus/>
-    <view class="search_btn"></view>
+    <input type="text" />
+    <view class="search_btn {{search ?'search_active':''}}" bindtap="isSearch"></view>
   </view>
 </view>
 <view class="container">
@@ -97,13 +97,26 @@
   </view>
 </view>
 <view class="footer">
-<view class="flex"><view class="image">
-  <image src="https://img.aimoge.com/FsKEf4swFUpkmJn8O_lLN3WGJkvK"></image>
-  <image src="https://img.aimoge.com/FhtJJ1CKxR1An0CCGH95L6-DX7h4" wx:if=""></image>
- </view> <text>我同意 <text class="blue">《寄件服务协议》</text></text>
+<view class="flex"><view class="image" bindtap="isAgree">
+   <image src="https://img.aimoge.com/FsKEf4swFUpkmJn8O_lLN3WGJkvK" wx:if="{{!agree}}"></image>
+  <image src="https://img.aimoge.com/FhtJJ1CKxR1An0CCGH95L6-DX7h4" wx:if="{{agree}}"></image>
+ </view> <text>我同意</text> <navigator class="blue" url="../service/index">《寄件服务协议》</navigator>
  </view>
  <view class="">
-   <view class="btn">确认下单</view>
+   <view class="btn" bindtap="showErrorTip">确认下单</view>
  </view>
+</view>
+<view class="mask" wx:if="{{error||loading}}"></view>
+<view class="drawer_box" animation="{{animationData}}" wx:if="{{error}}">
+  <view class="drawer_icon">
+   <image src="../../images/depositOrder/img_fail.png"></image>
+  </view>
+  <view class="drawer_title">/(ㄒoㄒ)/~预约失败</view>
+</view>
+<view class="drawer_box" animation="{{animationData}}" wx:if="{{loading}}">
+  <view class="drawer_icon">
+   <image src="../../images/depositOrder/img_fail.png"></image>
+  </view>
+  <view class="drawer_title">预约中</view>
 </view>
 

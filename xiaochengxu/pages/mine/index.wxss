@@ -42,13 +42,23 @@ page {
 }
 
 .user .warp {
-  background-image: url("//img.aimoge.com/Fmmdp-VxX8ePBCkTUuu_MbJhW8Uu");
+  background-image: url("https://img.aimoge.com/Fmmdp-VxX8ePBCkTUuu_MbJhW8Uu");
 }
 
 .suggestion .warp {
-  background-image: url("//img.aimoge.com/FsQrsS_Bp1W5KB2q0iZFtqbPjbUb");
+  background-image: url("https://img.aimoge.com/FsQrsS_Bp1W5KB2q0iZFtqbPjbUb");
 }
 
 .customer .warp {
-  background-image: url("//img.aimoge.com/Ft4Ncwj0gT463uh7UW5y0IsBmVmB");
+  background-image: url("https://img.aimoge.com/Ft4Ncwj0gT463uh7UW5y0IsBmVmB");
+}
+
+.logout {
+  margin: 20px 20px 0px 20px;
+  background-color: #4285f4;
+  color: #FFFFFF;
+  height: 44px;
+  line-height: 44px;
+  border-radius: 5px;
+  text-align: center;
 }
