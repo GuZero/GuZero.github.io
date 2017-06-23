@@ -1,7 +1,7 @@
 <template lang="jade">
     div.text.rel
         div.tag.abs {{ tag }}
-        div.box.rel(:style="marginleftstyle") {{ text }}
+        div.box.rel.text(:style="marginleftstyle") {{ text }}
 </template>
 
 <script>
@@ -28,6 +28,11 @@
             color: #6e6e6e;
             left: 0;
             top: 0;
+        }
+        .text{
+          word-break: break-all;
+            white-space: normal;
+        word-wrap: break-word;
         }
     }
 

@@ -15,7 +15,7 @@
                 :arrow="true",
                 @input="getID"
             )
-            Field(tag="终端名称", placeholder="请输入终端名称（必填）", v-model="terminalName", :input="true", @changeCallback="goInfo", readonly="readonly")
+            Field(tag="终端名称", placeholder="请输入终端名称（必填）", v-model="terminalName", :input="true", @changeCallback="goInfo", readonly="readonly",autocomplete="new-password" )
             Field(
                 tag="现场现象",
                 v-model="scene",
@@ -30,7 +30,7 @@
             )
             Field(tag="故障等级", :pvalue="fault", :p="true")
             Field(tag="超时设置", placeholder="请选择超时间", :input="true", v-model="date", type="datetime-local")
-            Field(tag="问题描述", placeholder="请输入问题描述", v-model.trim="desc", :textarea="true")
+            Field(tag="问题描述", placeholder="请输入问题描述", v-model.trim="desc", :textarea="true", autocomplete="new-password")
         SubmitBtn(@submitCallback="submitFun", text="提交", theme="white")
 
 
@@ -59,7 +59,7 @@
                 state: '',
                 flag: false,
                 date: '',
-                input:true
+                input: true
             }
         },
         components: {
@@ -71,10 +71,6 @@
             window.canGoBack = true;
             window.origin = null;
             //请求数据
-            this.ordertypes = [{
-                id: '1',
-                name: '柜子运维'
-            }];
             if (localStorage.terminal_name) {
                 this.terminalName = "";
             } else {
@@ -89,7 +85,18 @@
             window.origin = null;
         },
         watch: {
-            '$route': 'setName'
+            '$route': function() {
+                if (this.$route.path == ('/order/edit')) {
+                    //清空页面内容
+                    this.ordertypes = [];
+                    this.scene = '请选择（必选）';
+                    this.scenes = [];
+                    this.fault = '';
+                    this.date = '';
+                    this.getInfo();
+                    localStorage.terminal_name = ''
+                }
+            }
         },
         methods: {
             submitFun() {
@@ -134,7 +141,6 @@
                     }
                 }).then(function(rsp) {
                     _util.hideSysLoading();
-                    //                    console.log(rsp.data)
                     if (rsp.data.status == 0) {
                         _util.showErrorTip(rsp.data.msg);
                         that.url('/')
@@ -143,8 +149,7 @@
                     }
                 }).catch(function(error) {
                     _util.hideSysLoading();
-                    _util.showErrorTip('当前无网络，请检查您的网络状态！');
-
+                    _util.showErrorTip('您的网络可能出了点问题:(');
                 })
             },
             testChange() {
@@ -184,7 +189,7 @@
                 this.url('/searchterminal');
             },
             setName() {
-                this.terminalName = localStorage.terminal_name;
+
             },
             setDate(str) {
                 let x = str,
@@ -194,9 +199,17 @@
                     hour = x.substring(11, 13),
                     minute = x.substring(14),
                     format = year + "-" + day + "-" + month + ' ' + hour + ':' + minute;
+                if (_util.isIOS()) {
+                    format = format.substring(0, 16);
+                }
                 return format;
             },
             getInfo() {
+                this.ordertypes = [{
+                    id: '1',
+                    name: '柜子运维'
+                }];
+                this.terminalName = localStorage.terminal_name;
                 let that = this;
                 //获取现场现象
                 _util.showSysLoading();
@@ -209,7 +222,7 @@
                     }
                 }, function(error) {
                     _util.hideSysLoading();
-                    _util.showErrorTip('当前无网络，请检查您的网络状态！');
+                    _util.showErrorTip('您的网络可能出了点问题:(');
                 });
             }
         }
@@ -235,10 +248,10 @@
             min-height: 54px;
         }
     }
-    .input{
-        font-size: 16px;
-        readonly:"readonly";
-    }
     
+    .input {
+        font-size: 16px;
+        readonly: "readonly";
+    }
 
 </style>

@@ -18,7 +18,7 @@
             div.tag.none.rel(@click="loadAreas(tab0, $event)", :class="{active: tabActive0}") {{ tab0.ar_name }}
             div.tag.rel(@click="loadCitys(tab1, $event)", v-if="tabData1", :class="{active: tabActive1}") {{ tab1.ar_name }}
             div.tag.rel(@click="loadTerminals(tab2, $event)", v-if="tabData2") {{ tab2.ar_name }}
-        div.mt44.pt50.pb60(v-if="!terminalName")
+        div.mt44.pt50.pb60(v-if="!terminalName",:class="{main:flag1}")
             div.areas.rel.arrow(v-if="tabIndex == 0", v-for="a in areas", @click="loadCitys(a)")
                 div.div {{ a.ar_name }}({{ a.terminal_number }})
             div.areas.rel.arrow(v-if="tabIndex == 1", v-for="c in citys", @click="loadTerminals(c)")
@@ -29,7 +29,7 @@
                        div.title.rel {{ t.terminal_name }}
                        div.line.rel {{ t.region }}，{{ t.place }}，{{ t.terminal_code }}
             DataLoading(ref="loading")
-        div.nav.fixed(v-if="terminalName")
+        div.nav(v-if="terminalName",:class="{fixed:flag,abs:!flag}")
             div.tag.none.rel 全国
         div.mt44.pt50.pb60(v-if="terminalName")
             div.areas.rel(v-for="t in tn_terminals", @click.stop.prevent="goToInfo(t)")
@@ -37,7 +37,7 @@
                    div.title.rel {{ t.terminal_name }}
                    div.line.rel {{ t.region }}，{{ t.place }}，{{ t.terminal_code }}
             DataLoading(ref="loading")
-        FooterBar(:footerconfig="footerconfig")
+        FooterBar.fixed(:footerconfig="footerconfig",:class="{dis:!flag}")
 </template>
 
 <script>
@@ -88,13 +88,15 @@
                 tn_scroll_load_loading: false,
                 tn_scroll_load_end: false,
                 tn_delay: null,
-                flag:true
-                
+                flag: true,
+                flag1: false
             }
         },
         created() {
             window.canGoBack = false;
             window.origin = null;
+            this.isFlag3();
+
         },
         components: {
             HeaderBar,
@@ -148,7 +150,7 @@
         },
         methods: {
             goToInfo(terminal) {
-                this.url('/terminal/'+terminal.terminal_id);
+                this.url('/terminal/' + terminal.terminal_id);
             },
             resetScrollTop(showLoadEnd) {
                 if (showLoadEnd) this.showLoadEnd();
@@ -227,18 +229,18 @@
                 that.resetDefaultConfig();
                 that.citys = [];
                 that.showLoading();
-                getAjaxRequest("terminal_cache",ajaxUrls.citys + data.ar_id,that.version,2*60*1000,6*60*60*1000,
-                    function (response) {
+                getAjaxRequest("terminal_cache", ajaxUrls.citys + data.ar_id, that.version, 2 * 60 * 1000, 6 * 60 * 60 * 1000,
+                    function(response) {
                         that.hideLoading();
                         if (response.status == 0) {
-                            that.citys = response.data;                           
-                        }else {
+                            that.citys = response.data;
+                        } else {
                             if (response.msg) _util.showErrorTip(response.msg);
                         }
                     },
-                    function (error) {
+                    function(error) {
                         that.hideLoading();
-                        _util.showErrorTip('当前无网络，请检查您的网络状态！');
+                        _util.showErrorTip('您的网络可能出了点问题:(');
                     })
             },
             loadTerminals(data, e) {
@@ -254,18 +256,18 @@
                 let that = this;
                 if (that.areas && !that.areas.length) {
                     that.showLoading();
-                    getAjaxRequest("terminal_cache",ajaxUrls.areas,that.version,2*60*1000,6*60*60*1000,
-                        function (response) {
+                    getAjaxRequest("terminal_cache", ajaxUrls.areas, that.version, 2 * 60 * 1000, 6 * 60 * 60 * 1000,
+                        function(response) {
                             that.hideLoading();
                             if (response.status == 0) {
-                                that.areas = response.data;                           
-                            }else {
+                                that.areas = response.data;
+                            } else {
                                 if (response.msg) _util.showErrorTip(response.msg);
                             }
                         },
-                        function (error) {
+                        function(error) {
                             that.hideLoading();
-                            _util.showErrorTip('当前无网络，请检查您的网络状态！');
+                            _util.showErrorTip('您的网络可能出了点问题:(');
                         })
                 }
             },
@@ -285,8 +287,8 @@
                 that.showLoading();
                 that.scroll_load_loading = true;
 
-                getAjaxRequest("terminal_cache",ajaxUrls.terminals + that.ar_id + '/citys/' + that.city_id + '?page=' + page,that.version,2*60*1000,6*60*60*1000,
-                    function (response) {
+                getAjaxRequest("terminal_cache", ajaxUrls.terminals + that.ar_id + '/citys/' + that.city_id + '?page=' + page, that.version, 2 * 60 * 1000, 6 * 60 * 60 * 1000,
+                    function(response) {
                         that.hideLoading();
                         that.scroll_load_loading = false;
                         if (response.status == 0 && response.data && response.data.length) {
@@ -302,14 +304,14 @@
                             if (isFirst) {
                                 that.showLoadEnd();
                             }
-                            if(response.status != 0){
+                            if (response.status != 0) {
                                 if (response.msg) _util.showErrorTip(response.msg);
                             }
                         }
                     },
-                    function (error) {
+                    function(error) {
                         that.hideLoading();
-                        _util.showErrorTip('当前无网络，请检查您的网络状态！');
+                        _util.showErrorTip('您的网络可能出了点问题:(');
                     })
             },
             searchTerminal(isFirst) {
@@ -348,8 +350,8 @@
                     that.tn_delay = null;
                     that.showLoading();
                     that.tn_scroll_load_loading = true;
-                    getAjaxRequest("terminal_cache",ajaxUrls.searchTerminal + _key.trim() + '&page=' + page,that.version,2*60*1000,6*60*60*1000,
-                        function (response) {
+                    getAjaxRequest("terminal_cache", ajaxUrls.searchTerminal + _key.trim() + '&page=' + page, that.version, 2 * 60 * 1000, 6 * 60 * 60 * 1000,
+                        function(response) {
                             that.hideLoading();
                             that.tn_scroll_load_loading = false;
                             if (response.status == 0 && response.data && response.data.length) {
@@ -364,14 +366,14 @@
                                 if (isFirst) {
                                     that.showLoadEnd();
                                 }
-                                if(response.status != 0){
+                                if (response.status != 0) {
                                     if (response.msg) _util.showErrorTip(response.msg);
                                 }
                             }
                         },
-                        function (error) {
+                        function(error) {
                             that.hideLoading();
-                            _util.showErrorTip('当前无网络，请检查您的网络状态！');
+                            _util.showErrorTip('您的网络可能出了点问题:(');
                         })
                 }, 350);
             },
@@ -399,11 +401,20 @@
                     if (this.tabIndex == 2) this.scrollTop = document.body.scrollTop + 2;
                 }
             },
-            isFlag1(){
-                this.flag=false;
+            isFlag1() {
+                if (_util.isIOS()) {
+                    this.flag = false;
+                }
             },
-            isFlag2(){
-                this.flag=true;
+            isFlag2() {
+                if (_util.isIOS()) {
+                    this.flag = true;
+                }
+            },
+            isFlag3() {
+                if (_util.isIOS()) {
+                    this.flag1 = true;
+                }
             },
             isLoading() { //是否已显示“正在加载数据状态”节点
                 this.$refs.loading && this.$refs.loading.isLoading();
@@ -428,7 +439,13 @@
     .pt50 {
         padding-top: 100px;
     }
-
+    
+    .main {
+        position: relative;
+        overflow-y: scroll;
+        -webkit-overflow-scrolling: touch;
+    }
+    
     .arrow:after {
         content: '';
         background: url(//img.aimoge.com/Fn0wLikUitDAUkJTBe8EQYMgKxnD) 0 0 no-repeat;
@@ -441,7 +458,7 @@
         top: 50%;
         margin-top: -14px;
     }
-
+    
     .areas:before,
     .nav:before {
         content: '';
@@ -454,7 +471,7 @@
         background-color: #979797;
         transform: scale(1, .5);
     }
-
+    
     .nav {
         background-color: #fff;
         color: #4d4d4d;
@@ -494,7 +511,7 @@
             }
         }
     }
-
+    
     .areas {
         font-size: 16px;
         box-sizing: border-box;
@@ -519,6 +536,10 @@
                 padding-right: 16px;
             }
         }
+    }
+    
+    .dis {
+        display: none;
     }
 
 </style>

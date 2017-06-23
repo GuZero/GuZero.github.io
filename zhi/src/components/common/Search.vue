@@ -4,8 +4,8 @@
             input.rel(
                 type="text",
                 :placeholder="placeholder",
-                @input="setParentVar($event.target.value)",
-                @keyup="$emit('changeCallback')"
+                @input="setParentVar($event.target.value)",               
+                v-on:input="$emit('changeCallback')"
                 @focus="$emit('changeCallback1')"
                 @blur="$emit('changeCallback2')"
             ) 

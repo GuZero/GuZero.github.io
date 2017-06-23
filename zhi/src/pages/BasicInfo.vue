@@ -78,7 +78,7 @@
         div.manage
             div.item.info 管理员
             template(v-if="maintain_manager.length > 0")
-                div.rel(v-for="t in maintain_manager")
+                div.rel(v-for="t in maintain_manager",:key="t.user_id")
                     div.item.item_btn
                         div
                             p.gray 运维管理员
@@ -92,7 +92,7 @@
                             p.gray 运维管理员
                         div.btn(@click.stop.prevent="goToAllocation('1')" v-if="is_yunwei_manager == '0'") 分配
             template(v-if="operate_manager.length> 0")
-                div.rel(v-for="t in operate_manager")
+                div.rel(v-for="t in operate_manager",:key="t.user_id")
                     div.item.item_btn
                         div
                             p.gray 运营管理员
@@ -117,7 +117,7 @@
         data() {
             return {
                 //终端详情信息
-                terminal_name: '格格货栈',
+                terminal_name: '',
                 terminal_code: '',
                 terminal_id: this.$route.params.code,
                 pageTitle: '终端详情',
@@ -162,7 +162,6 @@
             }
         },
         created() {
-            this.fetchData();
             window.canGoBack = true;
             window.origin = "terminal";
 
@@ -170,16 +169,48 @@
         activated() {
             window.canGoBack = true;
             window.origin = "terminal";
+            let that = this;
+            that.terminal_name = '';
+            that.terminal_code = '';
+            that.launched_at= '';
+            that.boot_time='';
+            that.heartbeat='';
+            that.dot='';
+            that.status_desc='';
+            //版本信息
+            that.manager_version='';
+            that.behind_version='';
+            that.image_version='';
+            that.android_version='';
+            that.monitor_version='';
+            //业务配置
+            that.delay_time='';
+            that.account_info='';
+            that.rule='';
+            that.is_weixin='';
+            //位置信息
+            that.area='';
+            that.community='';
+            that.community_address='';
+            that.position='';
+            
+            that.location = {
+                    "latitude": 0,
+                    "longitude": 0
+                };
+            that.isActive = false;
+            that.maintain_manager = [];
+            that.operate_manager = [];
+            that.is_yunwei_manager = '0';
+            that.is_yunying_manager = '0';
+            this.fetchData();
         },
         components: {
             HeaderBar,
             TransmitFooter,
             DataLoading
+        },
 
-        },
-        watch: {
-            '$route': 'fetchData'
-        },
         methods: {
             showLoading() { //显示正在加载数据状态
                 this.scroll_load_loading = true;
@@ -191,9 +222,7 @@
             },
             fetchData() {
                 let that = this;
-                if (!(that.$route.path == ('/terminal/' + that.$route.params.code))) {
-                    return false;
-                }
+   
                 _util.showSysLoading();
                 that.terminal_id = that.$route.params.code;
                 setTimeout(function() {
@@ -241,7 +270,7 @@
                         },
                         function(error) {
                             _util.hideSysLoading();
-                            _util.showErrorTip('当前无网络，请检查您的网络状态！');
+                            _util.showErrorTip('您的网络可能出了点问题:(');
                         })
                 }, 0);
             },

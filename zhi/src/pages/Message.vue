@@ -31,7 +31,7 @@
                     div.empty-info 暂无消息通知
             template(v-if="list.length > 0")
                 template(v-if="activeTab == 1")
-                    div.list(v-for="(item,index) in list")
+                    div.list(v-for="(item,index) in list",:key="item.id")
                         div.item.rel(@click.stop.prevent="goDetail(item.id,item.href,index)")
                             p.time {{item.created_at | converTime}}
                             div.rel.info
@@ -46,7 +46,7 @@
                                         label.gray.rel.desc 创建时间:
                                         label {{item.created_at}}
                 template(v-if="activeTab == 2")
-                    div.list(v-for="item in list2")
+                    div.list(v-for="item in list2",:key="item.id")
                         div.item.rel
                             p.time 8月10日 10:30 
                             div.rel.info
@@ -67,11 +67,10 @@
 
 <script>
     import HeaderBar from '../components/common/Header'
-    import FooterBar from '../components/common/Footer'
+    //    import FooterBar from '../components/common/Footer'
     import DataLoading from '../components/common/DataLoading'
 
     export default {
-        mixins: [require('../components/mixin/BodyBg')],
         data() {
             return {
                 pageTitle: '消息中心',
@@ -82,7 +81,6 @@
                     issearch: 1
                 },
                 version: '1',
-                isGoHome: false,
                 activeTab: 1,
                 warn_num: '0',
                 task_num: '0',
@@ -101,37 +99,35 @@
                 list3: []
             }
         },
+        mixins: [require('../components/mixin/BodyBg')],
         components: {
             HeaderBar,
-            FooterBar,
+            //            FooterBar,
             DataLoading
         },
         mounted() {
             window.canGoBack = true;
             window.origin = null;
-            this.isGoHome = false;
-
-            this.switchTab(1);
             window.addEventListener('scroll', this.handleScroll);
         },
         activated() {
             window.canGoBack = true;
             window.origin = null;
-            if (window.localStorage.messageToHome === '1') {
-                this.activeTab= 1;
-                this.warn_num= '0';
-                this.task_num= '0';
-                this.alarm_num= '0';
-                this.contract_num= '0';
-                this.filter= '';
+            if (window.localStorage.messageToOther === '1' && window.localStorage.homeToMessage != '1' ) {
+                document.body.scrollTop = window.localStorage.messageScrollTop;
+            } else {
+                this.activeTab = 1;
+                this.warn_num = '0';
+                this.task_num = '0';
+                this.alarm_num = '0';
+                this.contract_num = '0';
+                this.filter = '';
                 this.resetData();
                 this.switchTab(1);
-            }else{
-                document.body.scrollTop = window.localStorage.messageScrollTop;
             }
-            window.localStorage.removeItem('messageScrollTop');
-            window.localStorage.removeItem('messageToHome');
             window.addEventListener('scroll', this.handleScroll);
+            window.localStorage.removeItem('messageScrollTop');
+            window.localStorage.removeItem('homeToMessage');
         },
         beforeRouteEnter(to, from, next) {
             next();
@@ -140,27 +136,30 @@
             this;
         },
         beforeRouteLeave(to, from, next) {
-            if (to.path === '/') {
-                window.localStorage.setItem('messageToHome','1');
-            }else{
-                window.localStorage.removeItem('messageToHome');
+            if (to.path !== '/') {
+                window.localStorage.setItem('messageToOther', '1');
+                window.localStorage.removeItem('homeToMessage');
                 window.localStorage.setItem('messageScrollTop', document.body.scrollTop);
-                document.body.scrollTop = 0;
-            }
-
+            } 
             next();
         },
-       
+        beforeRouteLeave(to, from, next) {
+            if (to.path == '/message') {
+                window.localStorage.setItem('homeToMessage', '1');
+            } 
+            next();
+        },
+
         destroyed() {
             this;
         },
         filters: {
-            converTime: function (value) {
+            converTime: function(value) {
                 if (!value) return '';
                 value = value.toString();
-                return parseInt(value.substring(5,7)) + '月' +  parseInt(value.substring(8,10)) + '日 ' + value.substring(11,16);
+                return parseInt(value.substring(5, 7)) + '月' + parseInt(value.substring(8, 10)) + '日 ' + value.substring(11, 16);
             }
-         },
+        },
         methods: {
             handleScroll() { //滚动加载监听事件
                 if (document.body.scrollTop + window.innerHeight >= document.body.scrollHeight - 1) {
@@ -182,30 +181,30 @@
                 this.$refs.loading && this.$refs.loading.showEnd();
             },
             formatDate(value) {
-                let date =new Date(value),
+                let date = new Date(value),
                     Y = date.getFullYear(),
                     m = date.getMonth() + 1,
                     d = date.getDate(),
                     H = date.getHours(),
                     i = date.getMinutes(),
                     s = date.getSeconds();
-                if(m < 10) {
-                 m ='0'+ m;
+                if (m < 10) {
+                    m = '0' + m;
                 }
-                if(d < 10) {
-                 d ='0'+ d;
+                if (d < 10) {
+                    d = '0' + d;
                 }
-                if(H < 10) {
-                 H ='0'+ H;
+                if (H < 10) {
+                    H = '0' + H;
                 }
-                if(i < 10) {
-                 i ='0'+ i;
+                if (i < 10) {
+                    i = '0' + i;
                 }
-                if(s < 10) {
-                 s ='0'+ s;
+                if (s < 10) {
+                    s = '0' + s;
                 }
                 // 获取时间格式 2017-01-03 10:13:48 
-                var t = Y+'-'+m+'-'+d+' '+H+':'+i+':'+s;
+                var t = Y + '-' + m + '-' + d + ' ' + H + ':' + i + ':' + s;
                 // 获取时间格式 2017-01-03
                 // var t = Y +'-'+ m +'-'+ d;
                 return t;
@@ -213,14 +212,15 @@
             converReadTime(value) {
                 if (!value) return '';
                 value = value.toString();
-                if (value.substring(0,1) == '-' || value.substring(0,4) == '0000') {
+                if (value.substring(0, 1) == '-' || value.substring(0, 4) == '0000') {
                     return true;
-                }else{
+                } else {
                     return false;
                 }
             },
             resetData() {
-                this.page = 1;
+                this.page = 1;                
+                this.total_page = 1;
                 this.isFirst = true;
                 this.scroll_load_loading = false;
                 this.scroll_load_end = false;
@@ -231,7 +231,7 @@
                 this.list3 = [];
             },
             switchTab(index) {
-                if (index == 0 || index == 2 || index == 3 ) {
+                if (index == 0 || index == 2 || index == 3) {
                     _util.showErrorTip('敬请期待！');
                     return false;
                 }
@@ -257,86 +257,83 @@
                 this.fetchData();
             },
             fetchData() {
-                if (!(this.$route.path == '/message')) {
-                    return false;
-                }
                 let that = this;
-                if (that.total_page < that.page) {
-                    that.showLoadEnd();
-                    return false;
-                }
+
                 if (that.scroll_load_loading) {
                     return false;
                 }
                 if (that.scroll_load_end) {
                     return false;
                 }
-                if (that.page == 1) {
+                if (that.total_page < that.page) {
+                    //                    that.showLoadEnd();
+                    return false;
+                }
+                if (that.isFirst && that.page == 1) {
                     document.body.scrollTop = 0;
                 }
                 if (that.isFirst) {
-                    getAjaxRequest("message_cache",ajaxUrls.messages + 'numbers',that.version,2*60*1000,6*60*60*1000,
-                        function (response) {
+                    getAjaxRequest("message_cache", ajaxUrls.messages + 'numbers', that.version, 5 * 1000, 6 * 60 * 60 * 1000,
+                        function(response) {
                             if (response.status == 0) {
-                                that.warn_num =  response.data.warn;
-                                that.task_num =  response.data.task;
-                                that.alarm_num =  response.data.alarm;
-                                that.contract_num =  response.data.contract;                                
-                            }else {
+                                that.warn_num = response.data.warn;
+                                that.task_num = response.data.task;
+                                that.alarm_num = response.data.alarm;
+                                that.contract_num = response.data.contract;
+                            } else {
                                 if (response.msg) _util.showErrorTip(response.msg);
                             }
                         },
-                        function (error) {
-                            _util.showErrorTip('当前无网络，请检查您的网络状态！');
+                        function(error) {
                         })
                 }
 
                 that.showLoading();
-                getAjaxRequest("message_cache",ajaxUrls.messages + that.filter + "?page=" + that.page,that.version,10*1000,6*60*60*1000,
-                    function (response) {
-                    if (response.status == 0) {
-                        switch (that.activeTab) {
-                            case 0:
-                                that.list0 = that.list0.concat(response.data.news);
-                                that.list = that.list0;
-                                break;
-                            case 1:
-                                that.list1 = that.list1.concat(response.data.news);
-                                that.list = that.list1;
+                getAjaxRequest("message_cache", ajaxUrls.messages + that.filter + "?page=" + that.page, that.version, 5 * 1000, 6 * 60 * 60 * 1000,
+                    function(response) {
+                        if (response.status == 0) {
+                            switch (that.activeTab) {
+                                case 0:
+                                    that.list0 = that.list0.concat(response.data.news);
+                                    that.list = that.list0;
+                                    break;
+                                case 1:
+                                    that.list1 = that.list1.concat(response.data.news);
+                                    that.list = that.list1;
 
-                                break;
-                            case 2:
-                                that.list2 = that.list2.concat(response.data.news);
-                                that.list = that.list2;
-                                break;
-                            case 3:
-                                that.list3 = that.list3.concat(response.data.news);
-                                that.list = that.list3;
-                                break;
-                            default:
-                                that.list1 = that.list1.concat(response.data.news);
-                                that.list = that.list1;
-                                break;
-                        }
-                        that.total_page = response.total_page;
-                        that.isFirst = false;
-                        that.page += 1;
-                        if (response.data.news.length < 16 || that.page > response.total_page) {
-                            that.showLoadEnd();
-                        }else{
+                                    break;
+                                case 2:
+                                    that.list2 = that.list2.concat(response.data.news);
+                                    that.list = that.list2;
+                                    break;
+                                case 3:
+                                    that.list3 = that.list3.concat(response.data.news);
+                                    that.list = that.list3;
+                                    break;
+                                default:
+                                    that.list1 = that.list1.concat(response.data.news);
+                                    that.list = that.list1;
+                                    break;
+                            }
+                            that.total_page = response.total_page;
+                            that.page += 1;
+                            if ( !that.isFirst && (response.data.news.length < 16 || that.page > response.total_page)) {
+                                that.showLoadEnd();
+                            } else {
+                                that.hideLoading();
+                            }
+                            that.isFirst = false;
+                        } else {
                             that.hideLoading();
+                            if (response.msg) _util.showErrorTip(response.msg);
                         }
-                    }else {
+                    },
+                    function(error) {
                         that.hideLoading();
-                        if (response.msg) _util.showErrorTip(response.msg);
-                    }
-                },
-                function (error) {
-                    that.hideLoading();
-                    _util.showErrorTip('当前无网络，请检查您的网络状态！');
-                })
+                        _util.showErrorTip('您的网络可能出了点问题:(');
+                    })
             },
-            goDetail(_id,href,index) {
+            goDetail(_id, href, index) {
                 let that = this;
                 let item = that.list[index];
                 if (!href) {
@@ -347,7 +344,7 @@
                     that.url(href);
                     return false;
                 }
-                axios.post( ajaxUrls.messages + that.filter, {
+                axios.post(ajaxUrls.messages + that.filter, {
                     message_id: _id
                 }, {
                     withCredentials: true,
@@ -358,14 +355,14 @@
                     if (rsp.data.status == 0) {
                         let date = new Date();
                         let item = that.list[index];
-                            item.readed_at = that.formatDate();
-                        that.list.splice(index,1,item);
+                        item.readed_at = that.formatDate();
+                        that.list.splice(index, 1, item);
                         that.url(href);
-                    }else {
+                    } else {
                         if (rsp.data.msg) _util.showErrorTip(rsp.data.msg);
                     }
                 }).catch(function(error) {
-                    _util.showErrorTip('当前无网络，请检查您的网络状态！');
+                    _util.showErrorTip('您的网络可能出了点问题:(');
                 });
             }
         }
@@ -376,6 +373,7 @@
     $tabactive: #07689f;
     $cf: #cfcfcf;
     .message {
+        background-color: #eee;
         .pt50 {
             padding-top: 43px;
         }
@@ -385,7 +383,7 @@
             width: 100%;
             box-sizing: border-box;
             -webkit-box-sizing: border-box;
-            .num{
+            .num {
                 color: #d75a48;
             }
             .tab {
@@ -398,7 +396,7 @@
                 }
                 &.active {
                     color: $tabactive;
-                    .num{
+                    .num {
                         color: $tabactive;
                     }
                     &:after {
@@ -414,70 +412,68 @@
                 }
             }
         }
-        .empty{
+        .empty {
             padding-top: 64px;
-            .empty-img{
+            .empty-img {
                 display: block;
                 width: 144px;
                 height: 144px;
                 margin: 0 auto 16px;
             }
-            .empty-info{
+            .empty-info {
                 font-size: 14px;
                 color: #6e6e6e;
                 text-align: center;
             }
         }
-        .item{
+        .item {
             padding: 24px 16px 0 16px;
-            .time{
-                display:block;
+            .time {
+                display: block;
                 width: 135px;
-                height: 18px; 
+                height: 18px;
                 line-height: 18px;
-                margin:0 auto 8px;
-                text-align: center; 
+                margin: 0 auto 8px;
+                text-align: center;
                 background-color: #cfcfcf;
-                border-radius: 10px; 
+                border-radius: 10px;
                 color: #fff;
                 font-size: 12px;
             }
-            .gray{
+            .gray {
                 color: #6e6e6e;
             }
-            .flag{
+            .flag {
                 font-size: 14px;
                 color: $tabactive;
             }
-            .bloder{
-            }
-            .info{
+            .bloder {}
+            .info {
                 padding-left: 16px;
-                .unreadStatus{
+                .unreadStatus {
                     position: absolute;
-                    top: 0; 
+                    top: 0;
                     left: 0;
-                    height: 8px; 
-                    width: 8px; 
-                    border-radius: 100%; 
-                    background-color: #d75a48; 
-
+                    height: 8px;
+                    width: 8px;
+                    border-radius: 100%;
+                    background-color: #d75a48;
                 }
-                .detail{
-                    background-color:#fff;
+                .detail {
+                    background-color: #fff;
                     border-radius: 10px;
                     padding: 8px 16px;
                     color: #323232;
-                    .title{
+                    .title {
                         font-size: 14px;
                         margin-bottom: 8px;
                         font-weight: 700;
                     }
-                    .line{
+                    .line {
                         padding-left: 60px;
                         min-height: 22px;
                     }
-                    .desc{
+                    .desc {
                         position: absolute;
                         top: 0;
                         left: 0;
@@ -487,8 +483,6 @@
                     }
                 }
             }
-            
-
         }
     }
 

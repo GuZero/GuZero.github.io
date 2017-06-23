@@ -93,7 +93,7 @@
                     }
                 }).catch(function(error) {
                     _util.hideSysLoading();
-                    _util.showErrorTip('当前无网络，请检查您的网络状态！');
+                    _util.showErrorTip('您的网络可能出了点问题:(');
                 });
             },
             clearInput() {

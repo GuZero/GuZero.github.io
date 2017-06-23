@@ -4,24 +4,34 @@
         :title="pageTitle",
         origin="terminal"
         )
-        div.boxlist.mt44
-            div.title 箱柜列表
-            ul
-                li.item(v-for='(a,index) in bins')
-                    div.item-info
-                        label.label {{a.position}}
-                        p.info.ellipsis(@click.stop.prevent="goToEidtEquipment('rack_id',a.rack_id,a.asset_num)" v-if="a.asset_num") {{a.asset_num}}
-                        p.info.unactive(@click.stop.prevent="goToEidtEquipment('rack_id',a.rack_id,a.asset_num)" v-else) 未填写
-                        i.scan(@click.stop.prevent="goToScan('rack_id',a.rack_id,index)")
-        div.device
-            div.title 其他设备
-            ul
-                li.item(v-for='(a,index) in other')
-                    div.item-info
-                        label.label {{a.name}}
-                        p.info.ellipsis(@click.stop.prevent="goToEidtEquipment('device_id',a.id,a.asset_num)" v-if="a.asset_num") {{a.asset_num}}
-                        p.info.unactive(@click.stop.prevent="goToEidtEquipment('device_id',a.id,a.asset_num)" v-else) 未填写
-                        i.scan(@click.stop.prevent="goToScan('device_id',a.id,index)")
+        template(v-if="isNoNetwork")
+            div.no-network
+                img.no-network-img(src='//img.aimoge.com/Fm6Kur5_5IsfnlIiRR2nErPqZkwE')
+                div.no-network-info 暂无网络
+                div.reload(@click.stop.prevent="fetchData") 重新加载
+        template(v-if="!isNoNetwork")
+            div.boxlist.mt44
+                div.title 箱柜列表
+                ul
+                    li.item(v-for='(item,index) in bins',:key="item.rack_id")
+                        div.item-info
+                            label.label {{item.position}}
+                            template(v-if="item.asset_num")
+                                p.info.ellipsis(@click.stop.prevent="goToEidtEquipment('rack_id',item.rack_id,item.asset_num)") {{item.asset_num}}
+                            template(v-if="!item.asset_num")
+                                p.info.unactive(@click.stop.prevent="goToEidtEquipment('rack_id',item.rack_id,item.asset_num)") 未填写
+                            i.scan(@click.stop.prevent="goToScan('rack_id',item.rack_id,index)")
+            div.device
+                div.title 其他设备
+                ul
+                    li.item(v-for='(item,index) in other',:key="item.id")
+                        div.item-info
+                            label.label {{item.name}}
+                            template(v-if="item.asset_num")
+                                p.info.ellipsis(@click.stop.prevent="goToEidtEquipment('device_id',item.id,item.asset_num)") {{item.asset_num}}
+                            template(v-if="!item.asset_num")
+                                p.info.unactive(@click.stop.prevent="goToEidtEquipment('device_id',item.id,item.asset_num)") 未填写
+                            i.scan(@click.stop.prevent="goToScan('device_id',a.id,index)")
         TransmitFooter(:footerconfig="footerconfig",:terminal_id="terminal_id")
         ModalDialog(ref="aboutModal")
 </template>
@@ -42,50 +52,47 @@
                 current_id: '',
                 current_type: '',
                 current_index: '',
+                isNoNetwork: false,
                 footerconfig: {
                     isequipment: true
                 }
             }
         },
-        created() {
-            this.fetchData();
-            window.canGoBack = true;
-            window.origin = "terminal";
-        },
+
         activated() {
             window.canGoBack = true;
             window.origin = "terminal";
+            this.fetchData();
         },
         components: {
             HeaderBar,
             TransmitFooter,
             ModalDialog
         },
-        watch: {
-          '$route': 'fetchData'
-        },
         methods:{
             fetchData() {
                 let that = this;
-                if (!(that.$route.path == ('/terminal/'+that.$route.params.code+'/equipmentinfo'))) {
-                    return false;
-                }
+                that.bins=[].concat();
+                that.other=[].concat();
+                that.isNoNetwork = false;
+                that.terminal_id = that.$route.params.code;  
                 _util.showSysLoading();
-                that.terminal_id = that.$route.params.code;
                 setTimeout(function () {
                     getAjaxRequest("terminal_cache",ajaxUrls.basic + that.$route.params.code + '?info=device',that.version,20*1000,6*60*60*1000,
                         function (response) {
                             _util.hideSysLoading();
+
                             if (response.status == 0) {
-                               that.bins = response.data.bins;
-                               that.other= response.data.other;                    
+                               that.bins = response.data.bins.concat();
+                               that.other= response.data.other.concat();                    
                             }else {
                                 if (response.msg) _util.showErrorTip(response.msg);
                             }
                         },
                         function (error) {
                             _util.hideSysLoading();
-                            _util.showErrorTip('当前无网络，请检查您的网络状态！');
+                            _util.showErrorTip('您的网络可能出了点问题:(');
+                            that.isNoNetwork = true;
                         })
                 },0);
             },
@@ -100,7 +107,7 @@
                 this.current_type = type;
                 this.current_id=_id;
                 this.current_index=index;
-                let that = this;
+                var that = this;
 //                if (_util.isIOS()) {
 //                    if (window.webkit && window.webkit.messageHandlers) {
 //                        window.webkit.messageHandlers.startQRScan.postMessage();
@@ -164,7 +171,7 @@
                     }
                 }).catch(function(error) {
                     _util.hideSysLoading();
-                    _util.showErrorTip('当前无网络，请检查您的网络状态！');
+                    _util.showErrorTip('您的网络可能出了点问题:(');
                     
                 });
             }
@@ -187,6 +194,31 @@
             line-height: 32px;
             color: #747474;
             padding: 0 16px;
+        }
+        .no-network {
+            padding-top: 159px;
+            .no-network-img {
+                display: block;
+                width: 122px;
+                height: 122px;
+                margin: 0 auto 16px;
+            }
+            .no-network-info {
+                font-size: 14px;
+                color: #6e6e6e;
+                text-align: center;
+            }
+            .reload{
+                margin: 42px auto 0;
+                background: #07689f;
+                height: 40px;
+                line-height: 40px;
+                width: 160px;
+                color: #fff;
+                font-size: 16px;
+                text-align: center;
+                border-radius: 24px;
+            }
         }
         ul{
             padding-left: 16px;

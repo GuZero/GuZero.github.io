@@ -7,11 +7,11 @@
         )
         div.mt44.pb60
             div.user.center.rel.graybt8
-                img(src="//img.aimoge.com/FlJ81rMZKlvsiYP-EXr3P492r4ZS")
+                img(src="//img.aimoge.com/FgEMgxglGfI7DWuyL0-DQAQ1mhE8")
                 p {{username}}
             div.meta.rel.graybt2.none.pass(@click.stop.prevent="goToPassword")
                 label.rel 修改密码
-        FooterBar(:footerconfig="footerconfig")
+        FooterBar.fixed(:footerconfig="footerconfig")
         ModalDialog(ref="logoutModal", @confirmCallback="confirmLogut")
         ModalDialog(ref="aboutModal")
 </template>
@@ -52,6 +52,10 @@
         activated() {
             window.canGoBack = false;
             window.origin = null;
+            let userJson = JSON.parse(window.localStorage.userJson || null);
+            if (userJson) {
+                this.username = userJson.realname;
+            }
         },
         methods: {
             goToPassword() {
@@ -82,7 +86,8 @@
                 axios.get(ajaxUrls.logout).then(function(rsp) {
                     _util.hideSysLoading();
                     if (rsp.data.status == 0) {
-                        window.localStorage.removeItem('userJson');
+                        that.username = '';
+                        window.localStorage.clear();
                         window.is_logged = false;
                         if (_util.isApp()) {
                             window.location.href ="gegemis:///Login";
@@ -94,7 +99,7 @@
                     }
                 }).catch(function(error) {
                     _util.hideSysLoading();
-                    _util.showErrorTip('当前无网络，请检查您的网络状态！');
+                    _util.showErrorTip('您的网络可能出了点问题:(');
                 });
             }
         }

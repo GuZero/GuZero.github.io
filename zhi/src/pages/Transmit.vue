@@ -39,7 +39,7 @@
             getAjaxRequest("order_cache", ajaxUrls.user + '', that.version, 2 * 60 * 1000, 6 * 60 * 60 * 1000, function(response) {
                 that.result = response.data;
             }, function(error) {
-                _util.showErrorTip('当前无网络，请检查您的网络状态！');
+                _util.showErrorTip('您的网络可能出了点问题:(');
             });
         },
         activated() {
@@ -68,7 +68,7 @@
                     getAjaxRequest("order_cache", ajaxUrls.user + that.username, that.version, 2 * 60 * 1000, 6 * 60 * 60 * 1000, function(response) {
                         that.result = response.data;
                     }, function(error) {
-                        _util.showErrorTip('当前无网络，请检查您的网络状态！');
+                        _util.showErrorTip('您的网络可能出了点问题:(');
                     });
                 }
             },
@@ -88,13 +88,13 @@
                     _util.hideSysLoading();
                     if (rsp.data.status == 0) {
                         _util.showErrorTip(rsp.data.msg);
-                        that.goInfo(task_id);
+                        that.url('/');
                     } else {
                         _util.showErrorTip(rsp.data.msg);
                     }
                 }).catch(function(error) {
                     _util.hideSysLoading();
-                    _util.showErrorTip('当前无网络，请检查您的网络状态！');
+                    _util.showErrorTip('您的网络可能出了点问题:(');
 
                 })
             },

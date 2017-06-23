@@ -12,12 +12,14 @@
                 :type="type || 'text'",
                 :placeholder="placeholder",
                 :maxlength="maxlength",
-                :readonly="readonly"
+                :readonly="readonly",
+                :autocomplete="autocomplete" ,
                 @focus="$emit('changeCallback')"
             )
             textarea(
                 v-if="textarea",
                 :placeholder="placeholder",
+                :autocomplete="autocomplete", 
                 :maxlength="maxlength",
                 @focus="$emit('changeCallback')"
             )
@@ -40,6 +42,7 @@
             "placeholder",
             "maxlength",
             "readonly",
+            "autocomplete",
             "input",
             "textarea",
             "p",

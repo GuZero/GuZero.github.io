@@ -15,7 +15,7 @@
             template(v-if="nameList.length <= 0 && !isSearch")
                 p.rel.item 无搜索结果
             template(v-else)
-                ul.rel(v-for="item in nameList")
+                ul.rel(v-for="item in nameList",:key="item.user_id")
                     li.rel.item(@click.stop.prevent="chooseOperator(item.user_id,item.name)") {{item.name}} 
                         label(v-if="item.mobile") （{{item.mobile}}）
             DataLoading(ref="loading")
@@ -117,7 +117,7 @@
                         function (error) {
                             that.isSearch = false;
                             that.hideLoading();
-                            _util.showErrorTip("当前无网络，请检查您的网络状态！");
+                            _util.showErrorTip("您的网络可能出了点问题:(");
                         })
                 },150);
             },
@@ -157,7 +157,7 @@
                     }
                 }).catch(function(error) {
                     _util.hideSysLoading();
-                    _util.showErrorTip('当前无网络，请检查您的网络状态！');
+                    _util.showErrorTip('您的网络可能出了点问题:(');
                 });
             }
         }

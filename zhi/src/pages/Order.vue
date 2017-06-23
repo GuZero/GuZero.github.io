@@ -44,7 +44,7 @@ div.home
 				div.status.f12.s3.rel(v-if="item.status_code == 2") {{ item.status }}
 		DataLoading(ref="loading")
 	div.add.f12.center.fixed(@click="addOne") 创建
-	FooterBar(:footerconfig="footerconfig")
+	FooterBar.fixed(:footerconfig="footerconfig")
 </template>
 
 <script>
@@ -57,6 +57,7 @@ div.home
         data() {
             return {
                 pageTitle: '运营支撑系统',
+                bodyBg: 'white',
                 btnconfig: {
                     isgoback: 0,
                     ismsg: 1,
@@ -127,8 +128,10 @@ div.home
         },
         watch: {
             '$route': function() {
-                let tab_id = parseInt(localStorage.tab_id);
-                this.switchTab(tab_id);
+                if (this.$route.path == ('/')) {
+                    let tab_id = parseInt(localStorage.tab_id);
+                    this.switchTab(tab_id);
+                }
             }
         },
         beforeRouteEnter(to, from, next) {
@@ -138,6 +141,9 @@ div.home
             this;
         },
         beforeRouteLeave(to, from, next) {
+            if (to.path == '/message') {
+                window.localStorage.setItem('homeToMessage', '1');
+            }
             next();
         },
         destroyed() {
@@ -156,18 +162,16 @@ div.home
                     document.body.scrollTop = 0;
                 }
                 that.showLoading();
-                //获取待办工单数量
-                if (that.isFirst) {
-                    getAjaxRequest("order_cache", ajaxUrls.num, that.version, 30 * 1000, 0.5 * 60 * 60 * 1000, function(response) {
-                        if (response.status == 0) {
-                            that.num = response.data.task_numbers;
-                        } else {
-                            if (response.msg) _util.showErrorTip(response.data.msg);
-                        }
-                    }, function(error) {
-                        _util.showErrorTip('当前无网络，请检查您的网络状态！');
-                    });
-                };
+                //获取待办工单数量               
+                getAjaxRequest("order_cache", ajaxUrls.num, that.version, 1 * 1000, 0.5 * 60 * 60 * 1000, function(response) {
+                    if (response.status == 0) {
+                        that.num = response.data.task_numbers;
+                    } else {
+                        if (response.msg) _util.showErrorTip(response.data.msg);
+                    }
+                }, function(error) {
+                    _util.showErrorTip('您的网络可能出了点问题:(');
+                });
                 that.scroll_load_loading = true;
                 getAjaxRequest("order_cache", ajaxUrls.tasks + 'filter=' + that.filter + '&page=' + that.page, that.version, 1 * 1000, 0.5 * 60 * 60 * 1000, function(response) {
                     that.hideLoading();
@@ -221,26 +225,28 @@ div.home
             },
             switchTab(index) {
                 this.searchFlag = false;
-                index > -1 ? this.activeTab = index : void 0;
-                switch (index) {
-                    case 0:
-                        this.filter = 'all'
-                        break;
-                    case 1:
-                        this.filter = 'create'
-                        break;
-                    case 2:
-                        this.filter = 'handle'
-                        break;
-                    case 3:
-                        this.filter = 'finish'
-                        break;
-                    default:
-                        this.filter = 'handle'
-                        break;
-                };
-                this.resetData();
-                this.fetchData();
+                if (!this.scroll_load_loading) {
+                    index > -1 ? this.activeTab = index : void 0;
+                    switch (index) {
+                        case 0:
+                            this.filter = 'all'
+                            break;
+                        case 1:
+                            this.filter = 'create'
+                            break;
+                        case 2:
+                            this.filter = 'handle'
+                            break;
+                        case 3:
+                            this.filter = 'finish'
+                            break;
+                        default:
+                            this.filter = 'handle'
+                            break;
+                    };
+                    this.resetData();
+                    this.fetchData();
+                }
                 localStorage.tab_id = index;
             },
             isSearch() {
@@ -314,7 +320,7 @@ div.home
                 }, function(error) {
                     that.hideLoading();
                     window.removeEventListener('scroll', that.handleScroll);
-                    _util.showErrorTip('当前无网络，请检查您的网络状态！');
+                    _util.showErrorTip('您的网络可能出了点问题:(');
                 });
             },
             showLoading() { //显示正在加载数据状态
@@ -437,7 +443,7 @@ div.home
             margin-bottom: 8px;
         }
         .user {
-            margin: 0 75px 0 0;
+            /*margin: 0 75px 0 0;*/
             display: block;
         }
         .time {

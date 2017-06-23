@@ -4,6 +4,8 @@ const baseDir = '/zhichengxitong/';
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const AppCachePlugin = require('appcache-webpack-plugin');
+const Manifest= require('webpack-manifest');
+const pkg =require('./package');
 //const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
@@ -127,10 +129,9 @@ module.exports = {
         new AppCachePlugin({
             cache: [
                     'src/lib/css/app.css',
-                    '//hm.baidu.com/hm.js?d54d20b7f29d4e83bedece6d61020a31',
-                    '//cdn.staticfile.org/vue/2.2.6/vue.min.js',
-                    '//cdn.staticfile.org/vue-router/2.3.0/vue-router.min.js',
-                    '//cdn.staticfile.org/axios/0.15.3/axios.min.js',
+                    '//cdn.bootcss.com/vue/2.2.6/vue.min.js',
+                    '//cdn.bootcss.com/vue-router/2.3.0/vue-router.min.js',
+                    '//cdn.bootcss.com/axios/0.15.3/axios.min.js',
                     '//img.aimoge.com/Fklf55k94DKYun6WI2_BqGlBh1r0',//成功模态框icon
                     '//img.aimoge.com/FhxFw9bG_wGDCcF1Mllyedsb8cmz',//返回顶部icon
                     '//img.aimoge.com/FqA7Kv6H770AcP8_gNy1rf_nqJMH',//loading icon
@@ -177,6 +178,7 @@ module.exports = {
             network: null,  // No network access allowed! 
             fallback: [],
             settings: ['prefer-online'],
+            headcomment: pkg.name + " v" + pkg.version, 
             exclude: ['file.txt', /.*\.html$/],  // Exclude file.txt and all .js files 
             output: 'manifest.appcache'
            }),

@@ -1,31 +1,33 @@
 CACHE MANIFEST
-# 2017-06-16 v1.2.20
 
-dist/js/OrderInfo.f04daf26.js
-dist/js/OrderCreate.dbdfc651.js
-dist/js/EquipmentInfo.f8832a9e.js
-dist/js/Transmit.6eff07d9.js
-dist/js/Allocation.38141449.js
-dist/js/OrderClose.7023318e.js
-dist/js/Mine.c1378162.js
-dist/js/EditPassword.c7d7c393.js
-dist/js/BasicInfo.dbfa04e3.js
-dist/js/Terminal.b1f528c9.js
-dist/js/SearchTerminal.14b229ba.js
-dist/js/Search.d982f51c.js
-dist/js/Message.69836908.js
-dist/js/Login.ae1f1e91.js
+
+# 2017-06-23 v1.2.23
+
+dist/js/OrderInfo.70310b9f.js
+dist/js/OrderCreate.49659ec2.js
+dist/js/EquipmentInfo.07560547.js
+dist/js/Transmit.03e35130.js
+dist/js/Allocation.7d8b28bc.js
+dist/js/OrderClose.a326602e.js
+dist/js/Mine.6fc43960.js
+dist/js/EditPassword.ae65c396.js
+dist/js/BasicInfo.9ce1442c.js
+dist/js/Terminal.f03fccd6.js
+dist/js/SearchTerminal.827c1253.js
+dist/js/Search.e7211f6e.js
+dist/js/Message.bc19e64a.js
+dist/js/Login.00c8bea8.js
 dist/js/Journal.fd226251.js
-dist/js/EditEquipment.fac5d092.js
+dist/js/EditEquipment.011a3463.js
 dist/js/AdInfo.2af21941.js
-dist/js/bundle.4944a743.js
+dist/js/bundle.75c48e95.js
+
 
 CACHE:
 src/lib/css/app.css
-//hm.baidu.com/hm.js?d54d20b7f29d4e83bedece6d61020a31
-//cdn.staticfile.org/vue/2.2.6/vue.min.js
-//cdn.staticfile.org/vue-router/2.3.0/vue-router.min.js
-//cdn.staticfile.org/axios/0.15.3/axios.min.js
+//cdn.bootcss.com/vue/2.2.6/vue.min.js
+//cdn.bootcss.com/vue-router/2.3.0/vue-router.min.js
+//cdn.bootcss.com/axios/0.15.3/axios.min.js
 //img.aimoge.com/Fklf55k94DKYun6WI2_BqGlBh1r0
 //img.aimoge.com/FhxFw9bG_wGDCcF1Mllyedsb8cmz
 //img.aimoge.com/FqA7Kv6H770AcP8_gNy1rf_nqJMH

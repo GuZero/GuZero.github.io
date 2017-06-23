@@ -21,7 +21,7 @@
                     TextFiled.h22(tag="故障等级：", :text="data.grade")
                     TextFiled.h22(tag="现场现象：", :text="data.scene", v-if="!completed")
                     TextFiled.h22(tag="现场现象（客服）：", :text="data.scene", v-if="completed", marginleft="130")
-                    TextFiled(tag="问题描述：", :text="data.desc")
+                    TextFiled.h22(tag="问题描述：", :text="data.desc")
                 div.keys.rel(v-if="completed")
                     TextFiled(tag="现场现象（运维）：", :text="data.terminalName", marginleft="130")
                     TextFiled(tag="故障分类（运维）：", :text="data.terminalName", marginleft="130")
@@ -53,6 +53,7 @@
         data() {
             return {
                 pageTitle: '工单详情',
+                bodyBg: 'white',
                 username: 'jerry',
                 completed: 0, //工单完成
                 isAuthor: 0, //发布者身份
@@ -86,11 +87,21 @@
         mounted() {
             window.canGoBack = true;
             window.origin = null;
+            document.body.scrollTop = 0;
             this.getData()
         },
         activated() {
             window.canGoBack = true;
             window.origin = null;
+            document.body.scrollTop = 0;
+            this.history=[];
+            this.data.terminalName='';
+            this.data.grade='';
+            this.data.scene='';
+            this.data.desc='';
+            this.data.status_code='';
+            this.data.username='';
+            
         },
         methods: {
             doAlertEvent() {
@@ -143,7 +154,7 @@
                 _util.showErrorTip('敬请期待！');
             },
             close() {
-                if (this.status == "已完成") {
+                if (this.status.substring(0,3) == "已完成") {
                     _util.showErrorTip('该工单已完成');
                     return false;
                 }
@@ -152,7 +163,7 @@
                 });
             },
             share() {
-                if (this.status == "已完成") {
+                if (this.status.substring(0,3)  == "已完成") {
                     _util.showErrorTip('该工单已完成');
                     return false;
                 }
@@ -182,7 +193,7 @@
                     }
                 }, function(error) {
                     _util.hideSysLoading();
-                    _util.showErrorTip('当前无网络，请检查您的网络状态！');
+                    _util.showErrorTip('您的网络可能出了点问题:(');
                 });
             }
 
@@ -197,7 +208,7 @@
     }
     
     .h22 {
-        height: 22px;
+        min-height: 22px;
     }
     
     .user {

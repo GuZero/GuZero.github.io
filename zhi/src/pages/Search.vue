@@ -175,16 +175,15 @@
 
         },
         methods: {
-            handleScroll() { //滚动加载监听事件                
-                if (document.body.scrollTop + window.innerHeight >= document.body.scrollHeight - 1) {
-                    if (this.result.lenght < 16) {
-                        return false;
-                    } else {
-                        if (this.terminalName&&!this.error) {
+            handleScroll() { //滚动加载监听事件
+                if (this.result.lenght < 16) {
+                    return false;
+                } else {
+                    if (document.body.scrollTop + window.innerHeight >= document.body.scrollHeight - 1) {
+                        if (this.terminalName && !this.error) {
                             this.loadTerminalData();
                         }
                     }
-
                 }
             },
             resetScrollTop(showLoadEnd) {
@@ -213,7 +212,7 @@
                 that.scroll_load_loading = true;
                 getAjaxRequest("searchPage_cache", that.url + _key.trim() + "&page=" + page, that.version, 30 * 1000, 0.5 * 60 * 60 * 1000, function(response) {
                     that.hideLoading();
-                    that.error=false;
+                    that.error = false;
                     if (response.status == 0) {
                         that.scroll_load_loading = false;
                         if (response.status == 0 && response.data && response.data.length) {
@@ -229,15 +228,15 @@
                                 that.showLoadEnd();
                             }
                         }
-                       that.showLoadEnd();  
+                        that.showLoadEnd();
                     } else {
                         if (response.msg) _util.showErrorTip(response.data.msg);
                     }
                 }, function(error) {
                     that.hideLoading();
                     that.showLoadEnd();
-                    that.error=true;
-                    _util.showErrorTip('当前无网络，请检查您的网络状态！');
+                    that.error = true;
+                    _util.showErrorTip('您的网络可能出了点问题:(');
                 });
             },
             searchByKey(isFirst) {
@@ -279,7 +278,7 @@
                                     that.num = response.data.length;
                                 }
                                 that.result = that.result.concat(response.data);
-                                if(!that.result.lenght==0) that.showLoadEnd();
+                                if (!that.result.lenght == 0) that.showLoadEnd();
                                 if (response.data.length < that.numPerPage) {
                                     that.tn_scroll_load_end = true;
                                 }

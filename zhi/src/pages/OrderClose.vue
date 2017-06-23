@@ -21,7 +21,7 @@
             Field(
                 tag="问题原因",
                 v-model="problem",
-                placeholder="请选择（必选",
+                placeholder="请选择（必选）",
                 :optionJsonConfig="{valuename: 'name', textname: 'name', idname: 'id'}",
                 :options="problems",
                 :selectText="problem",
@@ -47,7 +47,6 @@
                 v-model="result",
                 placeholder="请输入处理结果（必填）",
                 :input="true",
-
             )
             Field(
                 tag="抓取日志",
@@ -66,12 +65,12 @@
 
 <script>
     import HeaderBar from '../components/common/Header'
-//    import Upload from '../components/common/Upload'
+    //    import Upload from '../components/common/Upload'
     import Field from '../components/elements/Field'
     import SubmitBtn from '../components/elements/SubmitBtn'
     /*Upload(id="up1", ref="up1")*/
     export default {
-        mixins: [require('../components/mixin/BodyBg')],
+
         data() {
             return {
                 bodyBg: 'dark',
@@ -100,21 +99,13 @@
             HeaderBar,
             Field,
             SubmitBtn,
-//            Upload,
+            //            Upload,
 
         },
+        mixins: [require('../components/mixin/BodyBg')],
         created() {
             window.canGoBack = true;
             window.origin = null;
-            this.logs = [{
-                    id: '1',
-                    name: '是',
-                },
-                {
-                    id: '0',
-                    name: '否',
-                }
-            ];
             this.getInfo();
         },
         activated() {
@@ -122,8 +113,19 @@
             window.origin = null;
         },
         watch: {
-            '$route':function(){
-                if(this.$route.path==('/order/close?_id'+this.$route.query._id) ){
+            '$route': function() {
+                if (this.$route.path == ('/order/close')) {
+                    //清空页面的内容
+                    this.scene = '请选择（必选）';
+                    this.scenes = [];
+                    this.problem = '请选择（必选）';
+                    this.problems = [];
+                    this.categroy = '请选择（必选）';
+                    this.categroys = [];
+                    this.result = '';
+                    this.log = '请选择（必选）';
+                    this.logs = [];
+                    this.desc = '';
                     this.getInfo();
                 }
             }
@@ -165,7 +167,7 @@
                     hasCatchLogZh = this.hasCatchLogZh,
                     deal = this.desc,
                     that = this;
-                axios.post(ajaxUrls.orderinfo + that.$route.query._id+ '/close', {
+                axios.post(ajaxUrls.orderinfo + that.$route.query._id + '/close', {
                     appearance: appearance,
                     reason: reason,
                     yunwei_type: yunwei_type,
@@ -187,8 +189,8 @@
                     }
                 }).catch(function(error) {
                     _util.hideSysLoading();
-                    _util.showErrorTip('当前无网络，请检查您的网络状态！');
-                    
+                    _util.showErrorTip('您的网络可能出了点问题:(');
+
                 })
             },
             //获取现象原因的ID
@@ -221,7 +223,7 @@
                         that.problem = "";
                     }
                 }, function(error) {
-                    _util.showErrorTip('当前无网络，请检查您的网络状态！');
+                    _util.showErrorTip('您的网络可能出了点问题:(');
                 });
             },
             change1() {
@@ -236,14 +238,23 @@
                         that.categroy = "";
                     }
                 }, function(error) {
-                    _util.showErrorTip('当前无网络，请检查您的网络状态！');
+                    _util.showErrorTip('您的网络可能出了点问题:(');
                 });
             },
             //获取信息
             getInfo() {
+                this.logs = [{
+                        id: '1',
+                        name: '是',
+                    },
+                    {
+                        id: '0',
+                        name: '否',
+                    }
+                ];
                 let that = this;
-                // 获取当前工单信息        
-                getAjaxRequest("order_cache", ajaxUrls.orderinfo +that.$route.query._id, that.version, 20 * 1000, 0.5 * 60 * 60 * 1000, function(response) {
+                // 获取当前工单信息
+                getAjaxRequest("order_cache", ajaxUrls.orderinfo + that.$route.query._id, that.version, 20 * 1000, 0.5 * 60 * 60 * 1000, function(response) {
                     if (response.status == 0) {
                         that.name = response.data.terminal_name;
                     } else {
@@ -262,6 +273,7 @@
                 }, function(error) {
                     _util.showErrorTip('当前无网络，请检查您的网络状态！');
                 });
+
             }
 
 
