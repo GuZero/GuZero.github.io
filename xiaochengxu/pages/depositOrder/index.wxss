@@ -1,10 +1,12 @@
 /* pages/depositOrder/index.wxss */
+
 page {
   background-color: #efeff4;
   height: 100%;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
+
 .header {
   width: 100%;
   height: 94rpx;
@@ -33,12 +35,18 @@ page {
   margin-left: 16rpx;
 }
 
-.input input {
+.input .text {
   background: #fff;
   border-radius: 35rpx;
   width: 100%;
-  padding: 10rpx 54rpx 10rpx 160rpx;
+  padding: 5rpx 54rpx 10rpx 80rpx;
   box-sizing: border-box;
+  height: 48rpx;
+  font-size: 14px;
+  color: #353535;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .search_btn {
@@ -58,7 +66,9 @@ page {
   background: url('https://img.aimoge.com/Fs-fQpBgPqsJ6SEkVUGfeArmraeu') 0 0 no-repeat;
   background-size: 80% 80%;
 }
+
 /*内容部分*/
+
 .container {
   padding-top: 96rpx;
   padding-left: 32rpx;
@@ -73,7 +83,7 @@ page {
   /*justify-content: space-around;*/
 }
 
- .item:before{
+.item:before {
   content: '';
   display: block;
   position: absolute;
@@ -83,7 +93,8 @@ page {
   background-color: #ccc;
   transform: scale(1, 0.5);
 }
-.check_icon{
+
+.check_icon {
   position: absolute;
   width: 80rpx;
   height: 80rpx;
@@ -92,6 +103,7 @@ page {
   background: url('https://img.aimoge.com/FnzZFojwOO4F7djnvs5hKD5Y-U6b')0 0 no-repeat;
   background-size: 100% 100%;
 }
+
 .item .right {
   margin-left: 70rpx;
 }
@@ -113,45 +125,52 @@ page {
   width: 175rpx;
   height: 97rpx;
 }
+
 .item .left .image1 {
   margin-top: 30rpx;
   width: 175rpx;
   height: 99rpx;
 }
+
 .item .left .image2 {
   /*margin-top: 10rpx;*/
   width: 170rpx;
   height: 133rpx;
 }
+
 .item .left .image3 {
   /*margin-top: 10rpx;*/
   width: 175rpx;
   height: 184rpx;
 }
-.none:before{
+
+.none:before {
   height: 0;
 }
-.nocheack{
+
+.nocheack {
   color: #ccc;
 }
-.footer{
+
+.footer {
   background: #fff;
   display: flex;
   height: 120rpx;
   align-items: center;
-  margin-top:28rpx;
+  margin-top: 28rpx;
   justify-content: space-between;
-  padding-left: 36rpx; 
+  padding-left: 36rpx;
   font-size: 14px;
-  
 }
-.footer .image{
-   width: 36rpx;
+
+.footer .image {
+  width: 36rpx;
   height: 36rpx;
   margin-right: 32rpx;
 }
-.footer .btn{
-  width:192rpx;
+
+.footer .btn {
+  width: 192rpx;
   height: 120rpx;
   color: #fff;
   background: #4285f4;
@@ -161,7 +180,19 @@ page {
   font-size: 16px;
 }
 
+.footer .disabled {
+  background: #b2b2b2;
+  color: #eaeaea;
+  width: 192rpx;
+  height: 120rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+}
+
 /*弹出框样式*/
+
 .mask {
   width: 100%;
   height: 100%;
@@ -187,30 +218,35 @@ page {
   border-radius: 5px;
   text-align: center;
 }
+
 .drawer_title {
   padding-top: 20rpx;
   padding-bottom: 60rpx;
   font: 16px "microsoft yahei";
   text-align: center;
 }
-.drawer_icon{
+
+.drawer_icon {
   width: 106rpx;
   height: 106rpx;
   display: inline-block;
   margin-top: 40rpx;
-  
 }
+
 /*公共样式*/
 
 .blue {
   color: #4285f4;
 }
-.gray{
+
+.gray {
   color: #ccc;
 }
-.margin_t30{
+
+.margin_t30 {
   margin-top: 30rpx;
 }
+
 .container imgae {
   width: 100%;
   height: 100%;
