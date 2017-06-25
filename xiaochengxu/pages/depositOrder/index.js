@@ -4,6 +4,8 @@ Page({
   data: {
     flag: true,
     tabIndex: null,
+    animOfNoneNetWork: {},
+    animMsg: '',
     agree: false,
     search: false,
     error: false,
@@ -18,28 +20,37 @@ Page({
     grid1: null,
     grid2: null,
     grid3: null,
-
-
+    box_type: '',
+    isSubmit: false
 
   },
   switchTab: function (e) {
+    if (!e.currentTarget.dataset.item.count) {
+      return false;
+    }
+    var box_type = e.currentTarget.dataset.item.box_type;
     var current = this.data.tabIndex,
-      index = 0
-    if (current == 0 && e.currentTarget.id == 'item0') return
-    if (current == 1 && e.currentTarget.id == 'item1') return
-    if (current == 2 && e.currentTarget.id == 'item2') return
-    if (current == 3 && e.currentTarget.id == 'item3') return
-    if (e.currentTarget.id == 'item1') {
+      index = 1;
+    if (current == 1 && e.currentTarget.id == 'item0') return
+    if (current == 2 && e.currentTarget.id == 'item1') return
+    if (current == 3 && e.currentTarget.id == 'item2') return
+    if (current == 4 && e.currentTarget.id == 'item3') return
+    if (e.currentTarget.id == 'item0') {
       index = 1
     };
-    if (e.currentTarget.id == 'item2') {
+    if (e.currentTarget.id == 'item1') {
       index = 2
     };
-    if (e.currentTarget.id == 'item3') {
+    if (e.currentTarget.id == 'item2') {
       index = 3
     };
+    if (e.currentTarget.id == 'item3') {
+      index = 4
+    };
     this.setData({
-      tabIndex: index
+      tabIndex: index,
+      box_type: box_type,
+      isSubmit: true
     });
     this.load()
   },
@@ -49,17 +60,29 @@ Page({
       agree: flag
     });
   },
-  isSearch: function () {
-    let flag = !this.data.search;
-    this.setData({
-      search: flag
-    });
-  },
   submit: function () {
+    if (!this.data.isSubmit) {
+      return false;
+    }
+    if (!this.data.agree) {
+      app.showErrorTip(this, '请阅读并同意《寄件服务协议》')
+      return false;
+    }
+    var box_type = this.data.box_type;
+    var data = {
+      terminal_code: this.data.terminal_code,
+      box_type: parseInt(box_type.substring(box_type.length - 1))
+    },
+      that = this;
+    console.log(data);
+    app.ajax('POST', '/ultrabox/storage/order', data, function (d) {
+      that.setAnimation('1');
+      console.log(d);
+    }, function () {
+      that.setAnimation('0');
+    })
   },
   showErrorTip: function () {
-    var b = '1';
-    this.setAnimation(b);
 
   },
   setAnimation: function (str) {
@@ -70,7 +93,6 @@ Page({
       var isLoading = true;
     }
     if (isError || isLoading) {
-      console.log('1');
       this.setData({
         error: isError,
         loading: isLoading
@@ -156,10 +178,15 @@ Page({
       grid2: box2,
       grid3: box3,
     })
-    console.log(box1);
-    console.log(box2);
-    console.log(box3);
-    console.log(box0);
+  },
+  gotoInfo: function () {
+    let flag = !this.data.search;
+    this.setData({
+      search: flag
+    });
+    wx.redirectTo({
+      url: '../chooseTerminal/index',
+    })
   },
   /**
    * 生命周期函数--监听页面加载
@@ -171,8 +198,7 @@ Page({
 
     })
     this.load();
-    // console.log(this.data.item);
-    // this.getBoxJson(this.data.item);
+
   },
 
   /**

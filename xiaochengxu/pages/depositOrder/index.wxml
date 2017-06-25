@@ -4,11 +4,11 @@
   </view>
   <view class="input">
     <view class="text">{{terminal_name}}</view>
-    <view class="search_btn {{search ?'search_active':''}}" bindtap="isSearch"></view>
+    <view class="search_btn {{search ?'search_active':''}}" bindtap="gotoInfo"></view>
   </view>
 </view>
 <view class="container">
-  <view id="item0" class="item {{grid0.count==0 ?'nocheack':''}}"  bindtap="switchTab">
+  <view id="item0" class="item {{grid0.count==0 ?'nocheack':''}}"  bindtap="switchTab" data-item="{{grid0}}">
     <view class="left">
       <view class="image">
         <image src="https://img.aimoge.com/FlFtzHlGCuE0NoF7YEB6VnldRAiP" wx:if="{{!grid0.count==0}}"></image>
@@ -27,11 +27,11 @@
         <!--<text>深<text class="blue {{flag ?'gray':''}}">55</text>×宽<text class="blue {{flag ?'gray':''}}">25</text>×高<text class="blue {{flag ?'gray':''}}">10.5</text>cm</text>-->
         <text>{{grid0.size}}</text>
       </view>
-      <view class="check_icon" wx:if="{{tabIndex==0}}"></view>
+      <view class="check_icon" wx:if="{{tabIndex==1}}"></view>
     </view>
 
   </view>
-  <view id="item1" class="item {{grid1.count==0 ?'nocheack':''}}" bindtap="switchTab">
+  <view id="item1" class="item {{grid1.count==0 ?'nocheack':''}}" bindtap="switchTab" data-item="{{grid1}}">
     <view class="left">
       <view class="image1">
         <image src="https://img.aimoge.com/FvGzGOA7tJIGykl4UvOg-yhSAJSm" wx:if="{{!grid1.count==0}}"></image>
@@ -50,11 +50,11 @@
         <!--<text>深<text class="blue {{flag ?'gray':''}}">55</text>×宽<text class="blue {{flag ?'gray':''}}">42</text>×高<text class="blue {{flag ?'gray':''}}">10.5</text>cm</text>-->
         <text>{{grid1.size}}</text>
       </view>
-      <view class="check_icon" wx:if="{{tabIndex==1}}"></view>
+      <view class="check_icon" wx:if="{{tabIndex==2}}"></view>
     </view>
 
   </view>
-  <view id="item2" class="item {{grid2.count==0 ?'nocheack':''}}" bindtap="switchTab">
+  <view id="item2" class="item {{grid2.count==0 ?'nocheack':''}}" bindtap="switchTab" data-item="{{grid2}}">
     <view class="left">
       <view class="image2">
         <image src="https://img.aimoge.com/FkJvRhP8uS3Q69kqkNQFe5yc034Y" wx:if="{{!grid2.count==0}}"></image>
@@ -73,11 +73,11 @@
         <!--<text>深<text class="blue {{flag ?'gray':''}}">55</text>×宽<text class="blue {{flag ?'gray':''}}">42</text>×高<text class="blue {{flag ?'gray':''}}">22</text>cm</text>-->
         <text>{{grid2.size}}</text>
       </view>
-      <view class="check_icon" wx:if="{{tabIndex==2}}"></view>
+      <view class="check_icon" wx:if="{{tabIndex==3}}"></view>
     </view>
 
   </view>
-   <view id="item3" class="item {{grid3.count==0 ?'nocheack':''}} none" bindtap="switchTab">
+   <view id="item3" class="item {{grid3.count==0 ?'nocheack':''}} none" bindtap="switchTab" data-item="{{grid3}}">
     <view class="left">
       <view class="image3">
         <image src="https://img.aimoge.com/Fl3mSbr1XjhTUJyZmrQbHynUoyfe" wx:if="{{!grid3.count==0}}"></image>
@@ -96,7 +96,7 @@
         <!--<text>深<text class="blue {{flag ?'gray':''}}">55</text>×宽<text class="blue {{flag ?'gray':''}}">42</text>×高<text class="blue {{flag ?'gray':''}}">39</text>cm</text>-->
         <text>{{grid3.size}}</text>
       </view>
-      <view class="check_icon" wx:if="{{tabIndex==3}}"></view>
+      <view class="check_icon" wx:if="{{tabIndex==4}}"></view>
     </view>
   </view>
 </view>
@@ -107,7 +107,7 @@
  </view> <text>我同意</text> <navigator class="blue" url="../service/index">《寄件服务协议》</navigator>
  </view>
  <view class="">
-   <view class="{{tabIndex ?'btn':'disabled'}}" bindtap="showErrorTip"  >确认下单</view>
+   <view class="{{tabIndex ?'btn':'disabled'}}" bindtap="submit"  >确认下单</view>
  </view>
 </view>
 <view class="mask" wx:if="{{error||loading}}"></view>
@@ -119,8 +119,9 @@
 </view>
 <view class="drawer_box" animation="{{animationData}}" wx:if="{{loading}}">
   <view class="drawer_icon">
-   <image src="../../images/depositOrder/img_fail.png"></image>
+   <image src="https://img.aimoge.com/FvXNEYNFg2sj_zPDe9FeJFblgrma"></image>
   </view>
   <view class="drawer_title">预约中</view>
 </view>
+<view class="gege-tip fixed" animation="{{animOfNoneNetWork}}">{{animMsg}}</view>
 
