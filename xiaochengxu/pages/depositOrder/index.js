@@ -82,9 +82,6 @@ Page({
       that.setAnimation('0');
     })
   },
-  showErrorTip: function () {
-
-  },
   setAnimation: function (str) {
     if (str == '0') {
       var isError = true;

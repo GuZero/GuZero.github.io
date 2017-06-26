@@ -5,10 +5,10 @@
                 type="text",
                 :placeholder="placeholder",
                 @input="setParentVar($event.target.value)",               
-                v-on:input="$emit('changeCallback')"
                 @focus="$emit('changeCallback1')"
                 @blur="$emit('changeCallback2')"
-            ) 
+            )
+        div.btn(@click="$emit('searchInfo')") 搜索     
 </template>
 
 <script>
@@ -31,13 +31,23 @@
         padding: 10px 16px;
         box-sizing: border-box;
         -webkit-box-sizing: border-box;
+        display:  flex;
+        justify-content: space-between;
     }
-    
+    .btn{
+        display: flex;
+        justify-content: center;
+       align-items: center;
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 0 9px;
+    }
     .input {
         background-color: #fff;
         border-radius: 22px;
         top: 0;
-        padding: 0 50px 0 50px;
+        padding: 0 30px 0 30px;
+        width: 60%;
         &:before {
             content: '';
             display: block;

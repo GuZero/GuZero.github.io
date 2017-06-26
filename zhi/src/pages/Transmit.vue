@@ -7,7 +7,7 @@
             class="top44 fixed",
             placeholder='搜索姓名（如输入"何"）',
             v-model="username",
-            @changeCallback="searchByKey"
+            @searchInfo="searchByKey"
         )
         div.mt44.pt50.pb60
             div.empty.f16.rel(v-if="!result.length") 无搜索结果
@@ -76,7 +76,7 @@
                 let user_id = this.userID,
                     action = 'forward',
                     that = this;
-                axios.post(ajaxUrls.orderinfo + that.$route.query._id+ '/deal', {
+                axios.post(ajaxUrls.orderinfo + that.$route.query._id + '/deal', {
                     user_id: user_id,
                     action: action
                 }, {

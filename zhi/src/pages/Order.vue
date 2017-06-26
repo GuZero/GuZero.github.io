@@ -31,7 +31,7 @@ div.home
 			img.abs(:src="item.head")
 			div.div
 				div.title.rel
-					label.user.ellipsis.rel {{ item.creator }} 发起的柜子运维工单
+					label.user.ellipsis.rel {{ item.creator }} 发起的{{item.project}}工单
 					label.time.f12.abs {{ item.time }}
 				div.line.f12.rel
 					label.gray.rel 终端名称:
@@ -100,7 +100,7 @@ div.home
                 value: '存件订单'
             }, {
                 id: '02',
-                value: '寄件订单'
+                value: '寄存订单'
             }, {
                 id: '03',
                 value: '丰巢寄件'

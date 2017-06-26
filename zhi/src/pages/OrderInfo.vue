@@ -6,7 +6,7 @@
         div.mt44.pb60
             div.user.center.rel
                 img(src="//img.aimoge.com/FgEMgxglGfI7DWuyL0-DQAQ1mhE8")
-                p.bold {{ username }}的运维工单
+                p.bold {{ username }}的{{project}}工单
                 div.status.f12(v-if="data.status_code == 1")
                     label.rel.s1 {{ data.status }}
                 div.status.f12(v-if="data.status_code == 4")
@@ -58,6 +58,7 @@
                 completed: 0, //工单完成
                 isAuthor: 0, //发布者身份
                 isAdmin: 1, //审核者身份
+                project:'',//工单类型
                 status: '',
                 data: {
                     terminalName: '东亚逸品加装格格货栈',
@@ -181,6 +182,7 @@
                     _util.hideSysLoading();
                     if (response.status == 0) {
                         that.username = response.data.creator;
+                        that.project= response.data.project_desc;
                         that.data.terminalName = response.data.terminal_name;
                         that.data.grade = response.data.level;
                         that.data.scene = response.data.appearance;

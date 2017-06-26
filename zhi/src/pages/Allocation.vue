@@ -8,7 +8,7 @@
             class="top44 fixed",
             placeholder="请输入管理员姓名",
             v-model="operator_name",
-            @changeCallback="searchOperator(1)",
+            @searchInfo="searchOperator(1)",
             v-focus
         )
         div.content.mt90

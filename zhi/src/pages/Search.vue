@@ -7,10 +7,10 @@
             class="top44 fixed",
             placeholder="搜索手机号/终端名称",
             v-model="terminalName",
-            @changeCallback="searchByKey(1)",
+            @searchInfo="searchByKey(1)",
             v-focus
         )
-        div.mt44.pt50.pb60
+        div.pb60.main
            div.pd_16
                 div.item 搜索结果：共
                     span.c_b &nbsp {{num}}
@@ -24,11 +24,11 @@
                        label.c_g1 订单状态：
                        lable {{d.state}}
                     div
-                       label.c_g1 存件时间：
-                       lable {{d.fetch_at}}
+                       label.c_g1 派件时间：
+                       lable {{d.delivery_at}}
                     div
                        label.c_g1 取件时间：
-                       lable {{d.delivery_at}}
+                       lable {{d.fetch_at}}
                     div
                        label.c_g1 用户手机号：
                        lable {{d.receiver_telephone}}
@@ -93,11 +93,7 @@
                        lable {{d.mobile}}
             div.pd_20
                 DataLoading(ref="loading")
-
-
-
 </template>
-<!--<script src="https://unpkg.com/element-ui/lib/index.js"></script>-->
 <script>
     import HeaderBar from '../components/common/Header'
     //    import FooterBar from '../components/common/Footer'
@@ -121,7 +117,9 @@
                 num: 0,
                 result: [],
                 url: '',
+                pageList: [],
                 //终端列表状态
+                numPerPage: 16,
                 page: 1,
                 scrollTop: 0,
                 scroll_load_loading: false,
@@ -154,7 +152,6 @@
             window.origin = null;
             this.getUrl();
             window.addEventListener('scroll', this.handleScroll);
-            this.terminalName = "";
             this.hideLoading();
         },
         activated() {
@@ -170,18 +167,20 @@
             this.scrollTop = this.scrollTop || scrollTop;
             this.tn_scrollTop = this.tn_scrollTop || scrollTop;
             window.removeEventListener('scroll', this.handleScroll);
-            this.terminalName = null;
             next();
-
         },
         methods: {
             handleScroll() { //滚动加载监听事件
-                if (this.result.lenght < 16) {
-                    return false;
-                } else {
-                    if (document.body.scrollTop + window.innerHeight >= document.body.scrollHeight - 1) {
-                        if (this.terminalName && !this.error) {
-                            this.loadTerminalData();
+                if (document.body.scrollTop + window.innerHeight >= document.body.scrollHeight - 1) {
+                    if (this.result.length < 16) {
+                        return false;
+                    } else {
+                        if (this.scroll_load_end && this.$refs.loading) {
+                            return this.showLoadEnd();
+                        } else {
+                            if (this.terminalName && !this.error) {                              
+                                this.loadTerminalData();
+                            }
                         }
                     }
                 }
@@ -191,7 +190,7 @@
                 if (this.terminalName && this.terminalName.trim()) {
                     document.body.scrollTop = this.tn_scrollTop;
                 } else {
-                    if (this.tabIndex == 2 && this.scrollTop) {
+                    if (this.scrollTop) {
                         document.body.scrollTop = this.scrollTop;
                     } else {
                         document.body.scrollTop = 0;
@@ -208,6 +207,10 @@
                 if (that.scroll_load_end) {
                     return false;
                 }
+                if (that.pageList.indexOf(page) > -1) {
+                    return false;
+                }
+
                 that.showLoading();
                 that.scroll_load_loading = true;
                 getAjaxRequest("searchPage_cache", that.url + _key.trim() + "&page=" + page, that.version, 30 * 1000, 0.5 * 60 * 60 * 1000, function(response) {
@@ -217,8 +220,10 @@
                         that.scroll_load_loading = false;
                         if (response.status == 0 && response.data && response.data.length) {
                             that.result = that.result.concat(response.data);
+                            console.log(that.result);
                             that.num = that.result.length;
                             that.page += 1;
+                            that.pageList = that.pageList.concat([page]);
                             if (response.data.length < that.numPerPage) {
                                 that.scroll_load_end = true;
                             }
@@ -243,18 +248,24 @@
                 let that = this,
                     page = 1,
                     _key = that.terminalName;
+                let reg = new RegExp("[\\u4E00-\\u9FFF]+", "g");
+//                if (!reg.test(_key) && _key.trim()) {
+//                    let reg1 = /^1[3|4|5|7|8][0-9]{9}$/;
+//                    if (!reg1.test(_key.trim())) {
+//                        _util.showErrorTip('请输入完成的手机号!');
+//                        return false;
+//                    }
+//                }
                 if (!_key || !_key.trim()) {
                     that.flag = true;
                     that.num = 0;
                     that.resetScrollTop(1);
                     that.hideLoading();
                     that.result = [];
+                    _util.showErrorTip('请输入完成的手机号或终端名称');
                     return false;
                 }
                 if (that.tn_scroll_load_loading || that.isLoading()) {
-                    return false;
-                }
-                if (that.tn_scroll_load_end) {
                     return false;
                 }
                 this.showLoading();
@@ -267,7 +278,6 @@
                             that.tn_scroll_load_loading = false;
                             if (response.data) {
                                 that.flag = false;
-                                console.log(response.data);
                                 if (response.data.length == 0) {
                                     that.num = 0;
                                     that.flag = true;
@@ -279,9 +289,6 @@
                                 }
                                 that.result = that.result.concat(response.data);
                                 if (!that.result.lenght == 0) that.showLoadEnd();
-                                if (response.data.length < that.numPerPage) {
-                                    that.tn_scroll_load_end = true;
-                                }
                             } else {
                                 that.flag = true;
                                 that.tn_scroll_load_end = true;
@@ -307,6 +314,7 @@
                         this.isFlag2 = false;
                         this.isFlag3 = false;
                         this.isFlag4 = false;
+                        this.pageTitle = '存件订单';
                         break;
                     case '02':
                         this.url = ajaxUrls.search2;
@@ -314,6 +322,7 @@
                         this.isFlag1 = false;
                         this.isFlag3 = false;
                         this.isFlag4 = false;
+                        this.pageTitle = '寄存订单';
                         break;
                     case '03':
                         this.url = ajaxUrls.search3;
@@ -321,6 +330,7 @@
                         this.isFlag1 = false;
                         this.isFlag2 = false;
                         this.isFlag4 = false;
+                        this.pageTitle = '丰巢寄件';
                         break;
                     case '04':
                         this.url = ajaxUrls.search4;
@@ -328,12 +338,12 @@
                         this.isFlag2 = false;
                         this.isFlag3 = false;
                         this.isFlag1 = false;
+                        this.pageTitle = '菜鸟寄件';
                         break;
                     default:
                         this.url = ajaxUrls.search1;
                         break;
                 }
-                this.terminalName = null;
                 this.hideLoading();
                 this.result = [];
                 this.num = 0;
@@ -369,6 +379,16 @@
     
     .c_g1 {
         color: #908d8d;
+    }
+    
+    .main {
+        width: 100%;
+        height: 75%;
+        position: absolute;
+        overflow-y: scroll;
+        top: 94px;
+        bottom: 0px;
+        -webkit-overflow-scrolling: touch;
     }
     
     .pd_16 {

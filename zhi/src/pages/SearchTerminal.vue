@@ -7,7 +7,8 @@
             class="top44 fixed",
             placeholder='搜索终端名称',
             v-model="terminalName",
-            @changeCallback="searchTerminal(1)"
+            @searchInfo="searchTerminal(1)",            
+            @changeCallback="a"
         )
         div.mt44.pt50.pb60
             div.areas.rel(v-for="t in terminals", @click.stop.prevent="goToInfo(t)")

@@ -50,27 +50,30 @@
             p 业务配置 
             div.item.pd5
                 p.gray  超时时间
-                p.black {{manager_version}}
+                p.black {{delay_time}}
             div.item.pd5
                 p.gray  是否计费
-                p.black {{behind_version}}
+                p.black {{account_info}}
             div.item.pd5
                 p.gray  计费详情
-                p.black {{image_version}}
+                p.black {{rule}}
             div.item.pd5
                 p.gray  是否绑定微信
-                p.black {{android_version}}
+                p.black {{is_weixin}}
          div.edition
             p 位置信息 
             div.item.pd5
                 p.gray  区域
-                p.black {{manager_version}}
+                p.black {{area}}
             div.item.pd5
-                p.gray  区域名称
-                p.black {{behind_version}}
+                p.gray  小区名称
+                p.black {{community}}
             div.item.pd5
                 p.gray  小区地址
-                p.black {{image_version}}
+                p.black {{community_address}}
+             div.item.pd5
+                p.gray  柜子位置
+                p.black {{position}}    
             div.item.item_btn
                 div
                     div(:class="{ active: isActive }" @click.stop.prevent="getLocation('check')" ) 位置预览
@@ -139,7 +142,7 @@
                 is_weixin:'',//是否绑定微信
                 //位置信息
                 area:'',//区域
-                community:'',//小区
+                community:'',//小区名称
                 community_address:'',//小区地址
                 position:'',//柜子位置
                 

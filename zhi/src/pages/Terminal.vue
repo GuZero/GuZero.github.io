@@ -4,21 +4,20 @@
             :title="pageTitle",
             :btnconfig="btnconfig"
         )
-        Search(
+        Search.fixed(
             ref="searchBar",
             class="top44",
             placeholder="搜索终端名称",
             v-model="terminalName",
-            @changeCallback="searchTerminal(1)",
+            @searchInfo="searchTerminal(1)",
             @changeCallback1="isFlag1()",
             @changeCallback2="isFlag2()",
-            :class="{fixed:flag,abs:!flag}"
         )
-        div.nav(v-if="!terminalName", :class="{fixed:flag,abs:!flag}")
+        div.nav.fixed(v-if="!terminalName")
             div.tag.none.rel(@click="loadAreas(tab0, $event)", :class="{active: tabActive0}") {{ tab0.ar_name }}
             div.tag.rel(@click="loadCitys(tab1, $event)", v-if="tabData1", :class="{active: tabActive1}") {{ tab1.ar_name }}
             div.tag.rel(@click="loadTerminals(tab2, $event)", v-if="tabData2") {{ tab2.ar_name }}
-        div.mt44.pt50.pb60(v-if="!terminalName",:class="{main:flag1}")
+        div.mt44.pb60.main(v-if="!terminalName")
             div.areas.rel.arrow(v-if="tabIndex == 0", v-for="a in areas", @click="loadCitys(a)")
                 div.div {{ a.ar_name }}({{ a.terminal_number }})
             div.areas.rel.arrow(v-if="tabIndex == 1", v-for="c in citys", @click="loadTerminals(c)")
@@ -28,15 +27,15 @@
                     div.div
                        div.title.rel {{ t.terminal_name }}
                        div.line.rel {{ t.region }}，{{ t.place }}，{{ t.terminal_code }}
-            DataLoading(ref="loading")
-        div.nav(v-if="terminalName",:class="{fixed:flag,abs:!flag}")
+            DataLoading(ref="loading" v-if="terminalName")
+        div.nav.fixed(v-if="terminalName")
             div.tag.none.rel 全国
-        div.mt44.pt50.pb60(v-if="terminalName")
+        div.mt44.pb60.main(v-if="terminalName")
             div.areas.rel(v-for="t in tn_terminals", @click.stop.prevent="goToInfo(t)")
                 div.div
                    div.title.rel {{ t.terminal_name }}
                    div.line.rel {{ t.region }}，{{ t.place }}，{{ t.terminal_code }}
-            DataLoading(ref="loading")
+            DataLoading(ref="loading" v-if="isSearch")           
         FooterBar.fixed(:footerconfig="footerconfig",:class="{dis:!flag}")
 </template>
 
@@ -89,14 +88,12 @@
                 tn_scroll_load_end: false,
                 tn_delay: null,
                 flag: true,
-                flag1: false
+                isSearch:false
             }
         },
         created() {
             window.canGoBack = false;
             window.origin = null;
-            this.isFlag3();
-
         },
         components: {
             HeaderBar,
@@ -126,6 +123,7 @@
                 } else {
                     //搜索为空，隐藏搜索列表，恢复其默认滚动条位置
                     this.tn_scrollTop = 0;
+                    this.isSearch=false;
                 }
             }
         },
@@ -133,6 +131,7 @@
             window.addEventListener('scroll', this.handleScroll);
             this.resetScrollTop();
             this.loadAreaData();
+            this.hideLoading();
         },
         activated() { //开启<keep-alive>，会触发activated事件
             window.canGoBack = false;
@@ -315,6 +314,7 @@
                     })
             },
             searchTerminal(isFirst) {
+                this.isSearch=true;
                 let that = this,
                     page = 1,
                     _key = that.terminalName;
@@ -411,11 +411,6 @@
                     this.flag = true;
                 }
             },
-            isFlag3() {
-                if (_util.isIOS()) {
-                    this.flag1 = true;
-                }
-            },
             isLoading() { //是否已显示“正在加载数据状态”节点
                 this.$refs.loading && this.$refs.loading.isLoading();
             },
@@ -441,9 +436,12 @@
     }
     
     .main {
-        position: relative;
+        width: 100%;
+        height:62%;
+        position:absolute;
         overflow-y: scroll;
-        -webkit-overflow-scrolling: touch;
+        top: 100px;
+        -webkit-overflow-scrolling: touch;       
     }
     
     .arrow:after {

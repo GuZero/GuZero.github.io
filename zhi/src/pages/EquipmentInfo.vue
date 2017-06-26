@@ -156,13 +156,24 @@
                     _util.hideSysLoading();
                     if (rsp.data.status == 0) {
                         if (that.current_type == 'rack_id') {
-                            let item = that.bins[that.current_index];
+                            let array = [].concat(that.bins);
+
+                            let item = array[that.current_index];
                                 item.asset_num = asset_num;
-                            that.bins.splice(that.current_index,1,item);
+                            array.splice(that.current_index,1,item);
+
+                            that.bins = [].concat(array);
                         }else if (that.current_type == 'device_id') {
-                            let item = that.other[that.current_index];
+
+                            let array = [].concat(that.other);
+                            let item = array[that.current_index];
                                 item.asset_num = asset_num;
-                            that.other.splice(that.current_index,1,item);
+                            array.splice(that.current_index,1,item);
+                            that.other = [].concat(array);
+
+                            // let item = that.other[that.current_index];
+                            //     item.asset_num = asset_num;
+                            // that.other.splice(that.current_index,1,item);
                         }
                     } else {
                         if (rsp.data.msg){
