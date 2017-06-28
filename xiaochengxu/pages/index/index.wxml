@@ -10,7 +10,7 @@
         </view>
         <view class="item deposit rel" bindtap="linkToDeposit">
             物品寄存
-            <view class="tip abs" wx:if="{{depositCount}}">待取 {{depositCount}}</view>
+            <view class="tip abs" wx:if="{{depositCount}}">待取/待支付 {{depositCount}}</view>
         </view>
         <view class="item mine rel" bindtap="linkToMine">
             个人中心

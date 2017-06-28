@@ -81,6 +81,7 @@ App({
           success: function (res) {
             if (res.statusCode == 200 && res.data.status == 0) {
               that.globalData.openid = res.data.data.open_id || '';
+              wx.setStorageSync('openid', res.data.data.open_id);
               if (!res.data.data.uid) {
                 that.globalData.session = null;
               }
@@ -107,13 +108,15 @@ App({
     }
     that.globalData.checking_session = false;
   },
-  authenticated: function(callback){
+  authenticated: function(callback,isLoginPage){
     var that = this;
     function authenticated_finish(){
       if(!that.globalData.session){
-        wx.redirectTo({
-          url: '/pages/login/index'
-        });
+          if (!isLoginPage){
+              wx.redirectTo({
+                  url: '/pages/login/index'
+              });
+          }
       }
       else{
         callback();

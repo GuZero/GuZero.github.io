@@ -78,7 +78,7 @@
                     <view class="abs info-row-left">寄存箱格</view>
                     {{item.rack_name}}{{item.box_name}}({{item.boxSize}})
                 </view>
-                <view class="row row-last rel">
+                <view class="row row-last rel row-address" bindtap="openLocationMap">
                     <view class="abs info-row-left">寄存地址</view>
                     {{item.terminal_name}}
                 </view>
@@ -102,7 +102,7 @@
             <view class="item-btn-field flexmode item-btn-left"  data-orderId="{{item.order_id}}" bindtap="cancelOrder">
                 取消订单
             </view>
-            <view class="item-btn-field flexmode" data-orderid="{{item.order_id}}" bindtap="pay">继续支付</view>
+            <view class="item-btn-field flexmode" data-orderid="{{item.order_id}}" bindtap="goPay" wx:if="{{item.overTime>0 && canPay}}">继续支付</view>
         </view>
          <view class="item-btn flex" wx:if="{{item.statusIndex == 4 || item.statusIndex == 5}}">
             <view class="item-btn-field flexmode" data-orderid="{{item.order_id}}" bindtap="linkToDepositOrder">再次下单</view>

@@ -22,7 +22,7 @@ page {
     right: 56rpx;
     height: 162rpx;
     width: 162rpx;
-    background: url('https://img.aimoge.com/FtBpLM0j7AsSz1wRY1L0r--pWVrZ') no-repeat;
+    background: url('//img.aimoge.com/FtBpLM0j7AsSz1wRY1L0r--pWVrZ') no-repeat;
     background-size: 162rpx 162rpx;
     border-radius: 50%;
     text-align: center;
@@ -45,15 +45,15 @@ page {
     border-bottom: none;    
 }
 .entry-list .express {
-  background-image: url("https://img.aimoge.com/Fhq2NfpmMRINTVOdFMnr_Lry8Bvk");
+  background-image: url("//img.aimoge.com/Fhq2NfpmMRINTVOdFMnr_Lry8Bvk");
 }
 
 .entry-list .deposit {
-  background-image: url("https://img.aimoge.com/FvcVB64M6LVDEjD8S5TQMBWGoLJN");
+  background-image: url("//img.aimoge.com/FvcVB64M6LVDEjD8S5TQMBWGoLJN");
 }
 
 .entry-list .mine {
-  background-image: url("https://img.aimoge.com/FhpCNK1_sMgSJPexCG_wD3SnwnUq");
+  background-image: url("//img.aimoge.com/FhpCNK1_sMgSJPexCG_wD3SnwnUq");
 }
 .tip{
     top: 0;

@@ -7,7 +7,7 @@
 <View class="meta aw-r customer rel" bindtap="takePhoneCall">
   <View class="warp none rel">小格客服</View>
 </View>
-<View class="logout rel" bindtap="logout">
+<View class="logout rel" bindtap="showLogoutLayer">
   退出登录
 </View>
 <view class="gege-tip fixed" animation="{{animOfNoneNetWork}}">{{animMsg}}</view>

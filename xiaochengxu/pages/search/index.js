@@ -11,7 +11,7 @@ Page({
         company: '',
         deliverytype: '',
         code: '',
-        isScan: true
+        isScan: false
     },
     setCompany: function (companyInfo) {
         this.setData({
@@ -123,7 +123,12 @@ Page({
                 that.setData({
                     isScan: false
                 })
-                app.showErrorTip(that, error.errMsg);
+                console.log(error.errMsg);
+                if (error.errMsg == "scanCode:fail cancel"){
+                    app.showErrorTip(that, "扫描已取消");
+                }else{
+                    app.showErrorTip(that, error.errMsg);                    
+                }
                 return false;
             }
         })

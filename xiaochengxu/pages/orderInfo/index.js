@@ -16,6 +16,19 @@ Page({
             terminal_name: '',
             terminal_code: ''
         },
+        payInfo: {},
+        deviceInfo: {
+            os: '',
+            osver: '',
+            phonemodel: '',
+            udid: '',
+            weixin_id: '586b06cf6803fadf0d8b4567',
+            open_id: '',
+            app_name: 'gegexcu',
+            network: '',
+            appver: ''
+        },
+        canPay: true,
         animOfNoneNetWork: {},
         animMsg: ''
     },
@@ -49,17 +62,34 @@ Page({
         })
         return true;
     },
-    load: function (isFirst) {
-        var that = this, page = ''
+    load: function () {
+        var that = this;
         if (!that.getNetworkType()) {
             return false
         }
         app.ajax('GET', '/ultrabox/storage/order/' + that.data.order_id, null, function (d) {
             if (d.statusCode == 200) {
                 if (d.data.status == 0) {
+                    var time = new Date().getTime() - that.getDateByStr(d.data.data.order.created_at),
+                        time = parseInt(time / 1000),
+                        time = 15 * 60 - time,
+                        _interval = null;
+                    d.data.data.order.overTime = time;
                     that.setData({
                         item: d.data.data.order
                     })
+                    if (time > 0 && that.data.status[1].indexOf(that.data.item.status) > -1) {
+                        _interval = setInterval(function () {
+                            time -= 1;
+                            if (time <= 0) {
+                                that.setData({
+                                    canPay: false
+                                });
+                                clearInterval(_interval);
+                                _interval = null;
+                            }
+                        }, 1000);
+                    }
                     that.setDataStatus();
                 } else {
                     app.showErrorTip(that, d.data.msg);
@@ -69,6 +99,18 @@ Page({
                 app.showErrorTip(that, '网络错误，请检查您的网络设置！');
             }
         })
+    },
+    getDateByStr: function (str) {
+        var arr = str.split(' '),
+            arr1 = arr[0].split('-'),
+            arr2 = arr[1].split(':'),
+            year = arr1[0],
+            month = parseInt(arr1[1]) - 1,
+            date = arr1[2],
+            hour = arr2[0],
+            minutes = arr2[1],
+            seconds = arr2[2];
+        return new Date(year, month, date, hour, minutes, seconds).getTime();
     },
     setDataStatus: function () {
         var that = this;
@@ -110,11 +152,10 @@ Page({
             if (d.statusCode == 200) {
                 if (d.data.status == 0) {
                     var item = d.data.data;
-                    // var distance = that.getFlatternDistance(that.data.latitude,that.data.longitude,item.geo[1],item.geo[0]);
                     that.setData({
                         lastestItem: {
-                            terminal_name: item.terminal_name || '',
-                            terminal_code: item.code || ''
+                            terminal_name: item && item.terminal_name ? item.terminal_name : '',
+                            terminal_code: item && item.code ? item.code:''
                         },
                     })
                 } else {
@@ -136,35 +177,224 @@ Page({
             })
         }
     },
-    pay: function () {
+    bd09togcj02: function (bd_lon, bd_lat) {
+        var x_pi = 3.14159265358979324 * 3000.0 / 180.0;
+        var x = bd_lon - 0.0065;
+        var y = bd_lat - 0.006;
+        var z = Math.sqrt(x * x + y * y) - 0.00002 * Math.sin(y * x_pi);
+        var theta = Math.atan2(y, x) - 0.000003 * Math.cos(x * x_pi);
+        var gg_lng = z * Math.cos(theta);
+        var gg_lat = z * Math.sin(theta);
+        return [gg_lng, gg_lat]
+    },
+    openLocationMap: function (e) {
+        var order = this.data.item,
+            that = this,
+            geo = that.bd09togcj02(order.terminal_geo[0], order.terminal_geo[1]);
+        wx.openLocation({
+            latitude: Number(geo[1]),
+            longitude: Number(geo[0]),
+            name: order.terminal_name,
+            address: order.province_name + order.city_name + order.region_name + order.terminal_addr,
+            scale: 30
+        })
+    },
+    confirmPay: function (data, callback) {
+        var that = this;
+        app.ajaxPay('POST', "/pay/" + data.pay_id, data, function (d) {
+            if (d.statusCode == 200) {
+                if (d.data.status == 0 && d.data.data) {
+                    callback();
+                } else {
+                    app.showErrorTip(that, '支付失败');
+                }
+            } else {
+                app.showErrorTip(that, '网络错误，请检查您的网络设置！');
+            }
+        })
+    },
+    wxPay: function () {
+        var payInfo = this.data.payInfo,
+            that = this;
         wx.requestPayment(
             {
-                'timeStamp': '',
-                'nonceStr': '',
-                'package': '',
-                'signType': 'MD5',
-                'paySign': '',
-                'success': function (res) { },
-                'fail': function (res) { },
-                'complete': function (res) { }
+                'timeStamp': payInfo.order_info.timestamp.toString(),
+                'nonceStr': payInfo.order_info.noncestr,
+                'package': payInfo.order_info.package_value,
+                'signType': payInfo.order_info.sign_type,
+                'paySign': payInfo.order_info.pay_sign,
+                'success': function (res) {
+                    var data = {
+                        "pay_id": payInfo.pay_id,
+                        "pay_type": 4,
+                        "pay_info": res,
+                        "error_msg": '支付成功',
+                        "result": 100
+                    };
+                    that.confirmPay(data, function () {
+                        that.onLoad();                        
+                    })
+                },
+                'fail': function (res) {
+                    if (res.errMsg == "requestPayment:fail cancel") {
+                        var data = {
+                            "pay_id": payInfo.pay_id,
+                            "pay_type": 4,
+                            "pay_info": res,
+                            "error_msg": "用户主动取消",
+                            "result": 300
+                        };
+                        that.confirmPay(data, function () {
+                        })
+                    } else {
+                        var data = {
+                            "pay_id": payInfo.pay_id,
+                            "pay_type": 4,
+                            "pay_info": res,
+                            "error_msg": res.errMsg,
+                            "result": 200
+                        };
+                        that.confirmPay(data, function () {
+                            
+                        })
+                    }
+                }
             })
     },
 
-    goToInfo: function (e) {
-        var order_id = e.currentTarget.dataset.orderid;
-        wx.navigateTo({
-            url: '../orderInfo/index?order_id=' + order_id
+    getDeviceInfo: function (message) {
+        var device_info = wx.getSystemInfoSync(),
+            network = '',
+            open_id = wx.getStorageSync('openid') || '',
+            udid = wx.getStorageSync('uid') || '';
+        wx.getNetworkType({
+            success: function (res) {
+                network = res.networkType
+            },
+            fail: function () {
+                app.showErrorTip(that, '当前网络不可用，请检查您的网络设置！');
+            }
+        });
+        this.setData({
+            deviceInfo: {
+                os: device_info.system.split(' ')[0],
+                osver: device_info.system.split(' ')[1],
+                phonemodel: device_info.model,
+                udid: udid,
+                weixin_id: '586b06cf6803fadf0d8b4567',
+                open_id: open_id,
+                app_name: 'gegexcu',
+                network: network,
+                appver: device_info.version
+            }
         })
+    },
+    goPay: function () {
+        this.getDeviceInfo();
+        var open_id = wx.getStorageSync('openid') || '';
+        var data = {
+            total_fee: this.data.item.fee,
+            total_num: 1,
+            pay_type: 4,
+            order_ids: [this.data.item.order_id],
+            service: 'ultrabox_storage_order_service',
+            weixin_id: '586b06cf6803fadf0d8b4567',
+            open_id: open_id,
+            device_info: this.data.deviceInfo
+        },
+            that = this;
+        if (wx.showLoading) {
+            wx.showLoading({
+                title: '正在支付...',
+                mask: true
+            })
+        }
+        function gegePay() {
+            app.ajaxPay('POST', "/pay", data, function (d) {
+                if (wx.hideLoading()) {
+                    wx.hideLoading();
+                }    
+                if (d.statusCode == 200) {
+                    if (d.data.status == 0 && d.data.data) {
+                        that.setData({
+                            payInfo: d.data.data
+                        })
+                        that.wxPay();
+                    } else {
+                        app.showErrorTip(that, d.data.msg);
+                    }
+                } else {
+                    app.showErrorTip(that, '网络错误，请检查您的网络设置！');
+                }
+            })
+        }
+        if (that.data.item.status == 211) {
+            var data2 = {
+                "pay_id": that.data.item.pay_id,
+                "pay_type": 4,
+                "pay_info": {},
+                "error_msg": "用户主动取消",
+                "result": 300
+            };
+            that.confirmPay(data2, gegePay);
+        } else {
+            gegePay();
+        }
+    },
+
+    cancelOrder: function () {
+        var that = this;
+        if (!that.getNetworkType()) {
+            return false
+        }
+        function cancelThisOrder() {
+            if (wx.showLoading){
+                wx.showLoading({
+                    title: '正在取消订单...',
+                    mask: true
+                })
+            }
+            app.ajax('POST', "/ultrabox/storage/order/" + that.data.order_id, null, function (d) {
+                if (wx.hideLoading()) {
+                    wx.hideLoading();
+                }               
+                if (d.statusCode == 200) {
+                    if (d.data.status == 0) {
+                        var item = that.data.item;
+                         item.statusIndex = 5;
+                        that.setData({
+                           canPay: false,
+                           item: item
+                        })
+                    } else {
+                        app.showErrorTip(that, d.data.msg);                        
+                    }
+                } else {
+                    app.showErrorTip(that, '网络错误，请检查您的网络设置！');
+                }
+            })
+        }
+
+        if (that.data.item.status == 211) {
+            var data = {
+                service: "ultrabox_storage_order_service",
+                pay_id: that.data.item.pay_id,
+                pay_type: that.data.item.pay_type,
+                result: 300,
+                error_msg: '用户主动取消',
+                pay_info: {}
+            };
+            that.confirmPay(data,cancelThisOrder);
+        } else {
+            cancelThisOrder();
+        }
     },
     onLoad: function (options) {
         var that = this
         that.getNetworkType();
         that.setData({
-            order_id: options.order_id
+            order_id: that.options.order_id
         })
-        // that.setData({
-        //     order_id: '201604191137389076482082'
-        // })
         app.authenticated(function () {
             wx.getSystemInfo({
                 success: function (res) {

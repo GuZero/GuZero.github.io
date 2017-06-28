@@ -9,49 +9,45 @@ page {
 
 .header {
   width: 100%;
-  height: 94rpx;
+  height: 90rpx;
+  line-height: 90rpx;
+  padding: 0 32rpx;
+  font-size: 32rpx;
+  color: #c3c3c3;
+  border-bottom: 1rpx #eee solid;
   background-color: #4285f4;
-  display: flex;
-  justify-content: flex-start;
   align-items: center;
-  top: 0;
-  z-index: 111;
-}
-
-.img {
-  width: 43rpx;
-  height: 43rpx;
-  margin-left: 16rpx;
-  margin-right: 16rpx;
-}
-
-.img image {
-  width: 100%;
-  height: 100%;
-}
-
-.input {
-  width: 630rpx;
-  margin-left: 16rpx;
-}
-
-.input .text {
-  background: #fff;
-  border-radius: 35rpx;
-  width: 100%;
-  padding: 5rpx 54rpx 10rpx 80rpx;
   box-sizing: border-box;
+}
+
+.header .tag {
+  left: 32rpx;
+  top: 0;
+  background-image: url('//img.aimoge.com/Fi7keeAH_hoAfbUFnvUVGgB5ET6Y');
+  background-repeat: no-repeat;
+  background-size: 48rpx 48rpx;
+  background-position: center center;
+  width: 48rpx;
   height: 48rpx;
-  font-size: 14px;
-  color: #353535;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
+}
+
+.header .input {
+  flex: 1;
+}
+
+.header .text {
+  color: #666;
+  font-size: 32rpx;
+  height: 48rpx;
+  line-height: 48rpx;
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 0 48rpx 0 32rpx;
+  margin-left: 32rpx;
 }
 
 .search_btn {
   background: url('https://img.aimoge.com/FgyUPywZ4Jv9XXoSRGvetyhz9t2i') 0 0 no-repeat;
-  z-index: 111;
   position: absolute;
   background-size: 80% 80%;
   width: 30rpx;
@@ -62,28 +58,23 @@ page {
   display: block;
 }
 
-.search_active {
-  background: url('https://img.aimoge.com/Fs-fQpBgPqsJ6SEkVUGfeArmraeu') 0 0 no-repeat;
-  background-size: 80% 80%;
-}
-
 /*内容部分*/
 
 .container {
-  padding-top: 96rpx;
-  padding-left: 32rpx;
-  background: #fff;
+  padding-bottom: 156rpx;
 }
 
 .item {
-  padding: 32rpx 0rpx 32rpx 0;
+  padding: 32rpx;
   display: flex;
   color: #353535;
   position: relative;
+  font-size: 32rpx;
+  background: #fff;
   /*justify-content: space-around;*/
 }
 
-.item:before {
+.item:after {
   content: '';
   display: block;
   position: absolute;
@@ -153,14 +144,18 @@ page {
 }
 
 .footer {
+  bottom: 0;
+  left: 0;
   background: #fff;
   display: flex;
+  width: 100%;
   height: 120rpx;
   align-items: center;
   margin-top: 28rpx;
   justify-content: space-between;
   padding-left: 36rpx;
   font-size: 14px;
+  box-sizing: border-box;
 }
 
 .footer .image {
@@ -212,7 +207,7 @@ page {
   top: 50%;
   left: 50%;
   z-index: 1001;
-  background: #fafafa;
+  background: #fff;
   margin-top: -150rpx;
   margin-left: -300rpx;
   border-radius: 5px;

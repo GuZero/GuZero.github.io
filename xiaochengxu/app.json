@@ -1,34 +1,32 @@
 {
-  "pages": [
-   
-   
-    "pages/chooseTerminal/index",
-    "pages/index/index",
-    "pages/orderInfo/index",
-    "pages/deposit/index",
-    "pages/login/index",
-    "pages/terms/index",
-    "pages/express/index",
-    "pages/search/index",
-    "pages/company/index",
-    "pages/deliveryInfo/index",
-    "pages/mine/index",
-    "pages/suggestion/index",
-    "pages/depositOrder/index",
-    "pages/service/index"
-  ],
-  "window": {
-    "navigationBarBackgroundColor": "#4285f4",
-    "navigationBarTextStyle": "white",
-    "enablePullDownRefresh": true,
-    "backgroundColor": "#efeff4",
-    "backgroundTextStyle": "dark",
-    "navigationBarTitleText": "格格快递柜"
-  },
-  "networkTimeout": {
-    "connectSocket": 5000,
-    "request": 60000,
-    "downloadFile": 120000
-  },
-  "debug": false
+    "pages": [
+        "pages/index/index",
+        "pages/login/index",
+        "pages/terms/index",
+        "pages/deposit/index",
+        "pages/chooseTerminal/index",
+        "pages/depositOrder/index",
+        "pages/orderInfo/index",
+        "pages/service/index",
+        "pages/express/index",
+        "pages/search/index",
+        "pages/company/index",
+        "pages/deliveryInfo/index",
+        "pages/suggestion/index",
+        "pages/mine/index"
+    ],
+    "window": {
+        "navigationBarBackgroundColor": "#4285f4",
+        "navigationBarTextStyle": "white",
+        "enablePullDownRefresh": true,
+        "backgroundColor": "#efeff4",
+        "backgroundTextStyle": "dark",
+        "navigationBarTitleText": "格格快递柜"
+    },
+    "networkTimeout": {
+        "connectSocket": 5000,
+        "request": 60000,
+        "downloadFile": 120000
+    },
+    "debug": false
 }

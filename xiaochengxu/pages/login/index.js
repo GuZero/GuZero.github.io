@@ -35,7 +35,7 @@ Page({
                 })
             }
         })
-    });
+    },true);
   },
   onPullDownRefresh: function () {
     this.onLoad()
@@ -349,6 +349,7 @@ Page({
           uid: user.data._id,
           isLogining: !!user.data._id,
         })
+        wx.setStorageSync('uid', user.data._id);
         return that.goIndex()
       }
       else {

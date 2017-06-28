@@ -9,8 +9,11 @@ Page({
     userInfo: null
   },
   onLoad: function () {
-    var that = this
-    this.getUser()
+      var that = this
+      app.authenticated(function () {
+          that.getUser();
+      });
+
   },
   onPullDownRefresh: function () {
     this.onLoad()
@@ -57,9 +60,10 @@ Page({
     }
     User.logout(function (succed, msg) {
       if (succed) {
-       wx.clearStorageSync()
+          wx.removeStorageSync('session');
+          wx.removeStorageSync('uid');
         app.globalData.session = null
-        wx.redirectTo({
+        wx.reLaunch({
           url: '../login/index'
         })
       } else {

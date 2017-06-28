@@ -12,7 +12,6 @@ page {
   padding: 50rpx 32rpx;
   font-size: 72rpx;
   color: #fff;
-  font-weight: 700;
 }
 
 .status .tip {
@@ -35,16 +34,17 @@ page {
   border-bottom: 1px solid #e5e5e5;
   background: #fff;
 }
+
 .item-info .info-first {
   height: 128rpx;
   line-height: 128rpx;
   padding: 0 40rpx 0 130rpx;
   font-size: 48rpx;
-  font-weight: 700;
   color: #000;
   border-bottom: 1px solid #e5e5e5;
   background: #fff;
 }
+
 .info-row {
   text-align: right;
   box-sizing: border-box;
@@ -78,11 +78,13 @@ page {
 .info-row .row-last {
   padding-bottom: 0;
 }
+
 .item-detail {
   padding: 32rpx 40rpx;
   background: #fff;
   margin-top: 32rpx;
 }
+
 .item-btn {
   border-top: 1px solid #e5e5e5;
   background: #fff;
@@ -102,4 +104,23 @@ page {
 
 .item-btn .item-btn-left {
   border-right: 1px solid #e5e5e5;
+}
+
+.row-address {
+  padding-right: 20rpx;
+}
+
+.row-address::after {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  display: block;
+  content: '';
+  width: 14rpx;
+  height: 14rpx;
+  border-top: 2px solid #4285f4;
+  border-right: 2px solid #4285f4;
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  margin-top: -7rpx;
 }

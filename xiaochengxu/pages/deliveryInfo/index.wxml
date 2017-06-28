@@ -18,7 +18,7 @@
     <view class="header">物流信息</view>
     <block wx:if="{{showResult && logistics.length > 0}}">
       <view class="delivery">
-        <view class="list rel " wx:for="{{logistics}}">
+        <view class="list rel " wx:for="{{logistics}}" wx:key="{{item.time}}">
           <view class="i abs">
             <view class="inner"></view>
             <view class="outer"></view>

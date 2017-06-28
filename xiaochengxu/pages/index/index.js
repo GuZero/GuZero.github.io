@@ -3,7 +3,7 @@
 var app = getApp()
 Page({
   data: {
-    expressCount: 32332,
+    expressCount: 0,
     depositCount: 0,
     animOfNoneNetWork: {},
     animMsg: ''
@@ -61,21 +61,27 @@ Page({
     if (!that.getNetworkType()) {
       return false
     }
-    // app.ajax('GET', '/user/delivery?cursor=', null, function (d) {
-    //   if (d.statusCode == 200) {
-    //     if (d.data.status == 0) {
-
-    //     } else {
-          
-    //     }
-    //   } else {
-
-    //     app.showErrorTip(that, '网络错误，请检查您的网络设置！')
-    //   }
-    // })
+    app.ajax('GET', '/index/deliver/info', null, function (d) {
+      if (d.statusCode == 200) {
+        if (d.data.status == 0) {
+            that.setData({
+                expressCount: d.data.data.delivery.cnt,
+                depositCount: d.data.data.storage.cnt,
+            })
+        }
+      } else {
+        app.showErrorTip(that, '网络错误，请检查您的网络设置！')
+      }
+    })
   },
   onLoad: function () {
-    var that = this
-    that.getNetworkType();
+      var that = this
+      that.getNetworkType();
+      app.authenticated(function () {
+          that.load();
+      });
+  },
+   onShow: function () {
+     
   }
 })

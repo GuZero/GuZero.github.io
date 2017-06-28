@@ -1,127 +1,128 @@
-<view class="header  fixed">
-  <view class="img">
-    <image src="https://img.aimoge.com/Fi7keeAH_hoAfbUFnvUVGgB5ET6Y"></image>
-  </view>
-  <view class="input">
-    <view class="text">{{terminal_name}}</view>
-    <view class="search_btn {{search ?'search_active':''}}" bindtap="gotoInfo"></view>
-  </view>
-</view>
-<view class="container">
-  <view id="item0" class="item {{grid0.count==0 ?'nocheack':''}}"  bindtap="switchTab" data-item="{{grid0}}">
-    <view class="left">
-      <view class="image">
-        <image src="https://img.aimoge.com/FlFtzHlGCuE0NoF7YEB6VnldRAiP" wx:if="{{!grid0.count==0}}"></image>
-        <image src="https://img.aimoge.com/Fp-j28TnJ09v37VYgRTCVJYGPOLf" wx:if="{{grid0.count==0}}"></image>
-      </view>
-      <text>微型格口</text>
+<view class="depositOrder">
+  <view class="header flex rel">
+    <view class="tag"></view>
+    <view class="input" bindtap="gotoInfo">
+      <view class="text">{{terminal_name}}</view>
+      <view class="search_btn"></view>
     </view>
-    <view class="right">
-      <view>
-        <text>寄存费:<text class="blue {{grid0.count==0?'gray':''}}">{{grid0.price}}</text>元</text>
+  </view>
+  <view class="container">
+    <view id="item3" class="item {{item.box_type4.count==0 ?'nocheack':''}} none" bindtap="switchBox" data-item="{{item.box_type4}}">
+      <view class="left">
+        <view class="image">
+          <image src="https://img.aimoge.com/FlFtzHlGCuE0NoF7YEB6VnldRAiP" wx:if="{{!item.box_type4.count==0}}"></image>
+          <image src="https://img.aimoge.com/Fp-j28TnJ09v37VYgRTCVJYGPOLf" wx:if="{{item.box_type4.count==0}}"></image>
+        </view>
+        <text>微型格口</text>
       </view>
-      <view>
-        <text>适存：钥匙、钱包等</text>
+      <view class="right">
+        <view>
+          <text>寄存费: <text class="blue {{item.box_type4.count==0?'gray':''}}">{{item.box_type4.fee/100}}</text>元</text>
+        </view>
+        <view>
+          <text>适存：钥匙、钱包等</text>
+        </view>
+        <view>
+          <text>{{item.box_type4.size}}</text>
+        </view>
+        <view class="check_icon" wx:if="{{tabIndex==4}}"></view>
       </view>
-      <view>
-        <!--<text>深<text class="blue {{flag ?'gray':''}}">55</text>×宽<text class="blue {{flag ?'gray':''}}">25</text>×高<text class="blue {{flag ?'gray':''}}">10.5</text>cm</text>-->
-        <text>{{grid0.size}}</text>
-      </view>
-      <view class="check_icon" wx:if="{{tabIndex==1}}"></view>
     </view>
+    <view id="item0" class="item {{item.box_type1.count==0 ?'nocheack':''}}" bindtap="switchBox" data-item="{{item.box_type1}}">
+      <view class="left">
+        <view class="image1">
+          <image src="https://img.aimoge.com/FvGzGOA7tJIGykl4UvOg-yhSAJSm" wx:if="{{!item.box_type1.count==0}}"></image>
+          <image src="https://img.aimoge.com/FjJwAt0JWVG6V8Rx_B-y-tG0eu2f" wx:if="{{item.box_type1.count==0}}"></image>
+        </view>
+        <text>小型格口</text>
+      </view>
+      <view class="right">
+        <view>
+          <text>寄存费: <text class="blue {{item.box_type1.count==0?'gray':''}}">{{item.box_type1.fee/100}}</text>元</text>
+        </view>
+        <view>
+          <text>适存：钥匙、钱包等</text>
+        </view>
+        <view>
+          <!--<text>深<text class="blue {{flag ?'gray':''}}">55</text>×宽<text class="blue {{flag ?'gray':''}}">25</text>×高<text class="blue {{flag ?'gray':''}}">10.5</text>cm</text>-->
+          <text>{{item.box_type1.size}}</text>
+        </view>
+        <view class="check_icon" wx:if="{{tabIndex==1}}"></view>
+      </view>
 
-  </view>
-  <view id="item1" class="item {{grid1.count==0 ?'nocheack':''}}" bindtap="switchTab" data-item="{{grid1}}">
-    <view class="left">
-      <view class="image1">
-        <image src="https://img.aimoge.com/FvGzGOA7tJIGykl4UvOg-yhSAJSm" wx:if="{{!grid1.count==0}}"></image>
-        <image src="https://img.aimoge.com/FjJwAt0JWVG6V8Rx_B-y-tG0eu2f" wx:if="{{grid1.count==0}}"></image>
-      </view>
-      <text>小型格口</text>
     </view>
-    <view class="right">
-      <view>
-        <text>寄存费:<text class="blue {{grid1.count==0?'gray':''}}">{{grid1.price}}</text>元</text>
+    <view id="item1" class="item {{item.box_type2.count==0 ?'nocheack':''}}" bindtap="switchBox" data-item="{{item.box_type2}}">
+      <view class="left">
+        <view class="image2">
+          <image src="https://img.aimoge.com/FkJvRhP8uS3Q69kqkNQFe5yc034Y" wx:if="{{!item.box_type2.count==0}}"></image>
+          <image src="https://img.aimoge.com/Fu2knA0Wz9KADoZ6YgHZg3SdNzlv" wx:if="{{item.box_type2.count==0}}"></image>
+        </view>
+        <text>中型格口</text>
       </view>
-      <view>
-        <text>适存：单鞋、手包等</text>
+      <view class="right">
+        <view>
+          <text>寄存费: <text class="blue {{item.box_type2.count==0?'gray':''}}">{{item.box_type2.fee/100}}</text>元</text>
+        </view>
+        <view>
+          <text>适存：单鞋、手包等</text>
+        </view>
+        <view>
+          <!--<text>深<text class="blue {{flag ?'gray':''}}">55</text>×宽<text class="blue {{flag ?'gray':''}}">42</text>×高<text class="blue {{flag ?'gray':''}}">10.5</text>cm</text>-->
+          <text>{{item.box_type2.size}}</text>
+        </view>
+        <view class="check_icon" wx:if="{{tabIndex==2}}"></view>
       </view>
-      <view>
-        <!--<text>深<text class="blue {{flag ?'gray':''}}">55</text>×宽<text class="blue {{flag ?'gray':''}}">42</text>×高<text class="blue {{flag ?'gray':''}}">10.5</text>cm</text>-->
-        <text>{{grid1.size}}</text>
-      </view>
-      <view class="check_icon" wx:if="{{tabIndex==2}}"></view>
-    </view>
 
-  </view>
-  <view id="item2" class="item {{grid2.count==0 ?'nocheack':''}}" bindtap="switchTab" data-item="{{grid2}}">
-    <view class="left">
-      <view class="image2">
-        <image src="https://img.aimoge.com/FkJvRhP8uS3Q69kqkNQFe5yc034Y" wx:if="{{!grid2.count==0}}"></image>
-        <image src="https://img.aimoge.com/Fu2knA0Wz9KADoZ6YgHZg3SdNzlv" wx:if="{{grid2.count==0}}"></image>
-      </view>
-      <text>中型格口</text>
     </view>
-    <view class="right">
-      <view>
-        <text>寄存费:<text class="blue {{grid2.count==0 ?'gray':''}}">{{grid2.price}}</text>元</text>
+    <view id="item2" class="item {{item.box_type3.count==0 ?'nocheack':''}}" bindtap="switchBox" data-item="{{item.box_type3}}">
+      <view class="left">
+        <view class="image3">
+          <image src="https://img.aimoge.com/Fl3mSbr1XjhTUJyZmrQbHynUoyfe" wx:if="{{!item.box_type3.count==0}}"></image>
+          <image src="https://img.aimoge.com/FpwLBhhSWAmJuuEtSSYCdF1NfOLV" wx:if="{{item.box_type3.count==0}}"></image>
+        </view>
+        <text>大型格口</text>
       </view>
-      <view>
-        <text>适存：衣物、背包等</text>
+      <view class="right">
+        <view>
+          <text>寄存费: <text class="blue {{item.box_type3.count==0 ?'gray':''}}">{{item.box_type3.fee/100}}</text>元</text>
+        </view>
+        <view>
+          <text>适存：衣物、背包等</text>
+        </view>
+        <view>
+          <!--<text>深<text class="blue {{flag ?'gray':''}}">55</text>×宽<text class="blue {{flag ?'gray':''}}">42</text>×高<text class="blue {{flag ?'gray':''}}">22</text>cm</text>-->
+          <text>{{item.box_type3.size}}</text>
+        </view>
+        <view class="check_icon" wx:if="{{tabIndex==3}}"></view>
       </view>
-      <view>
-        <!--<text>深<text class="blue {{flag ?'gray':''}}">55</text>×宽<text class="blue {{flag ?'gray':''}}">42</text>×高<text class="blue {{flag ?'gray':''}}">22</text>cm</text>-->
-        <text>{{grid2.size}}</text>
-      </view>
-      <view class="check_icon" wx:if="{{tabIndex==3}}"></view>
-    </view>
 
-  </view>
-   <view id="item3" class="item {{grid3.count==0 ?'nocheack':''}} none" bindtap="switchTab" data-item="{{grid3}}">
-    <view class="left">
-      <view class="image3">
-        <image src="https://img.aimoge.com/Fl3mSbr1XjhTUJyZmrQbHynUoyfe" wx:if="{{!grid3.count==0}}"></image>
-        <image src="https://img.aimoge.com/FpwLBhhSWAmJuuEtSSYCdF1NfOLV" wx:if="{{grid3.count==0}}"></image>
-      </view>
-      <text>中型格口</text>
-    </view>
-    <view class="right margin_t30">
-      <view>
-        <text>寄存费:<text class="blue {{grid3.count==0?'gray':''}}">{{grid3.price}}</text>元</text>
-      </view>
-      <view>
-        <text>适存：钥匙、钱包等</text>
-      </view>
-      <view>
-        <!--<text>深<text class="blue {{flag ?'gray':''}}">55</text>×宽<text class="blue {{flag ?'gray':''}}">42</text>×高<text class="blue {{flag ?'gray':''}}">39</text>cm</text>-->
-        <text>{{grid3.size}}</text>
-      </view>
-      <view class="check_icon" wx:if="{{tabIndex==4}}"></view>
     </view>
   </view>
-</view>
-<view class="footer">
-<view class="flex"><view class="image" bindtap="isAgree">
-   <image src="https://img.aimoge.com/FsKEf4swFUpkmJn8O_lLN3WGJkvK" wx:if="{{!agree}}"></image>
-  <image src="https://img.aimoge.com/FhtJJ1CKxR1An0CCGH95L6-DX7h4" wx:if="{{agree}}"></image>
- </view> <text>我同意</text> <navigator class="blue" url="../service/index">《寄件服务协议》</navigator>
- </view>
- <view class="">
-   <view class="{{tabIndex ?'btn':'disabled'}}" bindtap="submit"  >确认下单</view>
- </view>
-</view>
-<view class="mask" wx:if="{{error||loading}}"></view>
-<view class="drawer_box" animation="{{animationData}}" wx:if="{{error}}">
-  <view class="drawer_icon">
-   <image src="../../images/depositOrder/img_fail.png"></image>
+  <view class="footer fixed">
+    <view class="flex">
+      <view class="image" bindtap="isAgree">
+        <image src="https://img.aimoge.com/FsKEf4swFUpkmJn8O_lLN3WGJkvK" wx:if="{{!agree}}"></image>
+        <image src="https://img.aimoge.com/FhtJJ1CKxR1An0CCGH95L6-DX7h4" wx:if="{{agree}}"></image>
+      </view>
+      <text>我同意</text>
+      <navigator class="blue" url="../service/index">《寄件服务协议》</navigator>
+    </view>
+    <view class="">
+      <view class="{{agree&&tabIndex ?'btn':'disabled'}}" bindtap="submit">确认下单</view>
+    </view>
   </view>
-  <view class="drawer_title">/(ㄒoㄒ)/~预约失败</view>
-</view>
-<view class="drawer_box" animation="{{animationData}}" wx:if="{{loading}}">
-  <view class="drawer_icon">
-   <image src="https://img.aimoge.com/FvXNEYNFg2sj_zPDe9FeJFblgrma"></image>
+  <view class="mask" wx:if="{{error||loading}}"></view>
+  <view class="drawer_box" wx:if="{{error}}">
+    <view class="drawer_icon">
+      <image src="../../images/depositOrder/img_fail.png"></image>
+    </view>
+    <view class="drawer_title">/(ㄒoㄒ)/~预约失败</view>
   </view>
-  <view class="drawer_title">预约中</view>
+  <view class="drawer_box" wx:if="{{loading}}">
+    <view class="drawer_icon">
+      <image src="https://img.aimoge.com/FvXNEYNFg2sj_zPDe9FeJFblgrma"></image>
+    </view>
+    <view class="drawer_title">预约中</view>
+  </view>
+  <view class="gege-tip fixed" animation="{{animOfNoneNetWork}}">{{animMsg}}</view>
 </view>
-<view class="gege-tip fixed" animation="{{animOfNoneNetWork}}">{{animMsg}}</view>
-

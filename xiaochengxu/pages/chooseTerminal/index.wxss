@@ -65,7 +65,7 @@ page {
 .search .input .tag {
   right: 48rpx;
   top: 0;
-  background-image: url('http://img.aimoge.com/Fp5Fb_0YJWJASyYvqsDVGCrPXbvC');
+  background-image: url('//img.aimoge.com/Fp5Fb_0YJWJASyYvqsDVGCrPXbvC');
   background-repeat: no-repeat;
   background-size: 32rpx 32rpx;
   background-position: center center;
@@ -132,7 +132,7 @@ page {
   height: 106rpx;
   line-height: 106rpx;
   padding-left: 56rpx;
-  background-image: url('http://img.aimoge.com/FuCPy6uTtcXC0CVP5n740M-ZIRps');
+  background-image: url('//img.aimoge.com/FuCPy6uTtcXC0CVP5n740M-ZIRps');
   background-repeat: no-repeat;
   background-size: 38rpx 38rpx;
   background-position: left center;
