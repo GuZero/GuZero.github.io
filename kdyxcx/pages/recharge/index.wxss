@@ -1,0 +1,76 @@
+/* pages/recharge/index.wxss */
+
+.hearder {
+  height: 260rpx;
+  background-color: #008cff;
+  color: #fff;
+  font-size: 28rpx;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  padding: 0 30rpx;
+  box-sizing: border-box;
+  align-items: center;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+}
+
+.center {
+  content: '';
+  height: 108rpx;
+  border-left: 1rpx solid #ccc;
+  margin-right: 18rpx;
+  opacity: .5;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+}
+
+.image {
+  width: 108rpx;
+  height: 108rpx;
+  margin-right: 22rpx;
+}
+
+.font-48 {
+  font-size: 48rpx;
+}
+.hearder .text{
+  height: 50rpx;
+  line-height: 50rpx;
+}
+.main{
+  padding: 0 30rpx;
+}
+.main .text{
+  font-size: 28rpx;
+  color: #888;
+  margin-top: 30rpx;
+  margin-bottom: 30rpx;
+}
+.main .btn{
+  width: 190rpx;
+  height: 100rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 48rpx;
+  color: #008cff;
+  border:  1rpx solid #008cff;
+  border-radius: 10rpx;
+}
+.item{
+  display: flex;
+  justify-content: space-between;
+}
+.mt_40{
+  margin-top: 40rpx;
+}
+.recharge_btn{
+  margin-top: 90rpx;
+}

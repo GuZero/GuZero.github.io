@@ -45,7 +45,7 @@ Page({
         return {
             title: '格格货栈-自助快递柜',
             desc: '24小时自助快递柜 · 快件收寄，交给格格货栈！',
-            path: '/page/deposit/index'
+            path: '/pages/deposit/index'
         }
     },
     getNetworkType: function () {
@@ -53,14 +53,14 @@ Page({
         wx.getNetworkType({
             success: function (res) {
                 if (!res.networkType || res.networkType == 'none') {
-                    that.setData({ scroll_load_loading: true })
+                    that.setData({ scroll_load_loading: false })
                     app.showErrorTip(that, '当前网络不可用，请检查您的网络设置！');
                     return false;
                 }
                 return true;
             },
             fail: function () {
-                that.setData({ scroll_load_loading: true })
+                that.setData({ scroll_load_loading: false })
                 app.showErrorTip(that, '当前网络不可用，请检查您的网络设置！');
                 return false;
             }
@@ -115,14 +115,12 @@ Page({
                     }
                 } else {
                     app.showErrorTip(that, d.data.msg);
-                    that.setData({ scroll_load_end: true })
-
                 }
             } else {
                 app.showErrorTip(that, '网络错误，请检查您的网络设置！');
-                that.setData({ scroll_load_end: true })
-
             }
+        }, function (err) {
+            app.showErrorTip(that, '网络错误，请检查您的网络设置！');
         })
     },
     getDateByStr: function (str) {
@@ -196,6 +194,8 @@ Page({
             } else {
                 app.showErrorTip(that, '网络错误，请检查您的网络设置！');
             }
+        },function(err){
+            app.showErrorTip(that, '网络错误，请检查您的网络设置！');            
         })
     },
     confirmPay: function (data, callback) {
@@ -265,8 +265,8 @@ Page({
     getDeviceInfo: function (message) {
         var device_info = wx.getSystemInfoSync(),
             network = '',
-            open_id = wx.getStorageSync('openid') || '',
-            udid = wx.getStorageSync('uid') || '';
+            open_id = app.globalData.openid || '',
+            udid = app.globalData.userInfo._id || '';
 
         wx.getNetworkType({
             success: function (res) {
@@ -292,7 +292,7 @@ Page({
     },
     goPay: function (e) {
         this.getDeviceInfo();
-        var open_id = wx.getStorageSync('openid') || '',
+        var open_id = app.globalData.openid  || '',
             that = this,
             item = e.currentTarget.dataset.item;
         that.setData({

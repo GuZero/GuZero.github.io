@@ -2,13 +2,14 @@
 
 page {
   background-color: #efeff4;
-  height: 100%;
-  overflow-y: auto;
+  overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
 }
-
+.depositOrder{
+  overflow-x: hidden;
+    
+}
 .header {
-  width: 100%;
   height: 90rpx;
   line-height: 90rpx;
   padding: 0 32rpx;
@@ -60,7 +61,7 @@ page {
 
 /*内容部分*/
 
-.container {
+.content {
   padding-bottom: 156rpx;
 }
 

@@ -1,0 +1,35 @@
+<!--pages/login/index.wxml-->
+<view class="container">
+  <view class="logintext">
+    <text class="login-text">格格快递员 • 您的派件好帮手</text>
+  </view>
+  <view class="loginform">
+    <view class="formitem">
+      <view class="form-item form-text">手机号码</view>
+      <view class="form-item percent_40">
+        <input placeholder="输入手机号码" maxlength="11" placeholder-class="gege-placeholder" class="form-input" type="number" bindinput="bindInput" style="{{ isUsernameError ? 'color:#e64340' : ''}}" />
+      </view>
+    </view>
+    <view class="formitem">
+      <view class="form-item form-text">密码</view>
+      <view class="form-item percent_40">
+        <input placeholder="输入密码"  placeholder-class="gege-placeholder" class="form-input" type="password" bindinput="bindPwd" />
+      </view>
+    </view>
+    <view class="">
+      <view class="inblock formradio" bindtap="radioChange">
+        <view class="radio-icon">
+          <view class="radio-icon-checked" style="opacity:{{isRadioChecked ? 1: 0}}"></view>
+        </view>
+        <view class="inblock gray">已阅读并同意</view>
+      </view>
+      <navigator url="../terms/index" class="inblock navigator blue">《格格快递员服务协议》</navigator>
+    </view>
+    <view class=" loginbtn" bindtap="login">
+      <button class="button button-blue {{isActiveBtn ? '' : 'disabled' }} " loading="{{isLogining}}">
+        {{isLogining ? "登录中" : "登录"}}
+      </button>
+    </view>
+  </view>
+  <view class="gege-tip fixed" animation="{{animOfNoneNetWork}}">{{animMsg}}</view>
+</view>

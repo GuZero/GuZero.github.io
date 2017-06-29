@@ -11,6 +11,7 @@ Page({
         boxs: [],
         terminal_code: '',
         terminal_name: '',
+        distance: 0,
         tabIndex: null,
         order: {},
         payInfo: {},
@@ -28,16 +29,10 @@ Page({
 
     },
     onPullDownRefresh: function () {
-        this.onLoad()
-        wx.stopPullDownRefresh()
+        this.onLoad(this.options);
+        wx.stopPullDownRefresh();
     },
-    onShareAppMessage: function () {
-        return {
-            title: '格格货栈-自助快递柜',
-            desc: '24小时自助快递柜 · 快件收寄，交给格格货栈！',
-            path: '/page/depositOrder/index'
-        }
-    },
+
     getNetworkType: function () {
         var that = this
         wx.getNetworkType({
@@ -127,6 +122,8 @@ Page({
                     url: '../orderInfo/index?order_id=' + that.data.order.order_id
                 })
             }
+        }, function (err) {
+            app.showErrorTip(that, '网络错误，请检查您的网络设置！');
         })
     },
     wxPay: function () {
@@ -188,8 +185,8 @@ Page({
     getDeviceInfo: function (message) {
         var device_info = wx.getSystemInfoSync(),
             network = '',
-            open_id = wx.getStorageSync('openid') || '',
-            udid = wx.getStorageSync('uid') || '';
+            open_id = app.globalData.openid || '',
+            udid = app.globalData.userInfo._id || '';
         wx.getNetworkType({
             success: function (res) {
                 network = res.networkType
@@ -214,7 +211,7 @@ Page({
     },
     goPay: function () {
         this.getDeviceInfo();
-        var open_id = wx.getStorageSync('openid') || '';
+        var open_id = app.globalData.openid || '';
         var data = {
             total_fee: this.data.order.fee,
             total_num: 1,
@@ -236,17 +233,23 @@ Page({
                         })
                         that.wxPay();
                     } else {
+                        that.hideAll();                        
                         app.showErrorTip(that, d.data.msg);
                         wx.redirectTo({
                             url: '../orderInfo/index?order_id=' + that.data.order.order_id
                         })
                     }
                 } else {
+                    that.hideAll();                                          
                     app.showErrorTip(that, '网络错误，请检查您的网络设置！');
                     wx.redirectTo({
                         url: '../orderInfo/index?order_id=' + that.data.order.order_id
                     })
                 }
+            }, function (err) {
+                that.hideAll();                      
+                that.showError();
+                app.showErrorTip(that, '网络错误，请检查您的网络设置！');
             })
         }
         if (that.data.order.status == 211) {
@@ -291,6 +294,10 @@ Page({
                 that.showError();
                 app.showErrorTip(that, '网络错误，请检查您的网络设置！');
             }
+        }, function (err) {
+            that.hideAll();
+            that.showError();
+            app.showErrorTip(that, '网络错误，请检查您的网络设置！');
         })
     },
     load: function () {
@@ -306,11 +313,17 @@ Page({
                     })
                 }
             }
+        }, function (err) {
+            app.showErrorTip(that, '网络错误，请检查您的网络设置！');
         })
     },
     gotoInfo: function () {
-        wx.navigateTo({
-            url: '../chooseTerminal/index',
+        var that = this;
+        wx.redirectTo({
+            url: '../chooseTerminal/index?terminal_code=' + that.data.terminal_code + '&terminal_name=' + that.data.terminal_name + '&distance=' + that.data.distance,
+            fail:function(err){
+                console.log(err);
+            }
         })
     },
     /**
@@ -319,14 +332,23 @@ Page({
     onLoad: function (options) {
         var that = this;
         that.setData({
-            terminal_code: options.terminal_code,
-            terminal_name: options.terminal_name
-
+            terminal_code: that.options.terminal_code,
+            terminal_name: that.options.terminal_name,
+            distance: that.options.distance || 'none'
         })
         that.getNetworkType();
         app.authenticated(function () {
             that.load();
         });
-
     },
+    onShareAppMessage: function () {
+        var terminal_code = this.data.terminal_code;
+        var terminal_name = this.data.terminal_name;
+        var distance = this.data.distance;
+        return {
+            title: '格格货栈-自助快递柜',
+            desc: '24小时自助快递柜 · 快件收寄，交给格格货栈！',
+            path: '/pages/depositOrder/index?terminal_code=' + terminal_code + '&terminal_name=' +terminal_name + '&distance=' + distance
+        }
+    }
 })

@@ -61,6 +61,10 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-  
+      return {
+          title: '格格货栈-自助快递柜',
+          desc: '24小时自助快递柜 · 快件收寄，交给格格货栈！',
+          path: '/pages/service/index'
+      }
   }
 })

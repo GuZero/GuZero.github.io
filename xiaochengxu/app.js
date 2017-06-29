@@ -53,8 +53,8 @@ App({
       success: function (res) {
         if (res.statusCode == 200){
           if(res.data.status == 0) {
-            setTimeout(that.signIn, 24 * 60 * 60 * 1000);
-            that.checkingSessionFinish();
+            that.globalData.userInfo = res.data.data || {};
+            that.wexinSignin();
           }
           else{
             that.globalData.session = null;
@@ -72,29 +72,71 @@ App({
   },
   login: function () {
     var that = this;
+    that.weixinLogin(function(){
+      that.loadUser(function(){
+      }, function(){
+      });
+      that.checkingSessionFinish();
+    }, that.checkingSessionFinish);
+  },
+  wexinSignin: function(){
+    var that = this;
+    that.request({
+      url: this.globalData.API + '/weixin/' + that.globalData.wxid + '/wxapp/signin',
+      data: {},
+      method: 'POST',
+      success: function (res) {
+        if (res.statusCode == 200) {
+          if (res.data.status == 0) {
+            that.globalData.openid = res.data.data.open_id || '';
+            setTimeout(that.signIn, 6 * 60 * 60 * 1000);
+            that.checkingSessionFinish();
+          }
+          else {
+            that.globalData.session = null;
+            that.login();
+          }
+        }
+        else {
+          that.checkingSessionFinish();
+        }
+      },
+      fail: function () {
+        that.checkingSessionFinish();
+      }
+    });
+  },
+  weixinLogin: function (success_callback, fail_callback){
+    var that = this;
     wx.login({
       success: function (res) {
         that.request({
           url: that.globalData.API + '/weixin/' + that.globalData.wxid + '/wxapp/login',
-          data: {code: res.code},
+          data: { code: res.code },
           method: 'POST',
           success: function (res) {
             if (res.statusCode == 200 && res.data.status == 0) {
               that.globalData.openid = res.data.data.open_id || '';
-              wx.setStorageSync('openid', res.data.data.open_id);
               if (!res.data.data.uid) {
                 that.globalData.session = null;
               }
+              else{
+                that.globalData.userInfo = {
+                  _id: res.data.data.uid,
+                  username: res.data.data.username
+                }
+                return success_callback(res);
+              }
             }
-            that.checkingSessionFinish();
+            fail_callback(res);
           },
           fail: function (res) {
-            that.checkingSessionFinish();
+            fail_callback(res);
           }
         });
       },
       fail: function () {
-        that.checkingSessionFinish();
+        fail_callback();
       }
     });
   },
@@ -129,6 +171,25 @@ App({
     else{
       that.globalData.checking_session.push(authenticated_finish);
     }
+  },
+  loadUser: function (success_callback, fail_callback){
+    var that = this;
+    that.request({
+      url: this.globalData.API + '/user',
+      method: 'GET',
+      success: function (res) {
+        if (res.statusCode == 200 && res.data.status == 0) {
+          that.globalData.userInfo = res.data.data || {};
+          success_callback(res);
+        }
+        else {
+          fail_callback(res);
+        }
+      },
+      fail: function () {
+        fail_callback();
+      }
+    });
   },
   showErrorTip: function (handle, msg) {
     var animation = wx.createAnimation({
@@ -254,5 +315,8 @@ App({
       return "/style480.png";
     }
     return "/style620.png";
+  },
+  getUser: function(){
+    return this.globalData.userInfo;
   }
-})
+});

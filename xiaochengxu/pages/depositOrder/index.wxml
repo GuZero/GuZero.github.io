@@ -1,12 +1,12 @@
 <view class="depositOrder">
   <view class="header flex rel">
     <view class="tag"></view>
-    <view class="input" bindtap="gotoInfo">
-      <view class="text">{{terminal_name}}</view>
+    <view class="input ellipsis" bindtap="gotoInfo">
+      <view class="text ellipsis">{{terminal_name}}</view>
       <view class="search_btn"></view>
     </view>
   </view>
-  <view class="container">
+  <view class="content">
     <view id="item3" class="item {{item.box_type4.count==0 ?'nocheack':''}} none" bindtap="switchBox" data-item="{{item.box_type4}}">
       <view class="left">
         <view class="image">
@@ -41,7 +41,7 @@
           <text>寄存费: <text class="blue {{item.box_type1.count==0?'gray':''}}">{{item.box_type1.fee/100}}</text>元</text>
         </view>
         <view>
-          <text>适存：钥匙、钱包等</text>
+          <text>适用：单鞋、手包等</text>
         </view>
         <view>
           <!--<text>深<text class="blue {{flag ?'gray':''}}">55</text>×宽<text class="blue {{flag ?'gray':''}}">25</text>×高<text class="blue {{flag ?'gray':''}}">10.5</text>cm</text>-->
@@ -64,7 +64,7 @@
           <text>寄存费: <text class="blue {{item.box_type2.count==0?'gray':''}}">{{item.box_type2.fee/100}}</text>元</text>
         </view>
         <view>
-          <text>适存：单鞋、手包等</text>
+          <text>适用：衣物、背包等</text>
         </view>
         <view>
           <!--<text>深<text class="blue {{flag ?'gray':''}}">55</text>×宽<text class="blue {{flag ?'gray':''}}">42</text>×高<text class="blue {{flag ?'gray':''}}">10.5</text>cm</text>-->
@@ -87,7 +87,7 @@
           <text>寄存费: <text class="blue {{item.box_type3.count==0 ?'gray':''}}">{{item.box_type3.fee/100}}</text>元</text>
         </view>
         <view>
-          <text>适存：衣物、背包等</text>
+          <text>适用：棉被、购物大袋等</text>
         </view>
         <view>
           <!--<text>深<text class="blue {{flag ?'gray':''}}">55</text>×宽<text class="blue {{flag ?'gray':''}}">42</text>×高<text class="blue {{flag ?'gray':''}}">22</text>cm</text>-->
@@ -105,7 +105,7 @@
         <image src="https://img.aimoge.com/FhtJJ1CKxR1An0CCGH95L6-DX7h4" wx:if="{{agree}}"></image>
       </view>
       <text>我同意</text>
-      <navigator class="blue" url="../service/index">《寄件服务协议》</navigator>
+      <navigator class="blue" url="../service/index">《物品寄存准则》</navigator>
     </view>
     <view class="">
       <view class="{{agree&&tabIndex ?'btn':'disabled'}}" bindtap="submit">确认下单</view>

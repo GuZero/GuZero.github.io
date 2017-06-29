@@ -1,0 +1,80 @@
+page {
+  background-color: #efeff4;
+  height: 100%;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.meta, .warp {
+  border-bottom: 1rpx #e5e5e5 solid;
+  background-color: #fff;
+  font-size: 34rpx;
+  color: #353535;
+}
+
+.meta.none, .warp.none {
+  border-bottom: none;
+}
+
+.meta:active, .warp:active {
+  background-color: #fafafa;
+}
+
+.meta.suggestion {
+  border-top: 1rpx #e5e5e5 solid;
+  display: flex;
+}
+
+.meta.aw-r::after {
+  top: 30rpx;
+  right: 30rpx;
+}
+.meta.top-up{
+  margin-bottom: 30rpx;
+}
+.warp {
+  padding: 25rpx 0 25rpx 80rpx;
+  margin: 0 0 0 32rpx;
+  background-position: 0 center;
+  background-repeat: no-repeat;
+  background-size: 60rpx 60rpx;
+}
+
+.user .warp {
+  background-image: url("https://img.aimoge.com/Fmmdp-VxX8ePBCkTUuu_MbJhW8Uu");
+}
+.top-up .warp{
+  background-image: url("https://img.aimoge.com/FkF6Hew2jYVN6ehwkMBxzPUpf-xx"); 
+}
+.suggestion .warp {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding-right:70rpx; 
+  background-image: url("https://img.aimoge.com/FoVG9E2t40KYJwuldrvCu-GFryk-");
+}
+
+.customer .warp {
+  background-image: url("https://img.aimoge.com/FloDdALO4YohhgOX4mYWy0gvOMAW");
+}
+
+.logout {
+  margin: 20px 20px 0px 20px;
+  background-color: #008cff;
+  color: #FFFFFF;
+  height: 44px;
+  line-height: 44px;
+  border-radius: 5px;
+  text-align: center;
+}
+.gray{
+  color: #999999;
+}
+.text{
+  text-align: center;
+  font-size: 24rpx;
+  color: #008cff;
+  bottom: 50rpx;
+  width: 100%;
+}

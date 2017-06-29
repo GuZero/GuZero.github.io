@@ -1,0 +1,17 @@
+<View class="meta user rel" bindtap="showLogoutLayer">
+  <View class="warp none rel">{{userInfo ? userInfo.username :'未获取到个人信息'}}</View>
+</View>
+<View class="meta aw-r top-up rel" bindtap="gotoInfo">
+  <View class="warp none rel">账户充值</View>
+</View>
+<View class="meta aw-r suggestion rel" bindtap="linkToSuggestion">
+  <View class="warp none"><text>联系我们</text><text class="gray">9:00～21:00</text></View>  
+</View>
+<View class="meta aw-r customer rel" bindtap="takePhoneCall">
+  <View class="warp none rel">在线客服</View>
+</View>
+<View class="logout rel" bindtap="showLogoutLayer">
+  退出登录
+</View>
+<view class="fixed text">格格快递员·您的派件好帮手</view>
+<view class="gege-tip fixed" animation="{{animOfNoneNetWork}}">{{animMsg}}</view>

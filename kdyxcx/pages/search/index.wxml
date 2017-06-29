@@ -1,0 +1,72 @@
+<!--pages/search/index.wxml-->
+<view class="container">
+  <view class="item">
+    <view class="text">
+      晨光科技产业园南楼一楼大厅楼梯房左侧楼梯B302-1格格货栈
+    </view>
+    <view class="choice">
+      <view class="grid">
+        <view class="btn">4</view>
+        <view class="type">大号</view>
+      </view>
+      <view class="grid">
+        <view class="btn">114</view>
+        <view class="type">中号</view>
+      </view>
+      <view class="grid">
+        <view class="btn">15</view>
+        <view class="type">小号</view>
+      </view>
+      <view class="grid">
+        <view class="btn disabled">0</view>
+        <view class="type">微号</view>
+      </view>
+    </view>
+  </view>
+  <view class="item">
+    <view class="text">
+      晨光科技产业园南楼一楼大厅楼梯房格格货栈
+    </view>
+    <view class="choice">
+      <view class="grid">
+        <view class="btn">4</view>
+        <view class="type">大号</view>
+      </view>
+      <view class="grid">
+        <view class="btn">114</view>
+        <view class="type">中号</view>
+      </view>
+      <view class="grid">
+        <view class="btn">15</view>
+        <view class="type">小号</view>
+      </view>
+      <view class="grid">
+        <view class="btn disabled">0</view>
+        <view class="type">微号</view>
+      </view>
+    </view>
+  </view>
+  <view class="item">
+    <view class="text">
+      晨光科技产业园南楼一楼大厅楼梯房格格货栈
+    </view>
+    <view class="choice">
+      <view class="grid">
+        <view class="btn">4</view>
+        <view class="type">大号</view>
+      </view>
+      <view class="grid">
+        <view class="btn">114</view>
+        <view class="type">中号</view>
+      </view>
+      <view class="grid">
+        <view class="btn">15</view>
+        <view class="type">小号</view>
+      </view>
+      <view class="grid">
+        <view class="btn disabled">0</view>
+        <view class="type">微号</view>
+      </view>
+    </view>
+  </view>
+</view>

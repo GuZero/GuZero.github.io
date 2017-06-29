@@ -45,7 +45,7 @@ Page({
     return {
       title: '格格货栈-自助快递柜',
       desc: '24小时自助快递柜 · 快件收寄，交给格格货栈！',
-      path: '/page/login/index'
+      path: '/pages/login/index'
     }
   },
   getNetworkType: function () {
@@ -349,8 +349,15 @@ Page({
           uid: user.data._id,
           isLogining: !!user.data._id,
         })
-        wx.setStorageSync('uid', user.data._id);
-        return that.goIndex()
+        app.weixinLogin(function(){
+          app.globalData.userInfo = user.data;
+          that.goIndex();
+        }, function(){
+          User.logout(function (succed, msg) {
+            app.globalData.session = null;
+            app.showErrorTip(that, '登录失败');
+          });
+        });
       }
       else {
         that.setData({
@@ -358,6 +365,6 @@ Page({
         })
         app.showErrorTip(that, user)
       }
-    })
+    });
   }
 })

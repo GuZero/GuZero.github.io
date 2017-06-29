@@ -23,7 +23,7 @@ Page({
     return {
       title: '格格货栈-自助快递柜',
       desc: '24小时自助快递柜 · 快件收寄，交给格格货栈！',
-      path: '/page/mine/index'
+      path: '/pages/mine/index'
     }
   },
   getNetworkType: function () {
@@ -61,7 +61,6 @@ Page({
     User.logout(function (succed, msg) {
       if (succed) {
           wx.removeStorageSync('session');
-          wx.removeStorageSync('uid');
         app.globalData.session = null
         wx.reLaunch({
           url: '../login/index'

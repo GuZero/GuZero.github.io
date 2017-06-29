@@ -139,3 +139,8 @@ page {
   font-size: 32rpx;
   color: #4285f4;
 }
+.empty{
+    font-size: 28rpx;
+    color: #888;
+    padding: 32rpx;
+}

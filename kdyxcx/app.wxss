@@ -1,0 +1,213 @@
+/**app.wxss**/
+
+page, .container {
+  box-sizing: border-box;
+}
+
+.rel {
+  position: relative;
+}
+
+.abs {
+  position: absolute;
+}
+
+.fixed {
+  position: fixed;
+}
+
+.flex {
+  display: flex;
+  display: -webkit-flex;
+}
+
+image {
+  max-height: 100%;
+  max-width: 100%;
+}
+
+/** 小箭头，包括上下左右方向 **/
+
+.aw-t::after {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 22rpx;
+  height: 22rpx;
+  border-top: 2px #c7c7cc solid;
+  border-right: 2px #c7c7cc solid;
+  border-top-right-radius: 2px;
+  transform: rotate(-45deg);
+}
+
+.aw-b::after {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 22rpx;
+  height: 22rpx;
+  border-top: 2px #c7c7cc solid;
+  border-right: 2px #c7c7cc solid;
+  border-top-right-radius: 2px;
+  transform: rotate(135deg);
+}
+
+.aw-l::after {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 22rpx;
+  height: 22rpx;
+  border-top: 2px #c7c7cc solid;
+  border-right: 2px #c7c7cc solid;
+  border-top-right-radius: 2px;
+  transform: rotate(-135deg);
+}
+
+.aw-r::after {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 22rpx;
+  height: 22rpx;
+  border-top: 2px #c7c7cc solid;
+  border-right: 2px #c7c7cc solid;
+  border-top-right-radius: 2px;
+  transform: rotate(45deg);
+}
+
+/** 小箭头 end **/
+
+/** tap 高亮效果 **/
+
+.gege-tap:active {
+  background-color: #eee;
+}
+
+/** tap 高亮效果 end **/
+
+/** placeholdertap 默认颜色 **/
+
+.gege-placeholder {
+  color: #b2b2b2;
+}
+
+.gege-tip {
+  height: 70rpx;
+  line-height: 70rpx;
+  background-color: #e64340;
+  color: #fff;
+  font-size: 30rpx;
+  text-align: center;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 900;
+  transform: translateY(-90rpx);
+}
+
+/** 表单 **/
+
+.gege-form-item {
+  border-bottom: 1px #e5e5e5 solid;
+  background-color: #fff;
+  padding: 0 30rpx;
+}
+
+.gege-form-tag {
+  width: 180rpx;
+  font-size: 34rpx;
+  color: #353535;
+  display: flex;
+  align-items: center;
+}
+
+.gege-form-field, .gege-form-field-p {
+  flex: 1;
+}
+
+.gege-form-field-p, .gege-form-field input {
+  font-size: 34rpx;
+  height: 90rpx;
+  line-height: 90rpx;
+}
+
+.gege-form-field-p.gray {
+  color: #b2b2b2;
+}
+
+.gege-form-field input {
+  width: 100%;
+}
+
+/** placeholdertap end **/
+
+/** button **/
+
+.button {
+  height: 94rpx;
+  line-height: 94rpx;
+  background-color: #4285f4;
+  color: #fff;
+  font-size: 36rpx;
+  text-align: center;
+}
+
+.button-blue {
+  background-color: #008cff;
+}
+
+.button-blue:active {
+  background-color: #3370d5;
+}
+
+.button-blue.disabled, .button-blue.disabled:active {
+  opacity: .4;
+}
+
+/** mgLoading **/
+
+.mgLoadingWarp {
+  margin-top: 20rpx;
+  height: 100rpx;
+  text-align: center;
+  line-height: 100rpx;
+  font-size: 28rpx;
+  width: 100%;
+  z-index: 999;
+  opacity: 1;
+  transition: opacity 0.06s ease-in-out;
+  top: 0;
+  left: 0;
+}
+
+.mgLoadingWarp span {
+  font-size: 28rpx;
+  display: block;
+  margin: 0 auto;
+}
+
+.ion-loading-c {
+  background: url('https://img.aimoge.com/FqA7Kv6H770AcP8_gNy1rf_nqJMH') 0 0 no-repeat;
+  display: inline-block;
+  background-size: 70% 70%;
+  background-position: center center;
+  position: relative;
+  top: 20rpx;
+  height: 64px;
+  width: 64px;
+  transform: scale(0.5);
+  transform-origin: right bottom;
+  -webkit-transform: scale(0.5);
+  -webkit-transform-origin: right bottom;
+  -moz-transform: scale(0.5);
+  -moz-transform-origin: right bottom;
+  -o-transform: scale(0.5);
+  -o-transform-origin: right bottom;
+  margin-top: -32px;
+}
+
+
+
+
+

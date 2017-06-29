@@ -4,11 +4,11 @@
       <input type="text" placeholder="输入小区名" placeholder-class="gege-gray" bindinput="change" value="{{key}}" />
       <view class="tag abs" wx:if="{{key}}" bindtap="clearInput"></view>
     </view>
-    <view class="search-btn" bindtap="loadByKey">搜索</view>
+    <view class="search-btn" bindtap="search">搜索</view>
   </view>
   <view class="content rel">
     <view class="lastest">
-      <view class="content-title">最近使用</view>
+      <view class="content-title">当前选择</view>
       <view class="terminal rel" bindtap="chooseTerminal" data-item="{{lastestItem}}">
         {{lastestItem.terminal_name?lastestItem.terminal_name : "暂无最近使用的格格货栈"}}
         <view class="abs dist" wx:if="{{lastestItem.terminal_name}}">{{lastestItem.distance}}km</view>
@@ -18,7 +18,7 @@
       <view class="content-title">附近的格格货栈</view>
       <view class="pos-loading rel" wx:if="{{isLocation}}">
         {{locatinfo}}
-        <view class="abs repos" bindtap="getUserLocation">重新定位</view>
+        <view class="abs repos" bindtap="Reposition">重新定位</view>
       </view>
       <view class="nearby-list" wx:for="{{items}}" wx:key="terminal_code">
         <view class="terminal rel" bindtap="chooseTerminal" data-item="{{item}}">
@@ -28,6 +28,9 @@
       </view>
       <view class="mgLoadingWarp" wx:if="{{scroll_load_loading && !isLocation}}">
         <span><i class="icon ion-loading-c rel"></i>加载中...</span>
+      </view>
+      <view class="empty" wx:if="{{!scroll_load_loading && !items.length}}">
+        <span>┗|｀O′|┛ 嗷~~这里还没有格格货栈哩</span>
       </view>
     </view>
   </view>

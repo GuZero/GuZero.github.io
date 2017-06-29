@@ -22,46 +22,58 @@ Page({
         scroll_load_loading: false,
         scroll_load_end: false
     },
-    choose: function (e) {
-        var data = e.currentTarget.dataset
-        data.code = this.data.code
-        var pages = getCurrentPages();
-        pages[pages.length - 2].setCompany(data);
-        wx.navigateBack({ "delta": 1 });
-    },
-
-    onLoad: function () {
+    onLoad: function (options) {
         var that = this
         that.getNetworkType();
+
         wx.getSystemInfo({
             success: function (res) {
                 that.setData({ scrollHeight: res.windowHeight })
                 that.getUserLocation();
-                that.loadHistory();
+                if (that.options.distance && that.options.distance != 'none' && that.options.terminal_code && that.options.terminal_name) {
+                    that.setData({
+                        lastestItem: {
+                            terminal_code: that.options.terminal_code,
+                            terminal_name: that.options.terminal_name,
+                            distance: that.options.distance
+                        }
+                    })
+                } else {
+                    that.loadHistory();
+                }
             }
         });
     },
+    onShareAppMessage: function () {
+        var terminal_code = this.data.terminal_code;
+        var terminal_name = this.data.terminal_name;
+        var distance = this.data.distance;
+        return {
+            title: '格格货栈-自助快递柜',
+            desc: '24小时自助快递柜 · 快件收寄，交给格格货栈！',
+            path: '/pages/chooseTerminal/index'
+        }
+    },
     onPullDownRefresh: function () {
-        wx.getSystemInfo({
-            success: function (res) {
-                that.setData({ scrollHeight: res.windowHeight })
-                that.getUserLocation();
-                that.loadHistory();
-                wx.stopPullDownRefresh()
-            }
-        });
+        this.onLoad(this.options);
     },
     getNetworkType: function () {
         var that = this
         wx.getNetworkType({
             success: function (res) {
                 if (!res.networkType || res.networkType == 'none') {
+                    that.setData({
+                        scroll_load_loading: false
+                    });
                     app.showErrorTip(that, '当前网络不可用，请检查您的网络设置！');
                     return false;
                 }
                 return true;
             },
             fail: function () {
+                that.setData({
+                    scroll_load_loading: false
+                });
                 app.showErrorTip(that, '当前网络不可用，请检查您的网络设置！');
                 return false;
             }
@@ -83,8 +95,6 @@ Page({
         s = s * 6378.137;// EARTH_RADIUS;
         s = Math.round(s * 1000) / 1000;
         return s;
-
-
         return d * (1 + fl * (h1 * sf * (1 - sg) - h2 * (1 - sf) * sg));
     },
     setDataStatus: function () {
@@ -102,6 +112,7 @@ Page({
     load: function (isFirst) {
         var that = this, page = ''
         if (!that.getNetworkType()) {
+            
             return false
         }
         if (that.data.scroll_load_loading) {
@@ -135,12 +146,12 @@ Page({
                     }
                 } else {
                     app.showErrorTip(that, d.data.msg);
-                    that.setData({ scroll_load_end: true })
                 }
             } else {
                 app.showErrorTip(that, '网络错误，请检查您的网络设置！');
-                that.setData({ scroll_load_end: true })
             }
+        }, function (err) {
+            app.showErrorTip(that, '网络错误，请检查您的网络设置！');
         })
     },
     loadHistory: function () {
@@ -165,31 +176,29 @@ Page({
             } else {
                 app.showErrorTip(that, '网络错误，请检查您的网络设置！');
             }
+        }, function (err) {
+            app.showErrorTip(that, '网络错误，请检查您的网络设置！');
         })
     },
     scrolltolower: function (e) {
         this.load();
     },
-    loadByKey: function () {
 
-        this.setData({
-            page: "",
-            pageList: [],
-            items: []
-        })
-        this.load();
-    },
 
     change: function (e) {
         this.setData({ key: e.detail.value })
         // this.search()
     },
     search: function () {
-        if (this.data.key == '') {
-            this.load()
-        } else {
-            this.loadByKey()
-        }
+        this.setData({
+            page: "",
+            pageList: [],
+            items: [],
+            scroll_load_end: false,
+            scroll_load_loading: false,
+        })
+        this.load();
+
     },
     clearInput: function () {
         this.setData({ key: '' })
@@ -197,7 +206,7 @@ Page({
     chooseTerminal: function (e) {
         var item = e.currentTarget.dataset.item;
         wx.redirectTo({
-            url: '../depositOrder/index?terminal_code=' + (item.terminal_code || item.code) + '&&terminal_name=' + item.terminal_name
+            url: '../depositOrder/index?terminal_code=' + (item.terminal_code || item.code) + '&terminal_name=' + item.terminal_name + '&distance=' + item.distance
         })
     },
     gcj02tobd09: function (lng, lat) {
@@ -207,6 +216,14 @@ Page({
         var bd_lng = z * Math.cos(theta) + 0.0065;
         var bd_lat = z * Math.sin(theta) + 0.006;
         return [bd_lng, bd_lat]
+    },
+    Reposition:function(){
+        var that = this;
+        wx.openSetting({
+            complete: function(res){
+                that.getUserLocation();  
+            }
+        })
     },
     getUserLocation: function () {
         var that = this;

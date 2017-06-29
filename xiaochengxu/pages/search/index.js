@@ -32,7 +32,7 @@ Page({
         return {
             title: '格格货栈-自助快递柜',
             desc: '24小时自助快递柜 · 快件收寄，交给格格货栈！',
-            path: '/page/search/index'
+            path: '/pages/search/index'
         }
     },
     getNetworkType: function () {
@@ -97,6 +97,8 @@ Page({
             } else {
                 app.showErrorTip(that, '网络错误，请检查您的网络设置！');
             }
+        }, function (err) {
+            app.showErrorTip(that, '网络错误，请检查您的网络设置！');
         })
     },
     bindCode: function (e) {

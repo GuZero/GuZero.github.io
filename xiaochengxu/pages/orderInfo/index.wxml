@@ -42,7 +42,7 @@
             </view>
             <view class="info-row info-first rel"  wx:if="{{item.statusIndex == 3}}">
                 <view class="abs info-row-left info-row-status">
-                    寄存码
+                    取件码
                 </view>
                 <span>
                     {{item.password}}

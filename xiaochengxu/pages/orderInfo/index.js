@@ -33,14 +33,14 @@ Page({
         animMsg: ''
     },
     onPullDownRefresh: function () {
-        this.onLoad()
+        this.onLoad(this.options)
         wx.stopPullDownRefresh()
     },
     onShareAppMessage: function () {
         return {
             title: '格格货栈-自助快递柜',
             desc: '24小时自助快递柜 · 快件收寄，交给格格货栈！',
-            path: '/page/deposit/index'
+            path: '/pages/orderInfo/index?order_id='+this.data.order_id
         }
     },
     getNetworkType: function () {
@@ -98,6 +98,8 @@ Page({
             } else {
                 app.showErrorTip(that, '网络错误，请检查您的网络设置！');
             }
+        }, function (err) {
+            app.showErrorTip(that, '网络错误，请检查您的网络设置！');
         })
     },
     getDateByStr: function (str) {
@@ -163,6 +165,8 @@ Page({
             } else {
                 app.showErrorTip(that, '网络错误，请检查您的网络设置！');
             }
+        }, function (err) {
+            app.showErrorTip(that, '网络错误，请检查您的网络设置！');
         })
     },
     linkToDepositOrder: function (e) {
@@ -211,6 +215,8 @@ Page({
             } else {
                 app.showErrorTip(that, '网络错误，请检查您的网络设置！');
             }
+        }, function (err) {
+            app.showErrorTip(that, '网络错误，请检查您的网络设置！');
         })
     },
     wxPay: function () {
@@ -265,8 +271,8 @@ Page({
     getDeviceInfo: function (message) {
         var device_info = wx.getSystemInfoSync(),
             network = '',
-            open_id = wx.getStorageSync('openid') || '',
-            udid = wx.getStorageSync('uid') || '';
+            open_id = app.globalData.openid || '',
+            udid = app.globalData.userInfo._id || '';
         wx.getNetworkType({
             success: function (res) {
                 network = res.networkType
@@ -291,7 +297,7 @@ Page({
     },
     goPay: function () {
         this.getDeviceInfo();
-        var open_id = wx.getStorageSync('openid') || '';
+        var open_id = app.globalData.openid || '';
         var data = {
             total_fee: this.data.item.fee,
             total_num: 1,
@@ -326,6 +332,11 @@ Page({
                 } else {
                     app.showErrorTip(that, '网络错误，请检查您的网络设置！');
                 }
+            }, function (err) {
+                if (wx.hideLoading()) {
+                    wx.hideLoading();
+                } 
+                app.showErrorTip(that, '网络错误，请检查您的网络设置！');
             })
         }
         if (that.data.item.status == 211) {
@@ -372,6 +383,11 @@ Page({
                 } else {
                     app.showErrorTip(that, '网络错误，请检查您的网络设置！');
                 }
+            }, function (err) {
+                if (wx.hideLoading()) {
+                    wx.hideLoading();
+                } 
+                app.showErrorTip(that, '网络错误，请检查您的网络设置！');
             })
         }
 

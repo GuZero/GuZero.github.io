@@ -207,7 +207,11 @@ image {
   margin-top: -32px;
 }
 
+.ellipsis {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
 
-
-
-
+.ellipsis {
+  overflow: hidden;
+}

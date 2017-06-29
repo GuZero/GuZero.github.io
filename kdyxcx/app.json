@@ -1,0 +1,59 @@
+{
+  "pages": [
+                                  
+    "pages/search/index",
+    "pages/login/index",
+    "pages/index/index",
+    
+    "pages/user/index",
+    "pages/inquire/index",
+    
+    "pages/operator/index",
+    "pages/terms/index",
+    "pages/recharge/index"
+   
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#008cff",
+    "navigationBarTextStyle": "white",
+    "enablePullDownRefresh": true,
+    "backgroundColor": "#efeff4",
+    "backgroundTextStyle": "dark",
+    "navigationBarTitleText": "格格快递员"
+  },
+  "tabBar": {
+    "backgroundColor":"#FFF",
+    "list": [
+      {
+        "pagePath": "pages/search/index",
+        "text": "空柜查询",
+        "iconPath": "images/tab/btn_konggui_nor@2x.png",
+        "selectedIconPath":"images/tab/btn_konggui_pre@2x.png"
+      },
+      {
+        "pagePath": "pages/index/index",
+        "text": "投件记录",
+        "iconPath": "images/tab/btn_toujian_nor@2x.png",
+        "selectedIconPath": "images/tab/btn_toujian_pre@2x.png"
+      },
+      {
+        "pagePath": "pages/inquire/index",
+        "text": "快件查询",
+        "iconPath": "images/tab/btn_kuaijian_nor@2x.png",
+        "selectedIconPath": "images/tab/btn_kuaijian_pre@2x.png"
+      },
+      {
+        "pagePath": "pages/user/index",
+        "text": "个人中心",
+        "iconPath": "images/tab/btn_geren_nor@2x.png",
+        "selectedIconPath": "images/tab/btn_geren_pre@2x.png"
+      }
+    ]
+  },
+  "networkTimeout": {
+    "connectSocket": 5000,
+    "request": 60000,
+    "downloadFile": 120000
+  },
+  "debug": false
+}
