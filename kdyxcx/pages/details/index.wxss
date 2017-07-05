@@ -1,5 +1,13 @@
 /* pages/details/index.wxss */
-.hearder{
+
+page {
+  background-color: #eceef1;
+  height: 100%;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.hearder {
   height: 260rpx;
   background-color: #008cff;
   color: #fff;
@@ -7,20 +15,115 @@
   display: flex;
   align-items: center;
 }
-.hearder .image{
+
+.hearder .image {
   width: 126rpx;
   height: 112rpx;
 }
-.hearder .text{
+
+/*等待取*/
+
+.wait {
+  content: "";
+  width: 126rpx;
+  height: 126rpx;
+  background: url("//img.aimoge.com/FuizKz383iR_Xp7cTfLdNPB0-AwY")no-repeat center center;
+  background-size: 100% 100%;
+}
+
+/*已取*/
+
+.acquire {
+  content: "";
+  width: 126rpx;
+  height: 126rpx;
+  background: url("//img.aimoge.com/FgiJKxnPU4eK15aHVdNRI84hmoRS")no-repeat center center;
+  background-size: 100% 100%;
+}
+
+/*回收件*/
+
+.recycle {
+  content: "";
+  width: 126rpx;
+  height: 126rpx;
+  background: url("//img.aimoge.com/FtpeiT8cE-dBo1YOXa5_JTuJW7OG")no-repeat center center;
+  background-size: 100% 100%;
+}
+
+/*超期件*/
+
+.exceed {
+  content: "";
+  width: 126rpx;
+  height: 126rpx;
+  background: url("//img.aimoge.com/FmH2GqoXeGIJU8zYtdblwH3iRXl3")no-repeat center center;
+  background-size: 100% 100%;
+}
+
+/*管理员处理件*/
+
+.admin {
+  content: "";
+  width: 126rpx;
+  height: 126rpx;
+  background: url("//img.aimoge.com/FoR5yQbeoiwdFBFBxVCdKYE0zb_Y")no-repeat center center;
+  background-size: 100% 100%;
+}
+
+.hearder .text {
   font-size: 40rpx;
   margin-left: 70rpx;
   font-weight: 700;
 }
-.item{
-  padding-left:40rpx; 
+
+.item {
+  padding-left: 40rpx;
+  background-color: #fff;
+  font-size: 34rpx;
+  color: #000;
 }
-.item .info{
-  line-height: 80rpx;
-  height: 80rpx;
-  border-bottom: 1px  solid #e5e5e5;
+
+.item .info {
+  line-height: 88rpx;
+  height: 88rpx;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.item .none {
+  border-bottom: none;
+}
+
+.tel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 66%;
+}
+
+.tel .icon {
+  content: '';
+  background: url('//img.aimoge.com/FjVK4Ogwf_aAJuKMvosr2tdhnIRp') no-repeat center center;
+  background-size: 100% 100%;
+  width: 46rpx;
+  height: 46rpx;
+}
+
+/**/
+
+.blue {
+  font-size: 34rpx;
+  color: #008cff;
+}
+
+.mr-95 {
+  margin-right: 95rpx;
+}
+
+.mr-90 {
+  margin-right: 60rpx;
+}
+
+.mt-30 {
+  margin-top: 30rpx;
 }

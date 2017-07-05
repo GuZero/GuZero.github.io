@@ -4,13 +4,13 @@
     <view class="input rel">
       <view class="abs search-icon"></view>
       <input type="text" placeholder="输入快递单号/手机号" placeholder-class="gege-gray" bindinput="change" value="{{key}}" />
-      <view class="scan abs" wx:if="{{!key}}"></view>
+      <view class="scan abs" wx:if="{{!key}}" bindtap="scanCode"></view>
       <view class="tag abs" wx:if="{{key}}" bindtap="clearInput"></view>
     </view>
     <view class="search-btn" bindtap="search">查询</view>
   </view>
   <view class="main mt-90" wx:if="{{items.length!=0}}">
-    <view class="item">
+    <view class="item" bindtap="gotoDetails">
       <view class="text">
         <text>运单号 201605241907</text>
         <text class="gege-green">待取件</text>
@@ -19,19 +19,19 @@
         <view class="info">
           <view class="address">
             <view class="map"></view>
-            <text>魔格公司格格货栈</text>
+            <view class="wrap">魔格公司格格货栈</view>
           </view>
-          <view class="show">
-            收件人：
-            <text>13456578972</text>
+          <view class="show flex">
+            <view class="title">收件人:</view>
+            <view class="data">13456578972</view>
           </view>
-          <view class="show h104">
-            投放时间：
-            <text>2016-05-26 17:45:03</text>
+          <view class="show h104 flex">
+            <view class="title">投放时间：</view>
+            <view class="data">2016-05-26 17:45:03</view>
           </view>
-          <view class="show pb-40">
-            在箱时长：
-            <text>0天 8小时 25分</text>
+          <view class="show pb-40 flex">
+            <view class="title">在箱时长：</view>
+            <view class="data">0天 8小时 25分</view>
           </view>
         </view>
         <view class="ml-22">
@@ -41,7 +41,7 @@
 
     </view>
   </view>
-  <view class="no-result">
+  <view class="no-result" wx:if="{{!items}}">
     <view class="w206">
       <view class="image">
         <image src="//img.aimoge.com/FnSNIItS441YiyzTeCNuXUvhA5sD"></image>

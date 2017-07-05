@@ -13,7 +13,7 @@ App({
       "url": "https://log.aimoge.com/v1/logistic",
       "data": {
         "d": device_info.model,
-        "an": "gegexcu",
+        "an": "kuaidiyuanxcu",
         "av": device_info.version,
         "os": device_info.system.split(' ')[0],
         "ov": device_info.system.split(' ')[1],
@@ -47,14 +47,14 @@ App({
   signIn: function () {
     var that = this;
     that.request({
-      url: this.globalData.API + '/signin',
-      data: {},
+      url: this.globalData.API + '/operator/signin',
+      data: { 'timestamp' : Number.parseInt(new Date().getTime() / 1000)},
       method: 'POST',
       success: function (res) {
         if (res.statusCode == 200) {
           if (res.data.status == 0) {
-            setTimeout(that.signIn, 24 * 60 * 60 * 1000);
-            that.checkingSessionFinish();
+            that.globalData.userInfo = res.data.data || {};
+            that.wexinSignin();
           }
           else {
             that.globalData.session = null;
@@ -72,29 +72,71 @@ App({
   },
   login: function () {
     var that = this;
+    that.weixinLogin(function () {
+      that.loadUser(function () {
+      }, function () {
+      });
+      that.checkingSessionFinish();
+    }, that.checkingSessionFinish);
+  },
+  wexinSignin: function () {
+    var that = this;
+    that.request({
+      url: this.globalData.USER_API+ '/weixin/' + that.globalData.wxid + '/wxapp/signin',
+      data: {},
+      method: 'POST',
+      success: function (res) {
+        if (res.statusCode == 200) {
+          if (res.data.status == 0) {
+            that.globalData.openid = res.data.data.open_id || '';
+            setTimeout(that.signIn, 6 * 60 * 60 * 1000);
+            that.checkingSessionFinish();
+          }
+          else {
+            that.globalData.session = null;
+            that.login();
+          }
+        }
+        else {
+          that.checkingSessionFinish();
+        }
+      },
+      fail: function () {
+        that.checkingSessionFinish();
+      }
+    });
+  },
+  weixinLogin: function (success_callback, fail_callback) {
+    var that = this;
     wx.login({
       success: function (res) {
         that.request({
-          url: that.globalData.API + '/weixin/' + that.globalData.wxid + '/operator/login',
+          url: that.globalData.USER_API + '/weixin/' + that.globalData.wxid + '/wxapp/login?require_login=0',
           data: { code: res.code },
           method: 'POST',
           success: function (res) {
             if (res.statusCode == 200 && res.data.status == 0) {
               that.globalData.openid = res.data.data.open_id || '';
-              wx.setStorageSync('openid', res.data.data.open_id);
               if (!res.data.data.uid) {
                 that.globalData.session = null;
               }
+              else {
+                that.globalData.userInfo = {
+                  _id: res.data.data.uid,
+                  username: res.data.data.username
+                }
+                return success_callback(res);
+              }
             }
-            that.checkingSessionFinish();
+            fail_callback(res);
           },
           fail: function (res) {
-            that.checkingSessionFinish();
+            fail_callback(res);
           }
         });
       },
       fail: function () {
-        that.checkingSessionFinish();
+        fail_callback();
       }
     });
   },
@@ -130,6 +172,25 @@ App({
       that.globalData.checking_session.push(authenticated_finish);
     }
   },
+  loadUser: function (success_callback, fail_callback) {
+    var that = this;
+    that.request({
+      url: this.globalData.USER_API + '/user',
+      method: 'GET',
+      success: function (res) {
+        if (res.statusCode == 200 && res.data.status == 0) {
+          that.globalData.userInfo = res.data.data || {};
+          success_callback(res);
+        }
+        else {
+          fail_callback(res);
+        }
+      },
+      fail: function () {
+        fail_callback();
+      }
+    });
+  },
   showErrorTip: function (handle, msg) {
     var animation = wx.createAnimation({
       duration: 600,
@@ -158,7 +219,7 @@ App({
       duration: 2500
     })
     setTimeout(function () {
-      wx.hideToast()
+      wx.hideToast();
     }.bind(this), 3000)
   },
   globalData: {
@@ -167,6 +228,7 @@ App({
     openid: '',
     wxid: '595316966803fa65338b4569',
     API: 'https://api.ebox.gegebox.com/v2',
+    USER_API: 'https://api.gegebox.com/v1',
     PAY: 'https://pay.gegebox.com/v1',
     STORE: "https://store.gegebox.com/v1",
     userInfo: null
@@ -184,7 +246,6 @@ App({
         success_callback(result);
       }
     };
-
     var header = req.header || {};
     header["X-SESSION"] = "token";
     if (that.globalData.session && new Date(that.globalData.session.expires || "") > new Date()) {
@@ -196,23 +257,10 @@ App({
   },
   ajax: function (method, url, data, succed, error) {
     this.request({
-      url: this.globalData.API + url,
+      url: url,
       data: data || {},
       method: method,
-      success: function (res) {
-        return succed(res);
-      },
-      fail: function (res) {
-        return error ? error(res) : 0;
-      }
-    });
-  },
-  ajaxPay: function (method, url, data, succed, error) {
-    this.request({
-      url: this.globalData.PAY + url,
-      data: data || {},
-      method: method,
-      header: { "Content-Type": "application/json" },
+    //   header: { "Content-Type": "application/json" },
       success: function (res) {
         return succed(res);
       },
@@ -254,5 +302,12 @@ App({
       return "/style480.png";
     }
     return "/style620.png";
+  },
+  getUser: function () {
+    return this.globalData.userInfo;
   }
-})
+});
+
+
+
+

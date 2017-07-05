@@ -4,6 +4,9 @@
 <View class="meta aw-r top-up rel" bindtap="gotoInfo">
   <View class="warp none rel">账户充值</View>
 </View>
+<View class="meta aw-r record rel" bindtap="gotoRechargeRecord">
+  <View class="warp none rel">充值记录</View>
+</View>
 <View class="meta aw-r suggestion rel" bindtap="linkToSuggestion">
   <View class="warp none"><text>联系我们</text><text class="gray">9:00～21:00</text></View>  
 </View>

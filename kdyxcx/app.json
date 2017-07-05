@@ -1,18 +1,15 @@
 {
   "pages": [
-    "pages/details/index",
-    "pages/inquire/index",                              
-    "pages/search/index",
-    "pages/login/index",
     "pages/index/index",
-    
+    "pages/details/index",
+    "pages/inquire/index",
+    "pages/login/index",
     "pages/user/index",
-    
-    
+    "pages/search/index",
+    "pages/record/index",
     "pages/operator/index",
     "pages/terms/index",
     "pages/recharge/index"
-   
   ],
   "window": {
     "navigationBarBackgroundColor": "#008cff",
@@ -23,13 +20,14 @@
     "navigationBarTitleText": "格格快递员"
   },
   "tabBar": {
-    "backgroundColor":"#FFF",
+    "backgroundColor": "#FFF",
+    "selectedColor": "#008cff",
     "list": [
       {
         "pagePath": "pages/search/index",
         "text": "空柜查询",
         "iconPath": "images/tab/btn_konggui_nor@2x.png",
-        "selectedIconPath":"images/tab/btn_konggui_pre@2x.png"
+        "selectedIconPath": "images/tab/btn_konggui_pre@2x.png"
       },
       {
         "pagePath": "pages/index/index",

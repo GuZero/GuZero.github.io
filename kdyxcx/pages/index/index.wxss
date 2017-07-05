@@ -1,21 +1,204 @@
-/**index.wxss**/
-.userinfo {
+page {
+  background-color: #eceef1;
+  height: 100%;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.header {
+  top: 0;
+  left: 0;
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 1111;
+}
+
+.header-choose {
+  height: 100rpx;
+  background-color: #008cff;
+  color: #fff;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 34rpx;
+  width: 100%;
+}
+
+.header-choose .text {
+  right: 30rpx;
+  font-size: 30rpx;
+}
+
+.header-choose .icon {
+  width: 16rpx;
+  height: 16rpx;
+  position: absolute;
+  left: 58%;
+  top: 32%;
+}
+
+.header-choose .aw-b::after {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 16rpx;
+  height: 16rpx;
+  border-top: 3px #fff solid;
+  border-right: 3px #fff solid;
+  border-top-right-radius: 3px;
+  transform: rotate(135deg);
+}
+
+.center {
   align-items: center;
 }
 
-.userinfo-avatar {
-  width: 128rpx;
-  height: 128rpx;
-  margin: 20rpx;
-  border-radius: 50%;
+.layer {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  opacity: 0.5;
+  top: 0;
+  left: 0;
+  z-index: 111;
 }
 
-.userinfo-nickname {
-  color: #aaa;
+.tabBox {
+  border-bottom: 1rpx #e5e5e5 solid;
+  position: fixed;
+  top: 100rpx;
+  left: 0;
+  width: 100%;
+  z-index: 300;
 }
 
-.usermotto {
-  margin-top: 200px;
+.tab {
+  flex: 1;
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+  height: 88rpx;
+  line-height: 88rpx;
+  background-color: #fafafa;
+  font-size: 30rpx;
+  color: #353535;
+}
+
+.tab::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 118rpx;
+  height: 6rpx;
+  background-color: #fafafa;
+  margin-left: -60rpx;
+}
+
+.tab.active {
+  color: #008cff;
+}
+
+.tab.active::after {
+  background-color: #008cff;
+}
+
+.content {
+  padding-top: 188rpx;
+}
+
+.item {
+  background: #fff;
+  margin-bottom: 30rpx;
+  font-size: 30rpx;
+  padding: 0 32rpx;
+}
+
+.item-header {
+  height: 110rpx;
+  line-height: 110rpx;
+  color: #000;
+  font-size: 34rpx;
+  border-bottom: 1rpx solid #dcdcdc;
+  box-sizing: border-box;
+  padding-right: 30rpx;
+}
+
+.number {
+  margin: 0 14rpx;
+  flex: 1;
+}
+
+.item-content {
+  padding: 40rpx 54rpx 40rpx 0;
+  color: #888;
+}
+
+.item-content:after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 50%;
+  right: 30rpx;
+  width: 24rpx;
+  height: 24rpx;
+  margin-top: -12rpx;
+  border-right: 4rpx solid #aeaeae;
+  border-top: 4rpx solid #aeaeae;
+  transform: rotate(45deg);
+}
+
+.item-title {
+  color: #000;
+  min-height: 44rpx;
+  vertical-align: middle;
+}
+
+.location-icon {
+  display: inline-block;
+  width: 15px;
+  height: 19px;
+  background: url('//img.aimoge.com/FnGk4vF_BPYrtOaOE7qhsnoPkG-M') no-repeat;
+  background-size: 100%;
+  vertical-align: middle;
+  margin-right: 14rpx;
+}
+
+.ver-mid {
+  vertical-align: middle;
+}
+
+.item-info {
+  margin-top: 34rpx;
+}
+
+.item-info-label {
+  width: 160rpx;
+}
+
+.fill-flex {
+  flex: 1;
+  word-break: break-all;
+  word-wrap: break-word;
+}
+
+.gege-green {
+  color: #09bb07;
+  text-align: right;
+}
+
+.gege-blue {
+  color: #008cff;
+  text-align: right;
+}
+
+.gege-orange {
+  color: #ff7300;
+  text-align: right;
+}
+
+.gege-yellow {
+  color: #ffbe00;
+  text-align: right;
 }

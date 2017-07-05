@@ -21,9 +21,19 @@ page, .container {
   display: -webkit-flex;
 }
 
+.flexmode {
+  align-items: center;
+}
+
 image {
   max-height: 100%;
   max-width: 100%;
+}
+
+.ellipsis {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 /** 小箭头，包括上下左右方向 **/
@@ -109,7 +119,7 @@ image {
 /** 表单 **/
 
 .gege-form-item {
-  border-bottom: 1px #e5e5e5 solid;
+  border-bottom: 1px #dcdcdc solid;
   background-color: #fff;
   padding: 0 30rpx;
 }
@@ -162,7 +172,7 @@ image {
 }
 
 .button-blue.disabled, .button-blue.disabled:active {
-  opacity: .4;
+  opacity: 0.4;
 }
 
 /** mgLoading **/
@@ -206,11 +216,24 @@ image {
   -o-transform-origin: right bottom;
   margin-top: -32px;
 }
-.hover{
+
+.hover {
   background-color: #007ee5;
-  opacity: .6;
+  opacity: 0.6;
 }
 
+.empty-content {
+  color: #b8b8b8;
+  font-size: 32rpx;
+  text-align: center;
+  padding-top: 35%;
+  width: 100%;
+}
 
-
-
+.empty-content .empty-img {
+  width: 156rpx;
+  height: 156rpx;
+  margin: 30rpx auto;
+  background: url(//img.aimoge.com/FjmANRvf07CVvfV-21eJlqTNHC3u) no-repeat;
+  background-size: 100%;
+}

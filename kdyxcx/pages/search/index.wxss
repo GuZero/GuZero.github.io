@@ -34,7 +34,6 @@ page {
   text-align: center;
   color: #008cff;
   border: 1rpx solid #008cff;
-  font-weight: 600;
 }
 .btn.disabled{
   border: 1rpx solid #000;

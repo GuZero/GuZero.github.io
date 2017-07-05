@@ -6,7 +6,7 @@ Page({
    */
   data: {
     key: '',
-    items:[]
+    items:['1']
   },
 
   /**
@@ -15,12 +15,23 @@ Page({
   onLoad: function (options) {
   
   },
+  gotoDetails:function(){
+    wx.navigateTo({
+      url: '../details/index',
+    })
+  },
+  scanCode:function(){
+    wx.scanCode({
+      success:function(res){
+        console.log(res);
+      }
+    })
+  },
   change: function (e) {
-    this.setData({ key: e.detail.value })
-    // this.search()
+    this.setData({ key: e.detail.value });
   },
   clearInput: function () {
-    this.setData({ key: '' })
+    this.setData({ key: '' });
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
