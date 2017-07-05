@@ -4,6 +4,7 @@ Page({
     data: {
         animOfNoneNetWork: {},
         animMsg: '',
+        options: '',
         agree: true,
         error: false,
         loading: false,
@@ -29,7 +30,7 @@ Page({
 
     },
     onPullDownRefresh: function () {
-        this.onLoad(this.options);
+        this.onLoad(this.data.options);
         wx.stopPullDownRefresh();
     },
 
@@ -331,10 +332,18 @@ Page({
      */
     onLoad: function (options) {
         var that = this;
+        if (options) {
+            that.setData({
+                options: options
+            })
+        }
+        var terminal_code = options && options.terminal_code ? options.terminal_code : '';
+        var terminal_name = options && options.terminal_name ? options.terminal_name : '';
+        var distance = options && options.distance ? options.distance : 'none';
         that.setData({
-            terminal_code: that.options.terminal_code,
-            terminal_name: that.options.terminal_name,
-            distance: that.options.distance || 'none'
+            terminal_code: terminal_code,
+            terminal_name: terminal_name,
+            distance: distance || 'none'
         })
         that.getNetworkType();
         app.authenticated(function () {

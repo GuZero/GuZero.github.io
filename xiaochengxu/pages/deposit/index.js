@@ -317,7 +317,7 @@ Page({
         }
         function gegePay() {
             app.ajaxPay('POST', "/pay", data, function (d) {
-                if (wx.hideLoading()) {
+                if (wx.hideLoading) {
                     wx.hideLoading();
                 }
                 if (d.statusCode == 200) {

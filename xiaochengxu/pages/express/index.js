@@ -143,6 +143,28 @@ Page({
   scrolltolower: function (e) {
     this.load()
   },
+  bd09togcj02: function (bd_lon, bd_lat) {
+      var x_pi = 3.14159265358979324 * 3000.0 / 180.0;
+      var x = bd_lon - 0.0065;
+      var y = bd_lat - 0.006;
+      var z = Math.sqrt(x * x + y * y) - 0.00002 * Math.sin(y * x_pi);
+      var theta = Math.atan2(y, x) - 0.000003 * Math.cos(x * x_pi);
+      var gg_lng = z * Math.cos(theta);
+      var gg_lat = z * Math.sin(theta);
+      return [gg_lng, gg_lat]
+  },
+  openLocationMap: function (e) {
+      var order = e.currentTarget.dataset.item,
+          that = this,
+          geo = that.bd09togcj02(order.terminal_geo[0], order.terminal_geo[1]);
+      wx.openLocation({
+          latitude: Number(geo[1]),
+          longitude: Number(geo[0]),
+          name: order.terminal_name,
+          address: order.province_name + order.city_name + order.region_name + order.terminal_addr,
+          scale: 30
+      })
+  },
   onLoad: function () {
     var that = this
     that.getNetworkType();

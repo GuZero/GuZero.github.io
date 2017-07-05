@@ -1,0 +1,26 @@
+/* pages/details/index.wxss */
+.hearder{
+  height: 260rpx;
+  background-color: #008cff;
+  color: #fff;
+  padding: 0 44rpx;
+  display: flex;
+  align-items: center;
+}
+.hearder .image{
+  width: 126rpx;
+  height: 112rpx;
+}
+.hearder .text{
+  font-size: 40rpx;
+  margin-left: 70rpx;
+  font-weight: 700;
+}
+.item{
+  padding-left:40rpx; 
+}
+.item .info{
+  line-height: 80rpx;
+  height: 80rpx;
+  border-bottom: 1px  solid #e5e5e5;
+}

@@ -61,10 +61,16 @@ Page({
     User.logout(function (succed, msg) {
       if (succed) {
           wx.removeStorageSync('session');
-        app.globalData.session = null
-        wx.reLaunch({
-          url: '../login/index'
-        })
+        app.globalData.session = null;
+        if (wx.reLaunch) {
+            wx.reLaunch({
+                url: '../login/index'
+            })
+        } else {
+            wx.redirectTo({
+                url: '../login/index'
+            })
+        }
       } else {
         app.showErrorTip(that, msg);
       }

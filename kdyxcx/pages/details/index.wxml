@@ -1,0 +1,17 @@
+<!--pages/details/index.wxml-->
+<view class="container">
+   <view class="hearder">
+      <view class="image">
+        <image src="//img.aimoge.com/FqKb39VyCH83aJAIbrvXw2uvn7lV"></image>
+      </view>
+      <view class="text">
+        <text>待取件</text>
+      </view>
+   </view>
+   <view class="item">
+      <view class="info">
+         <text>运单号</text>
+         <text>201605241907</text>
+      </view>
+   </view>
+</view>

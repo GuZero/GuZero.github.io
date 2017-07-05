@@ -206,7 +206,10 @@ image {
   -o-transform-origin: right bottom;
   margin-top: -32px;
 }
-
+.hover{
+  background-color: #007ee5;
+  opacity: .6;
+}
 
 
 

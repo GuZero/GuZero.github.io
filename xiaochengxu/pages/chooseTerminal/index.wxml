@@ -1,8 +1,8 @@
 <scroll-view scroll-y="true" bindscrolltolower="scrolltolower" bindscrolltolower="scrolltolower" style="height:{{scrollHeight}}px;">
   <view class="search flex fixed">
     <view class="input rel">
-      <input type="text" placeholder="输入小区名" placeholder-class="gege-gray" bindinput="change" value="{{key}}" />
-      <view class="tag abs" wx:if="{{key}}" bindtap="clearInput"></view>
+      <input type="text" placeholder="输入小区名" placeholder-class="gege-gray" bindinput="bindKeyInput" value="{{word}}" />
+      <view class="tag abs" wx:if="{{word}}" bindtap="clearInput"></view>
     </view>
     <view class="search-btn" bindtap="search">搜索</view>
   </view>
@@ -29,7 +29,7 @@
       <view class="mgLoadingWarp" wx:if="{{scroll_load_loading && !isLocation}}">
         <span><i class="icon ion-loading-c rel"></i>加载中...</span>
       </view>
-      <view class="empty" wx:if="{{!scroll_load_loading && !items.length}}">
+      <view class="empty" wx:if="{{!scroll_load_loading && !items.length && !isLocation}}">
         <span>┗|｀O′|┛ 嗷~~这里还没有格格货栈哩</span>
       </view>
     </view>

@@ -1,12 +1,13 @@
 {
   "pages": [
-                                  
+    "pages/details/index",
+    "pages/inquire/index",                              
     "pages/search/index",
     "pages/login/index",
     "pages/index/index",
     
     "pages/user/index",
-    "pages/inquire/index",
+    
     
     "pages/operator/index",
     "pages/terms/index",

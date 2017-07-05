@@ -6,7 +6,7 @@
     </view>
     <view wx:if="{{items.length > 0}}">
         <view class="list" wx:for="{{items}}" wx:key="{{order_id}}">
-            <view class="item">
+            <view class="item" data-orderid="{{item.order_id}}"  bindtap="goToInfo">
                 <view class="item-info">
                     <view class="info-row info-first rel">
                         <view class="abs info-row-left info-row-status" wx:if="{{item.statusIndex == 1}}">
@@ -53,8 +53,8 @@
                 </view>
                 <view class="item-btn flex">
                     <!--<view class="item-btn-field flexmode item-btn-left" wx:if="{{item.statusIndex == 4 || item.statusIndex == 5}}">删除订单</view>-->
-                    <view class="item-btn-field flexmode item-btn-left" wx:if="{{item.statusIndex == 1 && item.overTime>0}}"  data-item="{{item}}" bindtap="goPay">去支付</view>
-                    <view class="item-btn-field flexmode" data-orderid="{{item.order_id}}"  bindtap="goToInfo">查看详情</view>
+                    <view class="item-btn-field flexmode item-btn-left" wx:if="{{item.statusIndex == 1 && item.overTime>0}}"  data-item="{{item}}" catchtap="goPay">去支付</view>
+                    <view class="item-btn-field flexmode" data-orderid="{{item.order_id}}"  catchtap="goToInfo">查看详情</view>
                 </view>
             </view>
         </view>

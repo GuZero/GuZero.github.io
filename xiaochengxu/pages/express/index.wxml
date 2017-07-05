@@ -19,18 +19,18 @@
           <View class="mText abs">入柜时间</View>
           <View class="mValue">{{item.deliver_time || '-'}}</View>
         </View>
-        <View class="meta flex rel" wx:if="{{item.terminal_village_address}}">
+        <View class="meta flex rel row-address" wx:if="{{item.terminal_village_address}}" catchtap="openLocationMap" data-item="{{item}}">
           <View class="mText abs">取件地址</View>
           <View class="mValue">{{item.terminal_name}}（{{item.terminal_village_address}}）</View>
         </View>
-        <View class="meta flex rel" wx:if="{{!item.terminal_village_address}}">
+        <View class="meta flex rel row-address" wx:if="{{!item.terminal_village_address}}" catchtap="openLocationMap" data-item="{{item}}">
           <View class="mText abs">取件地址</View>
           <View class="mValue">{{item.terminal_name}}</View>
         </View>
       </View>
       <View class="btn flex rel">
-        <View class="tap rel" data-deliverytype="{{item.delivery_type}}" data-company="{{item.delivery_name}}" data-code="{{item.number || ''}}" bindtap="linkToInfo">查看运单</View>
-        <View class="tap blue rel" data-mobile="{{item.operator_mobile}}" bindtap="takePhoneCall">联系快递员</View>
+        <View class="tap rel" data-deliverytype="{{item.delivery_type}}" data-company="{{item.delivery_name}}" data-code="{{item.number || ''}}" catchtap="linkToInfo">查看运单</View>
+        <View class="tap blue rel" data-mobile="{{item.operator_mobile}}" catchtap="takePhoneCall">联系快递员</View>
       </View>
     </view>
   </view>
@@ -49,18 +49,18 @@
           <View class="mText abs">取件时间</View>
           <View class="mValue">{{item.fetch_time || '-'}}</View>
         </View>
-        <View class="meta flex rel" wx:if="{{item.terminal_village_address}}">
+        <View class="meta flex rel row-address" wx:if="{{item.terminal_village_address}}" catchtap="openLocationMap" data-item="{{item}}">
           <View class="mText abs">取件地址</View>
           <View class="mValue">{{item.terminal_name}}（{{item.terminal_village_address}}）</View>
         </View>
-        <View class="meta flex rel" wx:if="{{!item.terminal_village_address}}">
+        <View class="meta flex rel row-address" wx:if="{{!item.terminal_village_address}}" catchtap="openLocationMap" data-item="{{item}}">
           <View class="mText abs">取件地址</View>
           <View class="mValue">{{item.terminal_name}}</View>
         </View>
       </View>
       <View class="btn flex rel">
-        <View class="tap rel" data-deliverytype="{{item.delivery_type}}" data-company="{{item.delivery_name}}" data-code="{{item.number || ''}}" bindtap="linkToInfo">查看运单</View>
-        <View class="tap blue rel" data-mobile="{{item.operator_mobile}}" bindtap="takePhoneCall">联系快递员</View>
+        <View class="tap rel" data-deliverytype="{{item.delivery_type}}" data-company="{{item.delivery_name}}" data-code="{{item.number || ''}}" catchtap="linkToInfo">查看运单</View>
+        <View class="tap blue rel" data-mobile="{{item.operator_mobile}}" catchtap="takePhoneCall">联系快递员</View>
       </View>
     </view>
     <view class="mgLoadingWarp rel" wx:if="{{!scroll_load_end}}">

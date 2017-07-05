@@ -80,7 +80,7 @@ page {
 }
 
 .item .warp {
-  padding: 30rpx 0 0 40rpx;
+  padding: 0 0 0 40rpx;
 }
 
 .item .meta {
@@ -88,14 +88,14 @@ page {
 }
 
 .item .meta.head {
-  padding: 0 0 30rpx 0;
+    height: 116rpx;
+    line-height: 116rpx;
   border-bottom: 1rpx #e5e5e5 solid;
+  align-items:center;
 }
 
 .item .meta .mText {
   width: 150rpx;
-  align-items: center;
-  display: flex;
 }
 
 .item .meta .mValue {
@@ -128,4 +128,22 @@ page {
 
 .mgLoadingWarp {
   top: 0;
+}
+.row-address {
+  padding-right: 20rpx;
+}
+
+.row-address::after {
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  display: block;
+  content: '';
+  width: 14rpx;
+  height: 14rpx;
+  border-top: 2px solid #4285f4;
+  border-right: 2px solid #4285f4;
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  margin-top: -9rpx;
 }

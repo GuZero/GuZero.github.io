@@ -31,7 +31,7 @@ Page({
 
     },
     onPullDownRefresh: function () {
-        this.onLoad(this.options)
+        this.onLoad(this.data.options)
         wx.stopPullDownRefresh()
     },
     onShareAppMessage: function () {
@@ -65,7 +65,7 @@ Page({
         if (!that.getNetworkType()) {
             return false;
         }
-        app.ajax('GET', "/delivery/query?company=" + that.data.company + "&number=" + that.data.code, null, function (d) {
+        app.ajax('GET', "/delivery/query?company=" + that.data.company + "&number=" + encodeURIComponent(that.data.code), null, function (d) {
             that.setData({ scroll_load_end: true })
             if (d.statusCode == 200) {
                 if (d.data.status == 0) {

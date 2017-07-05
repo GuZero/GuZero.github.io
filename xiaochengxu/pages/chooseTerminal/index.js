@@ -4,12 +4,13 @@ Page({
     data: {
         animOfNoneNetWork: {},
         animMsg: '',
-        key: '',
+        word: '',
         lastestItem: {
             terminal_name: '',
             terminal_code: '',
             distance: 0
         },
+        options: {},
         latitude: 32.015198941158,
         longitude: 118.79287282351,
         locatinfo: "定位中...",
@@ -23,19 +24,26 @@ Page({
         scroll_load_end: false
     },
     onLoad: function (options) {
-        var that = this
+        var that = this;
         that.getNetworkType();
-
+        if (options) {
+            that.setData({
+                options: options
+            })
+        }
+        var terminal_code = options && options.terminal_code ? options.terminal_code : '';
+        var terminal_name = options && options.terminal_name ? options.terminal_name : '';
+        var distance = options && options.distance ? options.distance : 'none';
         wx.getSystemInfo({
             success: function (res) {
                 that.setData({ scrollHeight: res.windowHeight })
                 that.getUserLocation();
-                if (that.options.distance && that.options.distance != 'none' && that.options.terminal_code && that.options.terminal_name) {
+                if (distance && distance != 'none' && terminal_code && terminal_name) {
                     that.setData({
                         lastestItem: {
-                            terminal_code: that.options.terminal_code,
-                            terminal_name: that.options.terminal_name,
-                            distance: that.options.distance
+                            terminal_code: terminal_code,
+                            terminal_name: terminal_name,
+                            distance: distance
                         }
                     })
                 } else {
@@ -55,8 +63,10 @@ Page({
         }
     },
     onPullDownRefresh: function () {
-        this.onLoad(this.options);
-    },
+        this.onLoad(this.data.options);
+        wx.stopPullDownRefresh();
+    },        
+
     getNetworkType: function () {
         var that = this
         wx.getNetworkType({
@@ -125,7 +135,7 @@ Page({
             scroll_load_loading: true
         });
         page = that.data.page;
-        app.ajax('GET', "/ultrabox/storage/terminal/near?longitude=" + that.data.longitude + "&latitude=" + that.data.latitude + "&word=" + that.data.key + "&cursor=" + page, null, function (d) {
+        app.ajax('GET', "/ultrabox/storage/terminal/near?longitude=" + that.data.longitude + "&latitude=" + that.data.latitude + "&word=" + encodeURIComponent(that.data.word) + "&cursor=" + page, null, function (d) {
             that.setData({
                 scroll_load_loading: false
             });
@@ -183,11 +193,11 @@ Page({
     scrolltolower: function (e) {
         this.load();
     },
-
-
-    change: function (e) {
-        this.setData({ key: e.detail.value })
-        // this.search()
+    clearInput: function () {
+        this.setData({ word: '' });
+    },
+    bindKeyInput: function (e) {
+        this.setData({ word: e.detail.value });
     },
     search: function () {
         this.setData({
@@ -195,14 +205,12 @@ Page({
             pageList: [],
             items: [],
             scroll_load_end: false,
-            scroll_load_loading: false,
+            scroll_load_loading: false
         })
         this.load();
 
     },
-    clearInput: function () {
-        this.setData({ key: '' })
-    },
+
     chooseTerminal: function (e) {
         var item = e.currentTarget.dataset.item;
         wx.redirectTo({
@@ -219,11 +227,18 @@ Page({
     },
     Reposition:function(){
         var that = this;
-        wx.openSetting({
-            complete: function(res){
-                that.getUserLocation();  
-            }
-        })
+        if(wx.openSetting){
+            wx.openSetting({
+                complete: function (res) {
+                    that.getUserLocation();
+                }
+            })
+        }else{
+            wx.showModal({
+                title: '提示',
+                content: '当前微信版本过低，无法使用该功能，请升级到最新微信版本后重试。'
+            })
+        }
     },
     getUserLocation: function () {
         var that = this;

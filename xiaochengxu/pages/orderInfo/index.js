@@ -4,6 +4,7 @@ var app = getApp()
 Page({
     data: {
         order_id: '',
+        options:{},
         item: [],
         status: {
             1: [201, 211, 291, 292],
@@ -33,7 +34,7 @@ Page({
         animMsg: ''
     },
     onPullDownRefresh: function () {
-        this.onLoad(this.options)
+        this.onLoad(this.data.options)
         wx.stopPullDownRefresh()
     },
     onShareAppMessage: function () {
@@ -317,7 +318,7 @@ Page({
         }
         function gegePay() {
             app.ajaxPay('POST', "/pay", data, function (d) {
-                if (wx.hideLoading()) {
+                if (wx.hideLoading) {
                     wx.hideLoading();
                 }    
                 if (d.statusCode == 200) {
@@ -333,7 +334,7 @@ Page({
                     app.showErrorTip(that, '网络错误，请检查您的网络设置！');
                 }
             }, function (err) {
-                if (wx.hideLoading()) {
+                if (wx.hideLoading) {
                     wx.hideLoading();
                 } 
                 app.showErrorTip(that, '网络错误，请检查您的网络设置！');
@@ -366,7 +367,7 @@ Page({
                 })
             }
             app.ajax('POST', "/ultrabox/storage/order/" + that.data.order_id, null, function (d) {
-                if (wx.hideLoading()) {
+                if (wx.hideLoading) {
                     wx.hideLoading();
                 }               
                 if (d.statusCode == 200) {
@@ -384,7 +385,7 @@ Page({
                     app.showErrorTip(that, '网络错误，请检查您的网络设置！');
                 }
             }, function (err) {
-                if (wx.hideLoading()) {
+                if (wx.hideLoading) {
                     wx.hideLoading();
                 } 
                 app.showErrorTip(that, '网络错误，请检查您的网络设置！');
@@ -408,8 +409,14 @@ Page({
     onLoad: function (options) {
         var that = this
         that.getNetworkType();
+        if (options) {
+            that.setData({
+                options: options
+            })
+        }
+        var order_id = options && options.order_id ? options.order_id:'';
         that.setData({
-            order_id: that.options.order_id
+            order_id: order_id
         })
         app.authenticated(function () {
             wx.getSystemInfo({

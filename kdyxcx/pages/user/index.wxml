@@ -10,7 +10,7 @@
 <View class="meta aw-r customer rel" bindtap="takePhoneCall">
   <View class="warp none rel">在线客服</View>
 </View>
-<View class="logout rel" bindtap="showLogoutLayer">
+<View class="logout rel" bindtap="showLogoutLayer" button-hover="hover">
   退出登录
 </View>
 <view class="fixed text">格格快递员·您的派件好帮手</view>

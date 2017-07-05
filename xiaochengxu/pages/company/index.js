@@ -43,7 +43,7 @@ Page({
         }
     },
     onPullDownRefresh: function () {
-        this.onLoad(this.options)
+        this.onLoad(this.data.options)
         wx.stopPullDownRefresh()
     },
     getNetworkType: function () {

@@ -5,10 +5,11 @@ page {
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
 }
-.depositOrder{
+
+.depositOrder {
   overflow-x: hidden;
-    
 }
+
 .header {
   height: 90rpx;
   line-height: 90rpx;
@@ -24,7 +25,7 @@ page {
 .header .tag {
   left: 32rpx;
   top: 0;
-  background-image: url('//img.aimoge.com/Fi7keeAH_hoAfbUFnvUVGgB5ET6Y');
+  background-image: url('//img.aimoge.com/FiEMBvAO0UXoH5hQ--0L8uSfXHDj');
   background-repeat: no-repeat;
   background-size: 48rpx 48rpx;
   background-position: center center;
@@ -48,7 +49,9 @@ page {
 }
 
 .search_btn {
-  background: url('https://img.aimoge.com/FgyUPywZ4Jv9XXoSRGvetyhz9t2i') 0 0 no-repeat;
+  background-image: url('//img.aimoge.com/FrszcL0jvUD8rK8BqCUlFRN5ZgwM');
+  background-position: 0 0;
+  background-repeat: no-repeat;
   position: absolute;
   background-size: 80% 80%;
   width: 30rpx;
@@ -63,27 +66,21 @@ page {
 
 .content {
   padding-bottom: 156rpx;
+  padding-left: 32px;
+  background: #fff;
+  
 }
 
 .item {
   padding: 32rpx;
+  padding-left: 0;
   display: flex;
+  -webkit-display: flex;
   color: #353535;
   position: relative;
   font-size: 32rpx;
-  background: #fff;
   /*justify-content: space-around;*/
-}
-
-.item:after {
-  content: '';
-  display: block;
-  position: absolute;
-  bottom: 0rpx;
-  width: 100%;
-  height: 1px;
-  background-color: #ccc;
-  transform: scale(1, 0.5);
+  border-bottom: 1rpx solid rgba(151,151,151,0.5);
 }
 
 .check_icon {
@@ -92,7 +89,9 @@ page {
   height: 80rpx;
   top: -1rpx;
   right: 0;
-  background: url('https://img.aimoge.com/FnzZFojwOO4F7djnvs5hKD5Y-U6b')0 0 no-repeat;
+  background-image: url('//img.aimoge.com/Fv3CE1ZdLfo-GWI8V1tI21BZF111');
+  background-position: 0 0;
+  background-repeat: no-repeat;
   background-size: 100% 100%;
 }
 
@@ -116,24 +115,67 @@ page {
   margin-top: 30rpx;
   width: 175rpx;
   height: 97rpx;
+  background-image: url('//img.aimoge.com/FhibUaTIhk8Ak1QbqYpkXFmBMZG2');
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  background-size: 100%;
+}
+
+.item .left .image.disabled {
+  background-image: url('//img.aimoge.com/Fo0HD5ykO8kfAzvX4I_yVErPGcxI');
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  background-size: 100%;
 }
 
 .item .left .image1 {
   margin-top: 30rpx;
   width: 175rpx;
   height: 99rpx;
+  background-image: url('//img.aimoge.com/FjAFDTCWDlH0KRF0kEnMhEp82zU1');
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  background-size: 100%;
+}
+
+.item .left .image1.disabled {
+  background-image: url('//img.aimoge.com/Fk3Y5brwWAAwSjkG5aHWb1rKzsC4');
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  background-size: 100%;
 }
 
 .item .left .image2 {
-  /*margin-top: 10rpx;*/
   width: 170rpx;
   height: 133rpx;
+  background-image: url('//img.aimoge.com/FgF_tLYoCKETX68Ds_t9Ezkp-NO5');
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  background-size: 100%;
+}
+
+.item .left .image2.disabled {
+  background-image: url('//img.aimoge.com/Fte3VFZxwSgelt8MPNMYEscMLDhJ');
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  background-size: 100%;
 }
 
 .item .left .image3 {
   /*margin-top: 10rpx;*/
   width: 175rpx;
   height: 184rpx;
+  background-image: url('//img.aimoge.com/Fl3Ct3yariGwCFf5a6iVwTHTuOyv');
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  background-size: 100%;
+}
+
+.item .left .image2.disabled {
+  background-image: url('//img.aimoge.com/Fl5RsoDaX-bqkfBTlln6DPoETdUL');
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  background-size: 100%;
 }
 
 .none:before {
@@ -159,10 +201,21 @@ page {
   box-sizing: border-box;
 }
 
-.footer .image {
+.footer .agree {
   width: 36rpx;
   height: 36rpx;
   margin-right: 32rpx;
+  background-image: url('//img.aimoge.com/FtScIduXUKVq__ZZB6DTWyffHZ3S');
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  background-size: 100%;
+}
+
+.footer .noagree {
+  background-image: url('//img.aimoge.com/FrQrIw5WtrzVJKqQVxAUK58zema5');
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  background-size: 100%;
 }
 
 .footer .btn {

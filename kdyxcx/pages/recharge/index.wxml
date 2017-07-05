@@ -36,7 +36,7 @@
       </view>
     </view>
     <view class="recharge_btn">
-      <button class="button button-blue {{isActiveBtn ? '' : 'disabled' }} ">
+      <button class="button button-blue {{isActiveBtn ? '' : 'disabled' }} " button-hover="hover">
           充值
       </button>
     </view>

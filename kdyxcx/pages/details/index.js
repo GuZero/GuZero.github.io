@@ -1,12 +1,11 @@
-// pages/inquire/index.js
+// pages/details/index.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    key: '',
-    items:[]
+  
   },
 
   /**
@@ -15,13 +14,7 @@ Page({
   onLoad: function (options) {
   
   },
-  change: function (e) {
-    this.setData({ key: e.detail.value })
-    // this.search()
-  },
-  clearInput: function () {
-    this.setData({ key: '' })
-  },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

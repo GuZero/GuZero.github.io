@@ -33,16 +33,29 @@ page {
     padding: 120rpx 64rpx 0;
 }
 .entry-list .item{
+    position: relative;
     padding: 40rpx 0 40rpx 90rpx;
     background-position: 0 center;
     background-repeat: no-repeat;
     background-size: 60rpx 60rpx;
-    border-bottom: 1px solid #888;
     font-size: 36rpx;
     color: #7f7f7f;
 }
-.entry-list .item:last-child{
-    border-bottom: none;    
+.item:after {
+  content: '';
+  display: block;
+  position: absolute;
+  left: 0;
+  bottom: 0rpx;
+  width: 100%;
+  height: 1px;
+  background-color: #979797;
+  transform: scale(1, 0.5);
+  -webkit-transform: scale(1, 0.5);
+}
+.entry-list .item:last-child:after{
+     height: 0px;
+  background-color: none;  
 }
 .entry-list .express {
   background-image: url("//img.aimoge.com/Fhq2NfpmMRINTVOdFMnr_Lry8Bvk");
