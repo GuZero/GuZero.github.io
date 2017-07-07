@@ -1,0 +1,47 @@
+<view class="expList">
+  <view class="content tab-content">
+    <view wx:if="{{items.length>0}}">
+      <view wx:for="{{items}}" wx:key="item_id" class="list">
+        <view class="item rel"  bindtap="goToDetail" data-orderid="{{item.order_id}}">
+          <view class="item-header rel flex flexmode">
+            <view class="">运单号 </view>
+            <view class="number ellipsis">{{item.item_id}}</view>
+            <span class="gege-red">超期待取</span>
+          </view>
+          <view class="item-content rel">
+            <view class="item-title">
+              <i class="location-icon"></i>
+              <span class="ver-mid">{{item.terminal.terminal_name}} </span>
+            </view>
+            <view class="item-info flex flexmode">
+              <view class="item-info-label">收件人</view>
+              <view class="fill-flex">{{item.msisdn}} </view>
+            </view>
+            <view class="item-info  flex flexmode">
+              <view class="item-info-label">投放时间</view>
+
+              <view class="fill-flex">{{item.delivery_at}} </view>
+            </view>
+            <view class="item-info  flex flexmode">
+              <view class="item-info-label">在箱时长</view>
+              <view class="fill-flex">{{item.stayTime}}</view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="mgLoadingWarp rel" wx:if="{{scroll_load_loading}}">
+      <span><i class="icon ion-loading-c rel"></i>加载中...</span>
+    </view>
+    <view class="empty-content" wx:if="{{items.length <= 0 && !scroll_load_loading && isShowEmpty}}">
+      <view class="empty-img"></view>
+      <view>暂无记录</view>
+    </view>
+    <view class="nonet-content" wx:if="{{items.length <= 0 && !scroll_load_loading && noNetWork}}">
+      <view class="nonet-img"></view>
+      <view>暂无网络</view>
+      <button class="button button-blue" catchtap="reload">重新加载</button>
+    </view>
+  </view>
+  <view class="gege-tip fixed" animation="{{animOfNoneNetWork}}">{{animMsg}}</view>
+</view>

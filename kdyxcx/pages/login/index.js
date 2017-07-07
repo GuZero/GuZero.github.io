@@ -109,18 +109,11 @@ Page({
     goIndex: function () {
         var that = this
         wx.switchTab({
-            url: '../index/index',
-            success: function (res) {
-                
-            },
-            fail: function (res) {
-                console.log(res)
-            }
+            url: '../index/index'
         })
         return false
     },
     logout: function () {
-
         app.ajax('POST', app.globalData.API + '/operator/logout', { 'timestamp': Number.parseInt(new Date().getTime() / 1000) }, function (d) {
             if (d.statusCode == 200) {
                 if (d.data.status == 0) {
@@ -158,6 +151,10 @@ Page({
                     var user = d.data.data.user;
                     app.weixinLogin(function () {
                         app.globalData.userInfo = user;
+                        wx.setStorage({
+                          key: 'username',
+                          data: user.username,
+                        })
                         that.goIndex();
                     }, function () {
                         that.logout();

@@ -82,3 +82,6 @@ page {
   bottom: 50rpx;
   width: 100%;
 }
+.wx-contact-button-wrapper{
+ opacity: 0;
+}

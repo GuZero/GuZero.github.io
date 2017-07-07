@@ -1,65 +1,93 @@
 <!--pages/details/index.wxml-->
 <view class="container">
-  <view class="hearder">
-    <view class="wait">
-    </view>
-    <!--<view class="acquire">
-    </view>-->
-    <view class="text">
-      <text>待取件</text>
-    </view>
-  </view>
-  <view class="item">
-    <view class="info">
-      <text class="mr-95">运单号</text>
-      <text>201605241907</text>
-    </view>
-  </view>
-  <view class="item" bindtap="showLogoutLayer">
-    <view class="info flex">
-      <text class="mr-95">收件人</text>
-      <view class="tel">
-        <view class="blue">
-          13800138000
+  <view class="" wx:if="{{!noNetWork}}">
+    <view class="hearder">
+      <view class="wait-boxs boxs" wx:if="{{!item.timeout && item.state==0}}">
+        <view class="wait box">
         </view>
-        <view class="icon"></view>
+        <view class="text">待取件</view>
+      </view>
+      <view class="acquire-boxs boxs" wx:if="{{!item.timeout && item.state==5}}">
+        <view class="acquire box">
+        </view>
+        <view class="text">已取件</view>
+      </view>
+      <view class="recycle-boxs boxs" wx:if="{{!item.timeout && item.state==4}}">
+        <view class="recycle box">
+        </view>
+        <view class="text">快递员回收</view>
+      </view>
+      <view class="exceed-boxs boxs" wx:if="{{item.timeout}}">
+        <view class="exceed box">
+        </view>
+        <view class="text">超期待取</view>
+      </view>
+      <view class="admin-boxs boxs" wx:if="{{!item.timeout && item.state==6}}">
+        <view class="admin box">
+        </view>
+        <view class="text">管理员处理</view>
+      </view>
+    </view>
+    <view class="item">
+      <view class="info">
+        <view class="info-label">运单号</view>
+        <view class="fill-flex"> {{item.item_id}}</view>
+      </view>
+      <view class="info flex" bindtap="callPhone" data-phone="{{item.msisdn}}">
+        <view class="info-label">收件人</view>
+        <view class="tel">
+          <view class="blue">
+            {{item.msisdn}}
+          </view>
+          <view class="icon"></view>
+        </view>
+      </view>
+      <view class="info">
+        <view class="info-label">快递柜</view>
+        <view class="fill-flex">{{item.terminal.terminal_name}}</view>
+      </view>
+      <view class="info">
+        <view class="info-label">投放格口</view>
+        <view class="fill-flex">{{item.group}}组{{item.door}}号</view>
+      </view>
+      <view class="info none">
+        <view class="info-label">格口费用</view>
+        <view class="fill-flex">{{item.gridFee}}元</view>
+      </view>
+    </view>
+    <view class="item mt-30">
+      <view class="info">
+        <view class="info-label">投放时间</view>
+        <view class="fill-flex">{{item.delivery_at}}</view>
+      </view>
+      <view class="info-box">
+        <view class="info" wx:if="{{item.state==0}}">
+          <view class="info-label">在箱时长</view>
+          <view class="fill-flex">{{item.stayTime}}</view>
+        </view>
+        <view class="info" wx:if="{{ !item.timeout && item.state==5}}">
+          <view class="info-label">取件时间</view>
+          <view class="fill-flex">{{item.fetch_at}}</view>
+        </view>
+        <view class="info" wx:if="{{ !item.timeout && item.state==4}}">
+          <view class="info-label">回收时间</view>
+          <view class="fill-flex">{{item.fetch_at}}</view>
+        </view>
+        <view class="info" wx:if="{{ !item.timeout && item.state==6}}">
+          <view class="info-label">处理时间</view>
+          <view class="fill-flex">{{item.fetch_at}}</view>
+        </view>
+      </view>
+      <view class="info">
+        <view class="info-label">到期时间</view>
+        <view class="fill-flex">{{item.timeout_at}}</view>
       </view>
     </view>
   </view>
-  <view class="item">
-    <view class="info">
-      <text class="mr-95">快递柜</text>
-      <text>魔格公司格格货栈</text>
-    </view>
+  <view class="nonet-content" wx:if="{{noNetWork}}">
+    <view class="nonet-img"></view>
+    <view>暂无网络</view>
+    <button class="button button-blue" catchtap="reload">重新加载</button>
   </view>
-   <view class="item">
-    <view class="info">
-      <text class="mr-90">投放格口</text>
-      <text>01组 02号</text>
-    </view>
-  </view>
-  <view class="item">
-    <view class="info none">
-      <text class="mr-90">格口费用</text>
-      <text>0.00元</text>
-    </view>
-  </view>
-  <view class="item mt-30">
-    <view class="info">
-      <text class="mr-90">投放时间</text>
-      <text>2016-05-26 17:45:03 </text>
-    </view>
-  </view>
-   <view class="item">
-    <view class="info">
-      <text class="mr-90">在箱时长</text>
-      <text>0天 8小时 25分</text>
-    </view>
-  </view>
-  <view class="item">
-    <view class="info">
-      <text class="mr-90">到期时间</text>
-      <text>2016-05-26 17:45:03</text>
-    </view>
-  </view>
+    <view class="gege-tip fixed" animation="{{animOfNoneNetWork}}">{{animMsg}}</view>
 </view>

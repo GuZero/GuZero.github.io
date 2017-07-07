@@ -10,7 +10,7 @@ App({
     var device_info = wx.getSystemInfoSync();
     this.request({
       "type": "POST",
-      "url": "https://log.aimoge.com/v1/logistic",
+      "url": "https://log.gegebox.com/v1/logistic",
       "data": {
         "d": device_info.model,
         "an": "kuaidiyuanxcu",
@@ -53,7 +53,7 @@ App({
       success: function (res) {
         if (res.statusCode == 200) {
           if (res.data.status == 0) {
-            that.globalData.userInfo = res.data.data || {};
+            that.globalData.userInfo = res.data.data.user || {};
             that.wexinSignin();
           }
           else {

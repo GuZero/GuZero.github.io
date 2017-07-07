@@ -1,13 +1,13 @@
 <view class="index">
   <view class="header fixed">
     <view class="header-choose">
-      <view class="flex" bindtap="isChoose">
-        <text>三天内</text>
+      <view class="choose-date" bindtap="isChoose">
+        <text>{{date_info}}</text>
         <view class="icon aw-b"></view>
       </view>
-      <view class="text abs">
+      <view class="text abs" catchtap="goToExpList">
         超期件
-        <text>10</text>
+        <text>{{expCount}}</text>
       </view>
     </view>
     <view class="tabBox flex fixed">
@@ -18,41 +18,63 @@
     </view>
   </view>
   <view class="content tab-content">
-    <view class="list" wx:if="{{list.length>0}}">
-      <view class="item rel">
-        <view class="item-header rel flex flexmode">
-          <view class="">运单号 </view>
-          <view class="number ellipsis">201605241907</view>
-          <span class="gege-green" wx:if="{{tabIndex == 0}}">待取件</span>
-          <span class="gege-blue" wx:if="{{tabIndex == 1}}">已取件</span>
-          <span class="gege-yellow" wx:if="{{tabIndex == 2}}">快递员回收</span>
-          <span class="gege-orange" wx:if="{{tabIndex == 3}}">管理员处理</span>
-        </view>
-        <view class="item-content rel">
-          <view class="item-title">
-            <i class="location-icon"></i>
-            <span class="ver-mid">魔格公司格格货栈</span>
+    <view wx:if="{{items.length>0}}">
+      <view wx:for="{{items}}" wx:key="item_id" class="list">
+        <view class="item rel" bindtap="goToDetail" data-orderid="{{item.order_id}}">
+          <view class="item-header rel flex flexmode">
+            <view class="">运单号 </view>
+            <view class="number ellipsis">{{item.item_id}}</view>
+            <span class="gege-green" wx:if="{{tabIndex == 0}}">待取件</span>
+            <span class="gege-blue" wx:if="{{tabIndex == 1}}">已取件</span>
+            <span class="gege-yellow" wx:if="{{tabIndex == 2}}">快递员回收</span>
+            <span class="gege-orange" wx:if="{{tabIndex == 3}}">管理员处理</span>
           </view>
-          <view class="item-info flex flexmode">
-            <view class="item-info-label">收件人</view>
-            <view class="fill-flex">13456578972</view>
-          </view>
-          <view class="item-info  flex flexmode">
-            <view class="item-info-label">投放时间</view>
+          <view class="item-content rel">
+            <view class="item-title">
+              <i class="location-icon"></i>
+              <span class="ver-mid">{{item.terminal.terminal_name}} </span>
+            </view>
+            <view class="item-info flex flexmode">
+              <view class="item-info-label">收件人</view>
+              <view class="fill-flex">{{item.msisdn}} </view>
+            </view>
+            <view class="item-info  flex flexmode">
+              <view class="item-info-label">投放时间</view>
 
-            <view class="fill-flex">2016-05-26 17:45:03</view>
-          </view>
-          <view class="item-info  flex flexmode">
-            <view class="item-info-label">在箱时长</view>
-            <view class="fill-flex">0天 8小时 25分</view>
+              <view class="fill-flex">{{item.delivery_at}} </view>
+            </view>
+            <view class="item-info  flex flexmode" wx:if="{{tabIndex == 0}}">
+              <view class="item-info-label">在箱时长</view>
+              <view class="fill-flex">{{item.stayTime}}</view>
+            </view>
+            <view class="item-info  flex flexmode" wx:if="{{tabIndex == 1}}">
+              <view class="item-info-label">取件时间</view>
+              <view class="fill-flex">{{item.fetch_at}}</view>
+            </view>
+            <view class="item-info  flex flexmode" wx:if="{{tabIndex == 2}}">
+              <view class="item-info-label">回收时间</view>
+              <view class="fill-flex">{{item.fetch_at}}</view>
+            </view>
+            <view class="item-info  flex flexmode" wx:if="{{tabIndex == 3}}">
+              <view class="item-info-label">处理时间</view>
+              <view class="fill-flex">{{item.fetch_at}}</view>
+            </view>
           </view>
         </view>
       </view>
     </view>
-    <view class="empty-content" wx:if="{{list.length <= 0}}">
+    <view class="mgLoadingWarp rel" wx:if="{{scroll_load_loading}}">
+      <span><i class="icon ion-loading-c rel"></i>加载中...</span>
+    </view>
+    <view class="empty-content" wx:if="{{items.length <= 0 && !scroll_load_loading && !noNetWork &&isShowEmpty}}">
       <view class="empty-img"></view>
-      <view>暂无数据</view>
+      <view>暂无记录</view>
+    </view>
+    <view class="nonet-content" wx:if="{{items.length <= 0 && !scroll_load_loading && noNetWork}}">
+      <view class="nonet-img"></view>
+      <view>暂无网络</view>
+      <button class="button button-blue" catchtap="reload">重新加载</button>
     </view>
   </view>
+  <view class="gege-tip fixed" animation="{{animOfNoneNetWork}}">{{animMsg}}</view>
 </view>
-<view class="layer" wx:if="{{flag}}"></view>

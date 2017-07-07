@@ -15,7 +15,7 @@ page {
 .solid {
    display: flex;
   justify-content: space-between;
-  padding: 36rpx 0;
+  padding: 20rpx 0;
   height: 100%;
   border-bottom: 1px solid #eceef1;
 }

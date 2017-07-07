@@ -1,39 +1,31 @@
 <!--pages/record/index.wxml-->
-<view class="container">
-  <view class="item">
-    <view class="solid">
-      <view class="info">
-        <text class="black">翼支付</text>
-        <text class="gray mt-20">2016-08-29 16:08:08</text>
-      </view>
-      <view class="info">
-        <text class="green tr">+500</text>
-        <text class="gray mt-20">转入(15821134567)</text>
-      </view>
-    </view>
-  </view>
-  <view class="item">
-    <view class="solid">
-      <view class="info">
-        <text class="black">支付宝</text>
-        <text class="gray mt-20">2016-08-29 16:08:08</text>
-      </view>
-      <view class="info">
-        <text class="green tr">+568</text>
-        <text class="gray mt-20">转入(15821134567)</text>
+<scroll-view scroll-y="true" bindscrolltolower="scrolltolower" style="height:{{scrollHeight}}px;">
+  <view class="container">
+    <view class="item" wx:for="{{items}}" wx:key="charge_id">
+      <view class="solid">
+        <view class="info">
+          <text class="black">{{item.charge_channel_zh}}</text>
+          <text class="gray mt-20">{{item.date}}</text>
+        </view>
+        <view class="info">
+          <text class="tr {{item.textVal[0]=='-'?'green':'red'}}">
+            <text wx:if="{{item.textVal[0]!='-'}}">+</text>{{item.textVal}}</text>
+          <text class="gray mt-20">{{item.remark || '无活动'}}</text>
+        </view>
       </view>
     </view>
-  </view>
-  <view class="item">
-    <view class="solid none">
-      <view class="info">
-        <text class="black">转账</text>
-        <text class="gray mt-20">2016-08-29 16:08:08</text>
-      </view>
-      <view class="info">
-        <text class="red tr">-500</text>
-        <text class="gray mt-20">转入(15821134567)</text>
-      </view>
+    <view class="mgLoadingWarp rel" wx:if="{{scroll_load_loading}}">
+      <span><i class="icon ion-loading-c rel"></i>加载中...</span>
+    </view>
+    <view class="empty-content" wx:if="{{items.length <= 0 && !scroll_load_loading && !noNetWork &&isShowEmpty}}">
+      <view class="empty-img"></view>
+      <view>暂无记录</view>
+    </view>
+    <view class="nonet-content" wx:if="{{items.length <= 0 && !scroll_load_loading && noNetWork}}">
+      <view class="nonet-img"></view>
+      <view>暂无网络</view>
+      <button class="button button-blue" catchtap="reload">重新加载</button>
     </view>
   </view>
-</view>
+  <view class="gege-tip fixed" animation="{{animOfNoneNetWork}}">{{animMsg}}</view>
+</scroll-view>

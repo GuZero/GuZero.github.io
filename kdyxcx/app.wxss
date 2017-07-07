@@ -35,6 +35,10 @@ image {
   text-overflow: ellipsis;
   overflow: hidden;
 }
+.word-wrap {
+  word-break: break-all;
+  word-wrap: break-word;
+}
 
 /** 小箭头，包括上下左右方向 **/
 
@@ -231,9 +235,32 @@ image {
 }
 
 .empty-content .empty-img {
-  width: 156rpx;
-  height: 156rpx;
+  width: 206rpx;
+  height: 206rpx;
   margin: 30rpx auto;
-  background: url(//img.aimoge.com/FjmANRvf07CVvfV-21eJlqTNHC3u) no-repeat;
+  background: url('//img.aimoge.com/FqI0hqoK_7WyqVWtU-TmnHEOJqW6') no-repeat;
   background-size: 100%;
+}
+
+.nonet-content {
+  color: #b8b8b8;
+  font-size: 32rpx;
+  text-align: center;
+  padding-top: 180rpx;
+  width: 100%;
+}
+
+.nonet-content .nonet-img {
+  width: 206rpx;
+  height: 206rpx;
+  margin: 30rpx auto;
+  background: url('//img.aimoge.com/FmB0WZ-_JE4H4zRdPeYHixN0txk_') no-repeat;
+  background-size: 100%;
+}
+
+.nonet-content .button {
+  height: 70rpx;
+  line-height: 70rpx;
+  width: 56%;
+  margin: 70rpx auto 0;
 }

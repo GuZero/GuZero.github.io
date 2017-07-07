@@ -8,67 +8,54 @@ page {
 }
 
 .hearder {
-  height: 260rpx;
   background-color: #008cff;
   color: #fff;
-  padding: 0 44rpx;
+  padding: 44rpx 40rpx;
+}
+
+.hearder .boxs {
   display: flex;
   align-items: center;
 }
 
-.hearder .image {
-  width: 126rpx;
-  height: 112rpx;
-}
-
 /*等待取*/
 
+.box {
+  width: 150rpx;
+  height: 130rpx;
+}
+
 .wait {
-  content: "";
-  width: 126rpx;
-  height: 126rpx;
   background: url("//img.aimoge.com/FuizKz383iR_Xp7cTfLdNPB0-AwY")no-repeat center center;
-  background-size: 100% 100%;
+  background-size: 126rpx 122rpx;
 }
 
 /*已取*/
 
 .acquire {
-  content: "";
-  width: 126rpx;
-  height: 126rpx;
   background: url("//img.aimoge.com/FgiJKxnPU4eK15aHVdNRI84hmoRS")no-repeat center center;
-  background-size: 100% 100%;
+  background-size: 126rpx 126rpx;
 }
 
 /*回收件*/
 
 .recycle {
-  content: "";
-  width: 126rpx;
-  height: 126rpx;
   background: url("//img.aimoge.com/FtpeiT8cE-dBo1YOXa5_JTuJW7OG")no-repeat center center;
-  background-size: 100% 100%;
+  background-size: 145rpx 112rpx;
 }
 
 /*超期件*/
 
 .exceed {
-  content: "";
-  width: 126rpx;
-  height: 126rpx;
   background: url("//img.aimoge.com/FmH2GqoXeGIJU8zYtdblwH3iRXl3")no-repeat center center;
-  background-size: 100% 100%;
+  background-size: 145rpx 112rpx;
 }
 
 /*管理员处理件*/
 
 .admin {
-  content: "";
-  width: 126rpx;
-  height: 126rpx;
   background: url("//img.aimoge.com/FoR5yQbeoiwdFBFBxVCdKYE0zb_Y")no-repeat center center;
-  background-size: 100% 100%;
+  background-size: 142rpx 112rpx;
 }
 
 .hearder .text {
@@ -85,8 +72,10 @@ page {
 }
 
 .item .info {
-  line-height: 88rpx;
-  height: 88rpx;
+  padding: 28rpx 40rpx 28rpx 0;
+  display: flex;
+  display: -webkit-flex;
+  align-items: center;
   border-bottom: 1px solid #e5e5e5;
 }
 
@@ -96,9 +85,10 @@ page {
 
 .tel {
   display: flex;
+  display: -webkit-flex;
   justify-content: space-between;
   align-items: center;
-  width: 66%;
+  width: 76%;
 }
 
 .tel .icon {
@@ -109,21 +99,21 @@ page {
   height: 46rpx;
 }
 
+.info-label {
+  width: 190rpx;
+}
+.fill-flex {
+  flex: 1;
+  word-break: break-all;
+  word-wrap: break-word;
+}
+
 /**/
 
 .blue {
   font-size: 34rpx;
   color: #008cff;
 }
-
-.mr-95 {
-  margin-right: 95rpx;
-}
-
-.mr-90 {
-  margin-right: 60rpx;
-}
-
-.mt-30 {
-  margin-top: 30rpx;
-}
+ .mt-30{
+     margin-top: 30rpx;
+ }

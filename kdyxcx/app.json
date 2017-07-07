@@ -1,13 +1,13 @@
 {
-  "pages": [
+  "pages": [   
     "pages/index/index",
+    "pages/expList/index",
     "pages/details/index",
     "pages/inquire/index",
     "pages/login/index",
     "pages/user/index",
     "pages/search/index",
     "pages/record/index",
-    "pages/operator/index",
     "pages/terms/index",
     "pages/recharge/index"
   ],

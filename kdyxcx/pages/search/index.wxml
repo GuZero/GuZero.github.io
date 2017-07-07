@@ -1,72 +1,39 @@
 <!--pages/search/index.wxml-->
 <view class="container">
-  <view class="item">
+  <view class="item" wx:for="{{items}}" wx:key="terminal_code">
     <view class="text">
-      晨光科技产业园南楼一楼大厅楼梯房左侧楼梯B302-1格格货栈
+      {{item.terminal_name }}
     </view>
     <view class="choice">
-      <view class="grid">
-        <view class="btn">4</view>
+      <view class="grid" wx:if="{{item.box.big}}">
+        <view class="btn {{item.box.big.box_count==0 ?'disabled':''}}">{{item.box.big.box_count || 0 }}</view>
         <view class="type">大号</view>
       </view>
-      <view class="grid">
-        <view class="btn">114</view>
+      <view class="grid" wx:if="{{item.box.middle}}">
+        <view class="btn {{item.box.middle.box_count==0 ?'disabled':''}}">{{item.box.middle.box_count || 0 }}</view>
         <view class="type">中号</view>
       </view>
-      <view class="grid">
-        <view class="btn">15</view>
+      <view class="grid" wx:if="{{item.box.small}}">
+        <view class="btn {{item.box.small.box_count==0 ?'disabled':''}}">{{item.box.small.box_count || 0 }}</view>
         <view class="type">小号</view>
       </view>
-      <view class="grid">
-        <view class="btn disabled">0</view>
+      <view class="grid" wx:if="{{item.box.micro}}">
+        <view class="btn {{item.box.micro.box_count==0 ?'disabled':''}}">{{item.box.micro.box_count || 0 }}</view>
         <view class="type">微号</view>
       </view>
     </view>
   </view>
-  <view class="item">
-    <view class="text">
-      晨光科技产业园南楼一楼大厅楼梯房格格货栈
-    </view>
-    <view class="choice">
-      <view class="grid">
-        <view class="btn">4</view>
-        <view class="type">大号</view>
-      </view>
-      <view class="grid">
-        <view class="btn">114</view>
-        <view class="type">中号</view>
-      </view>
-      <view class="grid">
-        <view class="btn">15</view>
-        <view class="type">小号</view>
-      </view>
-      <view class="grid">
-        <view class="btn disabled">0</view>
-        <view class="type">微号</view>
-      </view>
-    </view>
+  <view class="mgLoadingWarp rel" wx:if="{{scroll_load_loading}}">
+    <span><i class="icon ion-loading-c rel"></i>加载中...</span>
   </view>
-  <view class="item">
-    <view class="text">
-      晨光科技产业园南楼一楼大厅楼梯房格格货栈
-    </view>
-    <view class="choice">
-      <view class="grid">
-        <view class="btn">4</view>
-        <view class="type">大号</view>
-      </view>
-      <view class="grid">
-        <view class="btn">114</view>
-        <view class="type">中号</view>
-      </view>
-      <view class="grid">
-        <view class="btn">15</view>
-        <view class="type">小号</view>
-      </view>
-      <view class="grid">
-        <view class="btn disabled">0</view>
-        <view class="type">微号</view>
-      </view>
-    </view>
+  <view class="empty-content" wx:if="{{items.length <= 0 && !scroll_load_loading && !noNetWork &&isShowEmpty}}">
+    <view class="empty-img"></view>
+    <view>暂无数据</view>
+  </view>
+  <view class="nonet-content" wx:if="{{items.length <= 0 && !scroll_load_loading && noNetWork}}">
+    <view class="nonet-img"></view>
+    <view>暂无网络</view>
+    <button class="button button-blue" catchtap="reload">重新加载</button>
   </view>
 </view>
+<view class="gege-tip fixed" animation="{{animOfNoneNetWork}}">{{animMsg}}</view>

@@ -1,5 +1,5 @@
 <View class="meta user rel" bindtap="showLogoutLayer">
-  <View class="warp none rel">{{userInfo ? userInfo.username :'未获取到个人信息'}}</View>
+  <View class="warp none rel">{{userName ? userName :'未获取到个人信息'}}</View>
 </View>
 <View class="meta aw-r top-up rel" bindtap="gotoInfo">
   <View class="warp none rel">账户充值</View>
@@ -7,10 +7,26 @@
 <View class="meta aw-r record rel" bindtap="gotoRechargeRecord">
   <View class="warp none rel">充值记录</View>
 </View>
-<View class="meta aw-r suggestion rel" bindtap="linkToSuggestion">
-  <View class="warp none"><text>联系我们</text><text class="gray">9:00～21:00</text></View>  
+<View class="meta aw-r suggestion rel" bindtap="takePhoneCall">
+  <View class="warp none">
+    <text>联系我们</text>
+    <text class="gray">9:00～21:00</text>
+  </View>
 </View>
-<View class="meta aw-r customer rel" bindtap="takePhoneCall">
+
+<View class="meta aw-r customer rel">
+  <contact-button class="abs" style="left:30rpx;top:16rpx;"  size="100" session-from="weapp"></contact-button>
+  <contact-button class="abs" style="left:90rpx;top:16rpx;"  size="100" session-from="weapp"></contact-button>
+  <contact-button class="abs" style="left:150rpx;top:16rpx;"  size="100" session-from="weapp"></contact-button>
+  <contact-button class="abs" style="left:210rpx;top:16rpx;"  size="100" session-from="weapp"></contact-button>
+  <contact-button class="abs" style="left:270rpx;top:16rpx;"  size="100" session-from="weapp"></contact-button>
+  <contact-button class="abs" style="left:330rpx;top:16rpx;"  size="100" session-from="weapp"></contact-button>
+  <contact-button class="abs" style="left:390rpx;top:16rpx;"  size="100" session-from="weapp"></contact-button>
+  <contact-button class="abs" style="left:450rpx;top:16rpx;"  size="100" session-from="weapp"></contact-button>
+   <contact-button class="abs" style="right:30rpx;top:16rpx;"  size="100" session-from="weapp"></contact-button>
+  <contact-button class="abs" style="right:90rpx;top:16rpx;"  size="100" session-from="weapp"></contact-button>
+  <contact-button class="abs" style="right:150rpx;top:16rpx;"  size="100" session-from="weapp"></contact-button>
+  <contact-button class="abs" style="right:210rpx;top:16rpx;"  size="100" session-from="weapp"></contact-button>
   <View class="warp none rel">在线客服</View>
 </View>
 <View class="logout rel" bindtap="showLogoutLayer" button-hover="hover">

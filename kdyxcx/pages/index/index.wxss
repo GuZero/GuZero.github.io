@@ -14,26 +14,37 @@ page {
 }
 
 .header-choose {
+  position: relative;
+  width: 100%;
   height: 100rpx;
   background-color: #008cff;
   color: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   font-size: 34rpx;
-  width: 100%;
+  text-align: center;
+}
+
+.choose-date {
+  height: 100rpx;
+  position: relative;
+  line-height: 100rpx;
+  width: 170rpx;
+  margin: 0 auto;
+  text-align: center;
 }
 
 .header-choose .text {
   right: 30rpx;
   font-size: 30rpx;
+  top: 0;
+  height: 100rpx;
+  line-height: 100rpx;
 }
 
 .header-choose .icon {
   width: 16rpx;
   height: 16rpx;
   position: absolute;
-  left: 58%;
+  right: 4rpx;
   top: 32%;
 }
 

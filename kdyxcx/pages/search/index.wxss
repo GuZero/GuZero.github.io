@@ -13,7 +13,6 @@ page {
   height: 126rpx;
   padding: 0 28rpx;
   display: flex;
-  justify-content: center;
   align-items: center;
   border-bottom: 1rpx #e5e5e5 solid;
   color: #000;

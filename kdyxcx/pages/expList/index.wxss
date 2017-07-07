@@ -1,0 +1,84 @@
+page {
+  background-color: #eceef1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.center {
+  align-items: center;
+}
+.item {
+  background: #fff;
+  margin-bottom: 30rpx;
+  font-size: 30rpx;
+  padding: 0 32rpx;
+}
+
+.item-header {
+  height: 110rpx;
+  line-height: 110rpx;
+  color: #000;
+  font-size: 34rpx;
+  border-bottom: 1rpx solid #dcdcdc;
+  box-sizing: border-box;
+  padding-right: 30rpx;
+}
+.number {
+  margin: 0 14rpx;
+  flex: 1;
+}
+.item-content {
+  padding: 40rpx 54rpx 40rpx 0;
+  color: #888;
+}
+.item-content:after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 50%;
+  right: 30rpx;
+  width: 24rpx;
+  height: 24rpx;
+  margin-top: -12rpx;
+  border-right: 4rpx solid #aeaeae;
+  border-top: 4rpx solid #aeaeae;
+  transform: rotate(45deg);
+}
+
+.item-title {
+  color: #000;
+  min-height: 44rpx;
+  vertical-align: middle;
+}
+
+.location-icon {
+  display: inline-block;
+  width: 15px;
+  height: 19px;
+  background: url('//img.aimoge.com/FnGk4vF_BPYrtOaOE7qhsnoPkG-M') no-repeat;
+  background-size: 100%;
+  vertical-align: middle;
+  margin-right: 14rpx;
+}
+
+.ver-mid {
+  vertical-align: middle;
+}
+
+.item-info {
+  margin-top: 34rpx;
+}
+
+.item-info-label {
+  width: 160rpx;
+}
+
+.fill-flex {
+  flex: 1;
+  word-break: break-all;
+  word-wrap: break-word;
+}
+
+.gege-red{
+  color: #f43530;
+  text-align: right;
+}

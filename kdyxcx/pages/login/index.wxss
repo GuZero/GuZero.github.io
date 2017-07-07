@@ -43,6 +43,9 @@ page {
 .form-input {
   height: 100%;
 }
+.form-input{
+    width: 100%;
+}
 
 .last-item {
   flex: 1;

@@ -1,5 +1,5 @@
 <!--pages/inquire/index.wxml-->
-<scroll-view scroll-y="true" style="height:{{scrollHeight}}px;">
+<scroll-view scroll-y="true" style="height:{{scrollHeight}}px;" bindscrolltolower="scrolltolower">
   <view class="search flex fixed">
     <view class="input rel">
       <view class="abs search-icon"></view>
@@ -7,47 +7,69 @@
       <view class="scan abs" wx:if="{{!key}}" bindtap="scanCode"></view>
       <view class="tag abs" wx:if="{{key}}" bindtap="clearInput"></view>
     </view>
-    <view class="search-btn" bindtap="search">查询</view>
+    <view class="search-btn" bindtap="isSearch">查询</view>
   </view>
-  <view class="main mt-90" wx:if="{{items.length!=0}}">
-    <view class="item" bindtap="gotoDetails">
+  <view class="main mt-90">
+    <view class="item" bindtap="gotoDetails" wx:for="{{items}}" wx:key="item_id" wx:if="{{items.length>0}}" data-orderid="{{item.order_id}}">
       <view class="text">
-        <text>运单号 201605241907</text>
-        <text class="gege-green">待取件</text>
+        <view>运单号
+          <text class="ellipsis">{{item.item_id}}</text>
+        </view>
+        <text class="gege-green" wx:if="{{item.state==0&&!item.timeout}}">待取件</text>
+        <text class="gege-blue" wx:if="{{item.state==5}}">已取件</text>
+        <text class="gege-yellow" wx:if="{{item.state==4}}">回收件</text>
+        <text class="gege-orange" wx:if="{{item.state==6}}">异常件</text>
+        <text class="gege-red" wx:if="{{item.timeout}}">超期待取</text>
       </view>
       <view class="flex item-info">
         <view class="info">
           <view class="address">
             <view class="map"></view>
-            <view class="wrap">魔格公司格格货栈</view>
+            <view class="wrap">{{item.terminal.terminal_name}}</view>
           </view>
           <view class="show flex">
-            <view class="title">收件人:</view>
-            <view class="data">13456578972</view>
+            <view class="title">收件人</view>
+            <view class="data">{{item.msisdn}}</view>
+            <!--13218032961-->
           </view>
           <view class="show h104 flex">
-            <view class="title">投放时间：</view>
-            <view class="data">2016-05-26 17:45:03</view>
+            <view class="title">投放时间</view>
+            <view class="data">{{item.delivery_at}}</view>
           </view>
-          <view class="show pb-40 flex">
-            <view class="title">在箱时长：</view>
-            <view class="data">0天 8小时 25分</view>
+          <view class="show pb-40 flex" wx:if="{{item.state==0}}">
+            <view class="title">在箱时长</view>
+            <view class="data">{{item.stayTime}}</view>
+          </view>
+          <view class="show pb-40 flex" wx:if="{{item.state==5}}">
+            <view class="title">取件时间</view>
+            <view class="data">{{item.fetch_at}}</view>
+          </view>
+          <view class="show pb-40 flex" wx:if="{{item.state==4}}">
+            <view class="title">回收时间</view>
+            <view class="data">{{item.fetch_at}}</view>
+          </view>
+          <view class="show pb-40 flex" wx:if="{{item.state==6}}">
+            <view class="title">处理时间</view>
+            <view class="data">{{item.fetch_at}}</view>
           </view>
         </view>
         <view class="ml-22">
           <view class="aw-r"></view>
         </view>
       </view>
-
     </view>
   </view>
-  <view class="no-result" wx:if="{{!items}}">
-    <view class="w206">
-      <view class="image">
-        <image src="//img.aimoge.com/FnSNIItS441YiyzTeCNuXUvhA5sD"></image>
-      </view>
-      <text>暂无查询结果</text>
-    </view>
-
+  <view class="mgLoadingWarp" wx:if="{{scroll_load_loading && !isLocation}}">
+    <span><i class="icon ion-loading-c rel"></i>加载中...</span>
   </view>
+  <view class="empty-content" wx:if="{{items.length <= 0 && !scroll_load_loading && !noNetWork &&isShowEmpty}}">
+    <view class="empty-img"></view>
+    <view>暂无查询结果</view>
+  </view>
+  <view class="nonet-content" wx:if="{{items.length <= 0 && !scroll_load_loading && noNetWork}}">
+    <view class="nonet-img"></view>
+    <view>暂无网络</view>
+    <button class="button button-blue" catchtap="reload">重新加载</button>
+  </view>
+  <view class="gege-tip fixed" animation="{{animOfNoneNetWork}}">{{animMsg}}</view>
 </scroll-view>
