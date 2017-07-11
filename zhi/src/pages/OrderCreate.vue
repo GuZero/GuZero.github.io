@@ -93,6 +93,7 @@
                     this.scenes = [];
                     this.fault = '';
                     this.date = '';
+                    this.desc='';
                     this.getInfo();
                     localStorage.terminal_name = ''
                 }

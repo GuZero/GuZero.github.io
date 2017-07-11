@@ -17,10 +17,9 @@
                         div.item-info
                             label.label {{item.position}}
                             template(v-if="item.asset_num")
-                                p.info.ellipsis(@click.stop.prevent="goToEidtEquipment('rack_id',item.rack_id,item.asset_num)") {{item.asset_num}}
+                                p.info.ellipsis {{item.asset_num}}
                             template(v-if="!item.asset_num")
-                                p.info.unactive(@click.stop.prevent="goToEidtEquipment('rack_id',item.rack_id,item.asset_num)") 未填写
-                            i.scan(@click.stop.prevent="goToScan('rack_id',item.rack_id,index)")
+                                p.info.unactive 未填写
             div.device
                 div.title 其他设备
                 ul
@@ -31,7 +30,7 @@
                                 p.info.ellipsis(@click.stop.prevent="goToEidtEquipment('device_id',item.id,item.asset_num)") {{item.asset_num}}
                             template(v-if="!item.asset_num")
                                 p.info.unactive(@click.stop.prevent="goToEidtEquipment('device_id',item.id,item.asset_num)") 未填写
-                            i.scan(@click.stop.prevent="goToScan('device_id',a.id,index)")
+                            i.scan(@click.stop.prevent="goToScan('device_id',item.id,index)")
         TransmitFooter(:footerconfig="footerconfig",:terminal_id="terminal_id")
         ModalDialog(ref="aboutModal")
 </template>

@@ -390,6 +390,9 @@ body {
     display: block;
     margin: auto;
     text-align: center;
+}
+
+.mgLoadingWarp span.load {
     text-indent: 38px;
 }
 
@@ -527,7 +530,8 @@ body {
 .icclock:before {
     background-image: url('//img.aimoge.com/Fo4ghwdR7Qmg7UcAYZMkYQ3y6AzC');
 }
-.gege-header .active:after{
+
+.gege-header .active:after {
     content: '';
     position: absolute;
     top: 8px;

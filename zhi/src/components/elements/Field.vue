@@ -19,6 +19,7 @@
             textarea(
                 v-if="textarea",
                 :placeholder="placeholder",
+                :value="value",
                 :autocomplete="autocomplete", 
                 :maxlength="maxlength",
                 @focus="$emit('changeCallback')"

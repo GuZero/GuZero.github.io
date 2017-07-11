@@ -4,6 +4,7 @@
             input.rel(
                 type="text",
                 :placeholder="placeholder",
+                :value="value",
                 @input="setParentVar($event.target.value)",               
                 @focus="$emit('changeCallback1')"
                 @blur="$emit('changeCallback2')"
@@ -13,7 +14,7 @@
 
 <script>
     export default {
-        props: ["placeholder"],
+        props: ["placeholder","value"],
         methods: {
             setParentVar(value) {
                 this.$emit('input', value)

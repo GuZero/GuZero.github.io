@@ -17,7 +17,7 @@
             div.tag.none.rel(@click="loadAreas(tab0, $event)", :class="{active: tabActive0}") {{ tab0.ar_name }}
             div.tag.rel(@click="loadCitys(tab1, $event)", v-if="tabData1", :class="{active: tabActive1}") {{ tab1.ar_name }}
             div.tag.rel(@click="loadTerminals(tab2, $event)", v-if="tabData2") {{ tab2.ar_name }}
-        div.mt44.pb60.main(v-if="!terminalName")
+        div.pb60.main(v-if="!terminalName")
             div.areas.rel.arrow(v-if="tabIndex == 0", v-for="a in areas", @click="loadCitys(a)")
                 div.div {{ a.ar_name }}({{ a.terminal_number }})
             div.areas.rel.arrow(v-if="tabIndex == 1", v-for="c in citys", @click="loadTerminals(c)")
@@ -30,15 +30,14 @@
             DataLoading(ref="loading" v-if="terminalName")
         div.nav.fixed(v-if="terminalName")
             div.tag.none.rel 全国
-        div.mt44.pb60.main(v-if="terminalName")
+        div.pb60.main(v-if="terminalName")
             div.areas.rel(v-for="t in tn_terminals", @click.stop.prevent="goToInfo(t)")
                 div.div
                    div.title.rel {{ t.terminal_name }}
                    div.line.rel {{ t.region }}，{{ t.place }}，{{ t.terminal_code }}
             DataLoading(ref="loading" v-if="isSearch")           
-        FooterBar.fixed(:footerconfig="footerconfig",:class="{dis:!flag}")
+        FooterBar.fixed(:footerconfig="footerconfig",:class="{dis:is_IOS}")
 </template>
-
 <script>
     import HeaderBar from '../components/common/Header'
     import FooterBar from '../components/common/Footer'
@@ -87,7 +86,7 @@
                 tn_scroll_load_loading: false,
                 tn_scroll_load_end: false,
                 tn_delay: null,
-                flag: true,
+                is_IOS:false,
                 isSearch:false
             }
         },
@@ -125,7 +124,16 @@
                     this.tn_scrollTop = 0;
                     this.isSearch=false;
                 }
+            },
+            '$route': function(){
+                if(this.$route.path==('/terminal')){
+                    this.terminalName='';
+                };
+                if(this.$route.path!=('/terminal')){
+                    if(this.is_IOS) this.is_IOS=false;
+                }
             }
+            
         },
         mounted() {
             window.addEventListener('scroll', this.handleScroll);
@@ -330,6 +338,7 @@
                 page = that.tn_page;
                 if (!_key || !_key.trim()) {
                     that.resetScrollTop(1);
+                    _util.showErrorTip('请输入要搜索的终端名称');
                     return false;
                 }
                 if (that.tn_delay) {
@@ -403,12 +412,12 @@
             },
             isFlag1() {
                 if (_util.isIOS()) {
-                    this.flag = false;
+                    this.is_IOS = true;
                 }
             },
             isFlag2() {
                 if (_util.isIOS()) {
-                    this.flag = true;
+                    this.is_IOS = false;
                 }
             },
             isLoading() { //是否已显示“正在加载数据状态”节点
@@ -437,10 +446,10 @@
     
     .main {
         width: 100%;
-        height:62%;
         position:absolute;
         overflow-y: scroll;
-        top: 100px;
+        height: 71%;
+        top: 144px;
         -webkit-overflow-scrolling: touch;       
     }
     

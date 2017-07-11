@@ -2,7 +2,7 @@
     div.md-loading
         div.loadingArea
             div.mgLoadingWarp.rel.block(ref="loading")
-                span
+                span.load
                     i.icon.ion-loading-c.rel
                     label 加载中...
             div.mgLoadingWarp.rel.none(ref="empty")

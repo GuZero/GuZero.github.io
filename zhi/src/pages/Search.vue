@@ -4,13 +4,14 @@
             :title="pageTitle"
         )
         Search(
-            class="top44 fixed",
+            class="top44",
             placeholder="搜索手机号/终端名称",
             v-model="terminalName",
             @searchInfo="searchByKey(1)",
+            :class="{fixed:!isIOS,abs:isIOS}"
             v-focus
         )
-        div.pb60.main
+        div.pb60.pt50.mt44
            div.pd_16
                 div.item 搜索结果：共
                     span.c_b &nbsp {{num}}
@@ -23,6 +24,9 @@
                     div
                        label.c_g1 订单状态：
                        lable {{d.state}}
+                    div
+                       label.c_g1 终端名称：
+                       lable {{d.terminal_name}}   
                     div
                        label.c_g1 派件时间：
                        lable {{d.delivery_at}}
@@ -47,6 +51,9 @@
                     div
                        label.c_g1 订单状态：
                        lable {{d.status}}
+                    div
+                       label.c_g1 终端名称：
+                       lable {{d.terminal_name}}   
                     div
                        label.c_g1 下单时间：
                        lable {{d.order_at}}
@@ -75,6 +82,9 @@
                        label.c_g1 寄件状态：
                        lable {{d.state}}
                     div
+                       label.c_g1 终端名称：
+                       lable {{d.terminal_name}}   
+                    div
                        label.c_g1 寄件时间：
                        lable {{d.delivery_at}}
                     div
@@ -85,6 +95,9 @@
                     div
                        label.c_g1 寄件状态：
                        lable {{d.state}}
+                    div
+                       label.c_g1 终端名称：
+                       lable {{d.terminal_name}}   
                     div
                        label.c_g1 寄件时间：
                        lable {{d.begin_time}}
@@ -130,7 +143,8 @@
                 tn_scroll_load_loading: false,
                 tn_scroll_load_end: false,
                 tn_delay: null,
-                error: false
+                error: false,
+                isIOS: false
             }
         },
         directives: {
@@ -153,6 +167,9 @@
             this.getUrl();
             window.addEventListener('scroll', this.handleScroll);
             this.hideLoading();
+            if (_util.isIOS()) {
+                this.isIOS =true;
+            }
         },
         activated() {
             window.canGoBack = true;
@@ -178,7 +195,7 @@
                         if (this.scroll_load_end && this.$refs.loading) {
                             return this.showLoadEnd();
                         } else {
-                            if (this.terminalName && !this.error) {                              
+                            if (this.terminalName && !this.error) {
                                 this.loadTerminalData();
                             }
                         }
@@ -220,7 +237,6 @@
                         that.scroll_load_loading = false;
                         if (response.status == 0 && response.data && response.data.length) {
                             that.result = that.result.concat(response.data);
-                            console.log(that.result);
                             that.num = that.result.length;
                             that.page += 1;
                             that.pageList = that.pageList.concat([page]);
@@ -249,13 +265,13 @@
                     page = 1,
                     _key = that.terminalName;
                 let reg = new RegExp("[\\u4E00-\\u9FFF]+", "g");
-//                if (!reg.test(_key) && _key.trim()) {
-//                    let reg1 = /^1[3|4|5|7|8][0-9]{9}$/;
-//                    if (!reg1.test(_key.trim())) {
-//                        _util.showErrorTip('请输入完成的手机号!');
-//                        return false;
-//                    }
-//                }
+                if (!reg.test(_key) && _key.trim()) {
+                    let reg1 = /^1[3|4|5|7|8][0-9]{9}$/;
+                    if (!reg1.test(_key.trim())) {
+                        _util.showErrorTip('请输入完成的手机号!');
+                        return false;
+                    }
+                }
                 if (!_key || !_key.trim()) {
                     that.flag = true;
                     that.num = 0;
@@ -348,6 +364,7 @@
                 this.result = [];
                 this.num = 0;
                 this.flag = true;
+                this.terminalName="";
             },
             isLoading() { //是否已显示“正在加载数据状态”节点
                 this.$refs.loading && this.$refs.loading.isLoading();
@@ -383,7 +400,6 @@
     
     .main {
         width: 100%;
-        height: 75%;
         position: absolute;
         overflow-y: scroll;
         top: 94px;

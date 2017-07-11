@@ -71,13 +71,16 @@
             div.item.pd5
                 p.gray  小区地址
                 p.black {{community_address}}
-             div.item.pd5
+            div.item.pd5
                 p.gray  柜子位置
-                p.black {{position}}    
-            div.item.item_btn
-                div
-                    div(:class="{ active: isActive }" @click.stop.prevent="getLocation('check')" ) 位置预览
-                div.btn(@click.stop.prevent="getLocation" ) 采集                                      
+                p.black {{position}}
+            div.item.pd5.item_map
+                div   
+                    p.gray  地图定位
+                    div
+                        div(:class="{ active: isActive }" @click.stop.prevent="getLocation('check')" ) 位置预览
+                div                
+                    div.btn(@click.stop.prevent="getLocation" ) 采集                                          
         div.manage
             div.item.info 管理员
             template(v-if="maintain_manager.length > 0")
@@ -310,7 +313,11 @@
     .gray {
         color: #6e6e6e;
     }
-    
+    .item_map{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
     .content {
         border: 1px #cfcfcf solid;
         .nav {
