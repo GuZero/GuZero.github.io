@@ -1,4 +1,4 @@
-module.exports={
+module.exports ={
   getById:function(){
     if(id) return null;
     return document.getElementById(id);

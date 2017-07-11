@@ -6,48 +6,27 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <link type="text/css" rel="stylesheet" href="m.css">
+    <script src="m.js"></script>
     <title></title>
 </head>
 
 <body>
-   <script>        
-        function a(array){
-            var arr1=[];
-            var json={};
-            for(var i=0;i<array.length;i++){
-                if(!json[array[i]]){
-                    arr1.push(array[i]);
-                    json[array[i]]=1;
-                }
-            }
-            return arr1;
-        }
-        function b(array){
-            var arr1=[];
-            for(var i=0;i<array.length;i++){
-                if(arr1.indexOf(array[i]==-1)){
-                    arr1.push(array[i]);
-                    
-                }
-            }
-            return arr1;
-        }
-        function c(n){
-            var arr1=[];
-            if(!n) return arr1;
-            if(!typeof(num)=="number") return arr1;
-            for(var i=0;i<n;i++){
-                var rnd =getRand(2,32);
-                arr1.push(rnd);
-            }
-            return b(arr1);
-        }
-        function getRand(Min,Max){
-            var Range=Max-Min;
-            var Rand=Math.random();
-            return(Min+Math.round(Rand*Range));
-        }
-        console.log(c(3));
+  <div id="mgAlert" class="mgAlert center fixed f14"></div>
+	<div id="mgLoadingWarp" class="mgLoadingWarp abs">
+		<span>
+            <i class="icon ion-loading-c rel"></i>
+            加载中...
+        </span>
+	</div>
+	<div id="sysLoading" class="sysLoading fixed">
+		<i class="ion-loading-c"></i>
+	</div>
+<!--    <button onclick="showErrorTip('1111')"></button>-->
+   <script>
+       var _util=require('./m.js')
+        var i=_util.getById('mgAlert')
+        console.log(i);
     </script>
 </body>
 
