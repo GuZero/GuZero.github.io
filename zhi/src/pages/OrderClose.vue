@@ -19,7 +19,7 @@
 
             )
             Field(
-                tag="问题原因",
+                tag="故障分类",
                 v-model="problem",
                 placeholder="请选择（必选）",
                 :optionJsonConfig="{valuename: 'name', textname: 'name', idname: 'id'}",
@@ -27,12 +27,11 @@
                 :selectText="problem",
                 :select="true",
                 :arrow="true",
-                @input="getValue1",
-                @changeCallback="change1"
-
-            )
+                @input="getValue1", 
+                @changeCallback="change1"              
+            )  
             Field(
-                tag="故障分类",
+                tag="问题原因",
                 v-model="categroy",
                 placeholder="请选择（必选）",
                 :optionJsonConfig="{valuename: 'id', textname: 'name', idname: 'id'}",
@@ -40,8 +39,8 @@
                 :selectText="categroy",
                 :select="true",
                 :arrow="true",
-                @input="getValue2"
-            )
+                @input="getValue2"               
+            )                    
             Field(
                 tag="处理结果",
                 v-model="result",
@@ -166,13 +165,16 @@
                     remark = this.result,
                     hasCatchLogZh = this.hasCatchLogZh,
                     deal = this.desc,
+                    tasks_id=this.$route.query._id,
                     that = this;
-                axios.post(ajaxUrls.orderinfo + that.$route.query._id + '/close', {
+                axios.post(ajaxUrls.orderinfo + that.$route.query._id + '/deal', {
+                    action:'close',
                     appearance: appearance,
+                    tasks_id:tasks_id,
                     reason: reason,
-                    yunwei_type: yunwei_type,
+                    type: yunwei_type,
                     remark: remark,
-                    hasCatchLogZh: hasCatchLogZh,
+                    has_catch_log: hasCatchLogZh,
                     deal: deal
                 }, {
                     withCredentials: true,
@@ -212,8 +214,9 @@
             change() {
                 let that = this;
                 that.categroy = "";
-                //获取问题原因
-                getAjaxRequest("order_cache", ajaxUrls.fault + that.val, that.version, 20 * 1000, 0.5 * 60 * 60 * 1000, function(response) {
+//                console.log(that.val,'xian');
+                //获取故障分类
+                getAjaxRequest("order_cache", ajaxUrls.fault + 'appearance=' + that.val, that.version, 20 * 1000, 0.5 * 60 * 60 * 1000, function(response) {
                     that.problems = response.data;
                     if (that.problems.length == 1) {
                         that.getValue1(response.data[0].id);
@@ -228,8 +231,8 @@
             },
             change1() {
                 let that = this;
-                //获取故障分类
-                getAjaxRequest("order_cache", ajaxUrls.fault + that.cause_id, that.version, 20 * 1000, 0.5 * 60 * 60 * 1000, function(response) {
+                //获取问原因
+                getAjaxRequest("order_cache", ajaxUrls.fault + 'type=' + that.cause_id, that.version, 20 * 1000, 0.5 * 60 * 60 * 1000, function(response) {
                     that.categroys = response.data;
                     if (that.categroys.length == 1) {
                         that.getValue2(response.data[0].id);
@@ -264,9 +267,9 @@
                     _util.showErrorTip('当前无网络，请检查您的网络状态！');
                 });
                 //获取现场现象
-                getAjaxRequest("order_cache", ajaxUrls.option, that.version, 20 * 1000, 0.5 * 60 * 60 * 1000, function(response) {
+                getAjaxRequest("order_cache", ajaxUrls.fault, that.version, 20 * 1000, 0.5 * 60 * 60 * 1000, function(response) {
                     if (response.status == 0) {
-                        that.scenes = response.data.appearance;
+                        that.scenes = response.data;
                     } else {
                         if (response.msg) _util.showErrorTip(response.msg);
                     }

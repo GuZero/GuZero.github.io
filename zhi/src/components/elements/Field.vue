@@ -53,6 +53,8 @@
             "selectText",
             "options",
             "optionJsonConfig",
+            "id",
+            "value"
             
         ],
         methods: {
