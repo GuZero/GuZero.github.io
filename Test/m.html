@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+</head>
+
+<body>
+<a href="javascript:;" id="goToTop" class="goToTop fixed" onclick="_util.scrollToTop();"></a>
+	<div class="module_share fixed" id="module_share" onclick="_util.getById('module_share').hide();"></div>
+	<div id="mgAlert" class="mgAlert center fixed f14"></div>
+	<div id="mgLoadingWarp" class="mgLoadingWarp abs">
+		<span>
+            <i class="icon ion-loading-c rel"></i>
+            加载中...
+        </span>
+	</div>
+	<div id="sysLoading" class="sysLoading fixed">
+		<i class="ion-loading-c"></i>
+	</div>
+	<button type="button" onclick="a()">测试</button>
+	<script>
+	 import router from './m.js'
+	 function a(){
+	 	_util.showErrorTip('两次输入密码不一致！');
+	 }
+	</script>
+</body>
+
+</html>
