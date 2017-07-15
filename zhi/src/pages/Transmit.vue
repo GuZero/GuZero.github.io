@@ -12,7 +12,7 @@
         div.mt44.pt50.pb60
             div.empty.f16.rel(v-if="!result.length") 无搜索结果
             div.item.rel(v-if="result.length", v-for="item in result")
-                div.box.f16.rel(@click.stop.prevent="showAlert(item)") {{ item.name }}
+                div.box.f16.rel(@click.stop.prevent="goInfo(item)") {{ item.name }}
         ModalDialog(ref="confirmModal", @confirmCallback="deal")
 </template>
 
@@ -25,7 +25,7 @@
         mixins: [require('../components/mixin/BodyBg')],
         data() {
             return {
-                pageTitle: '转发',
+                pageTitle: '选择姓名',
                 username: '',
                 result: [],
                 userID: '',
@@ -105,8 +105,10 @@
                     text: '确认是否转发给' + item.name + '为处理？'
                 });
             },
-            goInfo(_id) {
-                this.url('/order/' + _id);
+            goInfo(item) {
+              localStorage.user_Name =item.name;
+              localStorage.user_ID = item.user_id;
+              this.$router.go(-1);
             },
 
         }
@@ -118,7 +120,7 @@
         padding: 16px;
         color: #4d4d4d;
     }
-    
+
     .item {
         padding: 0 0 0 16px;
         color: #4d4d4d;

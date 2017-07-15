@@ -12,33 +12,31 @@
                 div.status.f12(v-if="data.status_code == 4")
                     label.rel.s2 {{ data.status }}
                 div.status.f12(v-if="data.status_code == 2")
-                    label.rel.s3 {{ data.status }}        
-                div.f12.status(v-if="completed")
-                    label.rel 已完成
+                    label.rel.s3 {{ data.status }}
             div.graybt8.rel
                 div.keys.rel
                     TextFiled.h22(tag="终端名称：", :text="data.terminalName")
                     TextFiled.h22(tag="故障等级：", :text="data.grade")
-                    TextFiled.h22(tag="现场现象：", :text="data.scene", v-if="!completed")
-                    TextFiled.h22(tag="现场现象（客服）：", :text="data.scene", v-if="completed", marginleft="130")
+                    TextFiled.h22(tag="现场现象：", :text="data.scene")
                     TextFiled.h22(tag="问题描述：", :text="data.desc")
                 div.keys.rel(v-if="completed")
-                    TextFiled(tag="现场现象（运维）：", :text="data.terminalName", marginleft="130")
-                    TextFiled(tag="故障分类（运维）：", :text="data.terminalName", marginleft="130")
-                    TextFiled(tag="问题原因：", :text="data.scene", marginleft="130")
-                    TextFiled(tag="处理方式：", :text="data.scene", marginleft="130")
-                    TextFiled(tag="处理结果：", :text="data.scene", marginleft="130")
-                    TextFiled(tag="是否抓取日志：", :text="data.scene", marginleft="130")
+                    TextFiled.h22(tag="现场现象（运维）：", :text="yunWeiApperanceInfo", marginleft="130")
+                    TextFiled.h22(tag="故障分类（运维）：", :text="yunWeiTypeInfo", marginleft="130")
+                    TextFiled.h22(tag="问题原因：", :text="reasonInfo")
+                    TextFiled.h22(tag="处理方式：", :text="deal")
+                    TextFiled.h22(tag="处理结果：", :text="remark")
+                    TextFiled.h22(tag="是否抓取日志：", :text="hasCatchLogZh",marginleft="100")
             div.info.rel
                 div.meta.rel(v-for="(item,index) in history",:class="{done:history.length-1==index}")
                     div.h5.rel  {{ item.opeator }} {{item.action}}
-                    div.tms.f12.rel {{item.created_at}}
-            SubmitBtn(v-if="isAuthor && !completed", text="删除", @submitCallback="showAlert('delete')") 删除
-            div.btnGroup.fixed.flex(v-if="isAdmin && !completed")
-                div.flexmodel.rel(@click="agree()") 同意
-                div.flexmodel.rel(@click="refuse()") 拒绝
-                div.flexmodel.rel(@click="showAlert('close')") 关闭
-                div.flexmodel.rel.none(@click="showAlert('share')") 转发
+                    div.tms.f12.rel {{item.remark}}
+                    div.tms.f12.rel {{item.created_at}}                   
+            SubmitBtn(v-if="!isAuthor&&!completed||!isAdmin&&!completed", text="跟进", @submitCallback="showAlert('follow')") 跟进
+            div.btnGroup.fixed.flex(v-if="isAuthor&&!completed||isAdmin&&!completed")
+                div.flexmodel.rel(@click="showAlert('delete')",v-if="isAuthor",:class="{w50:isAuthor}") 删除
+                div.rel(@click="showAlert('follow')",v-if="isAuthor||isAdmin",:class="{w50:isAuthor,flexmodel:isAdmin,w33:isAdmin}") 跟进
+                div.flexmodel.rel(@click="showAlert('close')",v-if="isAdmin",:class="{w33:isAdmin}") 关闭
+                div.rel.none(@click="showAlert('share')",v-if="isAdmin",:class="{w33:isAdmin}") 转发
         ModalDialog(ref="showalert", @confirmCallback="doAlertEvent")
 </template>
 
@@ -57,8 +55,15 @@
                 username: 'jerry',
                 completed: 0, //工单完成
                 isAuthor: 0, //发布者身份
-                isAdmin: 1, //审核者身份
-                project:'',//工单类型
+                isAdmin: 0, //审核者身份
+                project: '', //
+                appearance:'',//现场现象
+                reasonInfo:'',//问题原因
+                yunWeiTypeInfo:'',//故障分类
+                hasCatchLogZh:'',//抓取日志 0:否 1：是
+                yunWeiApperanceInfo:'',//现场现象（运维）
+                remark:'',//处理结果
+                deal:'',//处理方式
                 status: '',
                 data: {
                     terminalName: '东亚逸品加装格格货栈',
@@ -95,20 +100,19 @@
             window.canGoBack = true;
             window.origin = null;
             document.body.scrollTop = 0;
-            this.history=[];
-            this.data.terminalName='';
-            this.data.grade='';
-            this.data.scene='';
-            this.data.desc='';
-            this.data.status_code='';
-            this.data.username='';
-            
+            this.history = [];
+            this.data.terminalName = '';
+            this.data.grade = '';
+            this.data.scene = '';
+            this.data.desc = '';
+            this.data.status_code = '';
+            this.data.username = '';
         },
         methods: {
             doAlertEvent() {
                 let type = this.alertId;
                 if (type == 'delete') this.delete();
-                if (type == 'agree') this.agree();
+                if (type == 'follow') this.follow();
                 if (type == 'refuse') this.refuse();
                 if (type == 'close') this.close();
                 if (type == 'share') this.share();
@@ -116,12 +120,11 @@
             showAlert(id) {
                 let title = ``;
                 this.alertId = id;
-
                 if (id == 'delete') {
                     title = `确认删除？`;
                 }
-                if (id == 'agree') {
-                    title = `确认同意？`;
+                if (id == 'follow') {
+                    title = `确认跟进工单？`;
                 }
                 if (id == 'refuse') {
                     title = `确认拒绝？`;
@@ -138,24 +141,33 @@
                 });
             },
             delete() {
-                _util.showErrorTip('delete');
+              let that=this;
+              axios.post(ajaxUrls.orderinfo + that.$route.params.id, {
+              }, {
+                  withCredentials: true,
+                  headers: {
+                      'Content-Type': 'application/json'
+                  }
+              }).then(function(rsp) {
+                  _util.hideSysLoading();
+                  if (rsp.data.status == 0) {
+                      _util.showErrorTip(rsp.data.msg);
+                      that.url('/')
+                  } else {
+                      _util.showErrorTip(rsp.data.msg);
+                  }
+              }).catch(function(error) {
+                  _util.hideSysLoading();
+                  _util.showErrorTip('您的网络可能出了点问题:(');
+              })
             },
-            agree() {
-                if (this.status == "已完成") {
-                    _util.showErrorTip('该工单已完成');
-                    return false;
-                }
-                _util.showErrorTip('敬请期待！');
-            },
-            refuse() {
-                if (this.status == "已完成") {
-                    _util.showErrorTip('该工单已完成');
-                    return false;
-                }
-                _util.showErrorTip('敬请期待！');
+            follow(){
+              this.url('/order/follow',{
+                _id:this.$route.params.id
+              });
             },
             close() {
-                if (this.status.substring(0,3) == "已完成") {
+                if (this.status.substring(0, 3) == "已完成") {
                     _util.showErrorTip('该工单已完成');
                     return false;
                 }
@@ -164,16 +176,17 @@
                 });
             },
             share() {
-                if (this.status.substring(0,3)  == "已完成") {
+                if (this.status.substring(0, 3) == "已完成") {
                     _util.showErrorTip('该工单已完成');
                     return false;
                 }
-                this.url('/transmit', {
+                this.url('/order/forward', {
                     _id: this.$route.params.id
                 });
             },
             getData() {
-                let that = this;
+                let that = this,
+                    uid=localStorage.userJson.uid;
                 if (!(that.$route.path == ('/order/' + that.$route.params.id))) {
                     return false;
                 }
@@ -181,17 +194,54 @@
                 getAjaxRequest("order_cache", ajaxUrls.orderinfo + that.$route.params.id, that.version, 10 * 1000, 0.5 * 60 * 60 * 1000, function(response) {
                     _util.hideSysLoading();
                     if (response.status == 0) {
-                        that.username = response.data.creator;
-                        that.project= response.data.project_desc;
+                        console.log(response.data);
+
+                        that.username = response.data.creator.realname;
+                        that.project = response.data.project_desc;
                         that.data.terminalName = response.data.terminal_name;
                         that.data.grade = response.data.level;
                         that.data.scene = response.data.appearance;
-                        that.data.desc = response.data.content;
                         that.data.desc = response.data.content;
                         that.data.status_code = response.data.status_code;
                         that.data.status = response.data.status;
                         that.status = response.data.status;
                         that.history = response.data.history;
+                        //创建人ID
+                        let creator_id=response.data.creator.id;
+                        //当前用户ID
+                        let current_id=response.data.current_user.id;
+                        //执行人ID
+                        let owner_id=response.data.owner.id;
+
+                        if(creator_id==current_id&&creator_id!=owner_id){
+                          that.isAuthor=1;
+                        }else{
+                            that.isAuthor=0;
+                        }
+                        if(current_id==owner_id&&creator_id!=owner_id){
+                          that.isAdmin=1;
+                        }else{
+                          that.isAdmin=0;
+                        }
+                        if(current_id==owner_id&&creator_id==owner_id){
+                          that.isAdmin=1;
+                        }
+                        if(that.data.status_code==2){
+                          that.completed=1;
+                        }else{
+                          that.completed=0;
+                        };
+                        //工单完成显示信息
+                        that.yunWeiApperanceInfo=response.data.yunWeiApperanceInfo;
+                        that.reasonInfo=response.data.reasonInfo;
+                        that.yunWeiTypeInfo=response.data.yunWeiTypeInfo;
+                        that.remark=response.data.remark;
+                        that.deal=response.data.deal;
+                        if(response.data.hasCatchLogZh==0||response.data.hasCatchLogZh==''){
+                            that.hasCatchLogZh='否';
+                        }else if(response.data.hasCatchLogZh=1){
+                            that.hasCatchLogZh='是';
+                        }
                     }
                 }, function(error) {
                     _util.hideSysLoading();
@@ -208,11 +258,11 @@
     .pb60 {
         padding: 16px 0 60px 0;
     }
-    
+
     .h22 {
         min-height: 22px;
     }
-    
+
     .user {
         margin: 0 16px 0 16px;
         padding-bottom: 12px;
@@ -290,7 +340,7 @@
             }
         }
     }
-    
+
     .keys {
         padding: 16px 0 12px 0;
         margin: 0 16px 8px 16px;
@@ -299,7 +349,7 @@
             margin-bottom: 4px;
         }
     }
-    
+
     .info {
         padding: 5px 0 0 0;
         border-left: 2px #f3f3f3 solid;
@@ -342,7 +392,7 @@
             }
         }
     }
-    
+
     .btnGroup {
         border-top: 1px #cfcfcf solid;
         background-color: #f9f9f9;
@@ -357,7 +407,7 @@
         bottom: 0;
         z-index: 9000;
         .flexmodel {
-            width: 25%;
+            //width: 25%;
             display: inline-block;
             text-align: center;
             &:after {
@@ -376,6 +426,17 @@
                 display: none;
             }
         }
+    }
+
+    .w50 {
+        width: 50%;
+        display: inline-block;
+        text-align: center;
+    }
+    .w33 {
+        width: 33.33%;
+        display: inline-block;
+        text-align: center;
     }
 
 </style>

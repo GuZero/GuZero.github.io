@@ -61,10 +61,6 @@
                     finishUrl = '',
                     postData ={};
                 if (_util.getById('sysLoading').style.display == 'block') return false;
-                if (!that.asset_num.replace(/(^\s*)|(\s*$)/g, "")) {
-                    _util.showErrorTip('请输入终端设备信息！');
-                    return false;
-                }
                 if (that.rack_id) {
                     finishUrl = ajaxUrls.basic +  that.$route.params.code + '/bins';
                     postData ={
@@ -104,7 +100,7 @@
 
 </script>
 
-<style lang="sass" scoped>  
+<style lang="sass" scoped>
     .input {
         font-size: 14px;
         padding: 16px;

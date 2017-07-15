@@ -17,9 +17,10 @@
                         div.item-info
                             label.label {{item.position}}
                             template(v-if="item.asset_num")
-                                p.info.ellipsis {{item.asset_num}}
+                                p.info.ellipsis(@click.stop.prevent="goToEidtEquipment('rack_id',item.rack_id,item.asset_num)") {{item.asset_num}}
                             template(v-if="!item.asset_num")
-                                p.info.unactive 未填写
+                                p.info.unactive(@click.stop.prevent="goToEidtEquipment('rack_id',item.rack_id,item.asset_num)") 未填写
+                            i.scan(@click.stop.prevent="goToScan('rack_id',item.rack_id,index)")
             div.device
                 div.title 其他设备
                 ul

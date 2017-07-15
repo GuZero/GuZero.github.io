@@ -1,30 +1,33 @@
 CACHE MANIFEST
-# 4fb40cc193029b36b2dc
+# ca9729033215b9610cbf
 
-dist/js/OrderInfo.b6ff9c1a.js
-dist/js/OrderCreate.eff661f0.js
-dist/js/EquipmentInfo.28be8846.js
-dist/js/Transmit.58d735a9.js
-dist/js/Allocation.90c9c5dd.js
-dist/js/OrderClose.923d6f13.js
-dist/js/Mine.8e254e89.js
-dist/js/EditPassword.5cbaa9d9.js
-dist/js/BasicInfo.b18eb792.js
-dist/js/Terminal.2ce90fd5.js
-dist/js/SearchTerminal.0454e53e.js
-dist/js/Search.89f46300.js
-dist/js/Message.073ca834.js
-dist/js/Login.00a86462.js
-dist/js/Journal.1ce6ae30.js
-dist/js/EditEquipment.6aefd0be.js
-dist/js/AdInfo.842d5a3b.js
-dist/js/bundle.797b1f5c.js
+dist/js/OrderInfo.c6426c55.js
+dist/js/OrderTerminal.6268b75f.js
+dist/js/OrderFollow.07594324.js
+dist/js/OrderCreate.ae2e5c09.js
+dist/js/EquipmentInfo.e2602073.js
+dist/js/Transmit.1a13ed11.js
+dist/js/Allocation.2f1ea3df.js
+dist/js/OrderClose.f7bffae9.js
+dist/js/Mine.5d652344.js
+dist/js/EditPassword.d57a7fd3.js
+dist/js/BasicInfo.f2c9f5b9.js
+dist/js/Terminal.7f1b9ebc.js
+dist/js/SearchTerminal.9b1dc928.js
+dist/js/Search.fd0d274f.js
+dist/js/Message.fd85c0c4.js
+dist/js/Login.fb3b94e5.js
+dist/js/Journal.43ba2158.js
+dist/js/EditEquipment.ad6897a1.js
+dist/js/AdInfo.dd234c2e.js
+dist/js/bundle.247e7671.js
 
 CACHE:
 src/lib/css/app.css
-//cdn.bootcss.com/vue/2.2.6/vue.min.js
-//cdn.bootcss.com/vue-router/2.3.0/vue-router.min.js
-//cdn.bootcss.com/axios/0.15.3/axios.min.js
+//hm.baidu.com/hm.js?d54d20b7f29d4e83bedece6d61020a31
+//cdn.staticfile.org/vue/2.2.6/vue.min.js
+//cdn.staticfile.org/vue-router/2.3.0/vue-router.min.js
+//cdn.staticfile.org/axios/0.15.3/axios.min.js
 //img.aimoge.com/Fklf55k94DKYun6WI2_BqGlBh1r0
 //img.aimoge.com/FhxFw9bG_wGDCcF1Mllyedsb8cmz
 //img.aimoge.com/FqA7Kv6H770AcP8_gNy1rf_nqJMH

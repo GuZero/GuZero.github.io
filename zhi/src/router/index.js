@@ -6,6 +6,8 @@ const Mine = r => require.ensure([], () => r(require('../pages/Mine')), 'Mine');
 const OrderInfo = r => require.ensure([], () => r(require('../pages/OrderInfo')), 'OrderInfo');
 const OrderCreate = r => require.ensure([], () => r(require('../pages/OrderCreate')), 'OrderCreate');
 const OrderClose = r => require.ensure([], () => r(require('../pages/OrderClose')), 'OrderClose');
+const OrderFollow = r => require.ensure([], () => r(require('../pages/OrderFollow')), 'OrderFollow');
+const OrderTerminal = r => require.ensure([], () => r(require('../pages/OrderTerminal')), 'OrderTerminal');
 const EditPassword = r => require.ensure([], () => r(require('../pages/EditPassword')), 'EditPassword');
 const Transmit = r => require.ensure([], () => r(require('../pages/Transmit')), 'Transmit');
 const Terminal = r => require.ensure([], () => r(require('../pages/Terminal')), 'Terminal');
@@ -17,6 +19,7 @@ const BasicInfo = r => require.ensure([], () => r(require('../pages/BasicInfo'))
 const SearchTerminal = r => require.ensure([], () => r(require('../pages/SearchTerminal')), 'SearchTerminal');
 const Allocation = r => require.ensure([], () => r(require('../pages/Allocation')), 'Allocation');
 const EditEquipment = r => require.ensure([], () => r(require('../pages/EditEquipment')), 'EditEquipment');
+
 
 Vue.use(VueRouter)
 
@@ -47,6 +50,16 @@ export default new VueRouter({
             path: '/order/close',
             name: 'OrderClose',
             component: OrderClose
+        }
+        , {
+            path: '/order/follow',
+            name: 'OrderFollow',
+            component: OrderFollow
+        }
+        , {
+            path: '/order/forward',
+            name: 'OrderTerminal',
+            component: OrderTerminal
         }
         , {
             path: '/order/:id',

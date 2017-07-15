@@ -19,7 +19,7 @@ module.exports = {
     //获取工单需要的选项信息
     option:window.config.API+'/v1/tasks/option',
     //获取故障分类
-    fault:window.config.API+'/v1/tasks/troubles?appearance_id=',
+    fault:window.config.API+'/v1/tasks/troubles?',
     //搜索用户
     user:window.config.API+'/v1/users?name=',
     //搜索存件订单

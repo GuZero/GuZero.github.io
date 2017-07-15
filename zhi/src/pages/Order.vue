@@ -162,7 +162,7 @@ div.home
                     document.body.scrollTop = 0;
                 }
                 that.showLoading();
-                //获取待办工单数量               
+                //获取待办工单数量
                 getAjaxRequest("order_cache", ajaxUrls.num, that.version, 1 * 1000, 0.5 * 60 * 60 * 1000, function(response) {
                     if (response.status == 0) {
                         that.num = response.data.task_numbers;
@@ -268,14 +268,16 @@ div.home
                 this.url('/order/' + _id);
             },
             handleScroll() { //滚动加载监听事件
-                if (document.body.scrollTop + window.innerHeight >= document.body.scrollHeight - 1) {
-                    if (this.list.length < 16) {
-                        return false;
-                    } else {
-                        this.loadTerminalData();
-                    }
+								if(this.$route.path == ('/')){
+									if (document.body.scrollTop + window.innerHeight >= document.body.scrollHeight - 1) {
+											if (this.list.length < 16) {
+													return false;
+											} else {
+													this.loadTerminalData();
+											}
 
-                }
+									}
+								}              
             },
             loadTerminalData() {
                 let that = this,
@@ -352,7 +354,7 @@ div.home
     .pt50 {
         padding-top: 43px;
     }
-    
+
     .search {
         background: #8c8c8c;
         top: 6%;
@@ -376,7 +378,7 @@ div.home
             transform: scale(1, .5);
         }
     }
-    
+
     .nav {
         background-color: #fafafa;
         border-bottom: 1px $cf solid;
@@ -406,7 +408,7 @@ div.home
             }
         }
     }
-    
+
     .add {
         background: url(//img.aimoge.com/Fq2jHaTMAD8ds8JCcZjYEXHBAERN) 0 0 no-repeat;
         background-size: 100%;
@@ -421,7 +423,7 @@ div.home
             opacity: .6;
         }
     }
-    
+
     .item {
         padding: 0 0 0 0;
         &:active {
