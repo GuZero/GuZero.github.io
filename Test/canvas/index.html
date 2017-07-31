@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- <canvas id="myCanvas" width="320" height="500">
+        Your browser does not support the HTML5 canvas tag.
+    </canvas> -->
+    <img src="" alt="" id="img">
+    <script>
+        var img = new Image();
+        var img2 = new Image();
+        img2.src = 'http://img.aimoge.com/FohnmdyrZ46WyRHiqYrgUU-YERVW/style300.png';
+        img.src = 'http://img.aimoge.com/FnALAo0ciCD9DZJyRv0K-kFj_-No/style300.png';
+
+        // var canvas = document.createElement("canvas");
+        // var ctx = canvas.getContext("2d");
+        // ctx.drawImage(img2, 0, 0);
+        // ctx.drawImage(img, 30, 30);
+        // // ctx.font = "20px microsoft yahei";
+        // // ctx.fillStyle = "rgba(255,255,255,0.5)";
+        // // ctx.fillText("我是一张图", 100, 100);
+        // var dataURL = canvas.toDataURL('image/jpeg');
+        // console.log(dataURL);
+
+        function getBase64(url) {
+            var Img = new Image(),
+                dataURL = '';
+            Img.src = url;
+            Img.crossOrigin = "Anonymous";
+            Img.onload = function() {
+                var canvas = document.createElement("canvas"),
+                    width = Img.width,
+                    height = Img.height;
+                canvas.width = width;
+                canvas.height = height;
+                canvas.getContext("2d").drawImage(Img, 0, 0, width, height);
+                dataURL = canvas.toDataURL('image/jpeg');
+            }
+            console.log(dataURL);
+        };
+        getBase64('//img.aimoge.com/Fhazoz81-gjG1AmaYG9eV4J_bAmU_580x620_132981.jpeg');
+    </script>
+</body>
+
+</html>

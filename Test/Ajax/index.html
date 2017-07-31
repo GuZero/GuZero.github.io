@@ -3,83 +3,64 @@
 
 <head>
     <meta charset="UTF-8">
-    <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-    <script src="//cdn.bootcss.com/layer/3.0.1/layer.js"></script>
-</head>
-
-<body>
-    <script>
-    var app {
-        ajaxStatus = true;
-    }
-
-    function ajax(url, data, success, clone, type, erro) {
-        var type = type || 'post'; //请求类型
-        var alone = alone || false; //独立提交
-        var success = success || function(data) {
-            setTimeout(function() {
-                layer.msg(data.msg); //通过layer插件来进行提示信息
-            }, 500);
-            if (data.status) { //服务器处理成功
-                setTimeout(function() {
-                    if (data.url) {
-                        location.replace(data.url);
-                    } else {
-                        location.reload(true);
-                    }
-                }, 1500);
-            } else { //服务器处理失败
-                if (alone) { //改变ajax提交状态
-                    ajaxStatus = true;
-                }
-            }
-        };
-        var error = error || function(data) {
-            /*console.error('请求成功失败');*/
-            /*data.status;//错误状态吗*/
-            layer.closeAll('loading');
-            setTimeout(function() {
-                if (data.status == 404) {
-                    layer.msg('请求失败，请求未找到');
-                } else if (data.status == 503) {
-                    layer.msg('请求失败，服务器内部错误');
-                } else {
-                    layer.msg('请求失败,网络连接超时');
-                }
-                ajaxStatus = true;
-            }, 500);
-        };
-        /*判断是否可以发送请求*/
-        if (!ajaxStatus) {
-            return false;
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>测试</title>
+    <style>
+        input[type="datetime-local"] {
+            /*            background-color: transparent;*/
+            background-color: #fff;
+            FILTER: alpha(opacity=0);
+            /*androd*/
+            appearance: none;
+            /*下拉框去掉右侧图标*/
+            -moz-appearance: none;
+            -webkit-appearance: none;
+            border: none;
         }
-        ajaxStatus = false; //禁用ajax请求
-        /*正常情况下1秒后可以再次多个异步请求，为true时只可以有一次有效请求（例如添加数据）*/
-        if (!alone) {
-            setTimeout(function() {
-                ajaxStatus = true;
-            }, 1000);
-        };
-        $.ajax({
-            'url': url,
-            'data': data,
-            'type': type,
-            'dataType': 'json',
-            'xhrFields': {
-                withCredentials: true
-            },
-            'success':success,
-            'error': error,
-            'jsonpCallback': 'jsonp' + (new Date()).valueOf().toString().substr(-4),
-            'beforeSend': function() {
-                layer.msg('加载中', {
-                    icon: 16,
-                    shade: 0.01
-                });
-            }
-        });
 
-    }
+         ::-webkit-datetime-local-edit {
+            background-color: #fff;
+        }
+
+         ::-webkit-inner-spin-button {
+/*            visibility: hidden;*/
+        }
+
+         ::-webkit-calendar-picker-indicator {
+            border:none;
+            border-radius: 2px;
+            box-shadow: inset 0 1px #fff, 0 1px #eee;
+            background-color: #eee;
+            background-image: -webkit-linear-gradient(top, #f0f0f0, #e6e6e6);
+            color: #666;
+        }
+
+    </style>
+</head>
+<!--  -->
+<body>
+    <div>
+        <input type="time">
+        <input type="datetime-local" id="str">
+        <input type="datetime">
+        <input type="text" id="text">
+        <button id="btn">格式化时间</button>
+        <a href="promise_ajax.html">跳转</a>
+    </div>
+    <script>
+        document.getElementById("btn").onclick = function() {
+            var x = document.getElementById("str").value,
+                year = x.substring(0, 4),
+                month = x.substring(5, 7),
+                day = x.substring(8, 10),
+                hour = x.substring(11, 13),
+                minute = x.substring(14),
+                format = year + "-" + day + "-" + month + ' ' + hour + ':' + minute;
+            document.getElementById("text").value = format;
+        }
+
     </script>
 </body>
 
