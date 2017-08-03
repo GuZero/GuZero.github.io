@@ -1,0 +1,1417 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="keywords" content="格格 格格云店 格格鲜果 南京 南京水果 云店 鲜果 生鲜 南京生鲜 水果 零食 坚果 o2o 海南 小台农芒果" />
+    <meta name="description" content="格格云店水果、零食、坚果一网打尽，19元全城包邮，格格鲜果，最爱生活, 格格鲜果-超能箱|有好货频道" />
+    <link href="//cdn.bootcss.com/normalize/7.0.0/normalize.min.css" rel="stylesheet">
+    <link href="//cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet">
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <title>24小时格格+快递便利中心</title>
+    <style>
+        body {
+            font: normal 14px/22px Arial, "Microsoft YaHei";
+            color: #fff;
+            background-color: #fff;
+        }
+        
+        html,
+        body {
+            min-width: 1240px;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        img {
+            max-width: 100%;
+        }
+        
+        p {
+            margin: 0;
+        }
+        
+        .rel {
+            position: relative;
+        }
+        
+        .abs {
+            position: absolute;
+        }
+        /* .left {
+            float: left;
+        }
+        
+        .right {
+            float: right;
+        } */
+        
+        .red {
+            color: #ff0000;
+        }
+        
+        .yellow {
+            color: #ffa417;
+        }
+        
+        .orange {
+            color: #ff4911;
+        }
+        
+        .blue {
+            color: #0d44d0;
+        }
+        
+        .hide {
+            display: none;
+        }
+        
+        .bold {
+            font-weight: bold;
+        }
+        
+        .center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .flex {
+            display: flex;
+        }
+        
+        .mgAlert {
+            display: none;
+            border-radius: 5px;
+            width: 70%;
+            position: fixed;
+            top: 35%;
+            left: 50%;
+            margin-left: -35%;
+            z-index: 9400;
+            padding: 5% 3%;
+            word-break: break-all;
+            line-height: 22px;
+            border: 1px solid transparent;
+            opacity: 0;
+            text-align: center;
+            transition: opacity 0.2s ease-in-out;
+        }
+        
+        .mgAlert-error {
+            display: block;
+            color: #fff;
+            background-color: #000;
+            border-color: #fff;
+            font-size: 32px;
+        }
+        
+        .mgAlert-success {
+            display: block;
+            color: #3c763d;
+            background-color: #dff0d8;
+            border-color: #d6e9c6;
+        }
+        
+        .f24 {
+            font-size: 45px;
+        }
+        
+        .mshow {
+            opacity: .6;
+        }
+        
+        .layer {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.73);
+            top: 0;
+            left: 0;
+            z-index: 30;
+        }
+        
+        .header_box {
+            display: flex;
+            height: 58px;
+            align-items: center;
+            background-color: #212121;
+            min-width: 1024px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 11111;
+        }
+        
+        .header_box .logo {
+            width: 200px;
+            border-right: 1px solid #eee;
+            height: 100%;
+            display: flex;
+        }
+        
+        .header_box .logo img {
+            width: 60%;
+            height: 60%;
+        }
+        
+        .header_box .nav li {
+            /* width: 90px; */
+            height: 100%;
+            line-height: 100%;
+            text-align: center;
+            list-style: none;
+            margin-right: 55px;
+        }
+        
+        .header_box .nav li a {
+            text-decoration: none;
+            display: block;
+            height: 58px;
+            line-height: 58px;
+            font-size: 18px;
+            color: #fff;
+            padding: 0 5px;
+        }
+        
+        .header_box .nav li a.active {
+            color: #0d7ade;
+            border-bottom: 2px solid #0d7ade;
+            padding-bottom: 2px;
+        }
+        
+        .nav_phone {
+            right: 90px;
+            font-size: 18px;
+            height: 58px;
+            line-height: 58px;
+            background: url('//img.aimoge.com/FtnFEtY7uEfJubfv4hlRNwOz--V7') no-repeat 0 15px;
+            /*            background-size: 50% 50%;*/
+            padding-left: 35px;
+        }
+        
+        .main {
+            margin-top: 58px;
+        }
+        
+        .main img {
+            display: block;
+        }
+        
+        .mian .next {
+            background-color: #fff;
+        }
+        
+        .main .animate1 {
+            padding: 40px 80px;
+            justify-content: center;
+        }
+        
+        .animate1 .item {
+            width: 274px;
+            height: 274px;
+            font-size: 24px;
+            text-align: center;
+            line-height: 30px;
+            margin-right: 16px;
+            cursor: pointer;
+        }
+        
+        .animate1 .show {
+            background-color: #0080fe;
+            color: #fff;
+        }
+        
+        .animate1 .hide {
+            background-color: #fff;
+            color: #0080fe;
+            border: 1px solid #0080fe;
+            transform: scale(1.15);
+        }
+        
+        .animate1 .item .image {
+            content: "";
+            width: 116px;
+            height: 116px;
+            margin: 0 auto;
+            background-size: 90% 90%;
+        }
+        
+        .image1 {
+            background: url('//img.aimoge.com/FsOTsDvgzkJo67mH5T8Hav6qMVoh') no-repeat center center;
+        }
+        
+        .image1_hover {
+            display: none;
+            background: url('//img.aimoge.com/FnJC6EJkiKRodXUzZr4IWh90l-NF') no-repeat center center;
+        }
+        
+        .image2 {
+            background: url('//img.aimoge.com/FlzRVDJ2IIpOfKFCbpJ-mbLjqUPC') no-repeat center center;
+        }
+        
+        .image2_hover {
+            display: none;
+            background: url('//img.aimoge.com/FlVNeP9gwWpesWnjCzzZ6_mX1Ul0') no-repeat center center;
+        }
+        
+        .image3 {
+            background: url('//img.aimoge.com/FowEbi2JRnVBE1R8Hs2ndhuUGBTc') no-repeat center center;
+        }
+        
+        .image3_hover {
+            display: none;
+            background: url('//img.aimoge.com/Fh0_Cj0H5I9qts3GCytHyVCiheBz') no-repeat center center;
+        }
+        
+        .image4 {
+            background: url('//img.aimoge.com/FiBRsdeICzulTnwLNFTyozbikjGh') no-repeat center center;
+        }
+        
+        .image4_hover {
+            display: none;
+            background: url('//img.aimoge.com/FhmAj9TErP40VyWkMrhdfjic2_ED') no-repeat center center;
+        }
+        
+        .bg1 {
+            background-color: #e7e7e7;
+        }
+        
+        .animate2 {
+            padding: 10px 90px;
+            padding-bottom: 130px;
+        }
+        
+        .animate2 .first {
+            padding-top: 60px;
+            display: flex;
+            justify-content: space-between;
+            overflow: hidden;
+        }
+        
+        .animate2 .item {
+            width: 22vw;
+            height: 22vw;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .animate2 .item_bg1 {
+            background: url('//img.aimoge.com/Fqhg1cyxkUxBeY1VNN2AjTN_5-dO') no-repeat 0 0;
+        }
+        
+        .animate2 .item_bg2 {
+            background: url('//img.aimoge.com/FpMaNjGxSQiSOTxIrsMTllMC1oNW') no-repeat 0 0;
+        }
+        
+        .animate2 .item_bg3 {
+            background: url('//img.aimoge.com/FuG9WZIcmr5S7Am81DhDIV6-JreN') no-repeat 0 0;
+        }
+        
+        .animate2 .item_bg4 {
+            background: url('//img.aimoge.com/FhNo7R5rlCrNG7cSYDx-4FQR82BC') no-repeat 0 0;
+        }
+        
+        .animate2 .item_bg5 {
+            background: url('//img.aimoge.com/FkrKfvgsSJhDqg7uaI7BLBSLoJcT') no-repeat 0 0;
+        }
+        
+        .animate2 .item_bg6 {
+            background: url('//img.aimoge.com/FmW0jsmo8nzKfst7egAzAWTSntBs') no-repeat 0 0;
+        }
+        
+        .animate2 .item .mask {
+            width: 22vw;
+            height: 22vw;
+            background-color: #000;
+            left: 0;
+            top: 0;
+        }
+        
+        .opacity_6 {
+            opacity: .6;
+        }
+        
+        .opacity_9 {
+            opacity: .9;
+        }
+        
+        .animate2 .item .show .icon {
+            width: 116px;
+            height: 116px;
+            z-index: 111;
+            position: absolute;
+            z-index: 112;
+            left: 50%;
+            margin-left: -58px;
+            top: 56px;
+        }
+        
+        .animate2 .item .show .text {
+            height: 85px;
+            width: 100%;
+            text-align: center;
+            color: #027ff0;
+            line-height: 85px;
+            background: #fff;
+            font-size: 24px;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            z-index: 111;
+        }
+        
+        .icon img {
+            width: 90%;
+            height: 90%;
+        }
+        
+        .animate2 .item .hover {
+            display: none;
+            position: absolute;
+            bottom: -120%;
+            left: 0px;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .animate2 .item .hover .icon {
+            width: 116px;
+            height: 116px;
+            z-index: 111;
+            position: absolute;
+            left: 50%;
+            margin-left: -58px;
+            top: -58px;
+        }
+        
+        .animate2 .item .hover .text {
+            width: 100%;
+            text-align: center;
+            color: #fff;
+            font-size: 24px;
+            z-index: 111;
+            line-height: 30px;
+            position: absolute;
+            top: 25%;
+        }
+        
+        .animate2 .item .hover .text1 {
+            top: 40%;
+        }
+        
+        .animate2 .item .hover .text2 {
+            top: 50%;
+        }
+        
+        .h110 {
+            height: 50px;
+        }
+        
+        .title {
+            padding-top: 90px;
+            font-size: 45px;
+            color: #0080fe;
+            text-align: center;
+            line-height: 40px;
+        }
+        
+        .solid {
+            width: 120px;
+            height: 2px;
+            background: #0080fe;
+            display: inline-block;
+        }
+        
+        .btn_box .btn {
+            width: 308px;
+            height: 60px;
+            border-radius: 5px;
+            background-color: #0080fe;
+            color: #fff;
+            text-align: center;
+            cursor: pointer;
+            font-size: 24px;
+            line-height: 60px;
+            margin: 0 auto;
+            margin-top: 10px;
+            margin-bottom: 130px;
+            position: relative;
+        }
+        
+        .btn_box .btn a {
+            text-decoration: none;
+            color: #fff;
+        }
+        
+        .btn_box .btn .btn_icon {
+            width: 40px;
+            height: 24px;
+            background: url('//img.aimoge.com/FmxeootC8Zeot9I42JKUfXcRd_mU') no-repeat center center;
+            position: absolute;
+            top: 50%;
+            right: 20%;
+            margin-top: -12px;
+            background-size: 90% 90%;
+        }
+        
+        .btn_box .btn:hover {
+            background-color: #007ee5;
+        }
+        
+        .arrows {
+            position: absolute;
+            right: -40%;
+            top: 50%;
+            margin-top: -1.5vw;
+            width: 6vw;
+            height: 3vw;
+        }
+        
+        .arrows1 {
+            position: absolute;
+            right: 10%;
+            width: 3vw;
+            height: 6vw;
+            top: 10%;
+        }
+        
+        .animate3 {
+            padding: 0 86px;
+            margin-top: 85px;
+            display: flex;
+            justify-content: space-between;
+            padding-bottom: 128px;
+        }
+        
+        .animate3 .item {
+            width: 352px;
+            height: 352px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        
+        .animate3 .bg_1 {
+            background: url('//img.aimoge.com/Fk1IC6XUY3jq7noCg7Lu7VCCedFH') no-repeat center center;
+        }
+        
+        .animate3 .bg_2 {
+            background: url('//img.aimoge.com/Fky4D_PHCigeF12VV8Eppy5WuBhW') no-repeat center center;
+        }
+        
+        .animate3 .bg_3 {
+            background: url('//img.aimoge.com/FgTjmwAmCNtsY5tWLBqSGWZsBLaY') no-repeat center center;
+        }
+        
+        .animate3 .item .text {
+            height: 88px;
+            width: 100%;
+            text-align: center;
+            color: #fff;
+            line-height: 85px;
+            background: rgba(0, 0, 0, 0.6);
+            font-size: 24px;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            z-index: 111;
+        }
+        
+        .animate3 .item .mask {
+            background-color: rgba(0, 0, 0, 0.6);
+            position: absolute;
+            left: 0;
+            bottom: -100%;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .animate3 .item .mask .title {
+            text-align: center;
+            font-size: 24px;
+            font-weight: 600;
+            color: #fff;
+        }
+        
+        .animate3 .item .mask .text1 {
+            font-size: 24px;
+            line-height: 30px;
+            font-family: '宋体';
+        }
+        
+        .animate3 .item .mask .content {
+            margin-top: 40px;
+            margin-left: 60px;
+        }
+        
+        .animate3 .item .mask .content1 {
+            margin-top: 40px;
+            margin-left: 20px;
+        }
+        
+        .animate4 {
+            padding: 0 86px;
+            background: #232323;
+            color: #fff;
+            padding-bottom: 130px;
+        }
+        
+        .animate4 .item {
+            height: 274px;
+            cursor: pointer;
+            display: flex;
+        }
+        
+        .animate4 .item1 {
+            height: 274px;
+            cursor: pointer;
+            display: flex;
+        }
+        
+        .animate4 .item1 .left {
+            width: 274px;
+            height: 274px;
+        }
+        
+        .animate4 .item1 .right {
+            height: 100%;
+            width: 62vw;
+            padding-left: 38px;
+        }
+        
+        .animate4 .item1 .right .title {
+            text-align: left;
+            color: #fff;
+            font-size: 36px;
+            padding-top: 54px;
+        }
+        
+        .animate4 .item .left {
+            padding-left: 120px;
+            box-sizing: border-box;
+            flex: 1 1 auto;
+            height: 100%;
+        }
+        
+        .animate4 .item .left .title {
+            text-align: left;
+            color: #fff;
+            font-size: 36px;
+        }
+        
+        .animate4 .item .left .content {
+            margin-top: 30px;
+        }
+        
+        .animate4 .item .left .text2 {
+            font-size: 22px;
+            line-height: 30px;
+            font-family: "宋体";
+        }
+        
+        .animate4 .item1 .right .text2 {
+            margin-top: 36px;
+            font-size: 22px;
+            line-height: 30px;
+            font-family: "宋体";
+        }
+        
+        .animate4 .item .right {
+            width: 274px;
+            height: 274px;
+        }
+        
+        .animate4 .hover_4 {
+            background: #fff;
+            color: #8e8e8e;
+        }
+        
+        .about .submit {
+            height: 780px;
+            width: 100%;
+            background: url('//img.aimoge.com/FoH_m4RIiNDfj1Cz0V6Atlm3jIB-') no-repeat center center;
+            background-size: 100% 100%;
+        }
+        
+        .about .submit .input {
+            display: flex;
+            justify-content: space-between;
+            padding: 0 100px;
+            margin-top: 50px;
+        }
+        
+        .about .submit .input input {
+            padding: 20px;
+            width: 42%;
+            background: none;
+            border: 1px solid #fff;
+            color: #fff;
+            font-size: 24px;
+        }
+        
+        input::-webkit-input-placeholder {
+            /* WebKit browsers*/
+            color: #fff;
+            font-size: 24px;
+        }
+        
+        input:-moz-placeholder {
+            /* Mozilla Firefox 4 to 18*/
+            color: #fff;
+            font-size: 24px;
+        }
+        
+        input::-moz-placeholder {
+            /* Mozilla Firefox 19+*/
+            color: #fff;
+            font-size: 24px;
+        }
+        
+        input:-ms-input-placeholder {
+            /* Internet Explorer 10+*/
+            color: #fff;
+            font-size: 24px;
+        }
+        
+        .about .submit p {
+            color: #fff;
+            margin-left: 100px;
+            margin-top: 26px;
+            letter-spacing: 3px;
+            font-size: 15px;
+            /* font-family: "宋体"; */
+        }
+        
+        .about .submit .submitBtn {
+            margin-top: 30px;
+            width: 200px;
+            height: 50px;
+            background-color: #fff;
+            color: #008cff;
+            font-size: 24px;
+            text-align: center;
+            line-height: 50px;
+            cursor: pointer;
+        }
+        
+        .about .weixin {
+            height: 480px;
+            width: 100%;
+            background: url('//img.aimoge.com/FvMEGh-3gquu7rp0EG8dyo2nA9FQ') no-repeat center center;
+            font-size: 20px;
+            line-height: 30px;
+            padding: 0 86px;
+            box-sizing: border-box;
+        }
+        
+        .about .weixin>div {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100%;
+        }
+        
+        .about .weixin .logos {
+            height: 72px;
+            width: 162px;
+        }
+        
+        .about .weixin .code {
+            width: 160px;
+            height: 160px;
+        }
+        
+        .about .weixin .OR>div {
+            margin-right: 30px;
+        }
+        
+        .about .weixin .OR p {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .mt_20 {
+            margin-top: 20px;
+        }
+        
+        .mg_8 {
+            margin-left: -8px;
+        }
+        
+        .text1 {
+            font-weight: 600px;
+        }
+        
+        @media (max-width: 1366px) {
+            .arrows {
+                right: -36%;
+            }
+            .arrows1 {
+                top: 36%;
+            }
+        }
+        
+        @media (max-width:1240px) {
+            html,
+            body {
+                min-width: 1024px;
+            }
+        }
+        
+        .jubao {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header_box">
+        <div class="logo center">
+            <img src="//img.aimoge.com/FhrrVOU-1fdmZzoYFRGuJfSVORHW">
+        </div>
+        <ul class="nav flex">
+            <li><a href="#home" class="active">首页</a></li>
+            <li><a href="#gege+">格格+</a></li>
+            <li><a href="#profitModel">盈利模式</a></li>
+            <li><a href="#join">加盟</a></li>
+            <li><a href="#about_us">关于</a></li>
+        </ul>
+        <div class="nav_phone abs">400-033-8888</div>
+    </div>
+    <div class="main">
+        <div id="home">
+            <div>
+                <img src="//img.aimoge.com/Fvs8FHHAtPTr7MEGXCVBu4NsUuP0" alt="">
+                <img src="//img.aimoge.com/Flp3R2pxEgESBt2Ihng2D1HKhpDY" alt="">
+                <img src="//img.aimoge.com/Fof7-mPf7cr_aZLtTtuV7HPc4Sq7" alt="">
+                <img src="//img.aimoge.com/FgxHL-7fH_yo91Ed8qVWp7gT-YI7" alt="">
+                <img src="//img.aimoge.com/FjoVGupzc8PYAghFXyI0GxrUnT-Z" alt="">
+            </div>
+            <div class="next">
+                <img src="//img.aimoge.com/FhOA626RwpwOJytEqHl8MEQhYHn8" alt="">
+                <div class="animate1 flex">
+                    <div class="item center show">
+                        <div>
+                            <div class="image1 image "></div>
+                            <div class="image1_hover image "></div>
+                            <div class="text">
+                                24小时*365天
+                            </div>
+                            <div>
+                                无休假运营
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item center show">
+                        <div>
+                            <div class="image2 image "></div>
+                            <div class="image2_hover image "></div>
+                            <div class="text">
+                                无人值守
+                            </div>
+                            <div>
+                                扫码支付
+                            </div>
+                            <div>
+                                买完即走
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item center show">
+                        <div>
+                            <div class="image3 image"></div>
+                            <div class="image3_hover image "></div>
+                            <div class="text">
+                                低成本、高效率
+                            </div>
+                            <div>
+                                提供多样服务
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item center show">
+                        <div>
+                            <div class="image4 image"></div>
+                            <div class="image4_hover image "></div>
+                            <div class="text">
+                                完善的产品线
+                            </div>
+                            <div>
+                                可规模化建设
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <img src="//img.aimoge.com/FiMRYMJsaQxj5Xc3PlXad2fTrMeB" alt="">
+            </div>
+            <div>
+                <img src="//img.aimoge.com/Fjomfath_r0Bw2nxVvFcvxDZyB9E" alt="">
+                <img src="//img.aimoge.com/FsojsMhRvOosbShL0zt-1z6LdMeB" alt="">
+                <img src="//img.aimoge.com/Fo0Z8e_sZAWI5TlnDJdvSOS3AEHa" alt="">
+                <img src="//img.aimoge.com/Fh5kBS0ztPtyhzZL0Ic0OJzq2VaZ" alt="">
+                <img src="//img.aimoge.com/Fnmxe4iCNiQomnriwQ8qWTVoUevA" alt="">
+                <img src="//img.aimoge.com/FgUgONcFJ6pgqKhK4tskF2S7EDYC" alt="">
+            </div>
+            <div class="bg1">
+                <div class="title">
+                    <div>
+                        完善产品线，可规模化复制
+                    </div>
+                    <div class="solid"></div>
+                </div>
+                <div class="animate2">
+                    <div class="first">
+                        <div class="item item_bg1">
+                            <div class="show">
+                                <div class="icon">
+                                    <img src="//img.aimoge.com/Fgl9qswRqYiNeF5Jb9FMkdPoTHc9" alt="">
+                                </div>
+                                <div class="text">便利店盒子</div>
+                                <div class="mask abs opacity_6"></div>
+                            </div>
+                            <div class="hover">
+                                <div class="icon">
+                                    <img src="//img.aimoge.com/FgE4LgMf3Tw4nErKkek31k0-0Rfq" alt="">
+                                </div>
+                                <p class="text">中空强化玻璃、石膏板材质</p>
+                                <p class="text text1">坚硬防火隔热</p>
+                                <p class="text text2">确保质量安全</p>
+                                <div class="mask abs opacity_9"></div>
+                            </div>
+                            <div class="arrows">
+                                <img src="//img.aimoge.com/FhRLlF7DKDSGIkPQll-GiFA8SLA9" alt="">
+                            </div>
+                        </div>
+                        <div class="item item_bg2">
+                            <div class="show">
+                                <div class="icon">
+                                    <img src="//img.aimoge.com/Fmq9MP9TWvZCfQR58oTasktliILv" alt="">
+                                </div>
+                                <div class="text">便利店盒子</div>
+                                <div class="mask abs opacity_6"></div>
+                            </div>
+                            <div class="hover">
+                                <div class="icon">
+                                    <img src="//img.aimoge.com/FqY6wponBUW1sKcvQdbH0ZyQ0GBj" alt="">
+                                </div>
+                                <div class="text">商品扫描录入终端</div>
+                                <p class="text text1">拥有将商品智能扫描</p>
+                                <p class="text text2">录入系统的终端设备</p>
+                                <div class="mask abs opacity_9"></div>
+                            </div>
+                            <div class="arrows">
+                                <img src="//img.aimoge.com/FhRLlF7DKDSGIkPQll-GiFA8SLA9" alt="">
+                            </div>
+                        </div>
+                        <div class="item item_bg3">
+                            <div class="show">
+                                <div class="icon">
+                                    <img src="//img.aimoge.com/FvO94SpmVJKp0cQEVPpdhUqJsNZ2" alt="">
+                                </div>
+                                <div class="text">rfid电子标签体系</div>
+                                <div class="mask abs opacity_6"></div>
+                            </div>
+                            <div class="hover">
+                                <div class="icon">
+                                    <img src="//img.aimoge.com/FkjUw3gJvFyJHpycY_R_nIFN5O0S" alt="">
+                                </div>
+                                <div class="text">将商品标签化</div>
+                                <p class="text text1">智能识别实现商品的自助结算及防止商品被盗</p>
+                                <div class="mask abs opacity_9"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="h110 rel">
+                        <div class="arrows1">
+                            <img src="//img.aimoge.com/FuTccbaDZBxBUQlWNU-kv5P0aXy-" alt="">
+                        </div>
+                    </div>
+                    <div class="first">
+                        <div class="item item_bg4">
+                            <div class="show">
+                                <div class="icon">
+                                    <img src="//img.aimoge.com/Fp0sy31zHLdesTANKPvq6Bu2fX_d" alt="">
+                                </div>
+                                <div class="text">设备定期维护</div>
+                                <div class="mask abs opacity_6"></div>
+                            </div>
+                            <div class="hover">
+                                <div class="icon">
+                                    <img src="//img.aimoge.com/Fqt3YpR47bnT5rcAomalD2dDIPVa" alt="">
+                                </div>
+                                <div class="text">运维团队定期维护便利店盒子及设施</div>
+                                <p class="text text2">确保便利店正常运营</p>
+                                <div class="mask abs opacity_9"></div>
+                            </div>
+                            <div class="arrows">
+                                <img src="//img.aimoge.com/FuBX26DqtTRD0LKtMPCtSSKHCkzm" alt="">
+                            </div>
+                        </div>
+                        <div class="item item_bg5">
+                            <div class="show">
+                                <div class="icon">
+                                    <img src="//img.aimoge.com/FkyNE9ule7r0-16v7PqCEpi5aORc" alt="">
+                                </div>
+                                <div class="text">360度安全体系</div>
+                                <div class="mask abs opacity_6"></div>
+                            </div>
+                            <div class="hover">
+                                <div class="icon">
+                                    <img src="//img.aimoge.com/FiRAygwPlkagcj3shwHXs3RrOOvo" alt="">
+                                </div>
+                                <div class="text">扫码实名注册入店</div>
+                                <p class="text text1">通过报警通道离店</p>
+                                <p class="text text2">全方位摄像</p>
+                                <div class="mask abs opacity_9"></div>
+                            </div>
+                            <div class="arrows">
+                                <img src="//img.aimoge.com/FuBX26DqtTRD0LKtMPCtSSKHCkzm" alt="">
+                            </div>
+                        </div>
+                        <div class="item item_bg6">
+                            <div class="show">
+                                <div class="icon">
+                                    <img src="//img.aimoge.com/FpMtk3w4eNbM_BBwQCanyRkrPnL9" alt="">
+                                </div>
+                                <div class="text">可视化运营后台管理</div>
+                                <div class="mask abs opacity_6"></div>
+                            </div>
+                            <div class="hover">
+                                <div class="icon">
+                                    <img src="//img.aimoge.com/FuSbOMOT8K7w7xDt7CHcsjePmBP4" alt="">
+                                </div>
+                                <div class="text">商品及用户数据均记录存储在运营管理后台</div>
+                                <p class="text text2">方便管理</p>
+                                <div class="mask abs opacity_9"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="gege+">
+            <div>
+                <img src="//img.aimoge.com/FmO3oxqwkeh4zqPzoElLx0uWN029" alt="" width="100%">
+            </div>
+            <div>
+                <img src="//img.aimoge.com/FgQLhVN7xu5Kps0qIcuCPVC21Qog" alt="">
+                <img src="//img.aimoge.com/FlFvG-wCHTpzZJBhLzPImvitGCXA" alt="">
+                <img src="//img.aimoge.com/Fj3p5s8ZsJ1lNSYWDjXSAUxgSzRE" alt="">
+                <img src="//img.aimoge.com/FhdY7fV48qjzWax4hLn6zExTjirD" alt="">
+                <img src="//img.aimoge.com/FjGbAvNDv3pzbwrejxYqTqOzTMeq" alt="">
+                <div class="btn_box">
+                    <div class="btn">
+                        <a href="#submit">马上加盟</a>
+                        <div class="btn_icon">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg1">
+                <div class="title">
+                    <div>
+                        完善产品线的技术体系
+                    </div>
+                    <div class="solid"></div>
+                </div>
+                <div class="animate3">
+                    <div class="item bg_1">
+                        <div class="text">
+                            商品电子标签化体系
+                        </div>
+                        <div class="mask">
+                            <div class="title">商品电子标签化体系</div>
+                            <div class="content">
+                                <div class="text1">• 实现商品自助结算</div>
+                                <div class="text1">• 识别商品是否完成结算防止商品失窃</div>
+                                <div class="text1">• 商品的录入与后期管理</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item bg_2">
+                        <div class="text">
+                            全方位摄像+人脸识别系统
+                        </div>
+                        <div class="mask">
+                            <div class="title">全方位摄像+人脸识别系统</div>
+                            <div class="content">
+                                <div class="text1">• 人脸扫描进店</div>
+                                <div class="text1">• 全方位记录用户行为</div>
+                                <div class="text1">• 便于盗窃追踪</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item bg_3">
+                        <div class="text">
+                            可视化运营管理系统
+                        </div>
+                        <div class="mask">
+                            <div class="title">可视化运营管理系统</div>
+                            <div class="content1">
+                                <div class="text1">• 运营管理后台详细记录购买及结算数据，方便管理 </div>
+                                <div class="text1">• 记录不同用户购买行为，便于后期分用户运营</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <img src="//img.aimoge.com/FvgZWREnGhPd9g123QGZwoSkEaDQ" alt="">
+                    <img src="//img.aimoge.com/Fs8lTow0GH5Ez8N6HvvYrO7bWqMy" alt="">
+                    <img src="//img.aimoge.com/FjZijyQYMHiI_t6eBbm4--ck3WC1" alt="">
+                </div>
+            </div>
+        </div>
+        <div id="profitModel">
+            <div>
+                <img src="//img.aimoge.com/FqndTMkVJYqKJlwbZ8acFyoIBa7l" alt="">
+                <img src="//img.aimoge.com/FgbHL70CM3PeyMpOr1BlrmYkhcLw" alt="">
+                <img src="//img.aimoge.com/FtHeXX_GcnYalxsnIEKHf_vayOb7" alt="">
+                <img src="//img.aimoge.com/FnrweFnSSqHm-MLThLXtVV5TpbJJ" alt="">
+                <img src="//img.aimoge.com/FhPly9UN3JjqzssDEfMn6uK4Uj-e" alt="">
+                <img src="//img.aimoge.com/FndNuMjZfm2OyltmW1SbjlDRJFzm" alt="">
+            </div>
+            <div>
+                <div class="animate4">
+                    <img src="//img.aimoge.com/FgRHZRGy31bZHEk_GqyT17U4E-mc" alt="">
+                    <div class="item1">
+                        <div class="left">
+                            <img src="//img.aimoge.com/FqksGTDmX7kWJj-I3vNJuEkvSPr5" alt="" width="100%">
+                        </div>
+                        <div class="right">
+                            <div class="title">普通销售商品利差收入</div>
+                            <div class="content">
+                                <div class="text2">
+                                    与普通超市无异，收入主要来源于商品的利差。优势在于我们的便利柜位于普通住宅区，解决社区附近便利店较远的问题，解决社区居民最后100米的物流问题。
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item1">
+                        <div class="left">
+                            <img src="//img.aimoge.com/FhS4JLNCsMiIDqewjTHofI0JGkW_" alt="">
+                        </div>
+                        <div class="right">
+                            <div class="title">提升价格优势，利润最大化</div>
+                            <div class="content">
+                                <div class="text2">
+                                    由于无人快递便利柜的人力及运营成本较低，可适当降低商品价格，或定期做一些促销活动，提升其相较于普通便利店的价格优势，使社区居民更多地选择我们的便利柜，从而实现利润最大化
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="animate4">
+                    <div class="item">
+                        <div class="left">
+                            <div class="title">货架及快递柜资源</div>
+                            <div class="content">
+                                <div class="text2">• 货架可供各品牌作新品宣传资源 </div>
+                                <div class="text2">• 快递柜柜体及取件界面可作为广告资源平台</div>
+                            </div>
+                        </div>
+                        <div class="right">
+                            <img src="//img.aimoge.com/FmZq71a7RP3fw-pRgWsGoBRrj-rn" alt="">
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="left">
+                            <div class="title">APP资源</div>
+                            <div class="content">
+                                <div class="text2">• APP端静态固定及弹窗广告位资源平台 </div>
+                                <div class="text2">• 各合作商及品牌活动可在APP端做线上活动推广及宣传</div>
+                                <div class="text2">• APP端可通过用户注册获</div>
+                            </div>
+                        </div>
+                        <div class="right">
+                            <img src="//img.aimoge.com/FiXdaye7-7VAdjGZpREtdMtVAOsf" alt="">
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="left">
+                            <div class="title">全方位媒体资源</div>
+                            <div class="content">
+                                <div class="text2">• 便利柜中的宣传灯箱、电视屏、音频设备、支付屏等 </div>
+                                <div class="text2">• 快递柜取件界面、取件音频指导等</div>
+                            </div>
+                        </div>
+                        <div class="right">
+                            <img src="//img.aimoge.com/Fq3lZxfPeQkqq7CZNbcPLvgeCm4J" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <img src="//img.aimoge.com/FvM7QIS_aC7vKfilEh9SNhJCsckQ" alt="">
+                <img src="//img.aimoge.com/FsQZEkPpsiEY7mwcv4xOfKeTUJ2a" alt="">
+                <img src="//img.aimoge.com/FubWWpcBPT3IMDv9uZt3xsFqQ6nH" alt="">
+            </div>
+        </div>
+        <div id="join">
+            <div class="about">
+                <img src="//img.aimoge.com/Fj83F1N8k02aNS9wwK5TIzYcAsaM" alt="">
+                <img src="//img.aimoge.com/FlgTGvHlrtUgk9jJSqQX0mvasUNl" alt="">
+                <img src="//img.aimoge.com/FlkWMjoo_Q0uyAbtXfQYSvHEv4mz" alt="">
+                <img src="//img.aimoge.com/FgI6wj-hwf8XupTwUIsb8wt3Fi0S" alt="">
+                <img src="//img.aimoge.com/Fs1HkxciGAqTtN8grn5XFVA7ZJ0s" alt="">
+                <img src="//img.aimoge.com/FqhFZRilH7Vqnk1ZrrbLVTSwfn29" alt="">
+                <img src="//img.aimoge.com/Frv-TZ1v6B7Wh0gm8fKSHixvOfme" alt="">
+                <img src="//img.aimoge.com/FnSbyQ1Za7Ws_m9JLK4kX7Xdeimu" alt="">
+                <img src="//img.aimoge.com/FimDvlD9N-eo9gwLYs4zg-t_kVOQ" alt="">
+                <img src="//img.aimoge.com/FqIX39um2kSgsbrPsH3dXYvDClI9" alt="">
+                <img src="//img.aimoge.com/FhSlmSqUrRA3Rxe1FAEJedUOPBDM" alt="">
+                <img src="//img.aimoge.com/FvcaZFWnqwtTha4W5NMbAldOUT8b" alt="">
+                <div class="submit" id="submit">
+                    <img src="//img.aimoge.com/FgdAbQOT2AB1t2lVj2sP7MsDiGz4" alt="">
+                    <div class="input">
+                        <input type="text" name="" value="" placeholder="手机号" maxlength="11" id="mobile">
+                        <input type="email" placeholder="邮箱" id="email">
+                    </div>
+                    <p> *了解更多咨询，提交联系方式，客服会尽快联系您</p>
+                    <div class="center">
+                        <div class="submitBtn">提交</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="about_us">
+            <div class="about">
+                <img src="//img.aimoge.com/FvcLmYf-nrw7j_ZyGZASdiNs8TDM" alt="">
+                <img src="//img.aimoge.com/FrI1yBAyhmYzS6aDERwKUX5R72nL" alt="">
+                <img src="//img.aimoge.com/FlrGeyanUtOsqYs_J0vvr1iGU7vF" alt="">
+                <div class="weixin">
+                    <div>
+                        <div class="jubao">
+                            <div class="logos">
+                                <img src="//img.aimoge.com/Fjj2I6Q1DMSadLEizOhcyUQ1DC2e" alt="">
+                            </div>
+                            <div class="mt_20">
+                                <div>
+                                    地址：上海市徐汇区斜土路2899甲号光启文化广场A幢1202室
+                                </div>
+                                <div>
+                                    联系方式：021-61822222
+                                </div>
+                            </div>
+                        </div>
+                        <div class="gege">
+                            <div class="logos">
+                                <img src="//img.aimoge.com/FlewK8oYb34jtsdxipxPLgXSl6We" alt="">
+                            </div>
+                            <div class="mt_20">
+                                <div>
+                                    地址：南京市秦淮区1865创意产业园C4栋2楼
+                                </div>
+                                <div>
+                                    联系方式：400-033-8888
+                                </div>
+                            </div>
+                        </div>
+                        <div class="OR flex">
+                            <div>
+                                <div class="code">
+                                    <img src="//img.aimoge.com/FqYtdWjM-TTxMgu6zWMGo258FYce" alt="">
+                                </div>
+                                <p class="mg_8">格格小区微信公共号</p>
+                            </div>
+                            <div>
+                                <div class="code">
+                                    <img src="//img.aimoge.com/Fr57mf2VPXU-JXi3ABQY226rGXcl" alt="">
+                                </div>
+                                <p>格格小区app</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="mgAlert" class="mgAlert f24"></div>
+    <div class="layer hide" id="layer"></div>
+    <script>
+        $(function() {
+            $(window).scrollTop(0);
+            $(window).scroll(function() {
+                var top = $(window).scrollTop();
+                var tt = $(window).height();
+                if (tt < 648 || tt == 648) {
+                    if (top < tt * 6.2) {
+                        $(".nav a").eq(0).parent().siblings().children("a").removeClass("active");
+                        $(".nav a").eq(0).addClass("active");
+                    }
+                    if (top > tt * 6.2) {
+                        $(".nav a").eq(1).parent().siblings().children("a").removeClass("active");
+                        $(".nav a").eq(1).addClass("active");
+                    }
+                    if (top > tt * 11) {
+                        $(".nav a").eq(2).parent().siblings().children("a").removeClass("active");
+                        $(".nav a").eq(2).addClass("active");
+                    }
+                    if (top > tt * 16.7) {
+                        $(".nav a").eq(3).parent().siblings().children("a").removeClass("active");
+                        $(".nav a").eq(3).addClass("active");
+                    }
+                    if (top > tt * 23.2) {
+                        $(".nav a").eq(4).parent().siblings().children("a").removeClass("active");
+                        $(".nav a").eq(4).addClass("active");
+                    }
+                } else if (tt > 648 || tt == 960 || tt < 960) {
+                    if (top < tt * 5.6) {
+                        $(".nav a").eq(0).parent().siblings().children("a").removeClass("active");
+                        $(".nav a").eq(0).addClass("active");
+                    }
+                    if (top > tt * 5.6) {
+                        $(".nav a").eq(1).parent().siblings().children("a").removeClass("active");
+                        $(".nav a").eq(1).addClass("active");
+                    }
+                    if (top > tt * 9.8) {
+                        $(".nav a").eq(2).parent().siblings().children("a").removeClass("active");
+                        $(".nav a").eq(2).addClass("active");
+                    }
+                    if (top > tt * 14.5) {
+                        $(".nav a").eq(3).parent().siblings().children("a").removeClass("active");
+                        $(".nav a").eq(3).addClass("active");
+                    }
+                    if (top > tt * 20.3) {
+                        $(".nav a").eq(4).parent().siblings().children("a").removeClass("active");
+                        $(".nav a").eq(4).addClass("active");
+                    }
+                } else if (tt > 960) {
+                    if (top < tt * 6) {
+                        $(".nav a").eq(0).parent().siblings().children("a").removeClass("active");
+                        $(".nav a").eq(0).addClass("active");
+                    }
+                    if (top > tt * 6) {
+                        $(".nav a").eq(1).parent().siblings().children("a").removeClass("active");
+                        $(".nav a").eq(1).addClass("active");
+                    }
+                    if (top > tt * 11) {
+                        $(".nav a").eq(2).parent().siblings().children("a").removeClass("active");
+                        $(".nav a").eq(2).addClass("active");
+                    }
+                    if (top > tt * 15) {
+                        $(".nav a").eq(3).parent().siblings().children("a").removeClass("active");
+                        $(".nav a").eq(3).addClass("active");
+                    }
+                    if (top > tt * 21) {
+                        $(".nav a").eq(4).parent().siblings().children("a").removeClass("active");
+                        $(".nav a").eq(4).addClass("active");
+                    }
+                }
+            })
+
+            function showMsg(msg, type) {
+                var tclass = type == 1 ? 'mgAlert-error' : 'mgAlert-success',
+                    dom = $('#mgAlert')[0];
+                dom.setAttribute('class', 'mgAlert ' + tclass + ' mshow');
+                dom.innerHTML = msg;
+                setTimeout(function() {
+                    dom.setAttribute('class', 'mgAlert');
+                    dom.innerHTML = '';
+                }, 2000);
+            };
+
+            function submit() {
+                var data = {},
+                    mobile = $("#mobile").val(),
+                    email = $("#email").val();
+                if (!email) {
+                    showMsg('请输入邮箱！', 1);
+                    return false;
+                }
+                if (!mobile) {
+                    showMsg('请输入手机号', 1);
+                    return false;
+                }
+                if (!/^(13[0-9]{9}|15[012356789][0-9]{8}|18[0123456789][0-9]{8}|147[0-9]{8}|170[0-9]{8}|177[0-9]{8})$/.test(mobile)) {
+                    showMsg('请填写正确的11位手机号！', 1);
+                    return false;
+                }
+                data = {
+                    phone: mobile,
+                    email: email,
+                    contact_type: 'gegeplus'
+                }
+                $.ajax({
+                    url: "/contact",
+                    type: "POST",
+                    data: data,
+                    dataType: "json",
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    success: function(data) {
+                        if (data.status == 0) {
+                            showMsg('提交成功', 1)
+                        } else {
+                            showMsg('提交失败,请稍后重试', 1);
+                        }
+                    },
+                    error: function(err) {
+                        showMsg(err.msg, 1);
+                    }
+                })
+            }
+            $(".submitBtn").click(function() {
+                submit();
+            })
+            $(".nav a").click(function() {
+                $(this).addClass("active").parent().siblings().children("a").removeClass("active");
+            });
+            $(".animate1>div").hover(function() {
+                $(this).removeClass('show').addClass('hide');
+                $(this).children().children().eq(0).hide();
+                $(this).children().children().eq(1).show();
+            }, function() {
+                $(this).removeClass('hide').addClass('show');
+                $(this).children().children().eq(0).show();
+                $(this).children().children().eq(1).hide();
+            });
+            $(".animate2 .item").hover(function() {
+                $(this).children(".show").fadeOut();
+                $(this).children(".hover").show().animate({
+                    bottom: '0'
+                }, 1000);
+            }, function() {
+                $(this).children(".hover").animate({
+                    bottom: '-120%'
+                }, 500).hide();
+                $(this).children(".show").fadeIn();
+            })
+            $(".animate3 .item").hover(function() {
+                $(this).children(".text").fadeOut();
+                $(this).children(".mask").animate({
+                    bottom: '0'
+                }, 1000);
+            }, function() {
+                $(this).children(".mask").animate({
+                    bottom: '-100%'
+                }, 500)
+                $(this).children(".text").fadeIn();
+            })
+            $(".animate4 .item").hover(function() {
+                $(this).children(".left").addClass("hover_4").children(".title").css({
+                    color: '#1597f0'
+                });
+            }, function() {
+                $(this).children(".left").removeClass("hover_4").children(".title").css({
+                    color: '#fff'
+                });
+            })
+            $(".animate4 .item1").hover(function() {
+                $(this).children(".right").addClass("hover_4").children(".title").css({
+                    color: '#1597f0'
+                });
+            }, function() {
+                $(this).children(".right").removeClass("hover_4").children(".title").css({
+                    color: '#fff'
+                });
+            })
+        })
+    </script>
+</body>
+
+</html>
