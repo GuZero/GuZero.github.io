@@ -185,12 +185,11 @@
             height: 58px;
             line-height: 58px;
             background: url('//img.aimoge.com/FtnFEtY7uEfJubfv4hlRNwOz--V7') no-repeat 0 15px;
-            /*            background-size: 50% 50%;*/
             padding-left: 35px;
         }
         
-        .main {
-            margin-top: 58px;
+        .mian {
+            padding-top: 58px;
         }
         
         .main img {
@@ -780,7 +779,7 @@
     </div>
     <div class="main">
         <div id="home">
-            <div>
+            <div id="first_P">
                 <img src="//img.aimoge.com/Fvs8FHHAtPTr7MEGXCVBu4NsUuP0" alt="">
                 <img src="//img.aimoge.com/Flp3R2pxEgESBt2Ihng2D1HKhpDY" alt="">
                 <img src="//img.aimoge.com/Fof7-mPf7cr_aZLtTtuV7HPc4Sq7" alt="">
@@ -1243,7 +1242,7 @@
                 </div>
                 <div class="weixin">
                     <div>
-                        <div class="jubao">
+                        <!-- <div class="jubao">
                             <div class="logos">
                                 <img src="//img.aimoge.com/Fjj2I6Q1DMSadLEizOhcyUQ1DC2e" alt="">
                             </div>
@@ -1255,7 +1254,7 @@
                                     联系方式：021-61822222
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="gege">
                             <div class="logos">
                                 <img src="//img.aimoge.com/FlewK8oYb34jtsdxipxPLgXSl6We" alt="">
@@ -1265,8 +1264,12 @@
                                     地址：南京市秦淮区1865创意产业园C4栋2楼
                                 </div>
                                 <div>
+                                    联系人：唐先生 15195861353
+                                </div>
+                                <div>
                                     联系方式：400-033-8888
                                 </div>
+
                             </div>
                         </div>
                         <div class="OR flex">
@@ -1293,72 +1296,39 @@
     <script>
         $(function() {
             $(window).scrollTop(0);
+            var arr = ['#home', '#gege', '#profitModel', '#join', '#about_us'];
+            var arr1 = [];
+            $(".nav a").each(function(i) {
+                window.location.hash = arr[i];
+                arr1.push($(window).scrollTop())
+            })
+            window.location.hash = "";
             $(window).scroll(function() {
                 var top = $(window).scrollTop();
-                var tt = $(window).height();
-                if (tt < 648 || tt == 648) {
-                    if (top < tt * 6.2) {
-                        $(".nav a").eq(0).parent().siblings().children("a").removeClass("active");
-                        $(".nav a").eq(0).addClass("active");
-                    }
-                    if (top > tt * 6.2) {
-                        $(".nav a").eq(1).parent().siblings().children("a").removeClass("active");
-                        $(".nav a").eq(1).addClass("active");
-                    }
-                    if (top > tt * 11) {
-                        $(".nav a").eq(2).parent().siblings().children("a").removeClass("active");
-                        $(".nav a").eq(2).addClass("active");
-                    }
-                    if (top > tt * 16.7) {
-                        $(".nav a").eq(3).parent().siblings().children("a").removeClass("active");
-                        $(".nav a").eq(3).addClass("active");
-                    }
-                    if (top > tt * 23) {
-                        $(".nav a").eq(4).parent().siblings().children("a").removeClass("active");
-                        $(".nav a").eq(4).addClass("active");
-                    }
-                } else if (tt > 648 || tt == 960 || tt < 960) {
-                    if (top < tt * 5.6) {
-                        $(".nav a").eq(0).parent().siblings().children("a").removeClass("active");
-                        $(".nav a").eq(0).addClass("active");
-                    }
-                    if (top > tt * 5.6) {
-                        $(".nav a").eq(1).parent().siblings().children("a").removeClass("active");
-                        $(".nav a").eq(1).addClass("active");
-                    }
-                    if (top > tt * 9.8) {
-                        $(".nav a").eq(2).parent().siblings().children("a").removeClass("active");
-                        $(".nav a").eq(2).addClass("active");
-                    }
-                    if (top > tt * 14.5) {
-                        $(".nav a").eq(3).parent().siblings().children("a").removeClass("active");
-                        $(".nav a").eq(3).addClass("active");
-                    }
-                    if (top > tt * 20.3) {
-                        $(".nav a").eq(4).parent().siblings().children("a").removeClass("active");
-                        $(".nav a").eq(4).addClass("active");
-                    }
-                } else if (tt > 960) {
-                    if (top < tt * 6) {
-                        $(".nav a").eq(0).parent().siblings().children("a").removeClass("active");
-                        $(".nav a").eq(0).addClass("active");
-                    }
-                    if (top > tt * 6) {
-                        $(".nav a").eq(1).parent().siblings().children("a").removeClass("active");
-                        $(".nav a").eq(1).addClass("active");
-                    }
-                    if (top > tt * 11) {
-                        $(".nav a").eq(2).parent().siblings().children("a").removeClass("active");
-                        $(".nav a").eq(2).addClass("active");
-                    }
-                    if (top > tt * 15) {
-                        $(".nav a").eq(3).parent().siblings().children("a").removeClass("active");
-                        $(".nav a").eq(3).addClass("active");
-                    }
-                    if (top > tt * 21) {
-                        $(".nav a").eq(4).parent().siblings().children("a").removeClass("active");
-                        $(".nav a").eq(4).addClass("active");
-                    }
+                if (top < arr1[1]) {
+                    $(".nav a").eq(0).parent().siblings().children("a").removeClass("active");
+                    $(".nav a").eq(0).addClass("active");
+                    // window.location.hash = "#home";
+                }
+                if (top > arr1[1] || top == arr1[1]) {
+                    $(".nav a").eq(1).parent().siblings().children("a").removeClass("active");
+                    $(".nav a").eq(1).addClass("active");
+                    // window.location.hash = "#gege";
+                }
+                if (top > arr1[2] || top == arr1[2]) {
+                    $(".nav a").eq(2).parent().siblings().children("a").removeClass("active");
+                    $(".nav a").eq(2).addClass("active");
+                    // window.location.hash = "#profitModel";
+                }
+                if (top > arr1[3] || top == arr1[3]) {
+                    $(".nav a").eq(3).parent().siblings().children("a").removeClass("active");
+                    $(".nav a").eq(3).addClass("active");
+                    // window.location.hash = "#join";
+                }
+                if (top > arr1[4] || top == arr1[4]) {
+                    $(".nav a").eq(4).parent().siblings().children("a").removeClass("active");
+                    $(".nav a").eq(4).addClass("active");
+                    // window.location.hash = "#about_us";
                 }
             })
 
@@ -1420,7 +1390,6 @@
                 submit();
             })
             $(".nav a").click(function() {
-                $(window).scrollTop(0);
                 $(this).addClass("active").parent().siblings().children("a").removeClass("active");
             });
             $(".animate1>div").hover(function() {
