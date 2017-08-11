@@ -66,8 +66,7 @@ export default {
         HeaderBar
     },
     mounted() {
-        // this.getLoction();
-        this.load();
+        this.getLoction(this.load());
     },
     methods: {
         msgAlert(type, msg) {//弹出窗口
