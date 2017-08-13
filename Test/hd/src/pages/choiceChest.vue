@@ -123,16 +123,10 @@ export default {
             } else {
                 var map, geolocation;
                 //加载地图，调用浏览器定位服务
-                map = new AMap.Map('container', {
-                    resizeEnable: true
-                });
+                map = new AMap.Map('', { resizeEnable: true });
                 map.plugin('AMap.Geolocation', function () {
                     geolocation = new AMap.Geolocation({
                         enableHighAccuracy: true,//是否使用高精度定位，默认:true
-                        timeout: 10000,          //超过10秒后停止定位，默认：无穷大
-                        buttonOffset: new AMap.Pixel(10, 20),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
-                        zoomToAccuracy: true,      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
-                        buttonPosition: 'RB'
                     });
                     map.addControl(geolocation);
                     geolocation.getCurrentPosition();
@@ -208,9 +202,9 @@ export default {
             this.latitude = data.position.getLat();
             _util.showErrorTip(this.longitude)
         },
-        onError(data){
+        onError(data) {
             _util.showErrorTip(data);
-            this.msgAlert('warning','定位失败');
+            this.msgAlert('warning', '定位失败');
         },
         setData() {
             window.Data.t_c = this.t_c;
