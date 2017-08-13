@@ -201,6 +201,7 @@ export default {
             this.longitude = data.position.getLng();
             this.latitude = data.position.getLat();
             _util.showErrorTip(this.longitude)
+            console.log(this.longitude,this.latitude)
         },
         onError(data) {
             _util.showErrorTip(data);
