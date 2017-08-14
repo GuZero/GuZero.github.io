@@ -69,6 +69,7 @@ export default {
         HeaderBar
     },
     mounted() {
+<<<<<<< HEAD
         this.getLoction(this.load());
         $('body').removeClass('bg_blue');
     },
@@ -81,6 +82,16 @@ export default {
     },
     activated() {
         window.addEventListener('scroll', this.handleScroll);
+=======
+        this.getLoction();
+    },
+    watch: {
+        '$route': function () {
+            if (this.$route.path == ('/choicchest')) {
+                this.clearData();
+            }
+        }
+>>>>>>> ca355d43b1e22b34fb3fc900b25dc186d7eb6722
     },
     methods: {
         msgAlert(type, msg) {//弹出窗口
@@ -212,7 +223,11 @@ export default {
             this.longitude = data.position.getLng();
             this.latitude = data.position.getLat();
             _util.showErrorTip(this.longitude)
+<<<<<<< HEAD
             console.log(this.longitude, this.latitude)
+=======
+            console.log(this.longitude,this.latitude)
+>>>>>>> ca355d43b1e22b34fb3fc900b25dc186d7eb6722
         },
         onError(data) {
             _util.showErrorTip(data);
@@ -224,6 +239,7 @@ export default {
             this.url('./submit')
         },
         clearData() {
+<<<<<<< HEAD
             $(".choice_icon").hide();
             window.Data = {};
             // this.flag = false;
@@ -245,6 +261,17 @@ export default {
         },
         clearInput() {
             this.word = '';
+=======
+            window.Data = {};
+            this.flag = false;
+            this.t_c.clear();
+            this.t_c.clear();
+            this.items = [];
+            this.pageList = [];
+            this.page = '';
+            this.scroll_load_loading = false;
+            this.scroll_load_end = false;
+>>>>>>> ca355d43b1e22b34fb3fc900b25dc186d7eb6722
         },
         showLoading() { //显示正在加载数据状态
             this.scroll_load_loading = true;
