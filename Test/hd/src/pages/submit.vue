@@ -16,7 +16,12 @@
                     </div>
                 </div>
                 <div style="padding:0px 50px; font-size:14px;padding-bottom:20px;">
-                    <DateTime></DateTime>
+                    <!-- <DateTime :start_date="start_date" :end_date="end_date" @changeCallback1='change1' @changeCallback2='change1'></DateTime> -->
+                    <div class="mui-row">
+                        <input type="text" readonly id="start_date" v-model="start_date" :value="value" class="input mui-col-xs-5 mui-text-center" placeholder="开始时间" @input="change1">
+                        <span class="mui-col-xs-2 mui-text-center">----</span>
+                        <input type="text" readonly id="end_date" v-model="end_date" :value="value" class="input mui-col-xs-5 mui-text-center" placeholder="结束时间" @input="change1">
+                    </div>
                 </div>
             </div>
             <div class="hight_8 abs"></div>
@@ -35,11 +40,17 @@
                         <div class="add_icon">+</div>
                     </div>
                 </div>
-                <div class="item" v-for="(d,index) in arry" :key="d.id" @click="choiceItem(index)" :class="{disabled:d.id=='02'}">
+                <div class="item terminal" v-for="(d,index) in arry" :key="d.terminal_code" @click="choiceItem(d,$event)" data-id="terminal">
                     <div class="icon">
-                        <div class="choice_icon" v-if="activeTab==index"></div>
+                        <div class="choice_icon" v-show="false"></div>
                     </div>
-                    <p>{{d.name}}</p>
+                    <p>{{d.terminal_name}}</p>
+                </div>
+                <div class="item city" v-for="item in c_arry" :key="item.city_id" @click="choiceItem(item,$event)" data-id="city">
+                    <div class="icon">
+                        <div class="choice_icon" v-show="false"></div>
+                    </div>
+                    <p>{{item.city_name}}</p>
                 </div>
             </div>
             <div class="hight_8 abs"></div>
@@ -81,8 +92,8 @@
         <ModalDialog ref="confirmModal" @confirmCallback="setData"></ModalDialog>
         <div id="hint" class="sysLoading1 fixed">
             <div class="hint_info">
-                    <img src="//img.aimoge.com/FsNN9KaeHuuk90DQlqyLtNxOPfdd" style="width:25%" >
-                    <div>互动屏预定中...</div>                 
+                <img src="//img.aimoge.com/FsNN9KaeHuuk90DQlqyLtNxOPfdd" style="width:25%">
+                <div>互动屏预定中...</div>
             </div>
         </div>
     </div>
@@ -90,7 +101,7 @@
 
 <script>
 import HeaderBar from '../components/Header'
-import DateTime from '../components/DateTime'
+// import DateTime from '../components/DateTime'
 import ModalDialog from '../components/ModalDialog'
 export default {
     mixins: [require('../components/mixin/BodyBg')],
@@ -102,27 +113,49 @@ export default {
                 isgoback: 1
             },
             day: '0',
-            chest: '2',
+            chest: 0,
             scroll_load_loading: false,
             scroll_load_end: false,
-            start_date: '开始时间',
-            end_date: '结束时间',
+            start_date: '',
+            end_date: '',
             activeTab: '0',
             arry: [],
+            c_arry: [],
             flag: true,
+            terminals: new Set(),
+            citys: new Set()
         }
     },
     components: {
         HeaderBar,
-        DateTime,
+        // DateTime,
         ModalDialog,
     },
     mounted() {
         this.setInfo();
     },
+    watch: {
+        '$route': function () {
+            if (this.$route.path == ('/submit')) {
+                $(".choice_icon").hide();
+                if (window.Data.t_c && window.Data.t_n) {
+                    let arr1 = Array.from(window.Data.t_c);
+                    let arr2 = Array.from(window.Data.t_n);
+                    this.verify('3201', arr1);
+                    this.arry = this.setData(arr1, arr2);
+
+                }
+                if (window.Data.c_id && window.Data.c_name) {
+                    let arr3 = Array.from(window.Data.c_id);
+                    let arr4 = Array.from(window.Data.c_name);
+                    this.c_arry = this.setData1(arr3, arr4);
+                }
+            }
+        },
+    },
     computed: {
-        end_date: function () {
-            console.log('1');
+        start_date: function () {
+            console.log(this.start_date);
         }
     },
     methods: {
@@ -138,7 +171,7 @@ export default {
             }, 2000);
         },
         setInfo() {//设置信息
-            var htmlstyle = "<style>body{padding:0;margin:0;}.msg{color:#FFF;width:100%;height:30px;text-align:center;font-size:14px;line-height:30px;position:fixed;top: -30px;z-index:20;}" +
+            var htmlstyle = "<style>body{padding:0;margin:0;}.msg{color:#FFF;width:100%;height:30px;text-align:center;font-size:14px;line-height:30px;position:fixed;top: -30px;z-index:9999;}" +
                 ".msg_success{background-color:#1fcc6c;}" +
                 ".msg_warning{background-color:#e94b35;}" +
                 ".msg_primary{background-color:#337ab7;}" +
@@ -148,7 +181,8 @@ export default {
                 '<div class="msg msg_warning"></div>' +
                 '<div class="msg msg_primary"></div>' +
                 '<div class="msg msg_info"></div>');
-            this.arry = [{ 'name': '1865创意园二楼格格货栈', 'id': '01' }, { 'name': '1865创意园二楼格格货栈', 'id': '02' }, { 'name': '1865创意园二楼格格货栈', 'id': '03' },];
+            $(".choice_icon").hide();
+            this.init();
         },
         showAlert() {
             this.$refs.confirmModal.showModal({
@@ -158,14 +192,68 @@ export default {
         isAgree() {
             this.flag = !this.flag;
         },
-        choiceItem(index) {
-            this.activeTab = index;
+        choiceItem(item, ev, index) {
+            let el = ev.currentTarget;
+            let id = $(el).data("id");
+            let icon = $(el).children('.icon').children();
+            if (id == 'city' && this.terminals.size == 0) {
+                if ($(icon).is(":hidden")) {
+                    $(icon).show();
+                    this.citys.add(item.city_id);
+                    this.chest++;
+                } else {
+                    $(icon).hide();
+                    this.citys.delete(item.city_id);
+                    this.chest--;
+                }
+            } else if (id == 'terminal' && this.citys.size == 0) {
+                if ($(icon).is(":hidden")) {
+                    $(icon).show();
+                    this.terminals.add(item.terminal_code);
+                    this.chest++;
+                } else {
+                    $(icon).hide();
+                    this.terminals.delete(item.terminal_code);
+                    this.chest--;
+                }
+            } else {
+                _util.showErrorTip('抱歉！包城和选择柜机您只能选择一个');
+            }
         },
         gotoInfo(name) {
+            if (name == 'choiceChest') {
+                if (this.start_date == '' || this.end_date == '') {
+                    _util.showErrorTip('请先选择时间再选择柜机');
+                    return false;
+                }
+            }
             this.url('/' + name);
         },
-        setData() {
-            console.log('函数执行');
+        change1() {
+            if (this.start_date && this.end_date) {
+                this.arry = [];
+                this.c_arry = [];
+            }
+        },
+        setData(arr1, arr2) {
+            let Array = []
+            for (let i = 0; i < arr1.length; i++) {
+                let obj = Object.create(null);
+                obj.terminal_code = arr1[i];
+                obj.terminal_name = arr2[i];
+                Array.push(obj);
+            }
+            return Array
+        },
+        setData1(arr1, arr2) {
+            let Array = []
+            for (let i = 0; i < arr1.length; i++) {
+                let obj = Object.create(null);
+                obj.city_id = arr1[i];
+                obj.city_name = arr2[i];
+                Array.push(obj);
+            }
+            return Array
         },
         nextStep() {
             //  this.$refs.confirmModal.showModal({
@@ -173,6 +261,46 @@ export default {
             // });
             // _util.showErrorTip('请选择分类！');
             this.showInfo();
+        },
+        verify(cityID, code) {
+            axios.get('http://api.dev.aimoge.com/v1/media/adinteraction/inspect?city_id=' + cityID + '&terminal_codes=' + code + '&start_date=' + this.start_date + '&end_date=' + this.end_date)
+                .then(function (response) {
+                    if (response.data.status == 0) {
+                        that.hideLoading();
+                        console.log(response.data);
+                        that.items = response.data.data.adinteractions;
+                    } else {
+                        if (response.data.msg) _util.showErrorTip(response.data.msg);
+                    }
+                })
+                .catch(function (err) {
+                    that.hideLoading();
+                    _util.showErrorTip('您的网络可能出了点问题:(');
+                })
+        },
+        init() {
+            let m = new Date().getMonth() + 1,
+                d = new Date().getDate() + 1,
+                time = new Date().getHours(),
+                that = this;
+            if (time > 17 || time == 17) {
+                d = d + 1;
+            }
+            var startDate = new LCalendar();
+            startDate.init({
+                'trigger': '#start_date', //标签id
+                'type': 'date', //date 调出日期选择 datetime 调出日期时间选择 time 调出时间选择 ym 调出年月选择,
+                'minDate': (new Date().getFullYear()) + '-' + m + '-' + d, //最小日期
+                'maxDate': (new Date().getFullYear()) + '-' + 12 + '-' + 31,//最大日期
+            });
+            var endDate = new LCalendar();
+            // that.end_date=endDate.val;
+            endDate.init({
+                'trigger': '#end_date', //标签id
+                'type': 'date', //date 调出日期选择 datetime 调出日期时间选择 time 调出时间选择 ym 调出年月选择,
+                'minDate': (new Date().getFullYear()) + '-' + m + '-' + d, //最小日期
+                'maxDate': (new Date().getFullYear()) + '-' + 12 + '-' + 31 //最大日期
+            });
         },
         showLoading() { //显示正在加载数据状态
             this.scroll_load_loading = true;
@@ -239,7 +367,7 @@ export default {
 }
 
 .item {
-    margin: 15px auto;
+    margin: 10px auto;
     display: flex;
     align-items: center;
 }
@@ -262,7 +390,7 @@ export default {
 }
 
 .item p {
-    font-size: 18px;
+    font-size: 14px;
     color: #4d4d4d;
     margin-left: 18px;
 }
@@ -308,7 +436,6 @@ export default {
     top: 50%;
     margin-left: -35%;
     margin-top: -65px;
-    ;
     background: #fff;
     line-height: 30px;
     font-size: 16px;
@@ -316,6 +443,15 @@ export default {
     z-index: 90001;
     border-radius: 5px;
     padding-top: 16px;
+}
+
+.input {
+    border: none;
+    font-size: 14px;
+    width: 40%;
+    padding: 0px;
+    height: 25px;
+    margin-bottom: 0px;
 }
 </style>
 

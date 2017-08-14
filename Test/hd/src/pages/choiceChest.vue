@@ -1,13 +1,13 @@
 <template>
     <div class="choiceChest">
-        <HeaderBar :title="pageTitle" :btnconfig="btnconfig"></HeaderBar>
+        <HeaderBar :title="pageTitle" :btnconfig="btnconfig" @confirmCallback="setData"></HeaderBar>
         <div style="height:44px;"></div>
         <div class="search flex_1 fixed">
             <div class="input rel">
                 <input type="text" placeholder="输入小区名" v-model="word">
-                <div class="tag abs" v-if="word"></div>
+                <div class="tag abs" v-if="word" @click="clearInput"></div>
             </div>
-            <div class="search-btn">搜索</div>
+            <div class="search-btn" @click="search">搜索</div>
         </div>
         <div class="content mui-content rel">
             <div class="height_24">包成示爱选项</div>
@@ -19,15 +19,16 @@
             <div class="pos-loading rel" v-if="flag">{{locatinfo}}
                 <div class="abs repos">重新定位</div>
             </div>
-          
+    
             <div style="margin-top:36px;">
-                <div class="item" v-for="(d,index) in items" :key="d.id" @click="choiceItem(index)" :class="{disabled:d.id=='02'}">
+                <div class="item" v-for="(d,index) in items" :key="d.id" @click="choiceItem(d,$event)" :class="{disabled:d.id=='02'}">
                     <div class="icon">
-                        <div class="choice_icon" v-if="activeTab==index"></div>
+                        <div class="choice_icon" v-show="flag"></div>
                     </div>
                     <p class="mui-ellipsis">{{d.terminal_name}}</p>
                     <div class="abs" style="right:16px;">{{d.distance}}KM</div>
                 </div>
+                <div class="empty" v-if="!items.length">┗|'O'|┛ 嗷~~抱歉暂时没有找到您想要的</div>
             </div>
         </div>
     
@@ -59,7 +60,9 @@ export default {
             scroll_load_loading: false,
             scroll_load_end: false,
             activeTab: '0',
-            flag: true
+            flag: false,
+            t_c: new Set(),
+            t_n: new Set()
         }
     },
     components: {
@@ -67,6 +70,17 @@ export default {
     },
     mounted() {
         this.getLoction(this.load());
+        $('body').removeClass('bg_blue');
+    },
+    watch: {
+        '$route': function () {
+            if (this.$route.path == ('/choiceChest')) {
+                this.clearData();
+            }
+        }
+    },
+    activated() {
+        window.addEventListener('scroll', this.handleScroll);
     },
     methods: {
         msgAlert(type, msg) {//弹出窗口
@@ -80,8 +94,18 @@ export default {
                 }, 500)
             }, 2000);
         },
-        choiceItem(index) {
-            this.activeTab = index;
+        choiceItem(item, ev) {
+            let el = ev.currentTarget;
+            let icon = $(el).children('.icon').children();
+            if ($(icon).is(":hidden")) {
+                $(icon).show();
+                this.t_c.add(item.terminal_code)
+                this.t_n.add(item.terminal_name)
+            } else {
+                $(icon).hide();
+                this.t_c.delete(item.terminal_code);
+                this.t_n.delete(item.terminal_name)
+            }
         },
         gotoInfo() {
             this.url('./allcity');
@@ -102,21 +126,19 @@ export default {
                     });
                 })
             } else {
-                var map, geolocation, that = this;
+                var map, geolocation;
                 //加载地图，调用浏览器定位服务
-                map = new AMap.Map('', {
-                    resizeEnable: true
-                });
+                map = new AMap.Map('', { resizeEnable: true });
                 map.plugin('AMap.Geolocation', function () {
                     geolocation = new AMap.Geolocation({
-                        enableHighAccuracy: true, //是否使用高精度定位，默认:true
-                        timeout: 10000, //超过10秒后停止定位，默认：无穷大
+                        enableHighAccuracy: true,//是否使用高精度定位，默认:true
                     });
                     map.addControl(geolocation);
                     geolocation.getCurrentPosition();
-                    AMap.event.addListener(geolocation, 'complete', that.onComplete); //返回定位信息
-                    AMap.event.addListener(geolocation, 'error', that.msgAlert('warning', '定位失败')); //返回定位出错信息
+                    AMap.event.addListener(geolocation, 'complete', onComplete);//返回定位信息
+                    AMap.event.addListener(geolocation, 'error', onError);      //返回定位出错信息
                 });
+                if (callback) callback();
             }
         },
         load() {
@@ -154,6 +176,11 @@ export default {
                     _util.showErrorTip('您的网络可能出了点问题:(');
                 })
         },
+        handleScroll() {
+            if (document.body.scrollTop + window.innerHeight >= document.body.scrollHeight - 1) {
+                this.load();
+            }
+        },
         setDataStatus: function () {
             var that = this;
             var item = null, tempItems = [];
@@ -183,7 +210,41 @@ export default {
         },
         onComplete(data) {
             this.longitude = data.position.getLng();
-            this.latitude = data.data.position.getLat();
+            this.latitude = data.position.getLat();
+            _util.showErrorTip(this.longitude)
+            console.log(this.longitude, this.latitude)
+        },
+        onError(data) {
+            _util.showErrorTip(data);
+            this.msgAlert('warning', '定位失败');
+        },
+        setData() {
+            window.Data.t_c = this.t_c;
+            window.Data.t_n = this.t_n;
+            this.url('./submit')
+        },
+        clearData() {
+            $(".choice_icon").hide();
+            window.Data = {};
+            // this.flag = false;
+            // this.t_c.clear();
+            // this.t_c.clear();
+            // this.items = [];
+            // this.pageList = [];
+            // this.page = '';
+            // this.scroll_load_loading = false;
+            // this.scroll_load_end = false;
+        },
+        search() {
+            this.page = '';
+            this.pageList = [];
+            this.items = [];
+            this.scroll_load_end = false;
+            this.scroll_load_loading = false;
+            this.load();
+        },
+        clearInput() {
+            this.word = '';
         },
         showLoading() { //显示正在加载数据状态
             this.scroll_load_loading = true;
@@ -380,6 +441,12 @@ export default {
     font-size: 14px;
     color: #4d4d4d;
     margin: 0px 12px;
+}
+.empty{
+    font-size: 14px;
+    text-align: center;
+    color: #888;
+    padding-top: 30px;
 }
 </style>
 

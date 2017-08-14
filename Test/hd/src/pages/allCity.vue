@@ -8,11 +8,11 @@
             </div>
             <div class="show margin8">
                 <ul id="cityList">
-                    <li class="mui-table-view-cell" v-for="(item,index) in items" :key="item.id" @click="choiceCity(item,index)">
+                    <li class="mui-table-view-cell" v-for="(item,index) in items" :key="item.id" @click="choiceCity(item,$event)">
                         <div class="items">
                             <div>{{item.city_name}}</div>
                             <div style="padding-right:18px;">{{item.price}}元/天
-                                <i class="choice_icon" v-show="activeTab==index"></i>
+                                <i class="choice_icon" v-show="flag"></i>
                             </div>
                         </div>
                     </li>
@@ -36,6 +36,9 @@ export default {
             },
             items: [],
             activeTab: '0',
+            flag: false,
+            c_id: new Set(),
+            c_name:new Set()
         }
     },
     components: {
@@ -46,7 +49,10 @@ export default {
     },
     watch: {
         '$route': function () {
-           
+            if (this.$route.path == ('/allcity')) {
+                $(".choice_icon").hide();
+                window.Data={};
+            }
         }
     },
     methods: {
@@ -91,10 +97,22 @@ export default {
 
         },
         nextStep() {
-            this.$router.go(-1);
+            window.Data.c_id=this.c_id;
+            window.Data.c_name=this.c_name;
+            this.url('./submit');
         },
-        choiceCity(item, index) {
-            this.activeTab = index;
+        choiceCity(item, ev) {
+            let el = ev.currentTarget;
+            let icon = $(el).children('.items').children().eq(1).children();
+            if ($(icon).is(":hidden")) {
+                $(icon).show();
+                this.c_id.add(item.city_id);
+                this.c_name.add(item.city_name);
+            } else {
+                $(icon).hide();
+                this.c_id.delete(item.city_id);
+                this.c_name.delete(item.city_name);
+            }
         },
         showLoading() { //显示正在加载数据状态
             this.scroll_load_loading = true;
