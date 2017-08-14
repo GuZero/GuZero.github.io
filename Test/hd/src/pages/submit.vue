@@ -40,24 +40,17 @@
                         <div class="add_icon">+</div>
                     </div>
                 </div>
-<<<<<<< HEAD
                 <div class="item terminal" v-for="(d,index) in arry" :key="d.terminal_code" @click="choiceItem(d,$event)" data-id="terminal">
-=======
-                <div class="item" v-for="(d,index) in arry" :key="d.terminal_code" @click="choiceItem(index)" :class="{disabled:d.id=='02'}">
->>>>>>> ca355d43b1e22b34fb3fc900b25dc186d7eb6722
                     <div class="icon">
                         <div class="choice_icon" v-show="false"></div>
                     </div>
                     <p>{{d.terminal_name}}</p>
-<<<<<<< HEAD
                 </div>
                 <div class="item city" v-for="item in c_arry" :key="item.city_id" @click="choiceItem(item,$event)" data-id="city">
                     <div class="icon">
                         <div class="choice_icon" v-show="false"></div>
                     </div>
                     <p>{{item.city_name}}</p>
-=======
->>>>>>> ca355d43b1e22b34fb3fc900b25dc186d7eb6722
                 </div>
             </div>
             <div class="hight_8 abs"></div>
@@ -144,7 +137,6 @@ export default {
     watch: {
         '$route': function () {
             if (this.$route.path == ('/submit')) {
-<<<<<<< HEAD
                 $(".choice_icon").hide();
                 if (window.Data.t_c && window.Data.t_n) {
                     let arr1 = Array.from(window.Data.t_c);
@@ -164,12 +156,6 @@ export default {
     computed: {
         start_date: function () {
             console.log(this.start_date);
-=======
-                let arr1 = Array.from(window.Data.t_c);
-                let arr2 = Array.from(window.Data.t_n);
-                this.arry = this.setData(arr1, arr2)
-            }
->>>>>>> ca355d43b1e22b34fb3fc900b25dc186d7eb6722
         }
     },
     methods: {
@@ -195,12 +181,8 @@ export default {
                 '<div class="msg msg_warning"></div>' +
                 '<div class="msg msg_primary"></div>' +
                 '<div class="msg msg_info"></div>');
-<<<<<<< HEAD
             $(".choice_icon").hide();
             this.init();
-=======
-            // this.arry = [{ 'name': '1865创意园二楼格格货栈', 'id': '01' }, { 'name': '1865创意园二楼格格货栈', 'id': '02' }, { 'name': '1865创意园二楼格格货栈', 'id': '03' },];
->>>>>>> ca355d43b1e22b34fb3fc900b25dc186d7eb6722
         },
         showAlert() {
             this.$refs.confirmModal.showModal({
@@ -247,15 +229,12 @@ export default {
             }
             this.url('/' + name);
         },
-<<<<<<< HEAD
         change1() {
             if (this.start_date && this.end_date) {
                 this.arry = [];
                 this.c_arry = [];
             }
         },
-=======
->>>>>>> ca355d43b1e22b34fb3fc900b25dc186d7eb6722
         setData(arr1, arr2) {
             let Array = []
             for (let i = 0; i < arr1.length; i++) {
@@ -265,7 +244,6 @@ export default {
                 Array.push(obj);
             }
             return Array
-<<<<<<< HEAD
         },
         setData1(arr1, arr2) {
             let Array = []
@@ -276,8 +254,6 @@ export default {
                 Array.push(obj);
             }
             return Array
-=======
->>>>>>> ca355d43b1e22b34fb3fc900b25dc186d7eb6722
         },
         nextStep() {
             //  this.$refs.confirmModal.showModal({
