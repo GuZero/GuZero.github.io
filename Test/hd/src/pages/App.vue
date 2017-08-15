@@ -83,7 +83,7 @@ export default {
     },
     created() {
         this.getInfo();
-         this.isshare=_util.isWeixin();
+        // this.isshare=_util.isWeixin();
     },
     methods: {
         isShare() {

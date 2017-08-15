@@ -16,7 +16,6 @@
                     </div>
                 </div>
                 <div style="padding:0px 50px; font-size:14px;padding-bottom:20px;">
-                    <!-- <DateTime :start_date="start_date" :end_date="end_date" @changeCallback1='change1' @changeCallback2='change1'></DateTime> -->
                     <div class="mui-row">
                         <input type="text" readonly id="start_date" v-model="start_date" :value="value" class="input mui-col-xs-5 mui-text-center" placeholder="开始时间" @input="change1">
                         <span class="mui-col-xs-2 mui-text-center">----</span>
@@ -40,7 +39,7 @@
                         <div class="add_icon">+</div>
                     </div>
                 </div>
-                <div class="item terminal" v-for="(d,index) in arry" :key="d.terminal_code" @click="choiceItem(d,$event)" data-id="terminal">
+                <div class="item terminal" v-for="(d,index) in arry" :key="d.terminal_code" @click="choiceItem(d,$event)" data-id="terminal" :class="{disabled:d.succed==1}">
                     <div class="icon">
                         <div class="choice_icon" v-show="false"></div>
                     </div>
@@ -101,7 +100,6 @@
 
 <script>
 import HeaderBar from '../components/Header'
-// import DateTime from '../components/DateTime'
 import ModalDialog from '../components/ModalDialog'
 export default {
     mixins: [require('../components/mixin/BodyBg')],
@@ -123,12 +121,12 @@ export default {
             c_arry: [],
             flag: true,
             terminals: new Set(),
-            citys: new Set()
+            citys: new Set(),
+            succed: null
         }
     },
     components: {
         HeaderBar,
-        // DateTime,
         ModalDialog,
     },
     mounted() {
@@ -141,8 +139,13 @@ export default {
                 if (window.Data.t_c && window.Data.t_n) {
                     let arr1 = Array.from(window.Data.t_c);
                     let arr2 = Array.from(window.Data.t_n);
-                    this.verify('3201', arr1);
-                    this.arry = this.setData(arr1, arr2);
+                    let code = '';
+                    let _id = window.Data.city_id;
+                    for (let i = 0; i < arr1.length; i++) {
+                        code += '&terminal_code=' + arr1[i];
+                    }
+                    this.verify(_id,code);
+                    this.arry = this.setData(arr1, arr2,this.succed);
 
                 }
                 if (window.Data.c_id && window.Data.c_name) {
@@ -152,11 +155,6 @@ export default {
                 }
             }
         },
-    },
-    computed: {
-        start_date: function () {
-            console.log(this.start_date);
-        }
     },
     methods: {
         msgAlert(type, msg) {//弹出窗口
@@ -235,12 +233,13 @@ export default {
                 this.c_arry = [];
             }
         },
-        setData(arr1, arr2) {
+        setData(arr1, arr2,status) {
             let Array = []
             for (let i = 0; i < arr1.length; i++) {
                 let obj = Object.create(null);
                 obj.terminal_code = arr1[i];
                 obj.terminal_name = arr2[i];
+                obj.succed=status;
                 Array.push(obj);
             }
             return Array
@@ -262,13 +261,14 @@ export default {
             // _util.showErrorTip('请选择分类！');
             this.showInfo();
         },
-        verify(cityID, code) {
-            axios.get('http://api.dev.aimoge.com/v1/media/adinteraction/inspect?city_id=' + cityID + '&terminal_codes=' + code + '&start_date=' + this.start_date + '&end_date=' + this.end_date)
+        verify(cityID, code,callback) {
+            let that = this;
+            axios.get('http://api.dev.aimoge.com/v1/media/adinteraction/inspect?city_id=' + cityID + code + '&start_date=' + this.start_date + '&end_date=' + this.end_date)
                 .then(function (response) {
                     if (response.data.status == 0) {
                         that.hideLoading();
-                        console.log(response.data);
-                        that.items = response.data.data.adinteractions;
+                        that.succed=response.data.data.succed;
+                        if(callback) that.arry=callback();
                     } else {
                         if (response.data.msg) _util.showErrorTip(response.data.msg);
                     }

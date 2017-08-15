@@ -1,6 +1,5 @@
 <template>
-    <div class="make">
-        <!--裁剪部分-->
+    <div class="make1">
         <div class="htmleaf-container">
             <div id="clipArea"></div>
             <div class="footer">
@@ -17,192 +16,89 @@
             </div>
         </div>
         <HeaderBar :title="pageTitle" :btnconfig="btnconfig"></HeaderBar>
-        <div class="mui-content-padded">
-            <div class="mui-row">
-                <div class="mui-col-xs-5" @click="switchTab(0)">
-                    <button type="button" class="mui-btn mui-btn-outlined btn" id="make_btn" :class="{active:activeTab==0}">
-                        1.制作
-                    </button>
-                </div>
-                <div class="mui-col-xs-2"></div>
-                <div class="mui-col-xs-5" @click="switchTab(1)">
-                    <button type="button" class="mui-btn mui-btn-outlined btn" id="choice_btn" :class="{active:activeTab==1}">
-                        2.选择柜机
-                    </button>
+        <div style="height:44px;"></div>
+        <div class="content mui-content">
+            <div class="bg_img">
+                <div class="img rel">
+                    <div id="uploadBox">
+                        <a id="upload" @click="upLoad">
+                            <button type="button" class="mui-btn mui-btn-outlined upload_btn">
+                                上传图片
+                            </button>
+                            <input id="file" type="file" accept="image/*" multiple/>
+                        </a>
+                        <p class="font_14">建议上传1M以上 清晰度高的图片</p>
+                    </div>
+                    <div id="photo"></div>
                 </div>
             </div>
-            <div class="show" v-if="activeTab==0">
-                <div class="mui-card">
-                    <div class="mui-card-header mui-card-media">
-                        <div id="uploadBox">
-                            <a id="upload" @click="upLoad">
-                                <button type="button" class="mui-btn mui-btn-outlined upload_btn">
-                                    上传图片
-                                </button>
-                                <input id="file" type="file" accept="image/*" multiple/>
-                            </a>
-                            <p class="font_14">建议上传1M以上 清晰度高的图片</p>
-                        </div>
-                        <div id="error">
-                            <p class="font_14">咣咣，上传失败/(ㄒoㄒ)/~~</p>
-                            <div class="mui-text-center">
-                                <button type="button" class="mui-btn mui-btn-outlined upload_btn margin20" id="retry">重试</button>
-                            </div>
-                            <a id="reelect" class="font_14" @click="reelect">
-                                <label for="file">重选作品
-                                </label>
-                            </a>
-                        </div>
-                        <div id="photo"></div>
-                    </div>
-                    <div class="mui-card-content">
-                        <div class="text" @click="input">
-                            <p class="txt1 font_14">点击输入文字</p>
-                            <div class="text_1">
-                                <textarea maxlength="140" id="text" rows="2" v-model="text" @input="checkText"></textarea>
-                                <p id="num1" class="mui-text-right font_14">
-                                    <span id="word">0</span>/140</p>
-                            </div>
-                        </div>
+            <div class="text_box">
+                <div class="text" @click="input">
+                    <p class="txt1 font_14">点击输入文字</p>
+                    <div class="text_1">
+                        <input type="text" maxlength="8" placeholder="打字要满八个字，很长的字" style="border:none;font-size:14px;" v-model="text">
                     </div>
                 </div>
             </div>
-            <div id="cabinet" class="margin45" v-if="activeTab==1">
-                <ul class="mui-table-view line_h30">
-                    <li class="mui-table-view-cell">
-                        <div class="mui-row ">
-                            <div class="mui-col-xs-2 mui-text-center">
-                                <div style="width:18px;height:18px; display: inline-block">
-                                    <img class="mui-pull-left" src="//img.aimoge.com/FjHjVjKxuwijQBc6c_9jq9Ru0v9c" width="100%" height="100%">
-                                </div>
-                            </div>
-                            <div class="mui-col-xs-8 margin-5" @click.stop.prevent="gotoInfo('chooseCity')">
-                                <p class="mui-ellipsis">{{city_name}}</p>
-                            </div>
-                            <div class="mui-col-xs-2 mui-text-right">
-                                <div style="width:18px;height:18px;display: inline-block">
-                                    <img src="//img.aimoge.com/FnvoecOAQ0w2pmYfw0BfkPjXlvHC" width="100%" height="100%">
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-                <ul class="mui-table-view margin5">
-                    <li class="mui-table-view-cell">
-                        <div class="mui-row">
-                            <div class="mui-col-xs-2 mui-text-center">
-                                <div style="width:18px;height: 18px; display: inline-block">
-                                    <img src="//img.aimoge.com/FgsAPXW3eFt4MN3pHyGaq6_B-fjQ" alt="" width="100%" height="100%">
-                                </div>
-                            </div>
-                            <div class="mui-col-xs-10">
-                                <p class="mui-ellipsis">选择展示日期</p>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="mui-table-view-cell">
-                        <div class="mui-row" id="chooseDate">
-                            <!-- <div class="mui-col-xs-4 mui-text-center">{{start_date}}</div>
-                            <div class="mui-col-xs-4 mui-text-center">------</div>
-                            <div class="mui-col-xs-4 mui-text-center">{{end_date}}</div> -->
-                            <DateTime></DateTime>
-                        </div>
-                    </li>
-                </ul>
-                <div class="mui-row margin145">
-                    <div class="mui-col-xs-3 mui-text-right" @click="isAgree">
-                        <div class="agree" v-show="flag">
-                            <img src="//img.aimoge.com/FtRcBl62d6oHvi4N6OfL2xSYkREC" alt="" width="100%" height="100%">
-                        </div>
-                        <div class="agree" v-show="!flag">
-                            <img src="//img.aimoge.com/FhK_8jHkPbHUvC7yuZgnh5XzAmfy" alt="" width="100%" height="100%">
-                        </div>
+            <div class="choice_box" style="padding:16px 16px;">
+                <div class="flex_m" style="justify-content: space-between;">
+                    <div class="w_30 item_b color-1" @click="choiceTheme(theme1)">
+                        交友派
                     </div>
-                    <div class="mui-col-xs-9" @click="gotoInfo('agreement')">
-                        <a class="agreement">同意柜机屏幕展示协议</a>
+                    <div class="w_30 item_b color-2">
+                        宠物征婚
+                    </div>
+                    <div class="w_30 item_b color-3">
+                        爱豆粉
                     </div>
                 </div>
-    
-            </div>
-            <button type="button" class="mui-btn mui-btn-primary mui-btn-block bottom" @click="submit" v-if="activeTab==0">下一步</button>
-            <button type="button" class="mui-btn mui-btn-primary mui-btn-block bottom" @click="postData" v-if="activeTab==1">提交</button>
-        </div>
-        <div id="time">
-            <div class="mui-row mui-table-view-cell">
-                <div class="mui-col-xs-6 font_14" @click="isShow(0)">
-                    取消
-                </div>
-                <div class="mui-col-xs-6 blue mui-text-right font_14" @click="isShow(2)">
-                    确定
+                <div class="flex_m" style="justify-content: space-between;margin-top:10px;">
+                    <div class="w_30 color-4 item_b">
+                        晒娃魔
+                    </div>
+                    <div class="w_30 color-5 item_b">
+                        秀恩爱
+                    </div>
+                    <div class="w_30 color-6 item_b">
+                        自定义
+                    </div>
                 </div>
             </div>
-            <ul class="mui-table-view" id="date">
-                <li class="mui-table-view-cell mui-text-center" v-for="(d,index) in date" :key="d" @click="chooseSDate(d,index)" :class="{'dateActive':index==dateIndex}">
-                    <div class="mui-row" id="week1">
-                        <div class="mui-col-xs-5 mui-text-right">{{d.monday}}</div>
-                        <div class="mui-col-xs-2">到</div>
-                        <div class="mui-col-xs-5 mui-text-left">{{d.sunday}}</div>
-                    </div>
-                </li>
-            </ul>
+            <div class="btn_box">
+                <button type="button" class="mui-btn btn_blue" @click="nextStep">下一步</button>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
 import HeaderBar from '../components/Header'
-import DateTime from '../components/DateTime'
-import { setValAndReqNow, getFormatData } from '../lib/js/date.20170615'
 export default {
+    mixins: [require('../components/mixin/BodyBg')],
     data() {
         return {
-            pageTitle: '制作中',
+            pageTitle: '上屏制作',
+            bodyBg: 'bg_white',
             btnconfig: {
-                isgoback: 1,
+                isgoback: 1
             },
             _id: '',
             imgsrc: "",
             token: "",
             scroll_load_loading: false,
             scroll_load_end: false,
-            activeTab: 0,
+            url1: '//img.aimoge.com/FsUaurOIuKTQVXGzhewZ3zCWNVwr',
+            url2: '',
             text: '',
-            token: '',
-            start_date: '开始时间',
-            end_date: '结束时间',
-            date: [],
-            dateIndex: null,
-            flag: true,
-            city_name: '请选择城市',
-            ciyt_id: '',
-            url1:'//img.aimoge.com/FohnmdyrZ46WyRHiqYrgUU-YERVW',
-            url2:'',
+            theme1: './static/interaction/image/1.jpg',
+
         }
     },
     components: {
-        HeaderBar,
-        DateTime
-    },
-    created() {
-
+        HeaderBar
     },
     mounted() {
         this.setInfo();
-    },
-    watch: {
-        '$route': function () {
-            if (this.$route.path == ('/make')) {
-                if (this.city_id != "") {
-                    this.text = "";
-                    this.start_date = '开始时间';
-                    this.end_date = '结束时间';
-                    this.city_name = '请选择城市';
-                    this.city_id = '';
-                }
-                this.city_id = localStorage._id;
-                this.city_name = localStorage._name;
-            }
-        }
     },
     methods: {
         post_img(data) {//上传图片到七牛
@@ -229,10 +125,12 @@ export default {
                 processData: false,
                 success: function (respond) {
                     $('#sysLoading').hide();
+                    // _util.showErrorTip('图片制作完成！');
                     that.imgsrc = respond.name;
-                    console.log(that.imgsrc);
+                    that.url('./submit');
                 },
                 error: function (err) {
+
                     _util.showErrorTip('您的网络可能出了点问题:(');
                 }
             }).done(function (respond) {
@@ -265,35 +163,6 @@ export default {
             $(".txt1").hide();
             $(".text_1").show();
         },
-        switchTab(index) {//点击制作/点击选择柜子
-            switch (index) {
-                case 0:
-                    this.activeTab = 0;
-                    this.pageTitle = '制作中';
-                    this.submitTxt = '下一步';
-                    break;
-                case 1:
-                    this.activeTab = 1;
-                    this.pageTitle = '选择快递柜';
-                    this.submitTxt = '提交';
-                    break;
-                default:
-                    break;
-            }
-
-        },
-        submit() {//下一步&&提交
-            if (!this.text) {
-                this.msgAlert("warning", "请输入您想要说的话");
-                return false;
-            }
-            if (!this.imgsrc) {
-                this.msgAlert("warning", "请您上传一张图片");
-                return false;
-            }
-            this.activeTab = 1;
-            this.pageTitle = '选择快递柜';
-        },
         msgAlert(type, msg) {//弹出窗口
             $('.msg_' + type).html(msg);
             $('.msg_' + type).animate({
@@ -306,7 +175,7 @@ export default {
             }, 2000);
         },
         setInfo() {//设置信息
-            var htmlstyle = "<style>body{padding:0;margin:0;}.msg{color:#FFF;width:100%;height:30px;text-align:center;font-size:14px;line-height:30px;position:fixed;top: -30px;z-index:20;}" +
+            var htmlstyle = "<style>body{padding:0;margin:0;}.msg{color:#FFF;width:100%;height:30px;text-align:center;font-size:14px;line-height:30px;position:fixed;top: -30px;z-index:9999;}" +
                 ".msg_success{background-color:#1fcc6c;}" +
                 ".msg_warning{background-color:#e94b35;}" +
                 ".msg_primary{background-color:#337ab7;}" +
@@ -349,107 +218,16 @@ export default {
                     console.log("照片读取完成");
                 },
                 clipFinish: function (dataURL) {
-                   that.url2=dataURL;
-                   console.log(that.url1,that.text);
-                   that.getBase64(that.url1,that.url2,that.text);
+                    that.url2 = dataURL;
                 }
             });
-            //设置时间格式
-            for (let i = 0; i < 4; i++) {
-                this.date.push(setValAndReqNow(i + 2));
-                this.date[i].monday = getFormatData(this.date[i].monday);
-                this.date[i].sunday = getFormatData(this.date[i].sunday);
+            if (localStorage.img_src) {
+                localStorage.img_src = '';
+            } else {
+                window.localStorage.setItem('img_src', '');
             }
         },
-        checkText() { //文字限制
-            let len = this.text.length;
-            if (len > 139) {
-                that.msgAlert("warning", "您输入超出了字数限制");
-            }
-            let num = 140 - len;
-            $("#word").text(len);
-        },
-        isShow(i) {
-            switch (i) {
-                case 0:
-                    $("#time").animate({
-                        bottom: '-20%'
-                    }, "slow", function () {
-                        $("#time").hide();
-                    });
-                    break;
-                case 1:
-                    $("#time").show();
-                    $("#time").animate({
-                        bottom: '0'
-                    }, "slow");
-                    break;
-                case 2:
-                    if (this.start_date == "开始时间") {
-                        this.msgAlert("warning", "请选择时间");
-                        return false;
-                    }
-                    $("#time").animate({
-                        bottom: '-20%'
-                    }, "slow", function () {
-                        $("#time").hide();
-                    });
-                    break;
-                default:
-                    break;
-            }
-
-        },
-        chooseSDate(d, i) {//选择时间
-            this.start_date = d.monday;
-            this.end_date = d.sunday;
-            this.dateIndex = i;
-            $("#time").animate({
-                bottom: '-20%'
-            }, "slow", function () {
-                $("#time").hide();
-            });
-        },
-        isAgree() {
-            this.flag = !this.flag;
-        },
-        gotoInfo(name) {
-            this.url('/' + name);
-        },
-        postData() {
-            if (this.start_date == "开始时间" && this.end_date == "结束时间") {
-                this.msgAlert("warning", "请选择展示的日期");
-                return false;
-            }
-            if (this.ciyt_id == '') {
-                this.msgAlert("warning", "请选择您要展示的城市");
-                return false;
-            }
-            if (!this.flag) {
-                this.msgAlert("warning", "抱歉您还没有同意展示协议");
-                return false;
-            }
-            let data = {
-                content: this.text,
-                image: this.imgsrc,
-                city_id: this.city_id,
-                start_date: this.start_date,
-                end_date: this.end_date,
-            };
-            let that = this;
-            axios.post('http://api.dev.aimoge.com/v1/media/adinteraction', { data: JSON.stringify(data) }, {
-                withCredentials: true,
-                dataType: 'json',
-                headers: {
-                    'Content-Type': 'application/json; charset=utf-8',
-                }
-            }).then((rsp) => {
-                console.log(rsp.data);
-            }).catch((err) => {
-                console.log(err);
-            })
-        },
-        getBase64(url1, url2,content) {
+        getBase64(url1, url2, content) {
             let Img1 = new Image(),
                 Img2 = new Image(),
                 dataURL = '';
@@ -469,6 +247,26 @@ export default {
             dataURL = canvas.toDataURL("image/jpeg");
             this.post_img(dataURL);
         },
+        choiceTheme(str) {
+            this.url1 = str;
+            $(".bg_img").css({ 'background-image': 'url(' + str + ')' });
+        },
+        nextStep() {
+            if (!this.url1) {
+                this.msgAlert("warning", "请选择一类主题！");
+                return false;
+            }
+            if (!this.text) {
+                this.msgAlert("warning", "请输入您想要说的话！");
+                return false;
+            }
+            if (!this.url2) {
+                this.msgAlert("warning", "请您上传一张图片！");
+                return false;
+            }
+            this.getBase64(this.url1, this.url2, this.text);
+            localStorage.img_src = this.imgsrc;
+        },
         showLoading() { //显示正在加载数据状态
             this.scroll_load_loading = true;
             this.$refs.loading && this.$refs.loading.showLoading();
@@ -481,12 +279,113 @@ export default {
 }
 </script>
 <style scoped>
-.agree {
-    width: 15px;
-    height: 15px;
-    display: inline-block;
-    margin-right: 5px;
-    margin-top: 3px;
+.gege-header {
+    background: #4285f4;
+}
+
+.bg_img {
+    width: 100%;
+    height: 40vh;
+    padding: 16px 35px;
+}
+
+.img {
+    width: 100%;
+    border: 1px dashed #b2b2b2;
+    height: 100%;
+    background: #fff;
+}
+
+.img a input[type=file] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    cursor: pointer;
+    border: solid 1px #ddd;
+    opacity: 0;
+}
+
+.text_box {
+    padding: 8px 16px;
+    height: 60px;
+    padding-top: 2px;
+}
+
+.text_box>div {
+    width: 100%;
+    border: 1px solid #b2b2b2;
+    border-radius: 5px;
+}
+
+.item_b {
+    border: 1px solid #b2b2b2;
+    border-radius: 5px;
+    line-height: 60px;
+    text-align: center;
+    height: 60px;
+    /* margin-right: 20px; */
+}
+
+.btn_box {
+    padding: 16px 35px;
+}
+
+.white {
+    background: #fff;
+}
+
+.btn_blue {
+    border: 0.01px solid #4285f4;
+    background-color: #4285f4;
+    font-size: 15px;
+    padding: 7px 0;
+    width: 100%;
+    color: #fff;
+    border-radius: 4px;
+}
+
+.color-1 {
+    color: #4285f4;
+    border-color: #4285f4;
+}
+
+.color-2 {
+    color: #e84a5f;
+    border-color: #4285f4;
+}
+
+.color-3 {
+    color: #f09561;
+    border-color: #f09561;
+}
+
+.color-4 {
+    color: #a3c03f;
+    border-color: #a3c03f;
+}
+
+.color-5 {
+    color: #ee847f;
+    border-color: #ee847f;
+}
+
+.color-6 {
+    color: #b196e1;
+    border-color: #b196e1;
+}
+
+.flex_m {
+    display: flex;
+}
+
+.w_30 {
+    width: 30%;
 }
 </style>
 

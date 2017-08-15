@@ -1,6 +1,6 @@
 <template>
     <div class="choiceChest">
-        <HeaderBar :title="pageTitle" :btnconfig="btnconfig" @confirmCallback="setData"></HeaderBar>
+        <HeaderBar :title="pageTitle" :btnconfig="btnconfig" @confirmCallback="setData" @callback="setData"></HeaderBar>
         <div style="height:44px;"></div>
         <div class="search flex_1 fixed">
             <div class="input rel">
@@ -17,7 +17,7 @@
             </div>
             <div class="height_24">附近的格格货栈</div>
             <div class="pos-loading rel" v-if="flag">{{locatinfo}}
-                <div class="abs repos">重新定位</div>
+                <div class="abs repos" @click="getLoction">重新定位</div>
             </div>
     
             <div style="margin-top:36px;">
@@ -28,10 +28,9 @@
                     <p class="mui-ellipsis">{{d.terminal_name}}</p>
                     <div class="abs" style="right:16px;">{{d.distance}}KM</div>
                 </div>
-                <div class="empty" v-if="!items.length">┗|'O'|┛ 嗷~~抱歉暂时没有找到您想要的</div>
+                <div class="empty" v-if="!items.length&&flag&&word">┗|'O'|┛ 嗷~~抱歉暂时没有找到您想要的</div>
             </div>
         </div>
-    
     </div>
 </template>
 
@@ -44,8 +43,9 @@ export default {
             pageTitle: '选择柜机',
             bodyBg: 'bg_white',
             btnconfig: {
-                isgoback: 1,
-                isconfirm: 1
+                isgoback: 0,
+                isconfirm: 1,
+                isback: 1
             },
             word: '',
             latitude: 32.015198941158,
@@ -62,14 +62,16 @@ export default {
             activeTab: '0',
             flag: false,
             t_c: new Set(),
-            t_n: new Set()
+            t_n: new Set(),
+            city_id: ''
         }
     },
     components: {
         HeaderBar
     },
     mounted() {
-        this.getLoction(this.load());
+        // this.getLoction();
+        this.load();
         $('body').removeClass('bg_blue');
     },
     watch: {
@@ -101,6 +103,7 @@ export default {
                 $(icon).show();
                 this.t_c.add(item.terminal_code)
                 this.t_n.add(item.terminal_name)
+                this.city_id = item.city_id;
             } else {
                 $(icon).hide();
                 this.t_c.delete(item.terminal_code);
@@ -110,7 +113,7 @@ export default {
         gotoInfo() {
             this.url('./allcity');
         },
-        getLoction(callback) {
+        getLoction() {
             var that = this;
             if (_util.isWeixin()) {
                 window.wxsdk(function () {
@@ -120,16 +123,20 @@ export default {
                             if (res && res.latitude && res.longitude) {
                                 that.latitude = res.latitude;
                                 that.longitude = res.longitude;
-                                if (callback) callback();
+                                that.flag = false;
+                                that.load();
                             }
+                        },
+                        fail: function (res) {
+                            _util.showErrorTip('定位失败，请确认是否授权获取您的地理位置...');
+                            that.locatinfo = '定位失败';
                         }
                     });
                 })
             } else {
                 let map, geolocation;
                 //加载地图，调用浏览器定位服务
-                console.log('函数执行')
-                map = new AMap.Map('', {resizeEnable: true});
+                map = new AMap.Map('', { resizeEnable: true });
                 map.plugin('AMap.Geolocation', function () {
                     geolocation = new AMap.Geolocation({
                         enableHighAccuracy: true,//是否使用高精度定位，默认:true
@@ -143,7 +150,6 @@ export default {
                     AMap.event.addListener(geolocation, 'complete', that.onComplete);//返回定位信息
                     AMap.event.addListener(geolocation, 'error', that.onError);      //返回定位出错信息
                 });
-                if (callback) callback();
             }
         },
         load() {
@@ -162,7 +168,6 @@ export default {
                         that.hideLoading();
                         let d = response.data;
                         if (d.data.terminals && d.data.terminals.length > 0) {
-                            that.flag = false;
                             if (that.pageList.indexOf(page) >= 0) return false;
                             that.pageList.push(page);
                             that.page = d.data.next_cursor || '';
@@ -216,24 +221,25 @@ export default {
         onComplete(data) {
             this.longitude = data.position.getLng();
             this.latitude = data.position.getLat();
-            _util.showErrorTip('定位成功'+this.longitude);
-            console.log(this.longitude, this.latitude)
+            this.flag = false;
+            this.load();
         },
         onError(data) {
-             console.log('定位失败',data);
-            _util.showErrorTip('定位失败'+data.message);
+            _util.showErrorTip('定位失败，请确认是否授权获取您的地理位置...');
+            this.locatinfo = '定位失败';
         },
         setData() {
             window.Data.t_c = this.t_c;
             window.Data.t_n = this.t_n;
+            window.Data.city_id = this.city_id;
             this.url('./submit')
         },
         clearData() {
             $(".choice_icon").hide();
             window.Data = {};
             // this.flag = false;
-            // this.t_c.clear();
-            // this.t_c.clear();
+            this.t_c.clear();
+            this.t_n.clear();
             // this.items = [];
             // this.pageList = [];
             // this.page = '';
