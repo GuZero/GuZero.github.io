@@ -72,7 +72,7 @@
 /******/ 		script.async = true;
 /******/ 		script.timeout = 120000;
 
-/******/ 		script.src = __webpack_require__.p + "" + ({"0":"Submit","1":"choiceChest","2":"Make","3":"allCity","4":"Details","5":"Examine","6":"Agreement"}[chunkId]||chunkId) + "." + {"0":"39fa7f9d","1":"1ec04b45","2":"9df89e10","3":"4f37992f","4":"74b7f487","5":"6c86f7db","6":"380f5087"}[chunkId] + ".js";
+/******/ 		script.src = __webpack_require__.p + "" + ({"0":"Submit","1":"choiceChest","2":"Make","3":"allCity","4":"Details","5":"Examine","6":"Agreement"}[chunkId]||chunkId) + "." + {"0":"39fa7f9d","1":"637e310f","2":"9df89e10","3":"4f37992f","4":"74b7f487","5":"6c86f7db","6":"380f5087"}[chunkId] + ".js";
 /******/ 		var timeout = setTimeout(onScriptComplete, 120000);
 /******/ 		script.onerror = script.onload = onScriptComplete;
 /******/ 		function onScriptComplete() {
@@ -964,7 +964,7 @@ function applyToTag (styleElement, obj) {
     },
     created: function created() {
         this.getInfo();
-        // this.isshare=_util.isWeixin();
+        this.isshare = _util.isWeixin();
     },
 
     methods: {
