@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <base href="/" />
+        <meta charset="utf-8" />
+        <meta http-equiv="Pragma" content="no-cache" />
+        <meta http-equiv="expires" content="0" />
+        <meta http-equiv="Cache-Control" content="no-cache, no-store, max-age=0, must-revalidate, no-siteapp" />
+        <meta name="x5-orientation" content="portrait"/>
+        <meta name="x5-page-mode" content="app"/>
+        <meta name="screen-orientation" content="portrait" />
+        <meta name="browsermode" content="application" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <meta name="renderer" content="webkit" />
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+        <meta name="format-detection" content="telephone=no">
+        <meta name="apple-touch-fullscreen" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="keywords" content="格格鲜果 格格云店 南京水果 上海水果 云店 鲜果 生鲜 南京生鲜 上海生鲜 水果 零食 坚果 o2o" />
+        <meta name="description" content="格格鲜果水果、零食、坚果一网打尽，39元全城包邮，格格鲜果，最爱生活。" />
+        <link rel="dns-prefetch" href="//cdn.bootcss.com">
+        <link rel="dns-prefetch" href="//api.aimoge.com">
+        <link rel="dns-prefetch" href="//pay.aimoge.com">
+        <link rel="dns-prefetch" href="//file.aimoge.com">
+        <link rel="dns-prefetch" href="//img.aimoge.com">
+        <link href="/static/moge/css/global.css" type="text/css" rel="stylesheet" />
+        <title>用户登录</title>
+        <style>
+        .sysLoading { background: #000; position: fixed; width: 100%; height: 100%; z-index: 9000; opacity: .5; display: none; }
+        .ion-loading-c { background: url('/static/moge/images/loading.gif') 0 0 no-repeat; display: inline-block; background-size: 70% 70%; background-position: center center; position: relative; top: 10px; }
+        .sysLoading i.ion-loading-c { width: 32px; height: 32px; display: inline-block; position: absolute; top: 50%; left: 50%; margin-left: -15px; margin-top: -15px; }
+        .input {height: 49px;}
+        .input input {height: 30px; padding: 0; width: 100%; line-height: 30px; position: relative; top: 9px;}
+        .ubtn a {display: block; width: 48%; text-align: center; height: 44px; line-height: 44px; font-size: 16px; color: #fff; border-radius: 5px;}
+        .ubtn .button-energized { background-color: #ECA33E;}
+        .ubtn .button-blank { background-color: #ccc;}
+        .ubtn .button-energized:active { background-color: #CF8826;}
+        .ubtn .button-blank:active { background-color: #A29E9E;}
+        .login {display: block; background-color: #008cff; color: #fff; height: 44px; line-height: 44px; border-radius: 5px; position: relative; margin: 0 20px 0 20px;}
+        .login:active {background-color: #056FC7;}
+        .use_voice_code {position: fixed; width: 80%; background: #fff; padding: 15px 5%; left: 50%; margin-left: -45%; top: 30%; z-index: 9100; display: none;}
+        .utips { margin: 10px 0; }
+        .notice{text-align: center; color: #ccc; margin-top: 22px; line-height: 17px; font-size: 12px;}
+        .notice a, .notice a:visited {color: #008cff; text-decoration: underline;}
+        .form {background-color: #fff;margin: 0 5%;}
+        .form .sprite {display: block; width: 32px; height: 20px; border-right: 1px #eee solid; padding-right: 14px; margin-right: 10px; position: relative; top: 12px; left: 0;}
+        .form .mobile .sprite:before, .form .code .sprite:before {background-position: -192px 0; margin-left: -20px; -webkit-transform: scale(.6); top: -1px;}
+        .form .code .sprite:before {background-position: -256px 0;}
+        .form .getcode a {background-color: #ff2d73; color: #fff; height: 49px; line-height: 49px; display: block; width: 115px;}
+        .form .getcode a:active,.getcode a:visited {background-color: #CD1754;color: #fff;}
+        .form a.disabled{background-color: rgba(255, 45, 115, 0.53);}
+        .form a.disabled:active {background-color: rgba(255, 45, 115, 0.53);}
+        .voice-code {margin: 15px 0; text-align: center; color: #999; font-size: 12px;}
+        .voice-code a, .voice-code a:visited {color: #008cff;}
+        .imgCode {display: none; width: 280px; height: 180px; box-sizing: border-box; -webkit-box-sizing: border-box; background-color: #fff; z-index: 30000; left: 50%; margin-left: -140px; top: 28%; padding: 23px 35px; border-radius: 8px;}
+        .div {width: 150px; height: 50px; margin: 0 auto;}
+        .div img {width: 150px; height: 50px; border: none;}
+        .reflush {background: url(//img.aimoge.com/FvsVMv1Umg5JsDSN0Uz-vZE2EYqs) center center no-repeat; background-size: 12px; width: 30px; height: 50px; top: 0; right: -33px;}
+        .reflush:active {background-color: #fafafa;}
+        .ok {color: #4285f4; border: 1px #4285f4 solid; text-align: center; border-radius: 22px; height: 26px; line-height: 26px; margin-top: 15px;}
+        .ok:active {background-color: #eee;}
+        .closePic {background: transparent; width: 20px; height: 20px; top: 8px; left: 15px;}
+        .picode { margin: 12px 0 0 0; border-bottom: 1px #4d4d4d solid; height: 28px; line-height: 28px; }
+        .picode input {color: #4d4d4d; height: 24px; width: 100%; line-height: 24px; text-align: center; font-size: 14px;}
+        @media (max-width: 320px) {
+            .form .getcode a {width: 95px;}
+        }
+        </style>
+    </head>
+    <body>
+        <div id="sysLoading" class="sysLoading">
+            <i class="ion-loading-c"></i>
+        </div>
+        <div class="layer" id="layer"></div>
+        <div id="mgAlert" class="mgAlert center fixed f14"></div>
+        <div class="imgCode fixed" id="imgCode">
+            <img src="//img.aimoge.com/FgSgIducS7NfJNk-ZqN933p7JEaJ" class="abs closePic" onclick="hideImgCode();">
+            <div class="pic rel">
+                <div class="div rel">
+                    <img id="captchacode_image" />
+                    <div class="reflush abs" onclick="loadCaptchacodeIamge()"></div>
+                </div>
+                <div class="picode rel">
+                    <input id="captchacode_code" type="text" placeholder="填写验证码" />
+                </div>
+                <div class="ok rel" onclick="doNextSendAction()">提交</div>
+            </div>
+        </div>
+        <div id="container" class="container rel">
+            <div style="height: 300px;">
+                <div class="loginWarp">
+                    <div class="center" style="margin: 0;height: 103px;line-height: 103px;">
+                        <img class="imgReset" src="//img.aimoge.com/FhQVIq9yCJn4sAmymnl3CappIdK6" style="height: 89px;margin-top: 8px;" />
+                    </div>
+                    <div class="form">
+                        <div class="formitem flex mobile" style="border-bottom: 1px #eee solid;">
+                            <div class="sprite ml32"></div>
+                            <div class="input flexmodel">
+                                 <input type="tel" name="user_tele" class="block f16" placeholder="请填写手机号" maxlength="11" id="mobile"/>
+                            </div>
+                            <div class="getcode">
+                                <a id="getCode" href="javascript:;" class="center f16" onclick="sendCode();">获取验证码</a>
+                            </div>
+                        </div>
+                        <div class="formitem flex code">
+                            <div class="sprite ml32"></div>
+                            <div class="input flexmodel">
+                                 <input type="tel" name="user_tele_code" class="block f16" placeholder="输入验证码" id="code"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="voice-code" onclick="confirmVoiceCode();">短信验证码收不到？试试<a href="javascript:;">语音验证码</a></p>
+                <div id="control_btn" class="rel center" style="display: block;">            
+                    <a href="javascript:;" onclick="login();" class="login f16 bold">登录</a>
+                </div>
+                <div class="notice f14">
+                    <p>使用格格就意味着你同意格格的</p>
+                    <p>
+                        <a href="javascript:;">使用条款</a> 和 
+                        <a href="javascript:;">隐私协议</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="use_voice_code">
+            <div class="ut f18">
+                收不到短信，试试语音验证码吧？
+            </div>
+            <div class="utips">
+                发送语音验证码后会收到客服语音来电，提示登录验证码。
+            </div>
+            <div class="ubtn">
+                <a href="javascript:;" onclick="confirmVoiceCode();" class="button-energized fl">是</a>
+                <a href="javascript:;" onclick="cancelVoiceCode();" class="button-blank fr">否</a>
+            </div>
+        </div>
+        <script>
+        window.next_url = '{{ next_url }}';
+        window.config = {
+            IMG: "{{ settings.PREFIX_IMG }}",
+            API: '{{ settings.PREFIX_API|autodomain }}'
+        };
+        </script>
+        <script type="text/javascript" src="//upcdn.b0.upaiyun.com/libs/jquery/jquery-2.0.3.min.js"></script>
+        <script src="//cdn.bootcss.com/store.js/1.3.14/store.min.js"></script>
+        <script type="text/javascript" src="{{ settings.PREFIX_FILE }}@/static/js/user.1.0.5.min.js"></script>
+        <script type="text/javascript">
+            {% if is_weixin() %}
+            window.wxid = '{{ wxid }}';
+            window.open_id = '{{ open_id }}' || store.get("weixin_" + window.wxid + "_openid") || '';
+            {% endif %}
+
+            {% if is_alipay() %}
+                window.alipay_id = '{{ alipay_id }}';
+                window.alipay_user_id = '{{ alipay_user_id }}' || store.get('alipay_' + window.alipay_id + '_user_id') || '';
+            {% endif %}
+            MGUser.init('');
+            var next_send_action = false;
+
+            function showSuccessTip( txt ) {
+                if(!txt) return false;
+                $("#mgAlert").css('top', '35%').removeClass("mgAlert-success mgAlert-error showAlert hideAlert");
+                var mgAlert = $("#mgAlert").addClass("mgAlert-success showAlert").html(txt);
+                setTimeout(function(){
+                    mgAlert.removeClass("showAlert").addClass('hideAlert');
+                    setTimeout(function(){
+                        mgAlert.css('top','-35%');
+                    },300);
+                }, 2500 );
+            }
+
+            function showErrorTip( txt ) {
+                if(!txt) return false;
+                $("#mgAlert").css('top', '35%').removeClass("mgAlert-success mgAlert-error showAlert hideAlert");
+                var mgAlert = $("#mgAlert").addClass("mgAlert-error showAlert").html(txt);
+                setTimeout(function(){
+                    mgAlert.removeClass("showAlert").addClass('hideAlert');
+                    setTimeout(function(){
+                        mgAlert.css('top','-35%');
+                    },300);
+                }, 2500 );
+            }
+
+            function showImgCode() {
+                $('#layer').addClass('layer-visible');
+                $('#imgCode').show();
+            }
+
+            function hideImgCode() {
+                $('#layer').removeClass('layer-visible');
+                $('#imgCode').hide();
+            }
+
+            function showSysLoading() {
+                $('#sysLoading').show();
+            }
+
+            function hideSysLoading() {
+                $('#sysLoading').hide();
+            }
+
+            function closeDialog() {
+                $('#layer, .use_voice_code').hide();
+            }
+
+            function reflush() { window.location.reload(); }
+
+            function addLinkTouchEvent() {
+                setTimeout(function(){
+                    var a = document.getElementsByTagName('a');
+                    for(var i = 0; i < a.length; i++) {
+                      a[i].addEventListener('touchstart',function(){},false);
+                    }
+                },500);   
+            }
+
+            function loadCaptchacodeIamge() {
+                MGUser.getcaptchacode(function (isSuccess, image_name) {
+                    if(isSuccess){
+                        $("#captchacode_image")[0].src = "//img.aimoge.com/" + image_name.substring(0, 28);
+                        $("#captchacode_code").focus();
+                    }
+                });
+            }
+
+            function doNextSendAction() {
+                if(next_send_action){
+                    var captcha_code = $("#captchacode_code").val();
+                    if(!captcha_code){
+                        return showErrorTip('验证码不可以空!');
+                    }
+                    next_send_action(captcha_code);
+                    next_send_action = false;
+                    hideImgCode();
+                }
+            }
+
+            function sendCode(captcha_code) {
+                var $getCode = $('#getCode');
+                if($getCode.hasClass('disabled')) return false;
+                MGUser.getcode($('#mobile').val(), function(isSuccess, result) {
+                    isSuccess? showSuccessTip('发送验证码成功！'): showErrorTip(result);
+                }, function(isEnd, send_code_delay) {
+                    if(isEnd) {
+                        $('.use_voice_code').show();
+                        $('#layer').addClass('layer-visible');
+                        $getCode.removeClass('disabled').text('获取验证码');
+                    } else {
+                        $getCode.addClass('disabled').text(send_code_delay + 's');
+                    }
+                }, captcha_code || '', function () {
+                    next_send_action = sendCode;
+                    showImgCode();
+                    loadCaptchacodeIamge();
+                });
+            }
+
+            function confirmVoiceCode(captcha_code) {
+                var $getCode = $('#getCode');
+                cancelVoiceCode();
+                MGUser.getvoicecode($('#mobile').val(), function(isSuccess, result) {
+                    isSuccess? showSuccessTip('发送语言验证码成功!' ): showErrorTip(result);
+                }, function(isEnd, send_code_delay) {
+                    if(isEnd) {
+                        $getCode.removeClass('disabled').text('获取验证码');
+                    } else {
+                        $getCode.addClass('disabled').text(send_code_delay + 's');
+                    }
+                }, captcha_code || '', function () {
+                    next_send_action = confirmVoiceCode;
+                    showImgCode();
+                    loadCaptchacodeIamge();
+                });
+            }
+
+            function cancelVoiceCode() {
+                $('.use_voice_code').hide();
+                $('#layer').removeClass('layer-visible');
+            }
+
+            function login() {
+                var mobile = $('#mobile').val(),
+                    code = $('#code').val();
+                if($('#sysLoading').is(':visible')) return false;
+                if( !/^(13[0-9]{9}|15[012356789][0-9]{8}|18[0123456789][0-9]{8}|147[0-9]{8}|17[0-9]{9})$/.test( mobile ) ) {
+                    showErrorTip('请填写正确的11位手机号码!');
+                    return false;
+                }
+                if(!code) {
+                    showErrorTip('请输入验证码!');
+                    return false;
+                }
+                showSysLoading();
+                MGUser.login(mobile, code, '', function(isSuccess, result) {
+                    if(isSuccess){
+                        window.uid = result._id;
+                        window.is_login = !!window.uid;
+                        window.location.href = window.next_url;
+                    } else{
+                        hideSysLoading();
+                        showErrorTip(result);
+                    }
+                });
+            }
+
+            $(document).ready(function(){
+                addLinkTouchEvent();
+            });
+        </script>
+        {% include 'analytics.html' %}
+    </body>
+</html>
