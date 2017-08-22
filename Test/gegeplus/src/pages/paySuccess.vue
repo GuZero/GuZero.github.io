@@ -3,7 +3,7 @@
         <HeaderBar :title="pageTitle" :btnconfig="btnconfig"></HeaderBar>
         <div class="content-box">
            <div style="width:26%;"><img src="//img.aimoge.com/FsSlu4KsMzm2toqjFUoABNBz76cv"></div>
-           <div>登录成功</div>
+           <div>支付成功</div>
         </div>
         <div class="btn-box">
             <div class="btn">

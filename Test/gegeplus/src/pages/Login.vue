@@ -118,7 +118,7 @@ export default {
             if (this.next_send_action) {
                this.captcha_code = $("#captchacode_code").val();
                 if (!this.captcha_code) {
-                    return showErrorTip('验证码不可以空!');
+                    return _util.showErrorTip('验证码不可以空!');
                 }
                 this.next_send_action(this.captcha_code);
                 this.next_send_action = false;
@@ -130,7 +130,7 @@ export default {
             var $getCode = $('#getCode');
             if ($getCode.hasClass('disabled')) return false;
             MGUser.getcode($('#mobile').val(), function (isSuccess, result) {
-                isSuccess ? _util.showSuccessTip('发送验证码成功！') : console.log(result); _util.showErrorTip(result);
+                isSuccess ? _util.showSuccessTip('发送验证码成功！') : console.log(result);_util.showErrorTip(result);
             }, function (isEnd, send_code_delay) {
                 if (isEnd) {
                     $('.use_voice_code').show();
@@ -148,9 +148,9 @@ export default {
         confirmVoiceCode(captcha_code) {
             let that=this;
             var $getCode = $('#getCode');
-            cancelVoiceCode();
+            that.cancelVoiceCode();
             MGUser.getvoicecode($('#mobile').val(), function (isSuccess, result) {
-                isSuccess ? _util.showSuccessTip('发送语言验证码成功!') : _util.showErrorTip(result);
+                isSuccess ? _util.showSuccessTip('发送语言验证码成功!') : console.log(result); _util.showErrorTip(result);
             }, function (isEnd, send_code_delay) {
                 if (isEnd) {
                     $getCode.removeClass('disabled').text('获取验证码');
@@ -158,7 +158,7 @@ export default {
                     $getCode.addClass('disabled').text(send_code_delay + 's');
                 }
             }, that.captcha_code || '', function () {
-                that.next_send_action = confirmVoiceCode;
+                that.next_send_action = that.confirmVoiceCode;
                 that.showImgCode();
                 that.loadCaptchacodeIamge();
             });
@@ -183,9 +183,11 @@ export default {
             that.showSysLoading();
             MGUser.login(mobile, code, '', function (isSuccess, result) {
                 if (isSuccess) {
+                    console.log(result);
                     window.uid = result._id;
                     window.is_login = !!window.uid;
                     if(window.next_url){
+                         that.hideSysLoading();
                          window.location.href = window.next_url;
                     }else{
                         that.hideSysLoading();
@@ -362,11 +364,11 @@ export default {
 }
 
 .form a.disabled {
-    background-color: rgba(255, 45, 115, 0.53);
+    background-color: #7fc5ff;
 }
 
 .form a.disabled:active {
-    background-color: rgba(255, 45, 115, 0.53);
+    background-color: #7fc5ff;
 }
 
 .voice-code {

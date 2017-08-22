@@ -28,16 +28,23 @@ export default {
             btnconfig: {
                 isgoback: 1
             },
-            sum: '26'
+            items:[],
+            _id:''
         }
     },
     components: {
         HeaderBar
     },
+    created(){
+        
+    },
     mounted() {
 
     },
     methods: {
+       gotoList(item){
+           this.url('/order/list',{_id:item._id});
+       } 
     }
 }
 </script>
