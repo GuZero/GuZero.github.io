@@ -50,7 +50,9 @@ export default {
             sum: '26',
             res: {},
             _id: '',
-            items: []
+            items: [],
+            payInfo:null,
+            order:{}
         }
     },
     components: {
@@ -90,7 +92,7 @@ export default {
                     _util.showErrorTip('您的网络可能出了点问题:(');
                 })
         },
-        ajax(data, success, error) {
+        ajaxPay(data, success, error) {
             $.ajax({
                 type: "post",
                 url: window.config.PAY + '/pay/' + pay_id,
@@ -130,7 +132,7 @@ export default {
                             "result": 100
                         };
                         _util.showErrorTip('等待确认，请稍后...');
-                        ajax(data, function (data) {
+                        that.ajaxPay(data, function (data) {
                             that.url('/pay/success');
                         }, function (data) {
                             that.url('/pay/success');
@@ -145,7 +147,7 @@ export default {
                             "result": 200
                         };
                         _util.showErrorTip('正在取消，请稍后...');
-                        ajax(data, function (data) {
+                        that.ajaxPay(data, function (data) {
                             window.history.back();
                         }, function (data) {
                             window.history.back();
@@ -160,7 +162,7 @@ export default {
                             "result": 300
                         };
                         _util.showErrorTip(res.err_msg + '正在返回...');
-                        ajax(data, function (data) {
+                        that.ajaxPay(data, function (data) {
                             setTimeout(function () {
                                 window.history.back();
                             }, 2000);
@@ -182,7 +184,53 @@ export default {
                 service:'',
                 weixin_id:'',
                 open_id:''
+            };
+            let that=this;
+            function gegePay(){
+                that.ajaxPay(data,function(d){
+                    if(d.statusCode==200){
+                        if(d.data.status==0&&d.data.data){
+                            that.payInfo=d.data.data;
+                            that.wxPay();
+                        }else{
+                            _util.showErrorTip(d.data.msg);
+                        }
+                    }else{
+                        _util.showErrorTip('网络错误，请检查您的网络设置！');
+                    }
+                },function(err){
+                     _util.showErrorTip('网络错误，请检查您的网络设置！');
+                     that.$router.go(0);
+                })
             }
+            if(that.order.status==211){
+                let data={
+                    "pay_id":that.order.pay_id,
+                    "pay_type": 4,
+                    "pay_info":{},
+                    "erro_msg":"用户主动取消",
+                    "result":300
+                };
+                that.confirmPay(data,gegePay)
+            }else{
+                gegePay()
+            }
+        },
+        confirmPay(data,callback){
+            let that=this;
+            that.ajaxPay(data,function(d){
+                if(d.statusCode==200){
+                    if(d.data.status==0&&d.data.data){
+                        callback()
+                    }else{
+                        _util.showErrorTip('支付失败');
+                    }
+                }else{
+                    _util.showErrorTip('网络错误，请检查您的网络设置！')
+                }
+            },function(err){
+                _util.showErrorTip('网络错误，请检查您的网络设置！')
+            })
         }
     }
 }

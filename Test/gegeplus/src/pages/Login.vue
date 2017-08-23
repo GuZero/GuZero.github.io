@@ -130,7 +130,7 @@ export default {
             var $getCode = $('#getCode');
             if ($getCode.hasClass('disabled')) return false;
             MGUser.getcode($('#mobile').val(), function (isSuccess, result) {
-                isSuccess ? _util.showSuccessTip('发送验证码成功！') : console.log(result);_util.showErrorTip(result);
+                isSuccess ? _util.showSuccessTip('发送验证码成功！') : that.captcha_code='';_util.showErrorTip(result);
             }, function (isEnd, send_code_delay) {
                 if (isEnd) {
                     $('.use_voice_code').show();
@@ -140,6 +140,7 @@ export default {
                     $getCode.addClass('disabled').text(send_code_delay + 's');
                 }
             }, that.captcha_code || '', function () {
+                $('#captchacode_code').val('');
                 that.next_send_action = that.sendCode;
                 that.showImgCode();
                 that.loadCaptchacodeIamge();
@@ -183,7 +184,6 @@ export default {
             that.showSysLoading();
             MGUser.login(mobile, code, '', function (isSuccess, result) {
                 if (isSuccess) {
-                    console.log(result);
                     window.uid = result._id;
                     window.is_login = !!window.uid;
                     if(window.next_url){

@@ -7,7 +7,7 @@
                    <div>2017-07-23 13:00</div>
                    <div>26元</div>
                </div>
-               <div class="item-c rel">
+               <div class="item-c rel" @click="gotoList">
                    <div>
                        <div>订单编号：**************</div>
                        <div>购物网点：**************</div>

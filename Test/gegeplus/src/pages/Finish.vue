@@ -26,7 +26,7 @@ export default {
                 isgoback: 1,
                 isconfirm: 1
             },
-            terminal_code: '',
+            terminal_code: '0025150416',
             access_token: ''
         }
     },
@@ -34,18 +34,11 @@ export default {
         HeaderBar
     },
     created() {
-        this.init();
     },
     mounted() {
         $('#layer').css({ 'display': 'none' });
     },
     methods: {
-        init() {
-            if (!window.is_login) {
-                this.url('/login');
-                return false;
-            }
-        },
         postData(code, token) {
             let data = {
                 terminal_code: this.terminal_code,
