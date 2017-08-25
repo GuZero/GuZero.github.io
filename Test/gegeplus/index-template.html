@@ -24,7 +24,7 @@
     <link rel="dns-prefetch" href="//pay.aimoge.com">
     <link rel="dns-prefetch" href="//file.aimoge.com">
     <link rel="dns-prefetch" href="//img.aimoge.com">
-    <link href="../../static/gegeplus/css/global05.css" type="text/css" rel="stylesheet" />
+    <link href="{{ settings.PREFIX_GSTATIC }}/static/ncshop/css/global20170824.css" type="text/css" rel="stylesheet" />
     <title>格格智能便利店</title>
 </head>
 
@@ -42,37 +42,62 @@
     <div id="mgAlert" class="mgAlert center fixed f14"></div>
     <div id="app">
     </div>
-    {% include "weixinsdk.html" %}
+    <script type="text/javascript" src="//upcdn.b0.upaiyun.com/libs/jquery/jquery-2.0.3.min.js"></script>
+    <script src="//cdn.bootcss.com/store.js/1.3.14/store.min.js"></script>
+    <script type="text/javascript" src="{{ settings.PREFIX_FILE }}@/static/js/user.1.0.5.min.js"></script>
     <script>
-        window.next_url = '{{ next_url }}';
+        window._hmt = [];
         window.config = {
             IMG: "{{ settings.PREFIX_IMG }}",
             API: '{{ settings.PREFIX_API|autodomain }}',
             BASE_URL:'{{ settings.BASE_URL }}',
             PAY:'{{ settings.PREFIX_PAY|autodomain }}'
         };
-        window.pay_id = '{{ pay_id }}';
-        window.redirect_url='{{ redirect_url }}';
-        window.wxid =  '{{ wxid }}';
-        window.apiList = ['chooseWXPay'];
+        window.wxsdk = function(callback){callback();};
+
+        window.uid = '{{ user._id }}';
+        window.is_logged = !!window.uid;
+        window.merchant_id = "5996beccf60247b2478b4567";
+        MGUser.init(window.uid);
+
+        {% if is_weixin() and weixin %}
+            window.wxid = '{{ weixin._id }}';
+            window.wxtype = {{ weixin.weixin_type }};
+            window.open_id = '{{ open_id }}' || store.get("weixin_" + window.wxid + "_openid") || '';
+            window.share_config = {
+                title: '格格鲜果-确保新鲜，确保好吃，水果最低一分钱起！',
+                desc: '确保新鲜，确保好吃，水果最低一分钱起！',
+                link: "https://m.aimoge.com/trading" + (window.wxid ? ("?wxid=" + window.wxid) : ''),
+                imgUrl: 'http://img.aimoge.com/FpIQ4vCv3J7foWvHVCX9CP0p07JZ'
+            };
+        {% endif %}
+
+        {% if is_alipay() and alipay %}
+            window.alipay_id = '{{ alipay._id }}';
+            window.alipay_user_id = '{{ alipay_user_id }}' || store.get('alipay_' + window.alipay_id + '_user_id') || '';
+        {% endif %}
+
+        {% if promotion_id %}
+        store.set("promotion_id", {
+            promotion_id: '{{ promotion_id }}',
+            time: (new Date()).getTime() / 1000
+        });
+        {% endif %}
     </script>
     <script src="//cdn.bootcss.com/vue/2.2.6/vue.min.js "></script>
     <script src="//cdn.bootcss.com/vue-router/2.3.0/vue-router.min.js "></script>
     <script src="//cdn.bootcss.com/axios/0.15.3/axios.min.js "></script>
-    <script type="text/javascript" src="//upcdn.b0.upaiyun.com/libs/jquery/jquery-2.0.3.min.js"></script>
-    <script src="//cdn.bootcss.com/store.js/1.3.14/store.min.js"></script>
-    <script type="text/javascript" src="{{ settings.PREFIX_FILE }}@/static/js/user.1.0.5.min.js"></script>
     <script type="text/javascript">
-         {% if is_weixin() %}
-            window.wxid = '{{ wxid }}';
-            window.open_id = '{{ open_id }}' || store.get("weixin_" + window.wxid + "_openid") || '';
+        {% if is_weixin() %}
+        {% include 'weixinvuesdk.html' %}
         {% endif %}
+
         {% if is_alipay() %}
-            window.alipay_id = '{{ alipay_id }}';
-            window.alipay_user_id = '{{ alipay_user_id }}' || store.get('alipay_' + window.alipay_id + '_user_id') || '';
+        {% include 'alipayvuesdk.html' %}
         {% endif %}
-        MGUser.init('');
-        axios.defaults.withCredentials = true; 
+        axios.defaults.withCredentials = true;
+        axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
+        axios.defaults.baseURL = window.config.API; 
     </script>
 </body>
 
