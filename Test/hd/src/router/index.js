@@ -1,16 +1,6 @@
 import home from '../pages/App.vue';
-// import notPass from '../pages/notPass.vue';
-// import Make from '../pages/Make.vue';
-// import from '../pages/Agreement.vue';
-// import chooseCity from '../pages/chooseCity.vue';
-// import Examine from '../pages/Examine.vue';
-// import Make1 from '../pages/Make1.vue';
-// import Submit from '../pages/submit.vue';
-// import choiceChest from '../pages/choiceChest.vue';
-// import allCity from '../pages/allCity.vue';
-// import details from '../pages/details.vue';
 const Agreement = r => require.ensure([], () => r(require('../pages/Agreement')), 'Agreement');
-const Make = r => require.ensure([], () => r(require('../pages/Make1')), 'Make');
+const Make = r => require.ensure([], () => r(require('../pages/Make')), 'Make');
 const Examine = r => require.ensure([], () => r(require('../pages/Examine')), 'Examine');
 const Submit = r => require.ensure([], () => r(require('../pages/submit')), 'Submit');
 const choiceChest = r => require.ensure([], () => r(require('../pages/choiceChest')), 'choiceChest');

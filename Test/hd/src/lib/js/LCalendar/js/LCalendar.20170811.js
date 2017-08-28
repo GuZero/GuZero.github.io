@@ -763,10 +763,94 @@ window.LCalendar = (function() {
                     date_mm :
                     '0' + date_mm;
                 var date_dd = parseInt(Math.round(_self.gearDate.querySelector(".date_dd").getAttribute("val"))) + 1;
+                var day = parseInt(Math.round(_self.gearDate.querySelector(".date_dd").getAttribute("val"))) + 1;
                 date_dd = date_dd > 9 ?
                     date_dd :
                     '0' + date_dd;
-                _self.trigger.innerHTML = (date_yy % passY + _self.minY) + "-" + date_mm + "-" + date_dd;
+                var _id = _self
+                    .trigger
+                    .getAttribute('id');
+                if (_id == 'start_date') {
+                    window.localStorage.setItem('s_dd', day);
+                    window.localStorage.setItem('s_mm', date_mm)
+                    var n = document.getElementById('day');
+                    if (parseInt(n.innerHTML) != 0) {
+                        var sDD = localStorage.s_dd;
+                        var eDD = localStorage.e_dd;
+                        n.innerHTML = eDD - sDD + 1;
+                    }
+                }
+                if (_id == 'end_date') {
+                    var e_dd = day;
+                    var s_dd = localStorage.s_dd;
+                    var s_mm = localStorage.s_mm;
+                    var e_mm = date_mm;
+                    window.localStorage.setItem('e_dd', day);
+                    var mgAlert = document.getElementById('mgAlert');
+                    if (e_dd < s_dd && s_mm == e_mm) {
+                        mgAlert.style.top = '35%';
+                        mgAlert.setAttribute('class', 'mgAlert center fixed f14 mgAlert-error showAlert');
+                        mgAlert.innerHTML = '结束时间不能小于开始时间';
+                        if (window.errorTimer) {
+                            clearTimeout(window.errorTimer);
+                            window.errorTimer = null;
+                        }
+                        window.errorTimer = setTimeout(function() {
+                            mgAlert.setAttribute('class', 'mgAlert center fixed f14');
+                            setTimeout(function() {
+                                mgAlert.style.top = '-35%';
+                            }, 300);
+                        }, 2000);
+                        closeMobileCalendar(e);
+                        return false;
+                    } else {
+                        if (e_mm - s_mm == 1) {
+                            var days = calcDays(date_yy, e_mm);
+                        }
+                    }
+                    if (days) {
+                        var num = (e_dd - s_dd + 1) + days;
+                        if (num > 14) {
+                            mgAlert.style.top = '35%';
+                            mgAlert.setAttribute('class', 'mgAlert center fixed f14 mgAlert-error showAlert');
+                            mgAlert.innerHTML = '抱歉当前只提供两周时间';
+                            if (window.errorTimer) {
+                                clearTimeout(window.errorTimer);
+                                window.errorTimer = null;
+                            }
+                            window.errorTimer = setTimeout(function() {
+                                mgAlert.setAttribute('class', 'mgAlert center fixed f14');
+                                setTimeout(function() {
+                                    mgAlert.style.top = '-35%';
+                                }, 300);
+                            }, 2000);
+                            closeMobileCalendar(e);
+                            return false;
+                        }
+                        document.getElementById('day').innerHTML = num;
+                    } else {
+                        if (e_dd - s_dd + 1 > 14) {
+                            mgAlert.style.top = '35%';
+                            mgAlert.setAttribute('class', 'mgAlert center fixed f14 mgAlert-error showAlert');
+                            mgAlert.innerHTML = '抱歉当前只提供两周时间';
+                            if (window.errorTimer) {
+                                clearTimeout(window.errorTimer);
+                                window.errorTimer = null;
+                            }
+                            window.errorTimer = setTimeout(function() {
+                                mgAlert.setAttribute('class', 'mgAlert center fixed f14');
+                                setTimeout(function() {
+                                    mgAlert.style.top = '-35%';
+                                }, 300);
+                            }, 2000);
+                            closeMobileCalendar(e);
+                            return false;
+                        }
+                        document.getElementById('day').innerHTML = e_dd - s_dd + 1;
+                    }
+                }
+                // _self.trigger.innerHTML = (date_yy % passY + _self.minY) + "-" + date_mm + "-" + date_dd;
+                _self.trigger.value = (date_yy % passY + _self.minY) + "-" + date_mm + "-" + date_dd;
                 closeMobileCalendar(e);
             }
             //年月确认
@@ -823,6 +907,7 @@ window.LCalendar = (function() {
                     ":0" :
                     ":") + time_mm;
                 closeMobileCalendar(e);
+
             }
             _self
                 .trigger

@@ -38,7 +38,8 @@ export default {
             activeTab: '0',
             flag: false,
             c_id: new Set(),
-            c_name:new Set()
+            c_name:new Set(),
+            c_price:new Set()
         }
     },
     components: {
@@ -52,6 +53,9 @@ export default {
             if (this.$route.path == ('/allcity')) {
                 $(".choice_icon").hide();
                 window.Data={};
+                this.c_id.clear();
+                this.c_name.clear();
+                this.c_price.clear();
             }
         }
     },
@@ -99,6 +103,7 @@ export default {
         nextStep() {
             window.Data.c_id=this.c_id;
             window.Data.c_name=this.c_name;
+            window.Data.c_price=this.c_price;
             this.url('./submit');
         },
         choiceCity(item, ev) {
@@ -108,10 +113,12 @@ export default {
                 $(icon).show();
                 this.c_id.add(item.city_id);
                 this.c_name.add(item.city_name);
+                this.c_price.add(item.price);
             } else {
                 $(icon).hide();
                 this.c_id.delete(item.city_id);
                 this.c_name.delete(item.city_name);
+                this.c_price.delete(item.price);
             }
         },
         showLoading() { //显示正在加载数据状态

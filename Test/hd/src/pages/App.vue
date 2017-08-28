@@ -83,7 +83,7 @@ export default {
     },
     created() {
         this.getInfo();
-        // this.isshare=_util.isWeixin();
+        this.btnconfig.isshare=_util.isWeixin();
     },
     methods: {
         isShare() {
@@ -93,7 +93,7 @@ export default {
         getInfo() {
             let that = this;
             that.showLoading();
-            axios.get('http://api.dev.aimoge.com/v1/media/adinteraction')
+            axios.get('/media/adinteraction')
                 .then(function (response) {
                     if (response.data.status == 0) {
                         that.hideLoading();
@@ -109,6 +109,27 @@ export default {
                                 case 12:
                                     data[i].status1 = '审核拒绝';
                                     break;
+                                case 31:
+                                    data[i].status1 = '等待支付';
+                                    break;
+                                case 32:
+                                    data[i].status1 = '支付中';
+                                    break;
+                                case 33:
+                                    data[i].status1 = '支付等待确认';
+                                    break;
+                                case 34:
+                                    data[i].status1 = '支付确认';
+                                    break;
+                                case 35:
+                                    data[i].status1 = '支付成功';
+                                    break;
+                                case 36:
+                                    data[i].status1 = '支付失败';
+                                    break;    
+                                case 37:
+                                    data[i].status1 = '支付取消';
+                                    break;    
                                 default:
                                     data[i].status1 = '等待审核';
                                     break;
@@ -127,9 +148,7 @@ export default {
                 })
         },
         gotoInfo(item) {
-            if (item.status == '1') {
-                this.url('/details',{_id:item._id})
-            }
+            this.url('/details',{_id:item._id})
         },
         gotoMake() {
             this.url('/make')

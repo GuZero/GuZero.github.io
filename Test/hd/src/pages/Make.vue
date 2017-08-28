@@ -42,24 +42,24 @@
             </div>
             <div class="choice_box" style="padding:16px 16px;">
                 <div class="flex_m" style="justify-content: space-between;">
-                    <div class="w_30 item_b color-1" @click="choiceTheme(theme1)">
+                    <div class="w_30 item_b color-1" @click="choiceTheme(theme1,$event)">
                         交友派
                     </div>
-                    <div class="w_30 item_b color-2">
+                    <div class="w_30 item_b color-2" @click="choiceTheme(theme1,$event)">
                         宠物征婚
                     </div>
-                    <div class="w_30 item_b color-3">
+                    <div class="w_30 item_b color-3" @click="choiceTheme(theme1,$event)">
                         爱豆粉
                     </div>
                 </div>
                 <div class="flex_m" style="justify-content: space-between;margin-top:10px;">
-                    <div class="w_30 color-4 item_b">
+                    <div class="w_30 color-4 item_b" @click="choiceTheme(theme1,$event)">
                         晒娃魔
                     </div>
-                    <div class="w_30 color-5 item_b">
+                    <div class="w_30 color-5 item_b" @click="choiceTheme(theme1,$event)">
                         秀恩爱
                     </div>
-                    <div class="w_30 color-6 item_b">
+                    <div class="w_30 color-6 item_b" @click="choiceTheme(theme1,$event)">
                         自定义
                     </div>
                 </div>
@@ -91,6 +91,7 @@ export default {
             url2: '',
             text: '',
             theme1: './static/interaction/image/1.jpg',
+            category:''
 
         }
     },
@@ -126,11 +127,10 @@ export default {
                 success: function (respond) {
                     $('#sysLoading').hide();
                     // _util.showErrorTip('图片制作完成！');
-                    that.imgsrc = respond.name;
+                    that.imgsrc =window.img.imgsrc= respond.name;
                     that.url('./submit');
                 },
                 error: function (err) {
-
                     _util.showErrorTip('您的网络可能出了点问题:(');
                 }
             }).done(function (respond) {
@@ -188,7 +188,7 @@ export default {
             let that = this;
             //获取token值
             that.showLoading();
-            axios.get('http://api.dev.aimoge.com/v1/upload/token')
+            axios.get(window.config.API+'/upload/token')
                 .then(function (response) {
                     if (response.data.status == 0) {
                         that.hideLoading();
@@ -221,11 +221,7 @@ export default {
                     that.url2 = dataURL;
                 }
             });
-            if (localStorage.img_src) {
-                localStorage.img_src = '';
-            } else {
-                window.localStorage.setItem('img_src', '');
-            }
+            window.img={};
         },
         getBase64(url1, url2, content) {
             let Img1 = new Image(),
@@ -247,8 +243,10 @@ export default {
             dataURL = canvas.toDataURL("image/jpeg");
             this.post_img(dataURL);
         },
-        choiceTheme(str) {
+        choiceTheme(str,ev) {
             this.url1 = str;
+            let el = ev.currentTarget;
+            this.category=$(el).html().trim();
             $(".bg_img").css({ 'background-image': 'url(' + str + ')' });
         },
         nextStep() {
@@ -265,7 +263,8 @@ export default {
                 return false;
             }
             this.getBase64(this.url1, this.url2, this.text);
-            localStorage.img_src = this.imgsrc;
+            window.img.content=this.text;
+            window.img.category=this.category;
         },
         showLoading() { //显示正在加载数据状态
             this.scroll_load_loading = true;

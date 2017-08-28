@@ -1,6 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
-var baseDir = '/hd/';
+var baseDir = '/moge-www/templates/adinteraction/';
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 
@@ -9,14 +9,13 @@ module.exports = {
     entry: __dirname + baseDir + 'src/main.js',
     output: {
         /* 文件名 */
-        filename: 'bundle.[chunkhash:8].js',
-        // chunkFilename: '[name].[chunkhash:8].js',
+        filename: '[name].[chunkhash:8].js',
+        chunkFilename: '[name].[chunkhash:8].js',
         /* 输出目录，没有则新建 */
-        path: __dirname + baseDir + 'dist',
+        path: __dirname + '/moge-www/static/interaction/js/',
         /* 静态目录，可以直接从这里取文件 */
-        publicPath: 'dist',
-        
-       
+        publicPath:'/static/interaction/js/',
+
     },
     devServer: {
         hot: false,
@@ -90,12 +89,10 @@ module.exports = {
                 removeComments: true,
                 collapseWhitespace: true,
                 removeAttributeQuotes: true
-                // more options:
-                // https://github.com/kangax/html-minifier#options-quick-reference
             },
             template: __dirname + baseDir + 'index-template.html',
             filename: __dirname + baseDir + 'index.html'
         }),
-        new CleanWebpackPlugin([ __dirname + baseDir + 'dist']),
+        new CleanWebpackPlugin([__dirname + '/moge-www/static/interaction/js/']),
     ]
 }

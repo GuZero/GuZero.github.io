@@ -85,17 +85,6 @@ export default {
         window.addEventListener('scroll', this.handleScroll);
     },
     methods: {
-        msgAlert(type, msg) {//弹出窗口
-            $('.msg_' + type).html(msg);
-            $('.msg_' + type).animate({
-                'top': 0
-            }, 500);
-            setTimeout(function () {
-                $('.msg_' + type).animate({
-                    'top': '-30px'
-                }, 500)
-            }, 2000);
-        },
         choiceItem(item, ev) {
             let el = ev.currentTarget;
             let icon = $(el).children('.icon').children();
@@ -162,7 +151,7 @@ export default {
             }
             that.showLoading();
             page = that.page;
-            axios.get('//api.dev.aimoge.com/v1/media/adinteraction/terminal/near?longitude=' + that.longitude + '&latitude=' + that.latitude + '&word=' + that.word)
+            axios.get('/media/adinteraction/terminal/near?longitude=' + that.longitude + '&latitude=' + that.latitude + '&word=' + that.word)
                 .then(function (response) {
                     if (response.data.status == 0) {
                         that.hideLoading();

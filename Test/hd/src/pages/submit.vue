@@ -1,6 +1,6 @@
 <template>
     <div class="submit">
-        <HeaderBar :title="pageTitle" :btnconfig="btnconfig"></HeaderBar>
+        <HeaderBar :title="pageTitle" :btnconfig="btnconfig" @callback="goBack"></HeaderBar>
         <div style="height:44px;"></div>
         <div class="content mui-content rel">
             <div class="time_box">
@@ -17,9 +17,9 @@
                 </div>
                 <div style="padding:0px 50px; font-size:14px;padding-bottom:20px;">
                     <div class="mui-row">
-                        <input type="text" readonly id="start_date" v-model="start_date" :value="value" class="input mui-col-xs-5 mui-text-center" placeholder="开始时间" @input="change1">
+                        <input type="text" readonly id="start_date" v-model="start_date" :value="value" class="input mui-col-xs-5 mui-text-center" placeholder="开始时间" @input="resetData">
                         <span class="mui-col-xs-2 mui-text-center">----</span>
-                        <input type="text" readonly id="end_date" v-model="end_date" :value="value" class="input mui-col-xs-5 mui-text-center" placeholder="结束时间" @input="change1">
+                        <input type="text" readonly id="end_date" v-model="end_date" :value="value" class="input mui-col-xs-5 mui-text-center" placeholder="结束时间" @input="resetData">
                     </div>
                 </div>
             </div>
@@ -39,17 +39,19 @@
                         <div class="add_icon">+</div>
                     </div>
                 </div>
-                <div class="item terminal" v-for="(d,index) in arry" :key="d.terminal_code" @click="choiceItem(d,$event)" data-id="terminal" :class="{disabled:d.succed==1}">
-                    <div class="icon">
-                        <div class="choice_icon" v-show="false"></div>
+                <div style="max-height:120px;overflow-y: scroll">
+                    <div class="item terminal" v-for="(d,index) in arry" :key="d.terminal_code" @click="choiceItem(d,$event)" data-id="terminal" :class="{disabled:d.succed==1}">
+                        <div class="icon">
+                            <div class="choice_icon" v-show="false"></div>
+                        </div>
+                        <p>{{d.terminal_name}}</p>
                     </div>
-                    <p>{{d.terminal_name}}</p>
-                </div>
-                <div class="item city" v-for="item in c_arry" :key="item.city_id" @click="choiceItem(item,$event)" data-id="city">
-                    <div class="icon">
-                        <div class="choice_icon" v-show="false"></div>
+                    <div class="item city" v-for="item in c_arry" :key="item.city_id" @click="choiceItem(item,$event)" data-id="city">
+                        <div class="icon">
+                            <div class="choice_icon" v-show="false"></div>
+                        </div>
+                        <p>{{item.city_name}}</p>
                     </div>
-                    <p>{{item.city_name}}</p>
                 </div>
             </div>
             <div class="hight_8 abs"></div>
@@ -60,11 +62,11 @@
                             <img src="//img.aimoge.com/FgrEPLTkazeV_rEeBomK3P3gr15p" width="100%" height="100%">
                         </div>
                     </div>
-                    <div class="mui-col-xs-7 margin-5">
+                    <div class="mui-col-xs-6 margin-5">
                         <p class="mui-ellipsis">收费标注</p>
                     </div>
-                    <div class="mui-col-xs-3" style="text-align:right;">
-                        <div class="color_B">共计4元</div>
+                    <div class="mui-col-xs-4" style="text-align:right;margin-top:6px;">
+                        <div class="color_B">共计{{total}}元</div>
                     </div>
                 </div>
                 <div class="text">
@@ -88,7 +90,7 @@
                 <button type="button" class="mui-btn btn_blue" @click="nextStep">微信支付</button>
             </div>
         </div>
-        <ModalDialog ref="confirmModal" @confirmCallback="setData"></ModalDialog>
+        <ModalDialog ref="confirmModal" @confirmCallback="resetDate"></ModalDialog>
         <div id="hint" class="sysLoading1 fixed">
             <div class="hint_info">
                 <img src="//img.aimoge.com/FsNN9KaeHuuk90DQlqyLtNxOPfdd" style="width:25%">
@@ -108,7 +110,8 @@ export default {
             pageTitle: '确认提交',
             bodyBg: 'bg_white',
             btnconfig: {
-                isgoback: 1
+                isback: 1,
+                isgoback: 0,
             },
             day: '0',
             chest: 0,
@@ -122,7 +125,17 @@ export default {
             flag: true,
             terminals: new Set(),
             citys: new Set(),
-            succed: null
+            succed: null,
+            total: 0,
+            city_id: '',
+            //支付信息
+            service: 'media_adinteraction_service',
+            wxid: '',
+            pay_id: '',
+            order_ids: '',
+            fee: 0.01,
+            payType: 4,
+            _id: ''
         }
     },
     components: {
@@ -144,14 +157,15 @@ export default {
                     for (let i = 0; i < arr1.length; i++) {
                         code += '&terminal_code=' + arr1[i];
                     }
-                    this.verify(_id,code);
-                    this.arry = this.setData(arr1, arr2,this.succed);
-
+                    if (arr1 && arr2 && _id) {
+                        this.verify(_id, code);
+                    }
                 }
                 if (window.Data.c_id && window.Data.c_name) {
                     let arr3 = Array.from(window.Data.c_id);
                     let arr4 = Array.from(window.Data.c_name);
-                    this.c_arry = this.setData1(arr3, arr4);
+                    let arr5 = Array.from(window.Data.c_price);
+                    this.c_arry = this.setData1(arr3, arr4, arr5);
                 }
             }
         },
@@ -194,25 +208,36 @@ export default {
             let el = ev.currentTarget;
             let id = $(el).data("id");
             let icon = $(el).children('.icon').children();
+            let day = parseInt($("#day").html());
             if (id == 'city' && this.terminals.size == 0) {
                 if ($(icon).is(":hidden")) {
                     $(icon).show();
                     this.citys.add(item.city_id);
                     this.chest++;
+                    this.total += item.price * day;
                 } else {
                     $(icon).hide();
                     this.citys.delete(item.city_id);
                     this.chest--;
+                    this.total -= item.price * day;
                 }
             } else if (id == 'terminal' && this.citys.size == 0) {
                 if ($(icon).is(":hidden")) {
+                    // if(item.succed==1){
+                    //     this.showAlert();
+                    //     return false;
+                    // }
                     $(icon).show();
                     this.terminals.add(item.terminal_code);
                     this.chest++;
+                    this.total = day * 3 * this.chest;
+                    this.city_id = item.city_id;
                 } else {
                     $(icon).hide();
+                    this.total
                     this.terminals.delete(item.terminal_code);
                     this.chest--;
+                    this.total = day * 3 * this.chest;
                 }
             } else {
                 _util.showErrorTip('抱歉！包城和选择柜机您只能选择一个');
@@ -227,58 +252,116 @@ export default {
             }
             this.url('/' + name);
         },
-        change1() {
-            if (this.start_date && this.end_date) {
-                this.arry = [];
-                this.c_arry = [];
-            }
-        },
-        setData(arr1, arr2,status) {
+        setData(arr1, arr2, status, _id) {
             let Array = []
             for (let i = 0; i < arr1.length; i++) {
                 let obj = Object.create(null);
                 obj.terminal_code = arr1[i];
                 obj.terminal_name = arr2[i];
-                obj.succed=status;
+                obj.succed = status;
+                obj.city_id = _id;
                 Array.push(obj);
             }
             return Array
         },
-        setData1(arr1, arr2) {
+        setData1(arr1, arr2, arr3) {
             let Array = []
             for (let i = 0; i < arr1.length; i++) {
                 let obj = Object.create(null);
                 obj.city_id = arr1[i];
                 obj.city_name = arr2[i];
+                obj.price = arr3[i];
                 Array.push(obj);
             }
             return Array
         },
-        nextStep() {
-            //  this.$refs.confirmModal.showModal({
-            //     text: '该日期内部分柜机已被预定，您可以请重选'
-            // });
-            // _util.showErrorTip('请选择分类！');
-            this.showInfo();
+        resetData() {
+            if (this.start_date && this.end_date) {
+                this.arry = [];
+                this.c_arry = [];
+                this.chest = 0;
+                this.total = 0;
+            }
         },
-        verify(cityID, code,callback) {
+        resetDate() {
+            this.start_date = '开始时间';
+            this.end_date = '结束时间';
+            $('#day').html('0');
+        },
+        nextStep() {
+            this.postData();
+            // this.doWeixinpay();
+        },
+        verify(cityID, code) {
             let that = this;
-            axios.get('http://api.dev.aimoge.com/v1/media/adinteraction/inspect?city_id=' + cityID + code + '&start_date=' + this.start_date + '&end_date=' + this.end_date)
+            axios.get('/media/adinteraction/inspect?city_id=' + cityID + code + '&start_date=' + this.start_date + '&end_date=' + this.end_date)
                 .then(function (response) {
                     if (response.data.status == 0) {
                         that.hideLoading();
-                        that.succed=response.data.data.succed;
-                        if(callback) that.arry=callback();
+                        that.succed = response.data.data.succed;
+                        that.arry = that.setData(Array.from(window.Data.t_c), Array.from(window.Data.t_n), that.succed, cityID);
                     } else {
                         if (response.data.msg) _util.showErrorTip(response.data.msg);
                     }
                 })
                 .catch(function (err) {
+                    console.log(err);
                     that.hideLoading();
                     _util.showErrorTip('您的网络可能出了点问题:(');
                 })
         },
+        postData() {
+            if (!this.start_date && !this.end_date) {
+                this.msgAlert("warning", "请选择展示的日期");
+                return false;
+            }
+            if (this.citys.size == 0 && this.terminals.size == 0) {
+                this.msgAlert("warning", "请选择柜机");
+                return false;
+            }
+            if (!this.flag) {
+                this.msgAlert("warning", "抱歉您还没有同意展示协议");
+                return false;
+            }
+            let content = window.img.content ? window.img.content : '',
+                image = window.img.imgsrc,
+                terminal_codes = Array.from(this.terminals),
+                city_id = this.city_id ? this.city_id : Array.from(this.citys),
+                start_date = this.start_date,
+                end_date = this.end_date,
+                category = window.img.category;
+            let data = {
+                content: content,
+                image: image,
+                terminal_codes: terminal_codes,
+                city_id: city_id,
+                start_date: start_date,
+                end_date: end_date,
+                category: category
+            };
+            let that = this;
+            that.showInfo();
+            axios.post('/media/adinteraction', data).then((rsp) => {
+                if (rsp.data.status == 0) {
+                    that.hideInfo();
+                    let data = rsp.data.data
+                    that._id = data._id;
+                    that.goPay(data);
+                } else {
+                    if (rsp.data.status == 200) {
+                        that.hideInfo();
+                        _util.showErrorTip(res.data.msg);
+                    }
+                }
+            }).catch((err) => {
+                console.log(err);
+                that.hideInfo();
+                _util.showErrorTip('您的网络可能出了点问题:(');
+            })
+        },
         init() {
+            this.service = 'media_adinteraction_service';
+            this.wxid = window.wxid;
             let m = new Date().getMonth() + 1,
                 d = new Date().getDate() + 1,
                 time = new Date().getHours(),
@@ -301,6 +384,48 @@ export default {
                 'minDate': (new Date().getFullYear()) + '-' + m + '-' + d, //最小日期
                 'maxDate': (new Date().getFullYear()) + '-' + 12 + '-' + 31 //最大日期
             });
+        },
+        goBack() {
+            $('#sysLoading').show();
+            this.url('/make');
+            $('#sysLoading').hide();
+        },
+        goPay(data) {
+            let search = {
+                "order_ids": data._id,
+                "service": "media_adinteraction_service",
+                "payTypes": 4,
+                "total_fee": this.fee,
+                "total_num": 1,
+                "callbackurl": encodeURIComponent(window.config.BASE_URL + "adinteraction?#/details?_id=" + data._id)
+            }
+            function goPay() {
+                this.url(window.config.BASE_URL + 'pay', search);
+            }
+            if (data.status == 211) {
+                this.confirmPayCancel(goPay,data)
+            } else {
+                this.url(window.config.BASE_URL + 'pay', search);
+            }
+        },
+        confirmPayCancel(callback,item) {
+            let data = {
+                "service": "media_adinteraction_service",
+                "pay_id": item.pay_id,
+                "pay_type":4,
+                "result": 300,
+                "error_msg": '用户主动取消',
+                "pay_info": {}
+            }
+            let that=this;
+            axios.post(window.config.PAY+'/pay/'+data.pay_id,data).then((rsp)=>{
+                if(rsp.status==0&&rsp.data){
+                    if(callback) callback();
+                }else{
+                    _util.showErrorTip('支付失败');
+                    that.$route.go(0);
+                }
+            })
         },
         showLoading() { //显示正在加载数据状态
             this.scroll_load_loading = true;

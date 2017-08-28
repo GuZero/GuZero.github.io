@@ -5,23 +5,22 @@
         <div class="content mui-content">
             <div class="header">
                 <div>
-                    <div class="title">上屏中</div>
-                    <div>内容不符，已安排微信退款，请注意查收</div>
+                    <div class="title">{{title}}</div>
+                    <div>{{content}}</div>
                 </div>
             </div>
             <div class="info" style="background:#fff;border-bottom:1px solid #dfdfdf;margin-bottom:16px;">
                 <div class="mui-table-view-cell">
                     <div class="items">
                         <div>上屏柜机</div>
-                        <div class="mui-ellipsis-2" style="min-width:65%;">
-                            <p style="margin-top:0;">1865创意园东二楼格格货栈</p>
-                            <p>1865创意园东二楼格格货栈</p>
+                        <div class="mui-ellipsis-2" style="min-width:65%;max-height=60px;overflow-y: scroll;">
+                            <p v-for="(item,index) in items" :key="item.terminal_code" :class="{mg_t0:index==0}">{{item.terminal_name}}</p>
                         </div>
                     </div>
                 </div>
                 <div class="mui-table-view-cell">
                     <div class="items">
-                        <div>上屏柜机</div>
+                        <div>上屏时间</div>
                         <div>
                             {{start_date}} ---- {{end_date}}
                         </div>
@@ -33,7 +32,7 @@
                     <div class="items">
                         <div>支付金额</div>
                         <div class="mui-ellipsis-2">
-                          {{21.00}}元
+                            {{21.00}}元
                         </div>
                     </div>
                 </div>
@@ -41,7 +40,7 @@
                     <div class="items">
                         <div>下单时间</div>
                         <div>
-                          {{'09-20'}}   {{'10:30'}}
+                            {{'09-20'}} {{'10:30'}}
                         </div>
                     </div>
                 </div>
@@ -63,6 +62,9 @@ export default {
             },
             start_date: '2017-07-11',
             end_date: '2017-09-13',
+            items: [],
+            title: '审核中',
+            content: '24小时内将完成审核，若不通过则自动退款'
         }
     },
     components: {
@@ -71,13 +73,13 @@ export default {
     mounted() {
         this.getData();
     },
-    watch:{
-        '$route':function(){
-           if(this.$route.path==('/details')){
-              this.getData();
-           }
+    watch: {
+        '$route': function () {
+            if (this.$route.path == ('/details')) {
+                this.getData();
+            }
         }
-        
+
     },
     methods: {
         showLoading() { //显示正在加载数据状态
@@ -88,20 +90,39 @@ export default {
             this.scroll_load_loading = false;
             this.$refs.loading && this.$refs.loading.hideLoading();
         },
-        getData(){
-             let that = this;
+        getData() {
+            let that = this;
             that.showLoading();
-            axios.get('http://api.dev.aimoge.com/v1/media/adinteraction/'+that.$route.query._id)
+            axios.get(window.config.API + '/media/adinteraction/' + that.$route.query._id)
                 .then(function (res) {
                     if (res.data.status == 0) {
                         that.hideLoading();
-                        console.log(res.data);
+                        that.items = res.data.data.terminals;
+                        that.start_date = res.data.data.start_date;
+                        that.end_date = res.data.data.end_date;
+                        switch (res.data.data.status) {
+                            case 1:
+                                that.title = '审核中';
+                                that.content = '24小时内将完成审核，若不通过则自动退款';
+                                break;
+                            case 11:
+                                that.title = '未通过';
+                                that.content = '内容不符，已安排微信退款，请注意查收';
+                                break;
+                            case 12:
+                                that.title = '上屏中';
+                                that.content = '24小时内将完成审核，若不通过则自动退款';
+                                break;
+                            default:
+                                that.title = '审核中';
+                                that.content = '24小时内将完成审核，若不通过则自动退款';
+                                break;
+                        }
                     } else {
                         if (res.data.msg) _util.showErrorTip(res.data.msg);
                     }
                 })
                 .catch(function (err) {
-                    console.log(err);
                     that.hideLoading();
                     _util.showErrorTip('您的网络可能出了点问题:(');
                 })
@@ -139,6 +160,10 @@ export default {
 .items p {
     margin-top: 8px;
     text-align: right;
+}
+
+.items .mg_t0 {
+    margin-top: 0px;
 }
 </style>
 

@@ -5,10 +5,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
     <title>大屏互动</title>
-    <link type="text/css" rel="stylesheet" href="./src/lib/css/mui.min.v3.6.0.css">
-    <link type="text/css" rel="stylesheet" href="./src/lib/css/common.20170814.css">
-    <link type="text/css" rel="stylesheet" href="./src/lib/css/make.20170814.css">
-    <link rel="stylesheet" href="./src/lib/js/LCalendar/css/LCalendar.20170814.css">
+    <link type="text/css" rel="stylesheet" href="{{ settings.PREFIX_GSTATIC }}/static/interaction/lib/css/mui.min.v3.6.0.css">
+    <link type="text/css" rel="stylesheet" href="{{ settings.PREFIX_GSTATIC }}/static/interaction/lib/css/common.20170814.css">
+    <link type="text/css" rel="stylesheet" href="{{ settings.PREFIX_GSTATIC }}/static/interaction/lib/css/make.20170814.css">
+    <link rel="stylesheet" href="{{ settings.PREFIX_GSTATIC }}/static/interaction/lib/js/LCalendar/css/LCalendar.20170814.css">
 </head>
 
 <body class="bg_blue">
@@ -23,53 +23,37 @@
         <i class="ion-loading-c"></i>
     </div>
     <div id="app" style="margin-top:44px;"></div>
-    <script src="./src/lib/js/LCalendar/js/LCalendar.20170814.js"></script>
-    <script src="https://cdn.bootcss.com/vue/2.2.6/vue.min.js "></script>
-    <script src="https://cdn.bootcss.com/vue-router/2.3.0/vue-router.min.js "></script>
-    <script src="https://cdn.bootcss.com/axios/0.15.3/axios.min.js "></script>
-    <script src="https://cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script>
-    <script src="https://cdn.bootcss.com/iScroll/5.1.3/iscroll-zoom.min.js"></script>
-    <script src="https://cdn.bootcss.com/hammer.js/2.0.4/hammer.min.js"></script>
-    <script src="./src/lib/js/lrz.all.bundle.v1.0.0.js"></script>
-    <script src="./src/lib/js/jquery.photoClip.v1.8.0.js"></script>
+    <script src="{{ settings.PREFIX_GSTATIC }}/static/interaction/lib/js/LCalendar/js/LCalendar.20170811.js"></script>
+    <script src="//cdn.bootcss.com/vue/2.2.6/vue.min.js "></script>
+    <script src="//cdn.bootcss.com/vue-router/2.3.0/vue-router.min.js "></script>
+    <script src="//cdn.bootcss.com/axios/0.15.3/axios.min.js "></script>
+    <script src="//cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script>
+    <script src="//cdn.bootcss.com/iScroll/5.1.3/iscroll-zoom.min.js"></script>
+    <script src="//cdn.bootcss.com/hammer.js/2.0.4/hammer.min.js"></script>
+    <script src="//cdn.bootcss.com/store.js/1.3.14/store.min.js"></script>
+    <script src="{{ settings.PREFIX_GSTATIC }}/static/interaction/lib/js/lrz.all.bundle.v1.0.0.js"></script>
+    <script src="{{ settings.PREFIX_GSTATIC }}/static/interaction/lib/js/jquery.photoClip.v1.8.0.js"></script>
     <script type="text/javascript" src="//webapi.amap.com/maps?v=1.3&key=14c2e56f9158a06febd6aa31f3e6eb18"></script>
 
     <script>
         window.config = {
-            'API': '{{ settings.PREFIX_API|autodomain }}'
+            'API': '{{ settings.PREFIX_API|autodomain }}',
+            'BASE_URL': "{{ settings.BASE_URL|autodomain }}"
         };
         axios.defaults.withCredentials = true;
+        axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
+        axios.defaults.baseURL = window.config.API;
         window.wxsdk = function(callback) {
             callback();
         };
-        window.Data = {};
+        window.Data = {}; 
+       {% if is_weixin() and weixin %}
+        window.wxpay = {{ weixin.weixin_pay }};
+        window.wxid = '{{ weixin._id }}';
+        window.wxtype = {{ weixin.weixin_type }};
+        window.open_id = '{{ open_id }}' || store.get("weixin_" + window.wxid + "_openid") || '';
+        {% endif %}
     </script>
-    <!-- <script>
-        var map, geolocation;
-        //加载地图，调用浏览器定位服务
-        map = new AMap.Map('', {
-            resizeEnable: true
-        });
-        map.plugin('AMap.Geolocation', function() {
-            geolocation = new AMap.Geolocation({
-                enableHighAccuracy: true, //是否使用高精度定位，默认:true
-                timeout: 10000, //超过10秒后停止定位，默认：无穷大
-            });
-            map.addControl(geolocation);
-            geolocation.getCurrentPosition();
-            AMap.event.addListener(geolocation, 'complete', onComplete); //返回定位信息
-            AMap.event.addListener(geolocation, 'error', onError); //返回定位出错信息
-        });
-        //解析定位结果
-        function onComplete(data) {
-            // alert('定位成功');
-            console.log(data.position.getLng(), data.position.getLat());
-        }
-        //解析定位错误信息
-        function onError(data) {
-            // console.log('定位失败', data)
-        }
-    </script> -->
 </body>
 
 </html>

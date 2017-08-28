@@ -2,6 +2,7 @@
 	<div class="gege-header fixed">
 		<div class="title center ellipsis f16 abs">{{title}}</div>
 		<a  class="icgoback" v-if="hideGoback?false:true"  @click="goback(origin)" style="left: 0;"></a>
+		<a  class="icgoback" v-if="hasConfig? btnconfig.isback:false"  @click.prevent.stop="$emit('callback')" style="left: 0;"></a>
 		<a  class="icshare"  v-if="hasConfig? btnconfig.isshare: false" @click.prevent.stop="$emit('shareBtnCallback')"></a>
 		<a class="icclock" v-if="hasConfig? btnconfig.ismsg: false" @click.prevent.stop="$emit('msgBtnCallback')"> </a>
 		<a v-if="hasConfig?btnconfig.isconfirm:false" @click.prevent.stop="$emit('confirmCallback')" style="color:#fff;right:0">确认</a>
