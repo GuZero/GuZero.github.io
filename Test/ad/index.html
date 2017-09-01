@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="../css/global.css">
+    <title>监播任务</title>
+    <style>
+        .panel {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 12px 16px 0;
+        }
+        
+        .panel-content {
+            width: 100%;
+            box-sizing: border-box;
+            background: #fff;
+            margin: 0 auto;
+            border-radius: 6px;
+            padding: 0 16px;
+            margin-top: 15px;
+        }
+        
+        .panel-header {
+            padding: 15px 54px 15px 0;
+            color: #000;
+        }
+        
+        .panel-header .tag {
+            display: block;
+            position: absolute;
+            top: 16px;
+            right: -18px;
+            width: 70px;
+            height: 24px;
+            font-size: 14px;
+            text-align: center;
+            color: #fff;
+            text-indent: 7px;
+        }
+        
+        .panel-header.end .tag {
+            background: url(//img.aimoge.com/FpqciHwHXThbKhFnkYJ3KbB7SXjG) no-repeat;
+            background-size: 70px 24px;
+        }
+        
+        .panel-header.active .tag {
+            background: url(//img.aimoge.com/FsVvrM_c5ceWbHYS885LMvWfsHtV) no-repeat;
+            background-size: 70px 24px;
+        }
+        
+        .panel-desc {
+            padding-bottom: 15px;
+            line-height: 22px;
+            border-bottom: 1px solid #e6e7e7;
+            color: #818181;
+        }
+        
+        .panel-desc p {
+            margin: 0;
+        }
+        
+        .panel-footer {
+            padding: 10px 0;
+            color: #818181;
+        }
+        
+        .panel-footer:after {
+            content: "";
+            display: block;
+            position: absolute;
+            top: 50%;
+            right: 0;
+            width: 10px;
+            height: 10px;
+            margin-top: -5px;
+            border-bottom: 1px solid #d6d6d6;
+            border-right: 1px solid #d6d6d6;
+            transform: rotate(-45deg);
+            -webkit-transform: rotate(-45deg);
+        }
+        
+        .time-label {
+            display: inline-block;
+            width: 26%;
+        }
+        
+        .empty-list {
+            color: #818181;
+            font-size: 22px;
+            line-height: 240px;
+            text-align: center;
+        }
+        
+        .tab-widget {
+            padding-top: 8px;
+            border-top: 1px #eee solid;
+            top: 44px;
+            left: 0;
+            width: 100%;
+            background-color: #fff;
+            border-bottom: 1px #ddd solid;
+            z-index: 3;
+        }
+        
+        .tab-widget a {
+            display: block;
+            text-align: center;
+            padding-bottom: 6px;
+            border-bottom: 3px #fff solid;
+            font-size: 15px;
+            color: #333;
+        }
+        
+        .tab-widget a.active {
+            color: #2196f3;
+        }
+        
+        .tab-widget a.active:after {
+            display: block;
+            content: "";
+            width: 50%;
+            height: 3px;
+            position: absolute;
+            background-color: #2196f3;
+            left: 50%;
+            margin-left: -25%;
+            bottom: -5px;
+        }
+        
+        .tab-content {
+            margin-top: 44px;
+            margin-top: 72px;
+            padding-bottom: 12px;
+        }
+        
+        .hide {
+            display: none;
+        }
+        
+        .tip {
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 28px;
+            line-height: 28px;
+            background-color: #2196f3;
+            color: #fff;
+            padding-left: 16px;
+            z-index: 4;
+            box-sizing: border-box;
+        }
+        
+        .tip .close {
+            right: 4px;
+            top: 0;
+            color: #fff;
+            height: 28px;
+            width: 28px;
+            background: url('//img.aimoge.com/FoYNdTeVhz8nLlaSBU1zhcdO6ccd') no-repeat;
+            background-position: center center;
+            background-size: 14px 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="gege-header fixed">
+        <div class="title center ellipsis f16 abs">监播任务</div>
+    </div>
+    <div class="rel" id="container">
+        <div class="tab-widget fixed">
+            <div class="rel flex ">
+                <a class="switch-tab flexmodel rel active" onclick="switchTab(0,this);">待处理</a>
+                <a class="switch-tab flexmodel rel" onclick="switchTab(1,this);">已完成</a>
+            </div>
+        </div>
+        <div class="tab-content" id="task-list">
+            <div class="panel">
+                <div class="panel-content rel">
+                    <div class="panel-header f16 rel active">
+                        广告名称：丝蕴巴拉巴拉
+                        <span class="tag">进行中</span>
+                    </div>
+                    <div class="panel-desc f14">
+                        <p>
+                            <span class="time-label">任务类型:</span> 上刊监播
+                        </p>
+                        <p>
+                            <span class="time-label">开始时间:</span> 2017-08-08 00:00:00
+                        </p>
+                        <p>
+                            <span class="time-label">结束时间:</span> 2017-08-08 00:00:00
+                        </p>
+                    </div>
+                    <div class="panel-footer rel">查看详情</div>
+                </div>
+            </div>
+            <!-- <p class='empty-list'>暂无活动</p> -->
+        </div>
+    </div>
+    <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        function showMsg(msg, type) {
+            var tclass = type == 1 ? 'mgAlert-error' : 'mgAlert-success',
+                dom = $('#mgAlert')[0];
+            dom.setAttribute('class', 'mgAlert ' + tclass + ' mshow');
+            dom.innerHTML = msg;
+            setTimeout(function() {
+                dom.setAttribute('class', 'mgAlert');
+                dom.innerHTML = '';
+            }, 2500);
+        };
+
+        function switchTab(index, self) {
+            var $this = $(self);
+            $(".switch-tab").removeClass("active");
+            $this.addClass("active");
+            // $(".tab-content").hide().eq(index).show();
+        }
+    </script>
+</body>
+
+</html>
