@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="./global.css">
+    <title>任务明细</title>
+    <style>
+        .pakgetArea {
+            width: 100%;
+            bottom: 0;
+            left: 0;
+            z-index: 300;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            padding: 8px 16px;
+        }
+        
+        .guide {
+            background-color: rgb(66, 133, 244);
+            color: #fff;
+            z-index: 3001;
+            bottom: -21px;
+            right: 32px;
+            display: block;
+            width: 40px;
+            text-align: center;
+            height: 40px;
+            line-height: 40px;
+            border-radius: 100%;
+        }
+        
+        .guide:active {
+            background-color: rgb(51, 100, 183);
+        }
+        
+        .guide.up {
+            bottom: 20px;
+        }
+        
+        .allmap {
+            height: 160px;
+            width: 100%;
+            background: #eee;
+        }
+        
+        .allmap img {
+            max-height: none;
+        }
+        
+        .question {
+            font-size: 16px;
+            color: #444444;
+            font-weight: bold;
+            padding: 26px 0 16px;
+        }
+        
+        .upload-btn {
+            width: 160px;
+            height: 160px;
+            border: 2px dashed #ccc;
+            display: block;
+        }
+        
+        .upload-btn:before,
+        .upload-btn:after {
+            position: absolute;
+            content: '';
+            display: block;
+            background-color: #ccc;
+            top: 50%;
+            left: 50%;
+            margin-top: -2px;
+            margin-left: -40px;
+        }
+        
+        .upload-btn:before {
+            width: 80px;
+            height: 4px;
+        }
+        
+        .upload-btn:after {
+            width: 80px;
+            height: 4px;
+            transform: rotate(90deg);
+            -webkit-transform: rotate(90deg);
+        }
+        
+        .mapBox {
+            margin-top: 44px;
+        }
+        
+        .submit-btn {
+            display: block;
+            margin: 20px auto;
+            border-radius: 6px;
+            height: 45px;
+            color: #fff;
+            background-color: #008cff;
+            text-align: center;
+            font-size: 20px;
+            line-height: 45px;
+        }
+        
+        .submit-btn.disabled {
+            background: #d2d2d2;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="mgAlert" class="mgAlert center fixed f14"></div>
+    <div id="mgLoadingWarp" class="mgLoadingWarp abs">
+        <span>
+                <i class="icon ion-loading-c rel"></i>
+                加载中...
+            </span>
+    </div>
+    <div id="sysLoading" class="sysLoading fixed">
+        <i class="ion-loading-c"></i>
+    </div>
+    <!-- <div class="uploading fixed" id="uploading">
+        <i class="ion-loading-c"></i><span class="upload-tip">正在上传图片</span>
+    </div> -->
+    <div class="gege-header fixed">
+        <div class="title center ellipsis f16 abs">任务明细</div>
+        <a class="icgoback"></a>
+    </div>
+    <div class="rel mapBox">
+        <div id="allmap" class="allmap"></div>
+        <div class="pakgetArea abs">
+            <p class="addr">
+                <span>终端名称：</span>南京办公室V3快递柜
+            </p>
+            <p>
+                <span>安装位置：</span>国家广告产业园格格货栈（4栋）
+            </p>
+        </div>
+        <a href="javascript:;" class="guide abs">
+            <label class="a">导航</label>
+        </a>
+    </div>
+    <div class="container">
+        <div class="question-list">
+            <div class="question-item">
+                <div class="question">1.小区门头照片<span class="red">*</span></div>
+                <div class="rel upload-widget">
+                    <a class="upload rel upload-btn" data-id="estate_img"></a>
+                </div>
+            </div>
+            <div class="question-item">
+                <div class="question">2.柜子正面照片<span class="red">*</span></div>
+                <div class="rel upload-widget">
+                    <a class="upload rel upload-btn" data-id="chest_img"></a>
+                </div>
+            </div>
+            <div class="question-item">
+                <div class="question">1.显示后台配置的监播照片类型<span class="red">*</span></div>
+                <div class="rel upload-widget">
+                    <a class="upload rel upload-btn" data-id="config_img"></a>
+                </div>
+            </div>
+        </div>
+        <a class="submit-btn" onclick="checkInfo();" id="submit-btn">提 交</a>
+    </div>
+    <script type="text/javascript" src="//webapi.amap.com/maps?v=1.3&key=14c2e56f9158a06febd6aa31f3e6eb18"></script>
+    <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="//res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+
+    <script type="text/javascript">
+        window.wxid = "55eba9799c7684b7098b4569";
+        window.token = '';
+        var PREFIX_API = "//api.dev.aimoge.com/v1";
+
+        function showErrorTip(txt) {
+            if (!txt) return false;
+            var mgAlert = $("#mgAlert");
+            mgAlert.css({
+                'top': '35%'
+            });
+            mgAlert.attr('class', 'mgAlert center fixed f14 mgAlert-error showAlert');
+            mgAlert.html(txt);
+            if (window.errorTimer) {
+                clearTimeout(window.errorTimer);
+                window.errorTimer = null;
+            }
+            window.errorTimer = setTimeout(function() {
+                mgAlert.attr('class', 'mgAlert center fixed f14');
+                setTimeout(function() {
+                    mgAlert.css({
+                        'top': '-35%'
+                    });
+                }, 300);
+            }, 2000);
+        }
+
+        function weixin_ajax(method, url, data, success_callback, error_callback) {
+            $.ajax({
+                type: method,
+                url: url,
+                data: data,
+                dataType: 'json',
+                xhrFields: {
+                    withCredentials: true
+                },
+                success: function(data) {
+                    return success_callback(data);
+                },
+                error: function(data) {
+                    return error_callback(data);
+                }
+            });
+        }
+
+        function isWeixin() {
+            return window.navigator.userAgent.indexOf("MicroMessenger") > 0;
+        }
+        (function() {
+            if (window.wxid && isWeixin()) {
+                weixin_ajax("GET", PREFIX_API + "/weixin/" + window.wxid + "/config?url=" + encodeURIComponent(window.wxUrl || window.location.href), null, function(data) {
+                    if (data && data.status == 0) {
+                        wx.config({
+                            debug: window.debugFlag || false,
+                            appId: data.data.appId,
+                            timestamp: data.data.timestamp,
+                            nonceStr: data.data.noncestr,
+                            signature: data.data.signature,
+                            jsApiList: window.apiList || ['checkJsApi', 'onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ', 'onMenuShareWeibo', 'getNetworkType', 'hideOptionMenu', 'showOptionMenu', 'closeWindow', 'hideMenuItems', 'showMenuItems', 'hideAllNonBaseMenuItem', 'showAllNonBaseMenuItem', 'scanQRCode', 'chooseWXPay', 'chooseImage', 'previewImage', 'getNetworkType', 'previewImage', 'uploadImage']
+                        });
+                    }
+                });
+                weixin_ajax("GET", PREFIX_API + "/upload/token", null, function(res) {
+                    if (res.status != 0) {
+                        showErrorTip("网络异常,该页面将无法正常执行！", 1);
+                    }
+                    window.token = res.data.token;
+                })
+            }
+        })();
+    </script>
+    <script type="text/javascript">
+        var submitData = {
+            estate_img: {
+                mediaId: "",
+                uploadId: "",
+                keyId: ""
+            },
+            chest_img: {
+                mediaId: "",
+                uploadId: "",
+                keyId: ""
+            },
+            config_img: {
+                mediaId: "",
+                uploadId: "",
+                keyId: ""
+            },
+        }
+
+        function initGuideMap() {
+            var map, geolocation;
+            //加载地图，调用浏览器定位服务
+            map = new AMap.Map('allmap', {
+                resizeEnable: true,
+                zoom: 13
+            });
+            map.plugin('AMap.Geolocation', function() {
+                geolocation = new AMap.Geolocation({
+                    enableHighAccuracy: true, //是否使用高精度定位，默认:true
+                    timeout: 10000, //超过10秒后停止定位，默认：无穷大
+                    // buttonOffset: new AMap.Pixel(10, 20), //定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+                    zoomToAccuracy: true, //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+                    buttonDom: '<input hidden="true" >',
+                    buttonPosition: 'RB'
+                });
+                map.addControl(geolocation);
+                geolocation.getCurrentPosition();
+                AMap.event.addListener(geolocation, 'complete', onComplete); //返回定位信息
+                AMap.event.addListener(geolocation, 'error', showErrorTip('定位失败，请确认是否授权获取您的地理位置...')); //返回定位出错信息
+            });
+        };
+
+        function onComplete(data) {
+            var longitude = data.position.getLng(),
+                latitude = data.position.getLat();
+            console.log(longitude, latitude);
+        }
+
+        function initNormalMap() {
+            map = new AMap.Map("allmap", {
+                zoom: 14,
+                center: [118.796629, 32.011938]
+            });
+            marker = new AMap.Marker({
+                map: map,
+                position: [118.796629, 32.011938]
+            })
+            marker.setLabel({
+                offset: new AMap.Pixel(20, 20), //修改label相对于maker的位置
+            });
+            $('.a').on('click', function() {
+                marker.markOnAMAP({
+                    name: '终端名称',
+                    position: marker.getPosition()
+                })
+            })
+        }
+
+        function wxChooseImage(obj) {
+            var $this = obj,
+                imgType = $this.attr("data-id");
+            wx.chooseImage({
+                count: 1, // 默认9
+                sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+                sourceType: ['camera'], // 可以指定来源是相册还是相机，默认二者都有
+                success: function(respond) {
+                    setTimeout(function() {
+                        if (respond.localIds.length == 1) {
+                            wx.uploadImage({
+                                localId: respond.localIds[0],
+                                success: function(res) {
+                                    var data = {
+                                        open_id: "",
+                                        media_id: res.serverId,
+                                        token: window.token,
+                                        source: "patrol"
+                                    }
+                                    weixin_ajax("POST", PREFIX_API + "/weixin/" + window.wxid + "/upload/image", data, function(data) {
+                                        if (data.status != 0) {
+                                            showErrorTip("上传失败请重新上传！");
+                                            return false;
+                                        }
+                                        $this.parent('.upload-widget').append('<div class="upload-img"><a href="javascript:;" class="cnupload abs" onclick="cancelphoto(this,\'' + imgType + '\');">+</a><img src="' + respond.localIds[0] + '" /></div>');
+                                        submitData[imgType].mediaId = res.serverId;
+                                        submitData[imgType].uploadId = data.data._id;
+                                        $this.hide();
+                                        showErrorTip("上传成功！");
+
+                                    }, function() {
+                                        showErrorTip("上传失败请重新上传！");
+                                    })
+                                },
+                                fail: function(res) {
+                                    showErrorTip("上传失败请重新上传！");
+                                }
+                            });
+                        } else {
+                            showErrorTip("只能上传一张图片！");
+                        }
+                    }, 200);
+                },
+                error: function() {
+                    showErrorTip("上传失败请重新上传！");
+                }
+            });
+        }
+        $(document).ready(function() {
+            initNormalMap();
+            if (isWeixin()) {
+                $('.gege-header').hide();
+                $('.mapBox').css({
+                    'marginTop': '0'
+                })
+            }
+            $(".upload-btn").on('click', function() {
+                var $this = $(this);
+                if (isWeixin()) {
+                    wxChooseImage($this);
+                } else {
+                    showErrorTip('请使用微信进行操作');
+                }
+            })
+        })
+    </script>
+</body>
+
+</html>
