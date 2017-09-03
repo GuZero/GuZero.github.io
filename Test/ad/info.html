@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="./global.css">
     <title>任务明细</title>
     <style>
         .pakgetArea {
@@ -318,40 +318,40 @@
                 success: function(respond) {
                     var imgSrc = respond.tempFilePaths;
                     console.log(imgSrc)
-                    setTimeout(function() {
-                        if (respond.localIds.length == 1) {
-                            wx.uploadImage({
-                                localId: respond.localIds[0],
-                                success: function(res) {
-                                    var data = {
-                                        open_id: "",
-                                        media_id: res.serverId,
-                                        token: window.token,
-                                        source: "patrol"
-                                    }
-                                    weixin_ajax("POST", PREFIX_API + "/weixin/" + window.wxid + "/upload/image", data, function(data) {
-                                        if (data.status != 0) {
-                                            showErrorTip("上传失败请重新上传！");
-                                            return false;
-                                        }
-                                        $this.parent('.upload-widget').append('<div class="upload-img"><a href="javascript:;" class="cnupload abs" onclick="cancelphoto(this,\'' + imgType + '\');">+</a><img src="' + respond.localIds[0] + '" /></div>');
-                                        submitData[imgType].mediaId = res.serverId;
-                                        submitData[imgType].uploadId = data.data._id;
-                                        // $this.hide();
-                                        showErrorTip("上传成功！");
+                        // setTimeout(function() {
+                        //     if (respond.localIds.length == 1) {
+                        //         wx.uploadImage({
+                        //             localId: respond.localIds[0],
+                        //             success: function(res) {
+                        //                 var data = {
+                        //                     open_id: "",
+                        //                     media_id: res.serverId,
+                        //                     token: window.token,
+                        //                     source: "patrol"
+                        //                 }
+                        //                 weixin_ajax("POST", PREFIX_API + "/weixin/" + window.wxid + "/upload/image", data, function(data) {
+                        //                     if (data.status != 0) {
+                        //                         showErrorTip("上传失败请重新上传！");
+                        //                         return false;
+                        //                     }
+                        //                     $this.parent('.upload-widget').append('<div class="upload-img"><a href="javascript:;" class="cnupload abs" onclick="cancelphoto(this,\'' + imgType + '\');">+</a><img src="' + respond.localIds[0] + '" /></div>');
+                        //                     submitData[imgType].mediaId = res.serverId;
+                        //                     submitData[imgType].uploadId = data.data._id;
+                        //                     // $this.hide();
+                        //                     showErrorTip("上传成功！");
 
-                                    }, function() {
-                                        showErrorTip("上传失败请重新上传！");
-                                    })
-                                },
-                                fail: function(res) {
-                                    showErrorTip("上传失败请重新上传！");
-                                }
-                            });
-                        } else {
-                            showErrorTip("只能上传一张图片！");
-                        }
-                    }, 200);
+                    //                 }, function() {
+                    //                     showErrorTip("上传失败请重新上传！");
+                    //                 })
+                    //             },
+                    //             fail: function(res) {
+                    //                 showErrorTip("上传失败请重新上传！");
+                    //             }
+                    //         });
+                    //     } else {
+                    //         showErrorTip("只能上传一张图片！");
+                    //     }
+                    // }, 200);
                 },
                 error: function() {
                     showErrorTip("上传失败请重新上传！");
