@@ -163,7 +163,6 @@
                 </div>
             </div>
         </div>
-        <img src="" alt="" id="img">
         <a class="submit-btn" onclick="checkInfo();" id="submit-btn">提 交</a>
     </div>
     <script type="text/javascript" src="//webapi.amap.com/maps?v=1.3&key=14c2e56f9158a06febd6aa31f3e6eb18"></script>
@@ -286,8 +285,8 @@
         function onComplete(data) {
             var longitude = data.position.getLng(),
                 latitude = data.position.getLat();
-            console.log(longitude, latitude);
-        }
+            showErrorTip(longitude, latitude);
+        };
 
         function initNormalMap() {
             map = new AMap.Map("allmap", {
@@ -307,64 +306,74 @@
                     position: marker.getPosition()
                 })
             })
-        }
+        };
 
         function wxChooseImage(obj) {
             var $this = obj,
                 imgType = $this.attr("data-id");
             wx.chooseImage({
-                count: 1, // 默认9
-                sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
-                sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
-                success: function(respond) {
-                    console.log(respond);
-                    // var imgSrc = respond.tempFilePaths;
-                    var imgSrc = respond.localIds[0];
-                    console.log(imgSrc);
-                    $('#img').attr({
-                        'src': imgSrc
-                    });
-                    // setTimeout(function() {
-                    //     if (respond.localIds.length == 1) {
-                    //         wx.uploadImage({
-                    //             localId: respond.localIds[0],
-                    //             success: function(res) {
-                    //                 var data = {
-                    //                     open_id: "",
-                    //                     media_id: res.serverId,
-                    //                     token: window.token,
-                    //                     source: "patrol"
-                    //                 }
-                    //                 weixin_ajax("POST", PREFIX_API + "/weixin/" + window.wxid + "/upload/image", data, function(data) {
-                    //                     if (data.status != 0) {
-                    //                         showErrorTip("上传失败请重新上传！");
-                    //                         return false;
-                    //                     }
-                    //                     $this.parent('.upload-widget').append('<div class="upload-img"><a href="javascript:;" class="cnupload abs" onclick="cancelphoto(this,\'' + imgType + '\');">+</a><img src="' + respond.localIds[0] + '" /></div>');
-                    //                     submitData[imgType].mediaId = res.serverId;
-                    //                     submitData[imgType].uploadId = data.data._id;
-                    //                     // $this.hide();
-                    //                     showErrorTip("上传成功！");
+                    count: 1, // 默认9
+                    needResult: 1,
+                    sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+                    sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+                    success: function(res) {
+                        // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
+                        console.log(res);
+                        var tempFilePaths = res.tempFilePaths
+                            // showErrorTip(res.errMsg);
+                    }
+                })
+                // wx.chooseImage({
+                //     count: 1, // 默认9
+                //     sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+                //     sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+                //     success: function(respond) {
+                //         var imgSrc = respond.tempFilePaths;
+                //         console.log(imgSrc)
+                //         setTimeout(function() {
+                //             if (respond.localIds.length == 1) {
+                //                 wx.uploadImage({
+                //                     localId: respond.localIds[0],
+                //                     success: function(res) {
+                //                         var data = {
+                //                             open_id: "",
+                //                             media_id: res.serverId,
+                //                             token: window.token,
+                //                             source: "patrol"
+                //                         }
+                //                         weixin_ajax("POST", PREFIX_API + "/weixin/" + window.wxid + "/upload/image", data, function(data) {
+                //                             if (data.status != 0) {
+                //                                 showErrorTip("上传失败请重新上传！");
+                //                                 return false;
+                //                             }
+                //                             $this.parent('.upload-widget').append('<div class="upload-img"><a href="javascript:;" class="cnupload abs" onclick="cancelphoto(this,\'' + imgType + '\');">+</a><img src="' + respond.localIds[0] + '" /></div>');
+                //                             submitData[imgType].mediaId = res.serverId;
+                //                             submitData[imgType].uploadId = data.data._id;
+                //                             // $this.hide();
+                //                             showErrorTip("上传成功！");
 
-                    //                 }, function() {
-                    //                     showErrorTip("上传失败请重新上传！");
-                    //                 })
-                    //             },
-                    //             fail: function(res) {
-                    //                 showErrorTip("上传失败请重新上传！");
-                    //             }
-                    //         });
-                    //     } else {
-                    //         showErrorTip("只能上传一张图片！");
-                    //     }
-                    // }, 200);
-                },
-                error: function(err) {
-                    console.log(err)
-                    showErrorTip("上传失败请重新上传！");
-                }
-            });
-        }
+            //                         }, function() {
+            //                             showErrorTip("上传失败请重新上传！");
+            //                         })
+            //                     },
+            //                     fail: function(res) {
+            //                         showErrorTip("上传失败请重新上传！");
+            //                     }
+            //                 });
+            //             } else {
+            //                 showErrorTip("只能上传一张图片！");
+            //             }
+            //         }, 200);
+            //     },
+            //     error: function() {
+            //         showErrorTip("上传失败请重新上传！");
+            //     }
+            // });
+        };
+
+        function checkInfo() {
+            initGuideMap()
+        };
         wx.ready(function() {
             initNormalMap();
             if (isWeixin()) {
@@ -375,7 +384,7 @@
             }
             $(".upload-btn").on('click', function() {
                 var $this = $(this);
-                showErrorTip('函数执行')
+                showErrorTip('函数执行');
                 if (isWeixin()) {
                     wxChooseImage($this);
                 } else {
