@@ -304,8 +304,8 @@
         };
 
         function onComplete(data) {
-            var longitude = data.position.getLng(),
-                latitude = data.position.getLat();
+            window.Lng = data.position.getLng();
+            window.Lat = data.position.getLat();
         };
 
         function onError(data) {
@@ -403,7 +403,7 @@
         function submitAll() {
             // check();
             initGuideMap()
-            console.log(longitude, latitude);
+            console.log(window.Lng, window.lat);
         };
 
         function cancelphoto(obj, type) {
