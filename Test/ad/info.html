@@ -278,14 +278,18 @@
                 map.addControl(geolocation);
                 geolocation.getCurrentPosition();
                 AMap.event.addListener(geolocation, 'complete', onComplete); //返回定位信息
-                AMap.event.addListener(geolocation, 'error', showErrorTip('定位失败，请确认是否授权获取您的地理位置...')); //返回定位出错信息
+                AMap.event.addListener(geolocation, 'error', onError); //返回定位出错信息
             });
         };
 
         function onComplete(data) {
             var longitude = data.position.getLng(),
                 latitude = data.position.getLat();
-            showErrorTip(longitude, latitude);
+            showErrorTip('经度' + longitude, '纬度' + latitude);
+        };
+
+        function onError(data) {
+            showErrorTip('定位失败，请确认是否授权获取您的地理位置...');
         };
 
         function initNormalMap() {
@@ -312,69 +316,66 @@
             var $this = obj,
                 imgType = $this.attr("data-id");
             wx.chooseImage({
-                    count: 1, // 默认9
-                    needResult: 1,
-                    sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
-                    sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
-                    success: function(res) {
-                        // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
-                        console.log(res);
-                        var tempFilePaths = res.tempFilePaths
-                            // showErrorTip(res.errMsg);
-                    }
-                })
-                // wx.chooseImage({
-                //     count: 1, // 默认9
-                //     sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
-                //     sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
-                //     success: function(respond) {
-                //         var imgSrc = respond.tempFilePaths;
-                //         console.log(imgSrc)
-                //         setTimeout(function() {
-                //             if (respond.localIds.length == 1) {
-                //                 wx.uploadImage({
-                //                     localId: respond.localIds[0],
-                //                     success: function(res) {
-                //                         var data = {
-                //                             open_id: "",
-                //                             media_id: res.serverId,
-                //                             token: window.token,
-                //                             source: "patrol"
-                //                         }
-                //                         weixin_ajax("POST", PREFIX_API + "/weixin/" + window.wxid + "/upload/image", data, function(data) {
-                //                             if (data.status != 0) {
-                //                                 showErrorTip("上传失败请重新上传！");
-                //                                 return false;
-                //                             }
-                //                             $this.parent('.upload-widget').append('<div class="upload-img"><a href="javascript:;" class="cnupload abs" onclick="cancelphoto(this,\'' + imgType + '\');">+</a><img src="' + respond.localIds[0] + '" /></div>');
-                //                             submitData[imgType].mediaId = res.serverId;
-                //                             submitData[imgType].uploadId = data.data._id;
-                //                             // $this.hide();
-                //                             showErrorTip("上传成功！");
+                count: 1, // 默认9
+                needResult: 1,
+                sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+                sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+                success: function(respond) {
+                    var imgSrc = respond.tempFilePaths;
+                    console.log(imgSrc)
+                    setTimeout(function() {
+                        if (respond.localIds) {
+                            wx.uploadImage({
+                                localId: respond.localIds[0],
+                                success: function(res) {
+                                    var data = {
+                                        open_id: "",
+                                        media_id: res.serverId,
+                                        token: window.token,
+                                        source: "patrol"
+                                    }
+                                    weixin_ajax("POST", PREFIX_API + "/weixin/" + window.wxid + "/upload/image", data, function(data) {
+                                        if (data.status != 0) {
+                                            showErrorTip("上传失败请重新上传！");
+                                            return false;
+                                        }
+                                        $this.parent('.upload-widget').append('<div class="upload-img"><a href="javascript:;" class="cnupload abs" onclick="cancelphoto(this,\'' + imgType + '\');">+</a><img src="' + respond.localIds[0] + '" /></div>');
+                                        submitData[imgType].mediaId = res.serverId;
+                                        submitData[imgType].uploadId = data.data._id;
+                                        $this.hide();
+                                        showErrorTip("上传成功！");
 
-            //                         }, function() {
-            //                             showErrorTip("上传失败请重新上传！");
-            //                         })
-            //                     },
-            //                     fail: function(res) {
-            //                         showErrorTip("上传失败请重新上传！");
-            //                     }
-            //                 });
-            //             } else {
-            //                 showErrorTip("只能上传一张图片！");
-            //             }
-            //         }, 200);
-            //     },
-            //     error: function() {
-            //         showErrorTip("上传失败请重新上传！");
-            //     }
-            // });
+                                    }, function() {
+                                        showErrorTip("上传失败请重新上传！");
+                                    })
+                                },
+                                fail: function(res) {
+                                    showErrorTip("上传失败请重新上传！");
+                                }
+                            });
+                        } else {
+                            showErrorTip("只能上传一张图片！");
+                        }
+                    }, 200);
+                },
+                error: function() {
+                    showErrorTip("上传失败请重新上传！");
+                }
+            });
         };
 
         function checkInfo() {
             initGuideMap()
         };
-        wx.ready(function() {
+
+        function cancelphoto(obj, type) {
+            $(obj).parent('.upload-img').prev('.upload-btn').css('display', 'block');
+            $(obj).parent('.upload-img').remove();
+            submitData[type].mediaId = "";
+            submitData[type].uploadId = "";
+            submitData[type].keyId = "";
+        }
+        $(document).ready(function() {
             initNormalMap();
             if (isWeixin()) {
                 $('.gege-header').hide();
@@ -386,7 +387,9 @@
                 var $this = $(this);
                 showErrorTip('函数执行');
                 if (isWeixin()) {
-                    wxChooseImage($this);
+                    wx.ready(function() {
+                        wxChooseImage($this);
+                    })
                 } else {
                     showErrorTip('请使用微信进行操作');
                 }
