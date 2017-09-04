@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel="stylesheet" href="./global.css">
+    <link rel="stylesheet" href="../css/global.css">
     <title>任务明细</title>
     <style>
         .pakgetArea {
@@ -136,7 +136,7 @@
     </div> -->
     <div class="gege-header fixed">
         <div class="title center ellipsis f16 abs">任务明细</div>
-        <a class="icgoback"></a>
+        <a class="icgoback" href="javascript:history.go(-1)"></a>
     </div>
     <div class="rel mapBox">
         <div id="allmap" class="allmap"></div>
@@ -174,7 +174,7 @@
                 </div>
             </div>
         </div>
-        <a class="submit-btn" onclick="checkInfo();" id="submit-btn">提 交</a>
+        <a class="submit-btn" onclick="submitAll();" id="submit-btn">提 交</a>
     </div>
     <script type="text/javascript" src="//webapi.amap.com/maps?v=1.3&key=14c2e56f9158a06febd6aa31f3e6eb18"></script>
     <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
@@ -270,6 +270,16 @@
             },
         }
 
+        function getUrlParam(k) {
+            var regExp = new RegExp('([?]|&)' + k + '=([^&]*)(&|$)');
+            var result = window.location.href.match(regExp);
+            if (result) {
+                return decodeURIComponent(result[2]);
+            } else {
+                return null;
+            }
+        }
+
         function initGuideMap() {
             var map, geolocation;
             //加载地图，调用浏览器定位服务
@@ -303,20 +313,23 @@
         };
 
         function initNormalMap() {
+            var lng = getUrlParam('lng'),
+                lat = getUrlParam('lat'),
+                terminal_name = getUrlParam('name');
             map = new AMap.Map("allmap", {
                 zoom: 14,
-                center: [118.796629, 32.011938]
+                center: [lng, lat]
             });
             marker = new AMap.Marker({
                 map: map,
-                position: [118.796629, 32.011938]
+                position: [lng, lat]
             })
             marker.setLabel({
                 offset: new AMap.Pixel(20, 20), //修改label相对于maker的位置
             });
             $('.a').on('click', function() {
                 marker.markOnAMAP({
-                    name: '终端名称',
+                    name: terminal_name,
                     position: marker.getPosition()
                 })
             })
@@ -332,7 +345,7 @@
                 sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
                 success: function(respond) {
                     setTimeout(function() {
-                        if (respond.localIds) {
+                        if (respond.localIds.length == 1) {
                             wx.uploadImage({
                                 localId: respond.localIds[0],
                                 success: function(res) {
@@ -387,8 +400,10 @@
             }
         };
 
-        function checkInfo() {
+        function submitAll() {
+            // check();
             initGuideMap()
+            console.log(longitude, latitude);
         };
 
         function cancelphoto(obj, type) {
