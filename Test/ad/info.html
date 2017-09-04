@@ -107,6 +107,16 @@
         .submit-btn.disabled {
             background: #d2d2d2;
         }
+        
+        .gray {
+            color: #818181;
+        }
+        
+        .info {
+            padding: 20px 0;
+            border-bottom: 1px dashed #ccc;
+            padding-bottom: 10px;
+        }
     </style>
 </head>
 
@@ -143,6 +153,7 @@
         </a>
     </div>
     <div class="container">
+        <div class="gray info">所有照片需保证清晰完整，不符合要求会导致任务审核不通过</div>
         <div class="question-list">
             <div class="question-item">
                 <div class="question">1.小区门头照片<span class="red">*</span></div>
@@ -157,7 +168,7 @@
                 </div>
             </div>
             <div class="question-item">
-                <div class="question">1.显示后台配置的监播照片类型<span class="red">*</span></div>
+                <div class="question">3.显示后台配置的监播照片<span class="red">*</span></div>
                 <div class="rel upload-widget">
                     <a class="upload rel upload-btn" data-id="config_img"></a>
                 </div>
@@ -285,7 +296,6 @@
         function onComplete(data) {
             var longitude = data.position.getLng(),
                 latitude = data.position.getLat();
-            showErrorTip('经度' + longitude, '纬度' + latitude);
         };
 
         function onError(data) {
@@ -321,8 +331,6 @@
                 sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
                 sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
                 success: function(respond) {
-                    var imgSrc = respond.tempFilePaths;
-                    console.log(imgSrc)
                     setTimeout(function() {
                         if (respond.localIds) {
                             wx.uploadImage({
@@ -364,6 +372,21 @@
             });
         };
 
+        function check() {
+            if (!submitData.estate_img.mediaId && !submitData.estate_img.uploadId && !submitData.estate_img.keyId) {
+                showErrorTip("请上传【1.小区门头照片】！");
+                return false;
+            }
+            if (!submitData.chest_img.mediaId && !submitData.chest_img.uploadId && !submitData.chest_img.keyId) {
+                showErrorTip("请上传【2.柜子正面的照片】！");
+                return false;
+            }
+            if (!submitData.config_img.mediaId && !submitData.config_img.uploadId && !submitData.config_img.keyId) {
+                showErrorTip("请上传【3.显示后台配置的监播照片】！");
+                return false;
+            }
+        };
+
         function checkInfo() {
             initGuideMap()
         };
@@ -385,7 +408,6 @@
             }
             $(".upload-btn").on('click', function() {
                 var $this = $(this);
-                showErrorTip('函数执行');
                 if (isWeixin()) {
                     wx.ready(function() {
                         wxChooseImage($this);
