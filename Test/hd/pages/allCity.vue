@@ -60,28 +60,7 @@ export default {
         }
     },
     methods: {
-        msgAlert(type, msg) {//弹出窗口
-            $('.msg_' + type).html(msg);
-            $('.msg_' + type).animate({
-                'top': 0
-            }, 500);
-            setTimeout(function () {
-                $('.msg_' + type).animate({
-                    'top': '-30px'
-                }, 500)
-            }, 2000);
-        },
         setInfo() {//设置信息
-            var htmlstyle = "<style>body{padding:0;margin:0;}.msg{color:#FFF;width:100%;height:30px;text-align:center;font-size:14px;line-height:30px;position:fixed;top: -30px;z-index:20;}" +
-                ".msg_success{background-color:#1fcc6c;}" +
-                ".msg_warning{background-color:#e94b35;}" +
-                ".msg_primary{background-color:#337ab7;}" +
-                ".msg_info{background-color:#5bc0de;}</style>";
-            $('head').append(htmlstyle);
-            $('body').prepend('<div class="msg msg_success"></div>' +
-                '<div class="msg msg_warning"></div>' +
-                '<div class="msg msg_primary"></div>' +
-                '<div class="msg msg_info"></div>');
             this.items = [{
                 city_id: '3201',
                 city_name: '南京市', price: '399'

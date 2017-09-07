@@ -3,11 +3,14 @@
         <HeaderBar :title="pageTitle" :btnconfig="btnconfig"></HeaderBar>
         <div style="height:44px;"></div>
         <div class="content mui-content">
-            <div class="header">
+            <div class="header rel">
                 <div>
                     <div class="title">{{title}}</div>
                     <div>{{content}}</div>
                 </div>
+                <a class="abs" style="top:24px;right:30px;" href="" v-if="status==12">
+                    <div class="aw_r"></div>
+                </a>
             </div>
             <div class="info" style="background:#fff;border-bottom:1px solid #dfdfdf;margin-bottom:16px;">
                 <div class="mui-table-view-cell">
@@ -32,7 +35,7 @@
                     <div class="items">
                         <div>支付金额</div>
                         <div class="mui-ellipsis-2">
-                            {{21.00}}元
+                            {{fee/100}}元
                         </div>
                     </div>
                 </div>
@@ -64,7 +67,9 @@ export default {
             end_date: '2017-09-13',
             items: [],
             title: '审核中',
-            content: '24小时内将完成审核，若不通过则自动退款'
+            content: '24小时内将完成审核，若不通过则自动退款',
+            fee: 0,
+            status:0
         }
     },
     components: {
@@ -74,7 +79,7 @@ export default {
         this.getData();
     },
     watch: {
-        '$route': function () {
+        '$route': function() {
             if (this.$route.path == ('/details')) {
                 this.getData();
             }
@@ -93,13 +98,15 @@ export default {
         getData() {
             let that = this;
             that.showLoading();
-            axios.get(window.config.API + '/media/adinteraction/' + that.$route.query._id)
-                .then(function (res) {
+            axios.get('/media/adinteraction/' + that.$route.query._id)
+                .then(function(res) {
                     if (res.data.status == 0) {
                         that.hideLoading();
                         that.items = res.data.data.terminals;
                         that.start_date = res.data.data.start_date;
                         that.end_date = res.data.data.end_date;
+                        that.fee = res.data.data.fee;
+                        that.status=res.data.data.status;
                         switch (res.data.data.status) {
                             case 1:
                                 that.title = '审核中';
@@ -122,7 +129,7 @@ export default {
                         if (res.data.msg) _util.showErrorTip(res.data.msg);
                     }
                 })
-                .catch(function (err) {
+                .catch(function(err) {
                     that.hideLoading();
                     _util.showErrorTip('您的网络可能出了点问题:(');
                 })
@@ -164,6 +171,18 @@ export default {
 
 .items .mg_t0 {
     margin-top: 0px;
+}
+
+.aw_r::after {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 11px;
+    height: 11px;
+    border-top: 2px #fff solid;
+    border-right: 2px #fff solid;
+    border-top-right-radius: 2px;
+    transform: rotate(45deg);
 }
 </style>
 

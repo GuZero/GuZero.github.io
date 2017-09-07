@@ -7,7 +7,7 @@
                     <div style="width: 110px;height: 80px;display: inline-block;">
                         <img src="//img.aimoge.com/FusiskJqzeh-IeU39DPXStckIv-U" alt="" width="100%" height="100%">
                     </div>
-                </div>   
+                </div>
                 <div class="mui-text-center margin16">
                     <p class="mui-h4 mui-ellipsis color_w line_h30">
                         格格小编对着
@@ -21,7 +21,7 @@
                     <div class="mui-row mui-text-center">
                         <div style="width:105px;height:105px;display: inline-block;">
                             <img src="//img.aimoge.com/Fr57mf2VPXU-JXi3ABQY226rGXcl" alt="" width="100%" height="100%">
-                        </div>   
+                        </div>
                     </div>
                     <div class="mui-row mui-text-center font_14 line_h30 margin16">
                         微信关注格格小区
@@ -54,17 +54,33 @@ export default {
         HeaderBar
     },
     created() {
-        this.getInfo();
+        this.cancelOrder(this.getInfo);
     },
     methods: {
+        cancelOrder(callback) {
+            let that = this;
+            axios.get('/media/adinteraction').then((res) => {
+                if (res.data.status == 0) {
+                    let data = res.data.data.adinteractions;
+                    that.city_id = data[0].city_id;
+                    for (let i = 0; i < data.length; i++) {
+                        if (data[i]._id) {
+                            if (data[i].pay_id && [36, 37].indexOf(data[i].status) > -1) {
+                                axios.delete('/media/adinteraction/' + data[i]._id).then((res) => {
+                                })
+                            }
+                        }
+                    };
+                    if (callback) callback()
+                }
+            })
+
+        },
         getInfo() {
             let that = this;
-            // console.log(localStorage.city_id);
-            that.city_id = "3201";
             that.showLoading();
-            axios.get('http://api.dev.aimoge.com/v1/media/adinteraction/info?city_id=' + that.city_id)
-                .then(function (res) {
-                    console.log(res.data);
+            axios.get('/media/adinteraction/info?city_id=' + that.city_id)
+                .then(function(res) {
                     if (res.data.status == 0) {
                         that.hideLoading();
                         if (res.data.city_count == null) {
@@ -76,7 +92,7 @@ export default {
                         if (res.data.msg) _util.showErrorTip(res.data.msg);
                     }
                 })
-                .catch(function (err) {
+                .catch(function(err) {
                     that.hideLoading();
                     _util.showErrorTip('您的网络可能出了点问题:(');
                 })
@@ -89,6 +105,7 @@ export default {
             this.scroll_load_loading = false;
             this.$refs.loading && this.$refs.loading.hideLoading();
         }
+
     }
 }
 </script>
