@@ -25,11 +25,14 @@
                             <button type="button" class="mui-btn mui-btn-outlined upload_btn">
                                 上传图片
                             </button>
-                            <input id="file" type="file" accept="image/*" multiple/>
+                            <input id="file" type="file" accept="image/*" multiple v-if="flag"/>
                         </a>
                         <p class="font_14">建议上传1M以上 清晰度高的图片</p>
                     </div>
-                    <div id="photo"></div>
+                    <a id="photoBox" @click="reelect">
+                        <input id="file" type="file" accept="image/*" multiple v-if="!flag"/>
+                        <div id="photo"></div>
+                    </a>
                 </div>
             </div>
             <div class="text_box">
@@ -87,12 +90,13 @@ export default {
             token: "",
             scroll_load_loading: false,
             scroll_load_end: false,
-            url1: '//img.aimoge.com/FsUaurOIuKTQVXGzhewZ3zCWNVwr',
+            url1: '',
             url2: '',
             text: '',
             theme1: './static/interaction/image/1.jpg',
-            category:''
-
+            category: '',
+            flag:true
+            //img.aimoge.com/FsUaurOIuKTQVXGzhewZ3zCWNVwr
         }
     },
     components: {
@@ -124,26 +128,28 @@ export default {
                 contentType: false,
                 dataType: 'json',
                 processData: false,
-                success: function (respond) {
+                success: function(respond) {
                     $('#sysLoading').hide();
-                    // _util.showErrorTip('图片制作完成！');
-                    that.imgsrc =window.img.imgsrc= respond.name;
+                    that.imgsrc = window.img.imgsrc = respond.name;
                     that.url('./submit');
                 },
-                error: function (err) {
+                error: function(err) {
                     _util.showErrorTip('您的网络可能出了点问题:(');
                 }
-            }).done(function (respond) {
+            }).done(function(respond) {
                 that.imgsrc = respond.name;
             });
         },
         upLoad() {
             $(".htmleaf-container").fadeIn(300);
-            $("#photo").show();
+            $("#photoBox").show();
         },
         cancle() {//取消上传图
             $(".htmleaf-container").fadeOut(300);
-            $("#photo").hide();
+            $('#photo').css({ 'background': 'none' })
+            $("#photoBox").hide();
+            $("#uploadBox").show();
+            this.flag=true;
         },
         finish() {//完成上传图片
             $("#photo").css({
@@ -153,11 +159,11 @@ export default {
             $("#uploadBox").hide();
             $("#error").hide();
             $(".htmleaf-container").hide();
+            this.flag=false;
         },
         reelect() {//重新选择作品
             $(".htmleaf-container").fadeIn(300);
-            $("#photo").show();
-            $("#file").on("click", function () { });
+            $("#photoBox").show();
         },
         input() {//点击输入文字
             $(".txt1").hide();
@@ -168,7 +174,7 @@ export default {
             $('.msg_' + type).animate({
                 'top': 0
             }, 500);
-            setTimeout(function () {
+            setTimeout(function() {
                 $('.msg_' + type).animate({
                     'top': '-30px'
                 }, 500)
@@ -188,8 +194,8 @@ export default {
             let that = this;
             //获取token值
             that.showLoading();
-            axios.get(window.config.API+'/upload/token')
-                .then(function (response) {
+            axios.get(window.config.API + '/upload/token')
+                .then(function(response) {
                     if (response.data.status == 0) {
                         that.hideLoading();
                         that.token = response.data.data.image_token;
@@ -197,7 +203,7 @@ export default {
                         if (response.data.msg) _util.showErrorTip(response.data.msg);
                     }
                 })
-                .catch(function (err) {
+                .catch(function(err) {
                     console.log(err);
                     that.hideLoading();
                     _util.showErrorTip('您的网络可能出了点问题:(');
@@ -209,19 +215,19 @@ export default {
                 file: "#file",
                 view: "#photo",
                 ok: "#finish",
-                loadStart: function () {
+                loadStart: function() {
                     // _util.showSysLoading()
                     console.log("照片读取中");
                 },
-                loadComplete: function () {
+                loadComplete: function() {
                     // _util.hideSysLoading();
                     console.log("照片读取完成");
                 },
-                clipFinish: function (dataURL) {
+                clipFinish: function(dataURL) {
                     that.url2 = dataURL;
                 }
             });
-            window.img={};
+            window.img = {};
         },
         getBase64(url1, url2, content) {
             let Img1 = new Image(),
@@ -243,10 +249,10 @@ export default {
             dataURL = canvas.toDataURL("image/jpeg");
             this.post_img(dataURL);
         },
-        choiceTheme(str,ev) {
+        choiceTheme(str, ev) {
             this.url1 = str;
             let el = ev.currentTarget;
-            this.category=$(el).html().trim();
+            this.category = $(el).html().trim();
             $(".bg_img").css({ 'background-image': 'url(' + str + ')' });
         },
         nextStep() {
@@ -263,8 +269,8 @@ export default {
                 return false;
             }
             this.getBase64(this.url1, this.url2, this.text);
-            window.img.content=this.text;
-            window.img.category=this.category;
+            window.img.content = this.text;
+            window.img.category = this.category;
         },
         showLoading() { //显示正在加载数据状态
             this.scroll_load_loading = true;
@@ -295,7 +301,7 @@ export default {
     background: #fff;
 }
 
-.img a input[type=file] {
+.bg_img a input[type=file] {
     position: absolute;
     top: 0;
     left: 0;
@@ -329,6 +335,10 @@ export default {
     text-align: center;
     height: 60px;
     /* margin-right: 20px; */
+}
+
+#photoBox {
+    display: none;
 }
 
 .btn_box {

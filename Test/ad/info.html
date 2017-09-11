@@ -107,6 +107,16 @@
         .submit-btn.disabled {
             background: #d2d2d2;
         }
+        
+        .gray {
+            color: #818181;
+        }
+        
+        .info {
+            padding: 20px 0;
+            border-bottom: 1px dashed #ccc;
+            padding-bottom: 10px;
+        }
     </style>
 </head>
 
@@ -126,7 +136,7 @@
     </div> -->
     <div class="gege-header fixed">
         <div class="title center ellipsis f16 abs">任务明细</div>
-        <a class="icgoback"></a>
+        <a class="icgoback" href="javascript:history.go(-1)"></a>
     </div>
     <div class="rel mapBox">
         <div id="allmap" class="allmap"></div>
@@ -143,6 +153,7 @@
         </a>
     </div>
     <div class="container">
+        <div class="gray info">所有照片需保证清晰完整，不符合要求会导致任务审核不通过</div>
         <div class="question-list">
             <div class="question-item">
                 <div class="question">1.小区门头照片<span class="red">*</span></div>
@@ -157,14 +168,13 @@
                 </div>
             </div>
             <div class="question-item">
-                <div class="question">1.显示后台配置的监播照片类型<span class="red">*</span></div>
+                <div class="question">3.显示后台配置的监播照片<span class="red">*</span></div>
                 <div class="rel upload-widget">
                     <a class="upload rel upload-btn" data-id="config_img"></a>
                 </div>
             </div>
         </div>
-        <img src="" alt="" id="img">
-        <a class="submit-btn" onclick="checkInfo();" id="submit-btn">提 交</a>
+        <a class="submit-btn" onclick="submitAll();" id="submit-btn">提 交</a>
     </div>
     <script type="text/javascript" src="//webapi.amap.com/maps?v=1.3&key=14c2e56f9158a06febd6aa31f3e6eb18"></script>
     <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
@@ -260,6 +270,16 @@
             },
         }
 
+        function getUrlParam(k) {
+            var regExp = new RegExp('([?]|&)' + k + '=([^&]*)(&|$)');
+            var result = window.location.href.match(regExp);
+            if (result) {
+                return decodeURIComponent(result[2]);
+            } else {
+                return null;
+            }
+        }
+
         function initGuideMap() {
             var map, geolocation;
             //加载地图，调用浏览器定位服务
@@ -279,93 +299,122 @@
                 map.addControl(geolocation);
                 geolocation.getCurrentPosition();
                 AMap.event.addListener(geolocation, 'complete', onComplete); //返回定位信息
-                AMap.event.addListener(geolocation, 'error', showErrorTip('定位失败，请确认是否授权获取您的地理位置...')); //返回定位出错信息
+                AMap.event.addListener(geolocation, 'error', onError); //返回定位出错信息
             });
         };
 
         function onComplete(data) {
-            var longitude = data.position.getLng(),
-                latitude = data.position.getLat();
-            console.log(longitude, latitude);
-        }
+            window.Lng = data.position.getLng();
+            window.Lat = data.position.getLat();
+        };
+
+        function onError(data) {
+            showErrorTip('定位失败，请确认是否授权获取您的地理位置...');
+        };
 
         function initNormalMap() {
+            var lng = getUrlParam('lng'),
+                lat = getUrlParam('lat'),
+                terminal_name = getUrlParam('name');
             map = new AMap.Map("allmap", {
                 zoom: 14,
-                center: [118.796629, 32.011938]
+                center: [lng, lat]
             });
             marker = new AMap.Marker({
                 map: map,
-                position: [118.796629, 32.011938]
+                position: [lng, lat]
             })
             marker.setLabel({
                 offset: new AMap.Pixel(20, 20), //修改label相对于maker的位置
             });
             $('.a').on('click', function() {
                 marker.markOnAMAP({
-                    name: '终端名称',
+                    name: terminal_name,
                     position: marker.getPosition()
                 })
             })
-        }
+        };
 
         function wxChooseImage(obj) {
             var $this = obj,
                 imgType = $this.attr("data-id");
             wx.chooseImage({
                 count: 1, // 默认9
+                needResult: 1,
                 sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
                 sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
                 success: function(respond) {
-                    console.log(respond);
-                    // var imgSrc = respond.tempFilePaths;
-                    var imgSrc = respond.localIds[0];
-                    console.log(imgSrc);
-                    $('#img').attr({
-                        'src': imgSrc
-                    });
-                    // setTimeout(function() {
-                    //     if (respond.localIds.length == 1) {
-                    //         wx.uploadImage({
-                    //             localId: respond.localIds[0],
-                    //             success: function(res) {
-                    //                 var data = {
-                    //                     open_id: "",
-                    //                     media_id: res.serverId,
-                    //                     token: window.token,
-                    //                     source: "patrol"
-                    //                 }
-                    //                 weixin_ajax("POST", PREFIX_API + "/weixin/" + window.wxid + "/upload/image", data, function(data) {
-                    //                     if (data.status != 0) {
-                    //                         showErrorTip("上传失败请重新上传！");
-                    //                         return false;
-                    //                     }
-                    //                     $this.parent('.upload-widget').append('<div class="upload-img"><a href="javascript:;" class="cnupload abs" onclick="cancelphoto(this,\'' + imgType + '\');">+</a><img src="' + respond.localIds[0] + '" /></div>');
-                    //                     submitData[imgType].mediaId = res.serverId;
-                    //                     submitData[imgType].uploadId = data.data._id;
-                    //                     // $this.hide();
-                    //                     showErrorTip("上传成功！");
+                    setTimeout(function() {
+                        if (respond.localIds.length == 1) {
+                            wx.uploadImage({
+                                localId: respond.localIds[0],
+                                success: function(res) {
+                                    var data = {
+                                        open_id: "",
+                                        media_id: res.serverId,
+                                        token: window.token,
+                                        source: "patrol"
+                                    }
+                                    weixin_ajax("POST", PREFIX_API + "/weixin/" + window.wxid + "/upload/image", data, function(data) {
+                                        if (data.status != 0) {
+                                            showErrorTip("上传失败请重新上传！");
+                                            return false;
+                                        }
+                                        $this.parent('.upload-widget').append('<div class="upload-img"><a href="javascript:;" class="cnupload abs" onclick="cancelphoto(this,\'' + imgType + '\');">+</a><img src="' + respond.localIds[0] + '" /></div>');
+                                        submitData[imgType].mediaId = res.serverId;
+                                        submitData[imgType].uploadId = data.data._id;
+                                        $this.hide();
+                                        showErrorTip("上传成功！");
 
-                    //                 }, function() {
-                    //                     showErrorTip("上传失败请重新上传！");
-                    //                 })
-                    //             },
-                    //             fail: function(res) {
-                    //                 showErrorTip("上传失败请重新上传！");
-                    //             }
-                    //         });
-                    //     } else {
-                    //         showErrorTip("只能上传一张图片！");
-                    //     }
-                    // }, 200);
+                                    }, function() {
+                                        showErrorTip("上传失败请重新上传！");
+                                    })
+                                },
+                                fail: function(res) {
+                                    showErrorTip("上传失败请重新上传！");
+                                }
+                            });
+                        } else {
+                            showErrorTip("只能上传一张图片！");
+                        }
+                    }, 200);
                 },
-                error: function(err) {
-                    console.log(err)
+                error: function() {
                     showErrorTip("上传失败请重新上传！");
                 }
             });
+        };
+
+        function check() {
+            if (!submitData.estate_img.mediaId && !submitData.estate_img.uploadId && !submitData.estate_img.keyId) {
+                showErrorTip("请上传【1.小区门头照片】！");
+                return false;
+            }
+            if (!submitData.chest_img.mediaId && !submitData.chest_img.uploadId && !submitData.chest_img.keyId) {
+                showErrorTip("请上传【2.柜子正面的照片】！");
+                return false;
+            }
+            if (!submitData.config_img.mediaId && !submitData.config_img.uploadId && !submitData.config_img.keyId) {
+                showErrorTip("请上传【3.显示后台配置的监播照片】！");
+                return false;
+            }
+        };
+
+        function submitAll() {
+            // check();
+            initGuideMap()
+            // console.log(window.Lng, window.lat);
+            showErrorTip(window.Lng);
+        };
+
+        function cancelphoto(obj, type) {
+            $(obj).parent('.upload-img').prev('.upload-btn').css('display', 'block');
+            $(obj).parent('.upload-img').remove();
+            submitData[type].mediaId = "";
+            submitData[type].uploadId = "";
+            submitData[type].keyId = "";
         }
-        wx.ready(function() {
+        $(document).ready(function() {
             initNormalMap();
             if (isWeixin()) {
                 $('.gege-header').hide();
@@ -375,9 +424,10 @@
             }
             $(".upload-btn").on('click', function() {
                 var $this = $(this);
-                showErrorTip('函数执行')
                 if (isWeixin()) {
-                    wxChooseImage($this);
+                    wx.ready(function() {
+                        wxChooseImage($this);
+                    })
                 } else {
                     showErrorTip('请使用微信进行操作');
                 }

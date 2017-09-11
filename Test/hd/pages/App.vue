@@ -135,7 +135,6 @@ export default {
                                     break;
                             }
                             data[i].length = data[i].city.name.length;
-                            // console.log(data.city);
                         }
                         that.items = response.data.data.adinteractions;
                     } else {
