@@ -19,7 +19,7 @@
             <div class="pos-loading rel" v-if="flag">{{locatinfo}}
                 <div class="abs repos" @click="getLoction">重新定位</div>
             </div>
-    
+
             <div style="margin-top:36px;">
                 <div class="item" v-for="(d,index) in items" :key="d.id" @click="choiceItem(d,$event)" :class="{disabled:d.id=='02'}">
                     <div class="icon">
@@ -60,7 +60,7 @@
                 scroll_load_loading: false,
                 scroll_load_end: false,
                 activeTab: '0',
-                flag: false,
+                flag: true,
                 t_c: new Set(),
                 t_n: new Set(),
                 city_id: ''
@@ -69,17 +69,14 @@
         components: {
             HeaderBar
         },
-        beforeMount() {
-            $('body').removeClass('bg_blue');
-        },
         mounted() {
             this.getLoction();
-            this.load();
         },
         watch: {
             '$route': function() {
                 if (this.$route.path == ('/choiceChest')) {
                     this.clearData();
+                    this.getLoction();
                 }
             }
         },
@@ -121,7 +118,8 @@
                 })
             },
             AMapGetLoction() {
-                let map, geolocation;
+                let map, geolocation,
+                    that = this;
                 //加载地图，调用浏览器定位服务
                 map = new AMap.Map('', {
                     resizeEnable: true
@@ -141,11 +139,7 @@
                 });
             },
             getLoction() {
-                if (_util.isWeixin()) {
-                   this.wxGetLoction()
-                } else {
-                    this.AMapGetLoction();
-                }
+                this.AMapGetLoction();
             },
             load() {
                 let that = this,
@@ -224,6 +218,8 @@
             onError(data) {
                 _util.showErrorTip('定位失败，请确认是否授权获取您的地理位置...');
                 this.locatinfo = '定位失败';
+                this.flag = false;
+                this.load();
             },
             setData() {
                 window.Data.t_c = this.t_c;
@@ -234,14 +230,14 @@
             clearData() {
                 $(".choice_icon").hide();
                 window.Data = {};
-                // this.flag = false;
+                this.flag = true;
                 this.t_c.clear();
                 this.t_n.clear();
-                // this.items = [];
-                // this.pageList = [];
-                // this.page = '';
-                // this.scroll_load_loading = false;
-                // this.scroll_load_end = false;
+                 this.items = [];
+                 this.pageList = [];
+                 this.page = '';
+                 this.scroll_load_loading = false;
+                 this.scroll_load_end = false;
             },
             search() {
                 this.page = '';

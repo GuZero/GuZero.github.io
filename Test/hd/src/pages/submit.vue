@@ -134,7 +134,7 @@
                     total_fee: 1,
                     pay_id: '',
                     pay_Type: 4,
-                    order_id: '59b0e926ce7d026eccb8c585',
+                    order_id: '',
                     status: 0,
                     total_num: 1
                 },
@@ -150,6 +150,7 @@
         watch: {
             '$route': function() {
                 if (this.$route.path == ('/submit')) {
+                    this.total=0;
                     $(".choice_icon").hide();
                     if (window.Data.t_c && window.Data.t_n) {
                         let arr1 = Array.from(window.Data.t_c);
@@ -225,10 +226,10 @@
                     }
                 } else if (id == 'terminal' && this.citys.size == 0) {
                     if ($(icon).is(":hidden")) {
-                        // if(item.succed==1){
-                        //     this.showAlert();
-                        //     return false;
-                        // }
+                        if(item.succed==1){
+                            this.showAlert();
+                            return false;
+                        }
                         $(icon).show();
                         this.terminals.add(item.terminal_code);
                         this.chest++;
@@ -292,7 +293,6 @@
             },
             nextStep() {
                this.postData();
-                //   this.goPay();
             },
             verify(cityID, code) {
                 let that = this;
@@ -307,7 +307,6 @@
                         }
                     })
                     .catch(function(err) {
-                        console.log(err);
                         that.hideLoading();
                         _util.showErrorTip('您的网络可能出了点问题:(');
                     })
@@ -346,7 +345,7 @@
                 axios.post('/media/adinteraction', data).then((rsp) => {
                     if (rsp.data.status == 0) {
                         that.hideInfo();
-                        let data = rsp.data.data
+                        let data = rsp.data.data;
                         that.order.order_id = data._id;
                         that.order.total_fee = data.fee;
                         that.order.pay_id = data.pay_id;

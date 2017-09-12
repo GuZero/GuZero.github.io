@@ -28,6 +28,7 @@
 <script>
 import HeaderBar from '../components/Header'
 export default {
+    mixins: [require('../components/mixin/BodyBg')],
     data() {
         return {
             pageTitle: '制作中',
