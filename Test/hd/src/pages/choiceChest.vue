@@ -61,8 +61,8 @@
                 scroll_load_end: false,
                 activeTab: '0',
                 flag: true,
-                t_c: new Set(),
-                t_n: new Set(),
+                t_c: [],
+                t_n: [],
                 city_id: ''
             }
         },
