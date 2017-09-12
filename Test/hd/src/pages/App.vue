@@ -8,19 +8,20 @@
                 </div>
                 <div id="info" v-if="items">
                     <ul class="mui-table-view">
-                        <li class="mui-table-view-cell info" v-for="item in items" :key="item._id" @click.stop.prevent="gotoInfo(item)">
+                        <li class="mui-table-view-cell info" v-for="item in items" :key="item._id" @click.stop.prevent="gotoInfo(item)" v-if="item.status==31||item.status==1||item.status==11||item.status==12">
                             <div class="mui-table">
                                 <div class="mui-table-cell mui-col-xs-10">
                                     <div class="mui-row line_h30">
-                                        <div class="mui-col-sm-2 mui-ellipsis gray ">支付：</div>
-                                        <div class="mui-col-sm-10 mui-ellipsis ">24.00元</div>
+                                        <div class="mui-col-sm-2 mui-ellipsis gray ">作品：</div>
+                                        <div class="mui-col-sm-10 mui-ellipsis ">{{item.category}}</div>
                                     </div>
                                     <div class="mui-row line_h30">
                                         <div class="mui-col-sm-2 mui-ellipsis gray">日期：</div>
                                         <div class="mui-col-sm-10 line_h30">{{item.start_date.substring(0, 10)}}~{{item.end_date.substring(0, 10)}}</div>
                                     </div>
                                     <div class="mui-row line_h30">
-                                        <div class="mui-col-sm-2 mui-ellipsis gray ">审核：</div>
+                                        <div class="mui-col-sm-2 mui-ellipsis gray ">状态 ：
+                                        </div>
                                         <div class="mui-col-sm-10 blue line_h30">{{item.status1}}</div>
                                     </div>
                                 </div>
@@ -83,7 +84,7 @@ export default {
     },
     created() {
         this.getInfo();
-        this.btnconfig.isshare=_util.isWeixin();
+        this.btnconfig.isshare = _util.isWeixin();
     },
     methods: {
         isShare() {
@@ -94,7 +95,7 @@ export default {
             let that = this;
             that.showLoading();
             axios.get('/media/adinteraction')
-                .then(function (response) {
+                .then(function(response) {
                     if (response.data.status == 0) {
                         that.hideLoading();
                         let data = response.data.data.adinteractions;
@@ -112,24 +113,6 @@ export default {
                                 case 31:
                                     data[i].status1 = '等待支付';
                                     break;
-                                case 32:
-                                    data[i].status1 = '支付中';
-                                    break;
-                                case 33:
-                                    data[i].status1 = '支付等待确认';
-                                    break;
-                                case 34:
-                                    data[i].status1 = '支付确认';
-                                    break;
-                                case 35:
-                                    data[i].status1 = '支付成功';
-                                    break;
-                                case 36:
-                                    data[i].status1 = '支付失败';
-                                    break;    
-                                case 37:
-                                    data[i].status1 = '支付取消';
-                                    break;    
                                 default:
                                     data[i].status1 = '等待审核';
                                     break;
@@ -141,13 +124,13 @@ export default {
                         if (response.data.msg) _util.showErrorTip(response.data.msg);
                     }
                 })
-                .catch(function (err) {
+                .catch(function(err) {
                     that.hideLoading();
                     _util.showErrorTip('您的网络可能出了点问题:(');
                 })
         },
         gotoInfo(item) {
-            this.url('/details',{_id:item._id})
+            this.url('/details', { _id: item._id })
         },
         gotoMake() {
             this.url('/make')

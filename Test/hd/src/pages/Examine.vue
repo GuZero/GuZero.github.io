@@ -1,6 +1,6 @@
 <template>
     <div class="examine">
-        <HeaderBar :title="pageTitle" :btnconfig="btnconfig"></HeaderBar>
+        <HeaderBar :title="pageTitle" :btnconfig="btnconfig" @callback="goback"></HeaderBar>
         <div class="mui-content pd10">
             <div class="mui-content-padded">
                 <div class="mui-text-center">
@@ -42,7 +42,8 @@ export default {
         return {
             pageTitle: '正在审核',
             btnconfig: {
-                isgoback: 1
+                isgoback: 0,
+                isback:1
             },
             city_id: '',
             city_count: '',
@@ -55,6 +56,13 @@ export default {
     },
     created() {
         this.cancelOrder(this.getInfo);
+    },
+    watch:{
+        '$route': function() {
+            if (this.$route.path == ('/examine')) {
+               this.cancelOrder(this.getInfo);
+            }
+        } 
     },
     methods: {
         cancelOrder(callback) {
@@ -96,6 +104,9 @@ export default {
                     that.hideLoading();
                     _util.showErrorTip('您的网络可能出了点问题:(');
                 })
+        },
+        goback(){
+            this.url('./',null,1);
         },
         showLoading() { //显示正在加载数据状态
             this.scroll_load_loading = true;
