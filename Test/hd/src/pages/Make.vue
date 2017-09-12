@@ -15,7 +15,7 @@
                 </div>
             </div>
         </div>
-        <HeaderBar :title="pageTitle" :btnconfig="btnconfig"></HeaderBar>
+        <HeaderBar :title="pageTitle" :btnconfig="btnconfig" @callback="goback"></HeaderBar>
         <div style="height:44px;"></div>
         <div class="content mui-content">
             <div class="bg_img" style="background-size: 100% 100%;">
@@ -80,7 +80,8 @@ export default {
             pageTitle: '上屏制作',
             bodyBg: 'bg_white',
             btnconfig: {
-                isgoback: 1
+                isgoback: 0,
+                isback:1
             },
             _id: '',
             imgsrc: "",
@@ -132,7 +133,8 @@ export default {
                 success: function(respond) {
                     $('#sysLoading').hide();
                     that.imgsrc = window.img.imgsrc = respond.name;
-                    that.url('./submit');
+                    // that.url('./submit');
+                    console.log(that.imgsrc.substring(0,28));
                 },
                 error: function(err) {
                     _util.showErrorTip('您的网络可能出了点问题:(');
@@ -246,8 +248,11 @@ export default {
                 width = Img1.width,
                 height = Img1.height,
                 ctx = canvas.getContext("2d");
+            canvas.width=Img1.width;
+            canvas.height=Img1.height;    
+            console.log(width,height);
             ctx.drawImage(Img1, 0, 0, width, height);
-            ctx.drawImage(Img2, 30, 30);
+            ctx.drawImage(Img2, 30, 30,300,300);
             ctx.font = "20px microsoft yahei";
             ctx.fillStyle = "rgba(255,255,255,0.5)";
             ctx.fillText(content, 100, 100);
@@ -295,6 +300,9 @@ export default {
         hideLoading() { //隐藏正在加载数据状态
             this.scroll_load_loading = false;
             this.$refs.loading && this.$refs.loading.hideLoading();
+        },
+        goback(){
+            this.url('./',null,1);
         },
     }
 }

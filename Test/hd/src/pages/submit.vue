@@ -144,6 +144,14 @@ export default {
         HeaderBar,
         ModalDialog,
     },
+    beforeRouteLeave: (to, from, next) => {
+          $('#sysLoading').show();
+          next();  
+    },
+    beforeRouteEnter: (to, from, next) => {
+            $('#sysLoading').hide();
+            next();
+    },
     mounted() {
         this.setInfo();
     },

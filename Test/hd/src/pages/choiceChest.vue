@@ -69,6 +69,14 @@
         components: {
             HeaderBar
         },
+        beforeRouteEnter: (to, from, next) => {
+            $('#sysLoading').hide();
+            next();
+        },
+        beforeRouteLeave: (to, from, next) => {
+             $('#sysLoading').show();
+            next();
+        },
         mounted() {
             this.getLoction();
         },
@@ -97,7 +105,6 @@
                     this.t_c.remove(item.terminal_code);
                     this.t_n.remove(item.terminal_name)
                 }
-                console.log(this.t_c);
             },
             gotoInfo() {
                 this.url('./allcity');
@@ -213,7 +220,6 @@
             onComplete(data) {
                 this.longitude = data.position.getLng();
                 this.latitude = data.position.getLat();
-                _util.showErrorTip('定位成功！');
                 this.flag = false;
                 this.load();
             },
@@ -242,6 +248,9 @@
                 this.scroll_load_end = false;
             },
             search() {
+                if(!this.word){
+                    _util.showErrorTip('请输入小区的名称')
+                }
                 this.page = '';
                 this.pageList = [];
                 this.items = [];
