@@ -21,8 +21,11 @@
                 <div class="mui-table-view-cell">
                     <div class="items">
                         <div>上屏柜机</div>
-                        <div class="mui-ellipsis-2" style="min-width:65%;max-height=60px;overflow-y: scroll;">
+                        <div class="mui-ellipsis-2" style="min-width:65%;max-height=60px;overflow-y: scroll;"  v-if="!city_name">
                             <p v-for="(item,index) in items" :key="item.terminal_code" :class="{mg_t0:index==0}">{{item.terminal_name}}</p>
+                        </div>
+                         <div class="mui-ellipsis-2" style="min-width:65%;max-height=60px;overflow-y: scroll;"  v-if="city_name">
+                            <p class="mg_t0">{{city_name}}</p>
                         </div>
                     </div>
                 </div>
@@ -77,6 +80,8 @@ export default {
             status: 0,
             crts: '',
             topic_id:'',
+            terminal_codes:[],
+            city_name:'',
             //支付信息
             order: {
                 service: 'media_adinteraction_service',
@@ -98,6 +103,7 @@ export default {
     watch: {
         '$route': function() {
             if (this.$route.path == ('/details')) {
+                this.resetData();
                 this.getData();
             }
         }
@@ -127,8 +133,13 @@ export default {
             axios.get('/media/adinteraction/' + that.$route.query._id)
                 .then(function(res) {
                     if (res.data.status == 0) {
-                        that.hideLoading();
-                        that.items = res.data.data.terminals;
+                        that.hideLoading();                        
+                        that.terminal_codes=res.data.data.terminal_codes;
+                        if(that.terminal_codes.length!=0){
+                            that.items = res.data.data.terminals;
+                        }else{
+                            that.city_name=res.data.data.city.name;
+                        }                      
                         that.start_date = res.data.data.start_date;
                         that.end_date = res.data.data.end_date;
                         that.fee = res.data.data.fee;
@@ -215,6 +226,10 @@ export default {
             if(this.topic_id!='000000000000000000000000'){
                 window.location.href=window.config.BASE_URL+'/forum/000000000000000000000000/topic/'+this.topic_id;
             }
+        },
+        resetData(){
+            this.terminal_codes=[];
+            this.city_name='';
         }
     }
 }

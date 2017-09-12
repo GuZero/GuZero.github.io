@@ -38,9 +38,9 @@ export default {
             items: [],
             activeTab: '0',
             flag: false,
-            c_id: new Set(),
-            c_name:new Set(),
-            c_price:new Set()
+            c_id:[],
+            c_name:[],
+            c_price:[]
         }
     },
     components: {
@@ -54,9 +54,9 @@ export default {
             if (this.$route.path == ('/allcity')) {
                 $(".choice_icon").hide();
                 window.Data={};
-                this.c_id.clear();
-                this.c_name.clear();
-                this.c_price.clear();
+                this.c_id=[];
+                this.c_name=[];
+                this.c_price=[];
             }
         }
     },
@@ -64,19 +64,19 @@ export default {
         setInfo() {//设置信息
             this.items = [{
                 city_id: '3201',
-                city_name: '南京市', price: '399'
+                city_name: '南京市', price: 399
             }, {
                 city_id: '1101',
                 city_name: '北京市',
-                price: '599'
+                price: 599
             }, {
                 city_id: '3101',
                 city_name: '上海市',
-                price: '499'
+                price: 499
             }, {
                 city_id: '4301',
                 city_name: '深圳市',
-                price: '499'
+                price: 499
             }];
 
         },
@@ -93,12 +93,12 @@ export default {
                 $(icon).show();
                 this.c_id.add(item.city_id);
                 this.c_name.add(item.city_name);
-                this.c_price.add(item.price);
+                this.c_price.push(item.price);
             } else {
                 $(icon).hide();
-                this.c_id.delete(item.city_id);
-                this.c_name.delete(item.city_name);
-                this.c_price.delete(item.price);
+                this.c_id.remove(item.city_id);
+                this.c_name.remove(item.city_name);
+                this.c_price.remove(item.price);
             }
         },
         showLoading() { //显示正在加载数据状态

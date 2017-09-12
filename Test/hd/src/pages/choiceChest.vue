@@ -94,9 +94,10 @@
                     this.city_id = item.city_id;
                 } else {
                     $(icon).hide();
-                    this.t_c.delete(item.terminal_code);
-                    this.t_n.delete(item.terminal_name)
+                    this.t_c.remove(item.terminal_code);
+                    this.t_n.remove(item.terminal_name)
                 }
+                console.log(this.t_c);
             },
             gotoInfo() {
                 this.url('./allcity');
@@ -212,6 +213,7 @@
             onComplete(data) {
                 this.longitude = data.position.getLng();
                 this.latitude = data.position.getLat();
+                _util.showErrorTip('定位成功！');
                 this.flag = false;
                 this.load();
             },
@@ -231,13 +233,13 @@
                 $(".choice_icon").hide();
                 window.Data = {};
                 this.flag = true;
-                this.t_c.clear();
-                this.t_n.clear();
-                 this.items = [];
-                 this.pageList = [];
-                 this.page = '';
-                 this.scroll_load_loading = false;
-                 this.scroll_load_end = false;
+                this.t_c=[];
+                this.t_n=[];
+                this.items = [];
+                this.pageList = [];
+                this.page = '';
+                this.scroll_load_loading = false;
+                this.scroll_load_end = false;
             },
             search() {
                 this.page = '';

@@ -72,7 +72,7 @@
 /******/ 		script.async = true;
 /******/ 		script.timeout = 120000;
 
-/******/ 		script.src = __webpack_require__.p + "" + ({"0":"Submit","1":"choiceChest","2":"allCity","3":"Make","4":"Details","5":"Examine","6":"Agreement"}[chunkId]||chunkId) + "." + {"0":"45289550","1":"1473d555","2":"8196bfb4","3":"aae72727","4":"f354ecb7","5":"1eb2b8ab","6":"a9ceb353"}[chunkId] + ".js";
+/******/ 		script.src = __webpack_require__.p + "" + ({"0":"Submit","1":"choiceChest","2":"allCity","3":"Make","4":"Details","5":"Examine","6":"Agreement"}[chunkId]||chunkId) + "." + {"0":"e17ddc70","1":"d93c5414","2":"e33656dc","3":"aae72727","4":"990c757e","5":"1eb2b8ab","6":"a9ceb353"}[chunkId] + ".js";
 /******/ 		var timeout = setTimeout(onScriptComplete, 120000);
 /******/ 		script.onerror = script.onload = onScriptComplete;
 /******/ 		function onScriptComplete() {
@@ -142,7 +142,19 @@ module.exports = {
         String.prototype.trim = function () {
             return this.replace(/(^\s*)|(\s*$)/g, "");
         };
-
+        Array.prototype.remove = function (val) {
+            var index = this.indexOf(val);
+            if (index > -1) {
+                this.splice(index, 1);
+            }
+        };
+        Array.prototype.add = function (val) {
+            if (this.indexOf(val) > -1) {
+                return false;
+            } else {
+                this.push(val);
+            }
+        };
         Element.prototype.hasClassName = function (a) {
             return new RegExp("(?:^|\\s+)" + a + "(?:\\s+|$)").test(this.className);
         };

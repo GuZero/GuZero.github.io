@@ -3,7 +3,19 @@ module.exports = {
         String.prototype.trim = function() {
             return this.replace(/(^\s*)|(\s*$)/g, "");
         };
-
+        Array.prototype.remove = function(val) {
+            var index = this.indexOf(val);
+            if (index > -1) {
+                this.splice(index, 1);
+            }
+        }
+        Array.prototype.add = function(val) {
+            if (this.indexOf(val) > -1) {
+                return false
+            } else {
+                this.push(val);
+            }
+        }
         Element.prototype.hasClassName = function(a) {
             return new RegExp("(?:^|\\s+)" + a + "(?:\\s+|$)").test(this.className);
         };

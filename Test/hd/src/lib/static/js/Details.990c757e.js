@@ -124,6 +124,9 @@ module.exports = Component.exports
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ exports["default"] = {
@@ -144,6 +147,8 @@ module.exports = Component.exports
             status: 0,
             crts: '',
             topic_id: '',
+            terminal_codes: [],
+            city_name: '',
             //支付信息
             order: {
                 service: 'media_adinteraction_service',
@@ -167,6 +172,7 @@ module.exports = Component.exports
     watch: {
         '$route': function $route() {
             if (this.$route.path == '/details') {
+                this.resetData();
                 this.getData();
             }
         }
@@ -198,7 +204,12 @@ module.exports = Component.exports
             axios.get('/media/adinteraction/' + that.$route.query._id).then(function (res) {
                 if (res.data.status == 0) {
                     that.hideLoading();
-                    that.items = res.data.data.terminals;
+                    that.terminal_codes = res.data.data.terminal_codes;
+                    if (that.terminal_codes.length != 0) {
+                        that.items = res.data.data.terminals;
+                    } else {
+                        that.city_name = res.data.data.city.name;
+                    }
                     that.start_date = res.data.data.start_date;
                     that.end_date = res.data.data.end_date;
                     that.fee = res.data.data.fee;
@@ -284,6 +295,10 @@ module.exports = Component.exports
             if (this.topic_id != '000000000000000000000000') {
                 window.location.href = window.config.BASE_URL + '/forum/000000000000000000000000/topic/' + this.topic_id;
             }
+        },
+        resetData: function resetData() {
+            this.terminal_codes = [];
+            this.city_name = '';
         }
     }
 };
@@ -364,7 +379,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "mui-table-view-cell"
   }, [_c('div', {
     staticClass: "items"
-  }, [_c('div', [_vm._v("上屏柜机")]), _vm._v(" "), _c('div', {
+  }, [_c('div', [_vm._v("上屏柜机")]), _vm._v(" "), (!_vm.city_name) ? _c('div', {
     staticClass: "mui-ellipsis-2",
     staticStyle: {
       "min-width": "65%",
@@ -377,7 +392,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         mg_t0: index == 0
       }
     }, [_vm._v(_vm._s(item.terminal_name))])
-  }))])]), _vm._v(" "), _c('div', {
+  })) : _vm._e(), _vm._v(" "), (_vm.city_name) ? _c('div', {
+    staticClass: "mui-ellipsis-2",
+    staticStyle: {
+      "min-width": "65%",
+      "overflow-y": "scroll"
+    }
+  }, [_c('p', {
+    staticClass: "mg_t0"
+  }, [_vm._v(_vm._s(_vm.city_name))])]) : _vm._e()])]), _vm._v(" "), _c('div', {
     staticClass: "mui-table-view-cell"
   }, [_c('div', {
     staticClass: "items"
