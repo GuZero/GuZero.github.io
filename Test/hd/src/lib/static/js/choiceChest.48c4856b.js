@@ -286,8 +286,9 @@ module.exports = Component.exports
         },
         onComplete: function onComplete(data) {
             this.longitude = data.position.getLng();
-            this.latitude = data.position.getLat();
+            this.longitude = data.position.getLat();
             this.isLocation = false;
+            showErrorTip('定位成功' + this.longitude + this.longitude);
             this.load();
         },
         onError: function onError(data) {
