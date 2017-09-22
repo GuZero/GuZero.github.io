@@ -288,7 +288,7 @@ module.exports = Component.exports
             this.longitude = data.position.getLng();
             this.longitude = data.position.getLat();
             this.isLocation = false;
-            showErrorTip('定位成功' + this.longitude + this.longitude);
+            _util.showErrorTip('定位成功' + this.longitude + this.longitude);
             this.load();
         },
         onError: function onError(data) {
