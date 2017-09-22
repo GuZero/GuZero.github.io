@@ -195,9 +195,9 @@ module.exports = Component.exports
             });
         },
         AMapGetLoction: function AMapGetLoction(isFirst) {
-            // if(_util.isWeixin()&&isFirst){
-            //     this.$router.go(0)
-            // }
+            if (isFirst) {
+                this.$router.go(0);
+            }
             var map, geolocation;
             var that = this;
             //加载地图，调用浏览器定位服务
