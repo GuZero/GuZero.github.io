@@ -1,6 +1,6 @@
-webpackJsonp([4],{
+webpackJsonp([1],{
 
-/***/ 20:
+/***/ 23:
 /***/ function(module, exports, __webpack_require__) {
 
 
@@ -39,7 +39,7 @@ module.exports = Component.exports
 
 /***/ },
 
-/***/ 22:
+/***/ 25:
 /***/ function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(_util) {module.exports = {
@@ -130,7 +130,7 @@ module.exports = Component.exports
 
 
 /* harmony default export */ exports["default"] = {
-    mixins: [__webpack_require__(22)],
+    mixins: [__webpack_require__(25)],
     data: function data() {
         return {
             pageTitle: '作品详情',
@@ -221,11 +221,11 @@ module.exports = Component.exports
                             that.title = '审核中';
                             that.content = '24小时内将完成审核，若不通过则自动退款';
                             break;
-                        case 11:
+                        case 12:
                             that.title = '未通过';
                             that.content = '内容不符，已安排微信退款，请注意查收';
                             break;
-                        case 12:
+                        case 11:
                             that.title = '上屏中';
                             that.content = '作品已发布上柜，点击查看互动评论';
                             break;
@@ -314,7 +314,7 @@ exports = module.exports = __webpack_require__(4)();
 
 
 // module
-exports.push([module.i, "\n.gege-header[data-v-f650d5fc] {\r\n    background: #4285f4;\n}\n.header[data-v-f650d5fc] {\r\n    background: #4285f4;\r\n    color: #fff;\r\n    font-size: 16px;\r\n    padding: 16px;\r\n    display: flex;\r\n    align-items: center;\n}\n.header .title[data-v-f650d5fc] {\r\n    font-size: 30px;\r\n    margin-bottom: 28px;\n}\n.items[data-v-f650d5fc] {\r\n    display: flex;\r\n    font-size: 14px;\r\n    justify-content: space-between;\r\n    color: #8a8a8a;\n}\n.items p[data-v-f650d5fc] {\r\n    margin-top: 8px;\r\n    text-align: right;\n}\n.items .mg_t0[data-v-f650d5fc] {\r\n    margin-top: 0px;\n}\n.aw_r[data-v-f650d5fc]::after {\r\n    content: '';\r\n    display: block;\r\n    position: absolute;\r\n    width: 11px;\r\n    height: 11px;\r\n    border-top: 2px #fff solid;\r\n    border-right: 2px #fff solid;\r\n    border-top-right-radius: 2px;\r\n    transform: rotate(45deg);\r\n    top: 4px;\n}\r\n", ""]);
+exports.push([module.i, "\n.gege-header[data-v-f650d5fc] {\r\n    background: #4285f4;\n}\n.header[data-v-f650d5fc] {\r\n    background: #4285f4;\r\n    color: #fff;\r\n    font-size: 16px;\r\n    padding: 16px;\r\n    display: flex;\r\n    align-items: center;\n}\n.header .title[data-v-f650d5fc] {\r\n    font-size: 30px;\r\n    margin-bottom: 28px;\n}\n.items[data-v-f650d5fc] {\r\n    display: flex;\r\n    font-size: 14px;\r\n    justify-content: space-between;\r\n    color: #8a8a8a;\n}\n.items p[data-v-f650d5fc] {\r\n    margin-top: 8px;\r\n    text-align: right;\n}\n.items .mg_t0[data-v-f650d5fc] {\r\n    margin-top: 0px;\n}\n.aw_r[data-v-f650d5fc]::after {\r\n    content: '';\r\n    display: block;\r\n    position: absolute;\r\n    width: 11px;\r\n    height: 11px;\r\n    border-top: 2px #fff solid;\r\n    border-right: 2px #fff solid;\r\n    border-top-right-radius: 2px;\r\n    transform: rotate(45deg);\r\n    top: 4px;\n}\n.scroll[data-v-f650d5fc]::-webkit-scrollbar {\r\n    width: 0;\r\n    height: 0;\n}\r\n", ""]);
 
 // exports
 
@@ -380,9 +380,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "items"
   }, [_c('div', [_vm._v("上屏柜机")]), _vm._v(" "), (!_vm.city_name) ? _c('div', {
-    staticClass: "mui-ellipsis-2",
+    staticClass: "scroll",
     staticStyle: {
       "min-width": "65%",
+      "max-height": "60px",
       "overflow-y": "scroll"
     }
   }, _vm._l((_vm.items), function(item, index) {
@@ -393,9 +394,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }, [_vm._v(_vm._s(item.terminal_name))])
   })) : _vm._e(), _vm._v(" "), (_vm.city_name) ? _c('div', {
-    staticClass: "mui-ellipsis-2",
+    staticClass: "scroll",
     staticStyle: {
       "min-width": "65%",
+      "max-height": "60px",
       "overflow-y": "scroll"
     }
   }, [_c('p', {
