@@ -195,7 +195,7 @@ module.exports = Component.exports
             });
         },
         AMapGetLoction: function AMapGetLoction(isFirst) {
-            if (isFirst) {
+            if (_util.isWeixin() && isFirst) {
                 this.$router.go(0);
             }
             var map, geolocation;
