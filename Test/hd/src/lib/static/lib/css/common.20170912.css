@@ -8,7 +8,6 @@
 body {
     height: 100vh;
     width: 100vw;
-    -webkit-overflow-scrolling: touch;
 }
 
 .bg_blue {
@@ -458,12 +457,16 @@ p.small {
 }
 
 .flex {
-    display: -moz-box;
+    /* display: -moz-box;
     display: -webkit-box;
     display: box;
     -moz-box-orient: horizontal;
     -webkit-box-orient: horizontal;
-    box-orient: horizontal;
+    box-orient: horizontal; */
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
 }
 
 .flex_1 {
@@ -831,14 +834,18 @@ body {
     content: '';
     display: block;
     position: absolute;
-    width: 11px;
-    height: 11px;
+    width: 12px;
+    height: 12px;
     border-top: 2px #c7c7cc solid;
     border-right: 2px #c7c7cc solid;
     border-top-right-radius: 2px;
     transform: rotate(45deg);
-}
-.mui-ellipsis-2::-webkit-scrollbar{
-width:0;
-height:0;
+    -ms-transform: rotate(45deg);
+    /* IE 9 */
+    -moz-transform: rotate(45deg);
+    /* Firefox */
+    -webkit-transform: rotate(45deg);
+    /* Safari 和 Chrome */
+    -o-transform: rotate(45deg);
+    /* Opera */
 }

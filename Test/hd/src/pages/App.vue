@@ -13,7 +13,7 @@
                                 <div class="mui-table-cell mui-col-xs-10">
                                     <div class="mui-row line_h30">
                                         <div class="mui-col-sm-2 mui-ellipsis gray ">作品：</div>
-                                        <div class="mui-col-sm-10 mui-ellipsis ">{{item.category}}</div>
+                                        <div class="mui-col-sm-10 mui-ellipsis ">{{item.category!=''?item.category:'自定义'}}</div>
                                     </div>
                                     <div class="mui-row line_h30">
                                         <div class="mui-col-sm-2 mui-ellipsis gray">日期：</div>
@@ -81,6 +81,10 @@ export default {
     },
     components: {
         HeaderBar
+    },
+    beforeRouteEnter: (to, from, next) => {
+        $('#sysLoading').hide();
+        next();
     },
     created() {
         this.getInfo();
@@ -156,18 +160,6 @@ export default {
     right: 9px;
     top: 50%;
     margin-top: -6px
-}
-
-.aw-r::after {
-    content: '';
-    display: block;
-    position: absolute;
-    width: 12px;
-    height: 12px;
-    border-top: 2px #c7c7cc solid;
-    border-right: 2px #c7c7cc solid;
-    border-top-right-radius: 2px;
-    transform: rotate(45deg);
 }
 </style>
 
