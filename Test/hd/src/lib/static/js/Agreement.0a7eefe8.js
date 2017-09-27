@@ -1,6 +1,6 @@
 webpackJsonp([6],{
 
-/***/ 15:
+/***/ 18:
 /***/ function(module, exports, __webpack_require__) {
 
 var Component = __webpack_require__(1)(
@@ -39,7 +39,7 @@ module.exports = Component.exports
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Header__ = __webpack_require__(3);
+/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Header__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Header___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_Header__);
 //
 //
@@ -129,10 +129,15 @@ module.exports = Component.exports
     components: {
         HeaderBar: __WEBPACK_IMPORTED_MODULE_0__components_Header___default.a
     },
+    beforeRouteEnter: function beforeRouteEnter(to, from, next) {
+        $('#sysLoading').hide();
+        next();
+    },
     created: function created() {},
 
     methods: {}
 };
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
 
 /***/ },
 

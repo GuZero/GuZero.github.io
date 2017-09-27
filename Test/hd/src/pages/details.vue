@@ -8,29 +8,29 @@
                     <div class="title">{{title}}</div>
                     <div>{{content}}</div>
                 </div>
-                <a class="abs" style="top:14px;right:30px;color:#fff;display:flex;"  v-if="status==11" @click="gotoWWdetails">
+                <a class="abs flex" style="top:14px;right:30px;color:#fff;" v-if="status==11" @click="gotoWWdetails">
                     上屏中
                     <div class="aw_r"></div>
                 </a>
-                <a class="abs" style="top:14px;right:30px;color:#fff;display:flex;"  v-if="status==31" @click="goPay">
+                <a class="abs flex" style="top:14px;right:30px;color:#fff;" v-if="status==31" @click="goPay">
                     去支付
                     <div class="aw_r"></div>
                 </a>
             </div>
             <div class="info" style="background:#fff;border-bottom:1px solid #dfdfdf;margin-bottom:16px;">
                 <div class="mui-table-view-cell">
-                    <div class="items">
+                    <div class="items flex">
                         <div>上屏柜机</div>
-                        <div class="mui-ellipsis-2" style="min-width:65%;max-height=60px;overflow-y: scroll;"  v-if="!city_name">
+                        <div class="scroll" style="min-width:65%;max-height:60px;overflow-y: scroll;" v-if="!city_name">
                             <p v-for="(item,index) in items" :key="item.terminal_code" :class="{mg_t0:index==0}">{{item.terminal_name}}</p>
                         </div>
-                         <div class="mui-ellipsis-2" style="min-width:65%;max-height=60px;overflow-y: scroll;"  v-if="city_name">
+                        <div class="scroll" style="min-width:65%;max-height:60px;overflow-y: scroll;" v-if="city_name">
                             <p class="mg_t0">{{city_name}}</p>
                         </div>
                     </div>
                 </div>
                 <div class="mui-table-view-cell">
-                    <div class="items">
+                    <div class="items flex">
                         <div>上屏时间</div>
                         <div>
                             {{start_date}} ---- {{end_date}}
@@ -40,7 +40,7 @@
             </div>
             <div class="info" style="background:#fff;border-bottom:1px solid #dfdfdf;border-top:1px solid #dfdfdf;" v-show="status!=31">
                 <div class="mui-table-view-cell">
-                    <div class="items">
+                    <div class="items flex">
                         <div>支付金额</div>
                         <div class="mui-ellipsis-2">
                             {{fee/100}}元
@@ -48,7 +48,7 @@
                     </div>
                 </div>
                 <div class="mui-table-view-cell">
-                    <div class="items">
+                    <div class="items flex">
                         <div>下单时间</div>
                         <div>
                             {{crts}}
@@ -79,9 +79,9 @@ export default {
             fee: 0,
             status: 0,
             crts: '',
-            topic_id:'',
-            terminal_codes:[],
-            city_name:'',
+            topic_id: '',
+            terminal_codes: [],
+            city_name: '',
             //支付信息
             order: {
                 service: 'media_adinteraction_service',
@@ -133,34 +133,34 @@ export default {
             axios.get('/media/adinteraction/' + that.$route.query._id)
                 .then(function(res) {
                     if (res.data.status == 0) {
-                        that.hideLoading();                        
-                        that.terminal_codes=res.data.data.terminal_codes;
-                        if(that.terminal_codes.length!=0){
+                        that.hideLoading();
+                        that.terminal_codes = res.data.data.terminal_codes;
+                        if (that.terminal_codes.length != 0) {
                             that.items = res.data.data.terminals;
-                        }else{
-                            that.city_name=res.data.data.city.name;
-                        }                      
+                        } else {
+                            that.city_name = res.data.data.city.name;
+                        }
                         that.start_date = res.data.data.start_date;
                         that.end_date = res.data.data.end_date;
                         that.fee = res.data.data.fee;
                         that.status = res.data.data.status;
                         that.crts = new Date(res.data.data.crts * 1000).toLocaleString()
-                        that.topic_id=res.data.data.topic_id;
+                        that.topic_id = res.data.data.topic_id;
                         switch (res.data.data.status) {
                             case 1:
                                 that.title = '审核中';
                                 that.content = '24小时内将完成审核，若不通过则自动退款';
                                 break;
-                            case 11:
+                            case 12:
                                 that.title = '未通过';
                                 that.content = '内容不符，已安排微信退款，请注意查收';
                                 break;
-                            case 12:
+                            case 11:
                                 that.title = '上屏中';
                                 that.content = '作品已发布上柜，点击查看互动评论';
                                 break;
                             case 31:
-                                that.title = '金额:' + (that.fee / 100)+'元';
+                                that.title = '金额:' + (that.fee / 100) + '元';
                                 that.content = ' ';
                                 let data = res.data.data;
                                 that.order.order_id = data._id;
@@ -222,14 +222,14 @@ export default {
                 }
             })
         },
-        gotoWWdetails(){
-            if(this.topic_id!='000000000000000000000000'){
-                window.location.href=window.config.BASE_URL+'/forum/000000000000000000000000/topic/'+this.topic_id;
+        gotoWWdetails() {
+            if (this.topic_id != '000000000000000000000000') {
+                window.location.href = window.config.BASE_URL + '/forum/000000000000000000000000/topic/' + this.topic_id;
             }
         },
-        resetData(){
-            this.terminal_codes=[];
-            this.city_name='';
+        resetData() {
+            this.terminal_codes = [];
+            this.city_name = '';
         }
     }
 }
@@ -254,8 +254,10 @@ export default {
 }
 
 .items {
-    display: flex;
     font-size: 14px;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
     justify-content: space-between;
     color: #8a8a8a;
 }
@@ -279,7 +281,20 @@ export default {
     border-right: 2px #fff solid;
     border-top-right-radius: 2px;
     transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    /* IE 9 */
+    -moz-transform: rotate(45deg);
+    /* Firefox */
+    -webkit-transform: rotate(45deg);
+    /* Safari 和 Chrome */
+    -o-transform: rotate(45deg);
+    /* Opera */
     top: 4px;
+}
+
+.scroll::-webkit-scrollbar {
+    width: 0;
+    height: 0;
 }
 </style>
 

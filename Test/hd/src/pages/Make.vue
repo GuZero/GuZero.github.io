@@ -33,39 +33,45 @@
                 </div>
             </div>
             <div class="text_box">
-                <div class="text" @click="input">
+                <div class="text flex flex-pack-center flex-align-center" @click="input">
                     <p class="txt1 font_14">点击输入文字</p>
                     <div class="text_1">
-                        <input type="text" maxlength="8" placeholder="打字要满八个字，很长的字" style="border:none;font-size:14px;" v-model="text" @input="checkText">
+                        <input type="text" maxlength="20" placeholder="打字要满八个字，很长的字" style="border:none;font-size:14px;" v-model="text" @input="checkText">
                     </div>
                 </div>
             </div>
             <div class="choice_box" style="padding:16px 16px;">
-                <div class="flex_m" style="justify-content: space-between;">
-                    <div class="w_30 item_b color-1" @click="choiceTheme(theme1,$event)">
+                <div class="flex flex-pack-justify">
+                    <div class="w_30 item_b color-1" @click="choiceTheme(theme1,$event,'#4285f4')">
                         交友派
                     </div>
-                    <div class="w_30 item_b color-2" @click="choiceTheme(theme2,$event)">
+                    <div class="w_30 item_b color-2" @click="choiceTheme(theme2,$event,'#e84a5f')">
                         宠物征婚
                     </div>
-                    <div class="w_30 item_b color-3" @click="choiceTheme(theme3,$event)">
+                    <div class="w_30 item_b color-3" @click="choiceTheme(theme3,$event,'#f09561')">
                         爱豆粉
                     </div>
                 </div>
-                <div class="flex_m" style="justify-content: space-between;margin-top:10px;">
-                    <div class="w_30 color-4 item_b" @click="choiceTheme(theme4,$event)">
+                <div class="flex flex-pack-justify" style="margin-top:10px;">
+                    <div class="w_30 color-4 item_b" @click="choiceTheme(theme4,$event,'#a3c03f')">
                         晒娃魔
                     </div>
-                    <div class="w_30 color-5 item_b" @click="choiceTheme(theme5,$event)">
+                    <div class="w_30 color-5 item_b" @click="choiceTheme(theme5,$event,'#ee7e79')">
                         秀恩爱
                     </div>
-                    <div class="w_30 color-6 item_b" @click="choiceTheme(theme6,$event)">
+                    <div class="w_30 color-6 item_b" @click="userDefined($event)">
                         自定义
                     </div>
                 </div>
             </div>
             <div class="btn_box">
                 <button type="button" class="mui-btn btn_blue" @click="nextStep">下一步</button>
+            </div>
+        </div>
+        <div id="hint" class="sysLoading1 fixed">
+            <div class="hint_info">
+                <img src="//img.aimoge.com/FsNN9KaeHuuk90DQlqyLtNxOPfdd" style="width:25%">
+                <div>图片制作中...</div>
             </div>
         </div>
     </div>
@@ -81,7 +87,7 @@ export default {
             bodyBg: 'bg_white',
             btnconfig: {
                 isgoback: 0,
-                isback:1
+                isback: 1
             },
             _id: '',
             imgsrc: "",
@@ -98,11 +104,16 @@ export default {
             theme5: './static/interaction/image/5.png',
             theme6: './static/interaction/image/6.png',
             category: '',
-            flag: true
+            flag: true,
+            color: '',
         }
     },
     components: {
         HeaderBar
+    },
+    beforeRouteEnter: (to, from, next) => {
+        $('#sysLoading').hide();
+        next();
     },
     mounted() {
         this.setInfo();
@@ -121,7 +132,7 @@ export default {
             var formdata = new FormData();
             formdata.append("file", file);
             formdata.append("token", that.token);
-            formdata.append("x:source", "dapinghudong");
+            formdata.append("x:source", "friend pet fans baby love");
             $('#sysLoading').show();
             $.ajax({
                 url: location.protocol == "http:" ? 'http://upload.qiniu.com' : 'https://up.qbox.me',
@@ -133,8 +144,8 @@ export default {
                 success: function(respond) {
                     $('#sysLoading').hide();
                     that.imgsrc = window.img.imgsrc = respond.name;
-                    // that.url('./submit');
-                    console.log(that.imgsrc.substring(0,28));
+                    that.url('./submit');
+                    // console.log(that.imgsrc.substring(0, 28));
                 },
                 error: function(err) {
                     _util.showErrorTip('您的网络可能出了点问题:(');
@@ -153,6 +164,7 @@ export default {
             $(".htmleaf-container").fadeOut(300);
             $('#photo').css({ 'background': 'none' })
             $("#photo").hide();
+            $('#upload_box').show();
         },
         finish() {//完成上传图片
             $("#photo").css({
@@ -166,34 +178,13 @@ export default {
         reelect() {//重新选择作品
             $("#file").click();
             $(".htmleaf-container").fadeIn(300);
-            $("#photo").show();           
+            $("#photo").show();
         },
         input() {//点击输入文字
             $(".txt1").hide();
             $(".text_1").show();
         },
-        msgAlert(type, msg) {//弹出窗口
-            $('.msg_' + type).html(msg);
-            $('.msg_' + type).animate({
-                'top': 0
-            }, 500);
-            setTimeout(function() {
-                $('.msg_' + type).animate({
-                    'top': '-30px'
-                }, 500)
-            }, 2000);
-        },
         setInfo() {//设置信息
-            var htmlstyle = "<style>body{padding:0;margin:0;}.msg{color:#FFF;width:100%;height:30px;text-align:center;font-size:14px;line-height:30px;position:fixed;top: -30px;z-index:9999;}" +
-                ".msg_success{background-color:#1fcc6c;}" +
-                ".msg_warning{background-color:#e94b35;}" +
-                ".msg_primary{background-color:#337ab7;}" +
-                ".msg_info{background-color:#5bc0de;}</style>";
-            $('head').append(htmlstyle);
-            $('body').prepend('<div class="msg msg_success"></div>' +
-                '<div class="msg msg_warning"></div>' +
-                '<div class="msg msg_primary"></div>' +
-                '<div class="msg msg_info"></div>');
             let that = this;
             //获取token值
             that.showLoading();
@@ -242,56 +233,138 @@ export default {
                 dataURL = '';
             Img1.src = url1;
             Img2.src = url2;
-            Img1.crossOrigin = "Anonymous";
-            Img2.crossOrigin = "Anonymous";
-            let canvas = document.createElement("canvas"),
+            Img1.crossOrigin = "anonymous";
+            Img2.crossOrigin = "anonymous";
+            let canvas = document.createElement("canvas").getContext("2d"),
                 width = Img1.width,
-                height = Img1.height,
-                ctx = canvas.getContext("2d");
-            canvas.width=Img1.width;
-            canvas.height=Img1.height;    
-            console.log(width,height);
-            ctx.drawImage(Img1, 0, 0, width, height);
-            ctx.drawImage(Img2, 30, 30,300,300);
-            ctx.font = "20px microsoft yahei";
-            ctx.fillStyle = "rgba(255,255,255,0.5)";
-            ctx.fillText(content, 100, 100);
-            dataURL = canvas.toDataURL("image/jpeg");
-            this.post_img(dataURL);
+                height = Img1.height;
+            // if (_util.isWeixin && _util.isIOS) {
+            //     this.showInfo();
+            // }
+            let that = this;
+            Img2.onload = function(event) {
+                try {
+                    canvas.width = 928;
+                    canvas.height = 864;
+                    let w = (928 - 623) / 2;
+                    let h = 716;
+                    canvas.drawImage(Img1, 0, 0, 928, 864);
+                    canvas.drawImage(Img2, w, 44, 623, 623);
+                    dataURL = canvas.canvas.toDataURL("image/png");
+                    that.post_img(dataURL);
+                } catch (e) {
+                    alert(e)
+                }
+            }
+            // if (_util.isWeixin && _util.isIOS) {
+            //     that.hideInfo();
+            // }
+            // ctx.font = "36px microsoft yahei";
+            // ctx.fillStyle = this.color;
+            // ctx.fillText(content, w, h);            
         },
-        choiceTheme(str, ev) {
+        choiceTheme(str, ev, color) {
             this.url1 = str;
             let el = ev.currentTarget;
             this.category = $(el).html().trim();
             $(".bg_img").css({ 'background-image': 'url(' + str + ')' });
+            $('.img').show();
+            this.color = color;
         },
         nextStep() {
-            if (!this.url1) {
-                this.msgAlert("warning", "请选择一类主题！");
-                return false;
-            }
             if (!this.text) {
-                this.msgAlert("warning", "请输入您想要说的话！");
+                _util.showErrorTip("请输入您想要说的话！");
                 return false;
             }
             if (!this.url2) {
-                this.msgAlert("warning", "请您上传一张图片！");
+                _util.showErrorTip("请您上传一张图片！");
                 return false;
             }
-            this.getBase64(this.url1, this.url2, this.text);
+            if (this.url1) {
+                this.getBase64(this.url1, this.url2);
+            } else {
+                this.post_img(this.url2);
+            }
             window.img.content = this.text;
             window.img.category = this.category;
         },
-        checkText(){//校验文字
-            if(this.text.length==8){
-                _util.showErrorTip('最多输入八个字！');
+        checkText() {//校验文字
+            if (this.text.length == 20) {
+                _util.showErrorTip('最多输入二十个字！');
             }
         },
-        resetData(){
-            this.url1='';
-            this.text='';
-            this.url2='';
-            this.category='';
+        resetData() {
+            this.url1 = '';
+            this.text = '';
+            this.url2 = '';
+            this.category = '';
+        },
+        userDefined(ev) {
+            let el = ev.currentTarget;
+            this.category = $(el).html().trim()
+            $('.img').hide();
+            $(".bg_img").css({ 'background-image': 'url(' + this.url2 + ')' });
+            this.url1 = '';
+        },
+        compress(img) {
+            var initSize = img.src.length;
+            var width = img.width;
+            var height = img.height;
+
+            //如果图片大于四百万像素，计算压缩比并将大小压至400万以下
+            var ratio;
+            if ((ratio = width * height / 4000000) > 1) {
+                ratio = Math.sqrt(ratio);
+                width /= ratio;
+                height /= ratio;
+            } else {
+                ratio = 1;
+            }
+            let canvas = document.createElement("canvas"),
+                ctx = canvas.getContext("2d"),
+                tCanvas = document.createElement("canvas"),
+                tctx = canvas.getContext("2d");
+            canvas.width = width;
+            canvas.height = height;
+
+            //        铺底色
+            ctx.fillStyle = "#fff";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            //如果图片像素大于100万则使用瓦片绘制
+            var count;
+            if ((count = width * height / 1000000) > 1) {
+                count = ~~(Math.sqrt(count) + 1); //计算要分成多少块瓦片
+
+                //            计算每块瓦片的宽和高
+                var nw = ~~(width / count);
+                var nh = ~~(height / count);
+
+                tCanvas.width = nw;
+                tCanvas.height = nh;
+
+                for (var i = 0; i < count; i++) {
+                    for (var j = 0; j < count; j++) {
+                        tctx.drawImage(img, i * nw * ratio, j * nh * ratio, nw * ratio, nh * ratio, 0, 0, nw, nh);
+
+                        ctx.drawImage(tCanvas, i * nw, j * nh, nw, nh);
+                    }
+                }
+            } else {
+                ctx.drawImage(img, 0, 0, width, height);
+            }
+
+            //进行最小压缩
+            var ndata = canvas.toDataURL('image/jpeg', 0.6);
+
+            console.log('压缩前：' + initSize);
+            console.log('压缩后：' + ndata.length);
+            console.log('压缩率：' + ~~(100 * (initSize - ndata.length) / initSize) + "%");
+
+            tCanvas.width = tCanvas.height = canvas.width = canvas.height = 0;
+
+            return ndata;
+
         },
         showLoading() { //显示正在加载数据状态
             this.scroll_load_loading = true;
@@ -301,8 +374,14 @@ export default {
             this.scroll_load_loading = false;
             this.$refs.loading && this.$refs.loading.hideLoading();
         },
-        goback(){
-            this.url('./',null,1);
+        showInfo() {
+            $("#hint").fadeIn("slow");
+        },
+        hideInfo() {
+            $("#hint").fadeOut("slow");
+        },
+        goback() {
+            this.url('./', null, 1);
         },
     }
 }
@@ -374,6 +453,13 @@ export default {
     background: #fff;
 }
 
+.upload_btn {
+    border: 1px solid #4285f4;
+    color: #4285f4;
+    width: 100%;
+    font-size: 14px;
+}
+
 .btn_blue {
     border: 0.01px solid #4285f4;
     background-color: #4285f4;
@@ -426,10 +512,6 @@ export default {
     background-size: 100% 100%;
 }
 
-.flex_m {
-    display: flex;
-}
-
 .w_30 {
     width: 30%;
 }
@@ -438,16 +520,35 @@ export default {
     display: none;
     position: absolute;
 }
-#upload_box{
+
+#upload_box {
     width: 100%;
     height: 100%;
     text-align: center;
-    margin-top: 30%;
+    padding-top: 30%;
 }
-#upload_box a{
+
+#upload_box a {
     width: 50%;
     display: block;
     margin: 0 auto;
+}
+
+.hint_info {
+    width: 70%;
+    height: 130px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -35%;
+    margin-top: -65px;
+    background: #fff;
+    line-height: 30px;
+    font-size: 16px;
+    text-align: center;
+    z-index: 90001;
+    border-radius: 5px;
+    padding-top: 16px;
 }
 </style>
 

@@ -15,7 +15,7 @@
                             <span class="color_B" id="day"> {{day}} </span>天)</p>
                     </div>
                 </div>
-                <div style="padding:0px 50px; font-size:14px;padding-bottom:20px;">
+                <div style="padding:0px 36px; font-size:14px;padding-bottom:20px;">
                     <div class="mui-row">
                         <input type="text" readonly id="start_date" v-model="start_date" :value="value" class="input mui-col-xs-5 mui-text-center" placeholder="开始时间" @input="resetData">
                         <span class="mui-col-xs-2 mui-text-center">----</span>
@@ -40,13 +40,13 @@
                     </div>
                 </div>
                 <div style="max-height:120px;overflow-y: scroll">
-                    <div class="item terminal" v-for="(d,index) in arry" :key="d.terminal_code" @click="choiceItem(d,$event)" data-id="terminal" :class="{disabled:d.succed==1}">
+                    <div class="item terminal flex flex-align-center" v-for="(d,index) in arry" :key="d.terminal_code" @click="choiceItem(d,$event)" data-id="terminal" :class="{disabled:d.succed==1}">
                         <div class="icon">
                             <div class="choice_icon" v-show="false"></div>
                         </div>
                         <p>{{d.terminal_name}}</p>
                     </div>
-                    <div class="item city" v-for="item in c_arry" :key="item.city_id" @click="choiceItem(item,$event)" data-id="city">
+                    <div class="item city flex flex-align-center" v-for="item in c_arry" :key="item.city_id" @click="choiceItem(item,$event)" data-id="city">
                         <div class="icon">
                             <div class="choice_icon" v-show="false"></div>
                         </div>
@@ -145,12 +145,12 @@ export default {
         ModalDialog,
     },
     beforeRouteLeave: (to, from, next) => {
-          $('#sysLoading').show();
-          next();  
+        $('#sysLoading').show();
+        next();
     },
     beforeRouteEnter: (to, from, next) => {
-            $('#sysLoading').hide();
-            next();
+        $('#sysLoading').hide();
+        next();
     },
     mounted() {
         this.setInfo();
@@ -158,7 +158,11 @@ export default {
     watch: {
         '$route': function() {
             if (this.$route.path == ('/submit')) {
+                this.chest = 0;
                 this.total = 0;
+                this.terminals = [];
+                this.citys = [];
+                this.c_arry = [];
                 $(".choice_icon").hide();
                 if (window.Data.t_c && window.Data.t_n) {
                     let arr1 = window.Data.t_c;
@@ -172,38 +176,14 @@ export default {
                         this.verify(_id, code);
                     }
                 }
-                if (window.Data.c_id && window.Data.c_name) {
-                    let arr3 = window.Data.c_id;
-                    let arr4 = window.Data.c_name;
-                    let arr5 = window.Data.c_price;
-                    this.c_arry = this.setData1(arr3, arr4, arr5);
+                if (window.Data.city) {
+                    this.c_arry.push(window.Data.city)
                 }
             }
         },
     },
     methods: {
-        msgAlert(type, msg) { //弹出窗口
-            $('.msg_' + type).html(msg);
-            $('.msg_' + type).animate({
-                'top': 0
-            }, 500);
-            setTimeout(function() {
-                $('.msg_' + type).animate({
-                    'top': '-30px'
-                }, 500)
-            }, 2000);
-        },
         setInfo() { //设置信息
-            var htmlstyle = "<style>body{padding:0;margin:0;}.msg{color:#FFF;width:100%;height:30px;text-align:center;font-size:14px;line-height:30px;position:fixed;top: -30px;z-index:9999;}" +
-                ".msg_success{background-color:#1fcc6c;}" +
-                ".msg_warning{background-color:#e94b35;}" +
-                ".msg_primary{background-color:#337ab7;}" +
-                ".msg_info{background-color:#5bc0de;}</style>";
-            $('head').append(htmlstyle);
-            $('body').prepend('<div class="msg msg_success"></div>' +
-                '<div class="msg msg_warning"></div>' +
-                '<div class="msg msg_primary"></div>' +
-                '<div class="msg msg_info"></div>');
             $(".choice_icon").hide();
             this.init();
         },
@@ -223,6 +203,7 @@ export default {
             if (id == 'city' && this.terminals.length == 0) {
                 if ($(icon).is(":hidden")) {
                     $(icon).show();
+                    this.city_id = '';
                     this.citys.add(item.city_id);
                     this.chest++;
                     this.total += item.price * day;
@@ -264,27 +245,27 @@ export default {
             this.url('/' + name);
         },
         setData(arr1, arr2, status, _id) {
-            let Array = []
+            let arr = []
             for (let i = 0; i < arr1.length; i++) {
                 let obj = Object.create(null);
                 obj.terminal_code = arr1[i];
                 obj.terminal_name = arr2[i];
                 obj.succed = status;
                 obj.city_id = _id;
-                Array.push(obj);
+                arr.push(obj);
             }
-            return Array
+            return arr;
         },
         setData1(arr1, arr2, arr3) {
-            let Array = []
+            let arr = []
             for (let i = 0; i < arr1.length; i++) {
                 let obj = Object.create(null);
                 obj.city_id = arr1[i];
                 obj.city_name = arr2[i];
                 obj.price = arr3[i];
-                Array.push(obj);
+                arr.push(obj);
             }
-            return Array
+            return arr;
         },
         resetData() {
             if (this.start_date && this.end_date) {
@@ -321,15 +302,15 @@ export default {
         },
         postData() {
             if (!this.start_date && !this.end_date) {
-                this.msgAlert("warning", "请选择展示的日期");
+                _util.showErrorTip("请选择展示的日期");
                 return false;
             }
             if (this.citys.length == 0 && this.terminals.length == 0) {
-                this.msgAlert("warning", "请选择柜机");
+                _util.showErrorTip("请选择柜机");
                 return false;
             }
             if (!this.flag) {
-                this.msgAlert("warning", "抱歉您还没有同意展示协议");
+                _util.showErrorTip("抱歉您还没有同意展示协议");
                 return false;
             }
             let content = window.img.content ? window.img.content : '',
@@ -370,7 +351,6 @@ export default {
             })
         },
         init() {
-            this.wxid = window.wxid;
             let m = new Date().getMonth() + 1,
                 d = new Date().getDate() + 1,
                 time = new Date().getHours(),
@@ -410,12 +390,12 @@ export default {
             }
 
             function goPay() {
-                window.location.href = '/pay?order_ids=' + search.order_id + '&service=' + search.service + '&total_fee=' + search.total_fee + '&total_num=' + search.total_num + '&callbackurl=' + search.callbackurl;
+                window.location.href = '/pay?pay_types=' + search.pay_Type + '&order_ids=' + search.order_id + '&service=' + search.service + '&total_fee=' + search.total_fee + '&total_num=' + search.total_num + '&callbackurl=' + search.callbackurl;
             }
             if (that.order.status == 211) {
                 this.confirmPayCancel(goPay)
             } else {
-                window.location.href = '/pay?order_ids=' + search.order_id + '&service=' + search.service + '&total_fee=' + search.total_fee + '&total_num=' + search.total_num + '&callbackurl=' + search.callbackurl;
+                window.location.href = '/pay?pay_types=' + search.pay_Type + '&order_ids=' + search.order_id + '&service=' + search.service + '&total_fee=' + search.total_fee + '&total_num=' + search.total_num + '&callbackurl=' + search.callbackurl;
             }
         },
         confirmPayCancel(callback) {
@@ -504,8 +484,6 @@ export default {
 
 .item {
     margin: 10px auto;
-    display: flex;
-    align-items: center;
 }
 
 .item .icon {
@@ -521,6 +499,13 @@ export default {
     border-bottom: 2px solid #4788f4;
     border-left: 2px solid #4788f4;
     transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    /* IE 9 */
+    -moz-transform: rotate(-45deg);
+    /* Firefox */
+    -webkit-transform: rotate(-45deg);
+    /* Safari 和 Chrome */
+    -o-transform: rotate(-45deg);
     margin-top: 3px;
     margin-left: 3px;
 }

@@ -85,6 +85,10 @@ export default {
     components: {
         HeaderBar
     },
+    beforeRouteEnter: (to, from, next) => {
+            $('#sysLoading').hide();
+            next();
+    },
     created() {
 
     },

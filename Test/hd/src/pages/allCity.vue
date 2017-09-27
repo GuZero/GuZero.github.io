@@ -8,11 +8,11 @@
             </div>
             <div class="show margin8">
                 <ul id="cityList">
-                    <li class="mui-table-view-cell" v-for="(item,index) in items" :key="item.id" @click="choiceCity(item,$event)">
-                        <div class="items">
+                    <li class="mui-table-view-cell" v-for="(item,index) in items" :key="item.id" @click="choiceCity(item,index)">
+                        <div class="items flex flex-pack-justify flex-align-center">
                             <div>{{item.city_name}}</div>
                             <div style="padding-right:18px;">{{item.price}}元/天
-                                <i class="choice_icon" v-show="flag"></i>
+                                <i class="choice_icon" v-show="activeTab==index"></i>
                             </div>
                         </div>
                     </li>
@@ -36,11 +36,13 @@ export default {
                 isgoback: 1
             },
             items: [],
-            activeTab: '0',
+            activeTab:null,
             flag: false,
-            c_id:[],
-            c_name:[],
-            c_price:[]
+            city:{
+                city_id:'',
+                city_name:'',
+                price:'',
+            }
         }
     },
     components: {
@@ -56,11 +58,9 @@ export default {
     watch: {
         '$route': function () {
             if (this.$route.path == ('/allcity')) {
-                $(".choice_icon").hide();
                 window.Data={};
-                this.c_id=[];
-                this.c_name=[];
-                this.c_price=[];
+                this.city=[];
+                this.activeTab=null;
             }
         }
     },
@@ -85,25 +85,14 @@ export default {
 
         },
         nextStep() {
-            window.Data.c_id=this.c_id;
-            window.Data.c_name=this.c_name;
-            window.Data.c_price=this.c_price;
+            window.Data.city=this.city;
             this.url('./submit');
         },
-        choiceCity(item, ev) {
-            let el = ev.currentTarget;
-            let icon = $(el).children('.items').children().eq(1).children();
-            if ($(icon).is(":hidden")) {
-                $(icon).show();
-                this.c_id.add(item.city_id);
-                this.c_name.add(item.city_name);
-                this.c_price.push(item.price);
-            } else {
-                $(icon).hide();
-                this.c_id.remove(item.city_id);
-                this.c_name.remove(item.city_name);
-                this.c_price.remove(item.price);
-            }
+        choiceCity(item,index) {
+            this.activeTab=index;
+            this.city.city_id=item.city_id;
+            this.city.city_name=item.city_name;
+            this.city.price=item.price;
         },
         showLoading() { //显示正在加载数据状态
             this.scroll_load_loading = true;
@@ -122,10 +111,7 @@ export default {
 }
 
 .items {
-    display: flex;
-    justify-content: space-between;
     height: 36px;
-    align-items: center;
     width: 100%;
     position: relative;
     font-size: 16px;
@@ -145,6 +131,14 @@ export default {
     border-bottom: 2px solid #4788f4;
     border-left: 2px solid #4788f4;
     transform: translateX(5px) translateY(-5px) rotate(-45deg);
+    -ms-transform: translateX(5px) translateY(-5px) rotate(-45deg);
+    /* IE 9 */
+    -moz-transform: translateX(5px) translateY(-5px) rotate(-45deg);
+    /* Firefox */
+    -webkit-transform: translateX(5px) translateY(-5px) rotate(-45deg);
+    /* Safari 和 Chrome */
+    -o-transform: translateX(5px) translateY(-5px) rotate(-45deg);
+    /* Opera */
 }
 
 .btn_blue {
