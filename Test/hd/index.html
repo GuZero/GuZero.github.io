@@ -17,12 +17,28 @@
     <meta name="apple-touch-fullscreen" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <title>大屏互动</title>
+    <title>Document</title>
+    <script src="//cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script>
+    <style>
+        .bg_img {
+            width: 100%;
+            height: 40vh;
+            padding: 16px 58px;
+        }
+    </style>
 </head>
-<img src="" alt="">
 
 <body>
-
+    <div class="bg_img" style="background-size: 100% 100%;"></div>
+    <button onclick="userDefined()">自定义</button>
+    <script>
+        function userDefined(ev) {
+            var bg_src = '//img.aimoge.com/FheIP7wXJgvYThObZtT_5kwAQwIT';
+            $(".bg_img").css({
+                'background-image': 'url(' + (bg_src || "") + ')'
+            });
+        }
+    </script>
 </body>
 
 </html>
