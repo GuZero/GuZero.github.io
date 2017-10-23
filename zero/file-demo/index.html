@@ -56,8 +56,8 @@
                 reader.onload = function(ev) {
                     image.src = ev.target.result;
                     image.onload = function() {
-                        var imgWidth = this.width;
-                        imgHeight = this.height;
+                        var imgWidth = this.width,
+                            imgHeight = this.height;
                         if (imgWidth > imgHeight && imgWidth > 750) {
                             imgWidth = 750;
                             imgHeight = Math.ceil(750 * ths.height / this.width);
