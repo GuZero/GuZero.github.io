@@ -20,7 +20,7 @@
         #files {
             position: absolute;
             left: 0;
-            top: 0;
+            top: 40;
             width: 100px;
             height: 100px;
             opacity: 0;
@@ -51,7 +51,7 @@
 
             if (file) {
                 ExIF.getData(file, function() {
-                    Orientation = ExIF.getTag(this, 'Orientation');
+                    Orientation = EXIF.getTag(this, 'Orientation');
                 });
                 reader.onload = function(ev) {
                     image.src = ev.target.result;
