@@ -50,7 +50,7 @@
                 image = new Image();
 
             if (file) {
-                ExIF.getData(file, function() {
+                EXIF.getData(file, function() {
                     Orientation = EXIF.getTag(this, 'Orientation');
                 });
                 reader.onload = function(ev) {
