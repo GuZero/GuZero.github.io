@@ -1,5 +1,7 @@
-import App from "./App";
-import router from "./router";
+// import App from "./App";
+// import router from "./router";
+import Counter from './components/Counter'
+import store from "./store/index"
 Vue.prototype.goback = function() {
     this.$router.go(-1);
 };
@@ -16,10 +18,9 @@ Vue.prototype.url = function(path, query, replace) {
         });
     }
 };
-Vue.config.devtools = true;
+Vue.use(Vuex);
 new Vue({
     el: "#app",
-    router,
-    template: "<App/>",
-    components: { App }
+    store,
+    render: h => (Counter)
 });

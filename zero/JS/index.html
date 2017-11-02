@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="file" accept="*.txt" id="my_file">
+    <script>
+        var my_file = document.getElementById('my_file');
+
+        function getResult(arr) {
+            var rusult = 0;
+            for (var i = 0; i < arr.length; i++) {
+                if (arr[i]) {
+                    rusult += (parseInt(arr[i]));
+                }
+            }
+            console.log(rusult.toString(16));
+            return rusult.toString(16);
+        }
+
+        function handFile(file) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                var array = e.target.result.split(/[\r\n]/);
+                getResult(array);
+            };
+            reader.readAsText(file, 'gb2312');
+        }
+        my_file.addEventListener('change', function(e) {
+            handFile(e.target.files[0])
+        })
+    </script>
+</body>
+
+</html>
