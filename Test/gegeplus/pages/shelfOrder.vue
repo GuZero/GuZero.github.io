@@ -71,13 +71,13 @@
 }
 </style>
 <template>
-    <div class="Pay">
+    <div class="shelf-Order">
         <HeaderBar :title="pageTitle" :btnconfig="btnconfig"></HeaderBar>
         <div class="content-box">
             <div class="item" v-for="item in items" :key="item.order_id">
                 <div class="item-t flex-g flex-pack-justify flex-align-center">
                     <div>{{item.pay_at}}</div>
-                    <div>{{item.pay_fee}}元</div>
+                    <div>{{item.pay_fee/100}}元</div>
                 </div>
                 <div class="item-c rel flex-g flex-pack-justify" @click="gotoList(item)">
                     <div>
@@ -94,7 +94,7 @@
                                 购物网点：
                             </div>
                             <div style="width:70%">
-                                {{item.terminal_name}}
+                                {{item.shelf.name}}
                             </div>
                         </div>
                     </div>
@@ -109,11 +109,13 @@
 <script>
 import HeaderBar from '../components/Header'
 export default {
+    mixins: [require('../components/mixin/BodyBg')],
     data() {
         return {
             pageTitle: '订单列表',
+            bodyBg: 'gray',
             btnconfig: {
-                isgoback: 0
+                isgoback: 1
             },
             items: [],
             flag: true
@@ -123,14 +125,16 @@ export default {
         HeaderBar
     },
     created() {
-
     },
     mounted() {
         this.getData();
     },
+    activated(){
+        this.getData();
+    },
     watch: {
         '$route': function() {
-            if (this.$route.path == ('/ncshop/order')) {
+            if (this.$route.path == ('/ncshop/shelf/order')) {
                 this.getData();
             }
         }
@@ -140,20 +144,13 @@ export default {
             this.items = [];
             let that = this;
             $('#sysLoading').show();
-            axios.get('/ncshop/order')
+            axios.get('/ncshop/shelf/order')
                 .then(function(res) {
                     $('#sysLoading').hide();
                     if (res.data.status == 0) {
                         let data = res.data.data.orders;
                         data.length == 0 ? that.flag = true : that.flag = false;
-                        for (let i = 0; i < data.length; i++) {
-                            let obj = Object.create(null);
-                            obj.pay_at = data[i].pay_at;
-                            obj.pay_fee = data[i].pay_fee / 100;
-                            obj.order_id = data[i].order_id;
-                            obj.terminal_name = data[i].terminal['terminal_name'];
-                            that.items.push(obj);
-                        }
+                        that.items = data;
                     } else {
                         if (res.data.msg) _util.showErrorTip(res.data.msg);
                     }
@@ -163,7 +160,7 @@ export default {
                 })
         },
         gotoList(item) {
-            this.url('/ncshop/order/' + item.order_id);
+            this.url('/ncshop/shelf/order/' + item.order_id);
         }
     }
 }

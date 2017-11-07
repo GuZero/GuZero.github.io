@@ -37,5 +37,10 @@ export default {
     [types.CHOOSE_BOOK](state, id) {
         state.curBookDetailId = id
     },
-    [types.SHOW_BOOK_DETAIL]
+    [types.SHOW_BOOK_DETAIL](state, obj) {
+        state.curBookDetail = obj
+    },
+    [types.CUR_CHAPTER](state, num) {
+        state.curChapter = num
+    }
 }

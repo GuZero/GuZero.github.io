@@ -71,13 +71,11 @@ import HeaderBar from '../components/Header'
 export default {
     data() {
         return {
-            pageTitle: '',
+            pageTitle: '登录成功',
             btnconfig: {
-                isgoback: 1,
-                isconfirm: 1
+                isgoback: 0,
+                isconfirm: 0
             },
-            // terminal_code: '0025150416',
-            // access_token: '56a5e1bebaf614b56fa9bff946a78dd39770aea8'
         }
     },
     components: {
@@ -98,27 +96,16 @@ export default {
             let that = this;
             that.showSysLoading();
             axios.post('/ncshop/terminal/door/open', data).then((rsp) => {
+                that.hideSysLoading();
                 if (rsp.data.status == 0) {
-                    that.hideSysLoading();
-                    console.log(rsp.data);
+                    _util.showSuccessTip('开门成功');
                 } else {
-                    if (rsp.data.status == 200) {
-                        that.hideSysLoading();
-                        console.log(rsp.data);
-                        _util.showErrorTip(rsp.data.msg);
-                    }
-                    if (rsp.data.status == 300) {
-                        that.hideSysLoading();
-                        console.log(rsp.data);
-                        _util.showErrorTip(rsp.data.msg);
-                    }
+                    _util.showErrorTip(rsp.data.msg);
                 }
             }).catch((err) => {
-                console.log(err);
                 that.hideSysLoading();
                 _util.showErrorTip('您的网络可能出了点问题:(');
             })
-
         },
         showSysLoading() {
             $('#sysLoading').show();
@@ -126,7 +113,6 @@ export default {
         hideSysLoading() {
             $('#sysLoading').hide();
         },
-
     }
 }
 </script>

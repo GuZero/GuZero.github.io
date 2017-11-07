@@ -75,7 +75,7 @@
     color: #fff;
     height: 44px;
     line-height: 44px;
-    border-radius: 5px;
+    border-radius: 36px;
     position: relative;
     margin: 0 20px 0 20px;
 }
@@ -116,7 +116,7 @@
 
 .form {
     background-color: #fff;
-    margin: 0 5%;
+    margin: 0 26px;
 }
 
 .form .sprite {
@@ -142,14 +142,18 @@
 .form .code .sprite:before {
     background-position: -256px 0;
 }
-
+.form .getcode{
+    padding-top: 14px;
+}
 .form .getcode a {
     background-color: #008cff;
     color: #fff;
-    height: 49px;
-    line-height: 49px;
+    height: 36px;
+    line-height: 36px;
     display: block;
     width: 115px;
+    border-radius: 30px;
+    font-size: 14px;
 }
 
 .form .getcode a:active,
@@ -159,7 +163,10 @@
 }
 
 .form a.disabled {
-    background-color: #7fc5ff;
+    background-color: #fff;
+    border:1px solid #4285f4;
+    color: #4285f4;
+    
 }
 
 .form a.disabled:active {
@@ -255,7 +262,15 @@
     text-align: center;
     font-size: 14px;
 }
-
+.logo{
+    width: 180px;
+    text-align: center;
+    margin: 20px auto;
+    margin-top: 64px;
+}
+.solid{
+    border-bottom: 1px solid #cfcfcf;
+}
 @media (max-width: 320px) {
     .form .getcode a {
         width: 95px;
@@ -265,6 +280,8 @@
 
 <template>
     <div class="app_login">
+        <HeaderBar :title="pageTitle" :btnconfig="btnconfig"></HeaderBar>
+        <div style="height:44px;"></div>
         <div class="imgCode fixed" id="imgCode">
             <img src="//img.aimoge.com/FgSgIducS7NfJNk-ZqN933p7JEaJ" class="abs closePic" @click="hideImgCode">
             <div class="pic rel">
@@ -281,36 +298,36 @@
         <div id="container" class="container rel">
             <div style="height: 300px;">
                 <div class="loginWarp">
-                    <div class="center" style="margin: 0;height: 103px;line-height: 103px;">
-                        <img class="imgReset" src="//img.aimoge.com/FsydS4Yr0ugjpawxX7zcKDd4PNZP" style="width:120px;margin-top:30px;" />
+                    <div class="logo">
+                        <img class="imgReset" :src="'//img.aimoge.com/'+logo_src.substring(0,28)"/>
                     </div>
                     <div class="form">
-                        <div class="formitem flex  mobile" style="border-bottom: 1px #eee solid;">
-                            <div class="sprite ml32"></div>
+                        <div class="formitem flex  mobile solid">
+                            <!-- <div class="sprite ml32"></div> -->
                             <div class="input flexmodel">
                                 <input type="tel" name="user_tele" class="block f16" placeholder="请填写手机号" maxlength="11" id="mobile" />
                             </div>
                         </div>
                         <div class="formitem flex code">
-                            <div class="sprite ml32"></div>
-                            <div class="input flexmodel">
+                            <!-- <div class="sprite ml32"></div> -->
+                            <div class="input flexmodel solid">
                                 <input type="tel" name="user_tele_code" class="block f16" placeholder="输入验证码" id="code" />
                             </div>
                             <div class="getcode">
-                                <a id="getCode" href="javascript:;" class="center f16" @click="sendCode" >获取验证码</a>
+                                <a id="getCode" class="center" @click="sendCode()" >获取验证码</a>
                             </div>
                         </div>
                     </div>
                 </div>
-                <p class="voice-code" @click="confirmVoiceCode">短信验证码收不到？试试
+                <p class="voice-code" @click="confirmVoiceCode()">短信验证码收不到？试试
                     <a href="javascript:;">语音验证码</a>
                 </p>
                 <div id="control_btn" class="rel center" style="display: block;">
-                    <a href="javascript:;" @click="login" class="login f16 bold">注册</a>
+                    <a href="javascript:;" @click="login" class="login f16 bold">登录</a>
                 </div>
                 <div class="notice f14">
-                    <p>点击注册，即表示已阅读并同意
-                        <a href="javascript:;">《格格+用户协议》</a>
+                    <p>点击登录，即表示已阅读并同意
+                        <a href="javascript:;">《用户协议》</a>
                     </p>
                 </div>
             </div>
@@ -323,19 +340,27 @@
                 发送语音验证码后会收到客服语音来电，提示登录验证码。
             </div>
             <div class="ubtn">
-                <a href="javascript:;" @click="confirmVoiceCode" class="button-energized fl">是</a>
-                <a href="javascript:;" @click="cancelVoiceCode" class="button-blank fr">否</a>
+                <a @click="confirmVoiceCode()" class="button-energized fl">是</a>
+                <a @click="cancelVoiceCode()" class="button-blank fr">否</a>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import HeaderBar from '../components/Header'
 export default {
+    mixins: [require('../components/mixin/BodyBg')],
     data() {
         return{
             next_send_action:false,
-            captcha_code:''
+            captcha_code:null,
+            logo_src:"",
+            bodyBg: 'white',
+            pageTitle: '用户登录',
+            btnconfig: {
+                isgoback: 0,
+            },
         }
      },
     beforeCreate() {
@@ -347,8 +372,16 @@ export default {
             }
         }
     },
+   beforeRouteLeave: (to, from, next) => {
+        $('#layer').addClass('hide');
+        next();
+    },
     mounted() {
         this.addLinkTouchEvent();
+        this.setLogo();
+    },
+    components: {
+        HeaderBar
     },
     methods: {
         showImgCode() {
@@ -389,7 +422,7 @@ export default {
         },
         doNextSendAction() {
             if (this.next_send_action) {
-               this.captcha_code = $("#captchacode_code").val();
+              this.captcha_code = $("#captchacode_code").val();
                 if (!this.captcha_code) {
                     return _util.showErrorTip('验证码不可以空!');
                 }
@@ -403,7 +436,7 @@ export default {
             var $getCode = $('#getCode');
             if ($getCode.hasClass('disabled')) return false;
             MGUser.getcode($('#mobile').val(), function (isSuccess, result) {
-                isSuccess ? _util.showSuccessTip('发送验证码成功！') : that.captcha_code='';_util.showErrorTip(result);
+                isSuccess ? _util.showSuccessTip('发送验证码成功！'):_util.showErrorTip(result);
             }, function (isEnd, send_code_delay) {
                 if (isEnd) {
                     $('.use_voice_code').show();
@@ -412,8 +445,8 @@ export default {
                 } else {
                     $getCode.addClass('disabled').text(send_code_delay + 's');
                 }
-            }, that.captcha_code || '', function () {
-                $('#captchacode_code').val('');
+            }, captcha_code || '', function () {
+                $("#captchacode_code").val('');
                 that.next_send_action = that.sendCode;
                 that.showImgCode();
                 that.loadCaptchacodeIamge();
@@ -424,14 +457,15 @@ export default {
             var $getCode = $('#getCode');
             that.cancelVoiceCode();
             MGUser.getvoicecode($('#mobile').val(), function (isSuccess, result) {
-                isSuccess ? _util.showSuccessTip('发送语言验证码成功!') : console.log(result); _util.showErrorTip(result);
+                isSuccess ? _util.showSuccessTip('发送语言验证码成功!') : _util.showErrorTip(result);
             }, function (isEnd, send_code_delay) {
                 if (isEnd) {
                     $getCode.removeClass('disabled').text('获取验证码');
                 } else {
                     $getCode.addClass('disabled').text(send_code_delay + 's');
                 }
-            }, that.captcha_code || '', function () {
+            }, captcha_code || '', function () {
+                $("#captchacode_code").val('');
                 that.next_send_action = that.confirmVoiceCode;
                 that.showImgCode();
                 that.loadCaptchacodeIamge();
@@ -472,6 +506,14 @@ export default {
                     _util.showErrorTip(result);
                 }
             });
+        },
+        setLogo(){
+            var next_url = this.$route.query.page_url || this.$route.query.next_url || '';
+            if(next_url.indexOf("shelf")>-1){
+               this.logo_src=window.ncshop_config && window.ncshop_config.ncshelf_logo||"FsuQe976BCZI2I6Za_B4Kpum_GW2_437x624_32101.jpeg";
+            }else{
+               this.logo_src=window.ncshop_config && window.ncshop_config.ncshop_logo||"FsuQe976BCZI2I6Za_B4Kpum_GW2_437x624_32101.jpeg";
+            }
         }
     }
 }

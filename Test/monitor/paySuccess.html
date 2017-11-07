@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, max-age=0, must-revalidate, no-siteapp" />
+    <meta name="x5-orientation" content="portrait" />
+    <meta name="x5-page-mode" content="app" />
+    <meta name="screen-orientation" content="portrait" />
+    <meta name="browsermode" content="application" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="renderer" content="webkit" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <link href="/css/global.css" type="text/css" rel="stylesheet">
+    <title>Document</title>
+    <style>
+        .container-title {
+            height: 54px;
+            line-height: 54px;
+            border-bottom: 1px solid #cfcfcf;
+        }
+        
+        .container-title span {
+            font-weight: 700;
+            font-family: '黑体';
+        }
+        
+        .container-title div {
+            margin-top: 9px;
+            margin-right: 8px;
+            width: 28px;
+            height: 28px;
+        }
+        
+        .container-item .item {
+            height: 32px;
+            line-height: 32px;
+        }
+        
+        .container-item .item-content {
+            background: #f2f2f2;
+            padding: 10px;
+            line-height: 18px;
+        }
+        
+        .container-item .item-content .color-b {
+            color: #07689f;
+        }
+        
+        .container-item .red {
+            color: #d75a48;
+        }
+        
+        .h8 {
+            height: 8px;
+            background: #f2f2f2;
+            width: 100%;
+        }
+        
+        .info {
+            padding: 0 16px;
+        }
+        
+        .info .info-title {
+            height: 50px;
+            line-height: 50px;
+        }
+        
+        .info .info-title span {
+            font-weight: 700;
+            font-family: '黑体';
+        }
+        
+        .info .info-title a {
+            font-size: 12px;
+            color: #07689f;
+            text-decoration: underline;
+        }
+        
+        .info .info-item .item-title {
+            padding-right: 24px;
+        }
+        
+        .info .info-item .item {
+            height: 32px;
+            line-height: 32px;
+        }
+        
+        .info .info-item .done {
+            background: url('//img.aimoge.com/Fs8-GRuZMi24RhBkPBF34X5uPJTA') no-repeat right center;
+            background-size: 16px auto;
+        }
+        
+        .info .info-item .active {
+            font-size: 16px;
+            color: #4285f4;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="sysLoading" class="sysLoading fixed">
+        <i class="ion-loading-c"></i>
+    </div>
+    <div class="layer" id="layer"></div>
+    <div id="mgAlert" class="mgAlert center fixed f14"></div>
+    <div class="gege-header fixed">
+        <div class="title center ellipsis f16 abs">格格监控申请</div>
+        <a class="icgoback"></a>
+    </div>
+    <div class="h44"></div>
+    <div class="container">
+        <div class="container-title flex-g flex-pack-justify">
+            <span class="f15">申请信息</span>
+            <div>
+                <img src="//img.aimoge.com/Fo770jA63i-FL-p_C_U2vL19qCmJ" alt="">
+            </div>
+        </div>
+        <div class="container-item">
+            <div class="item flex-g flex-pack-justify">
+                <span>申请人:</span>
+                <span>13900990099</span>
+            </div>
+            <div class="item flex-g flex-pack-justify">
+                <span>押金:</span>
+                <span>20元</span>
+            </div>
+            <div class="item flex-g flex-pack-justify">
+                <span>终端:</span>
+                <span>文锦花园格格货栈(深圳市)</span>
+            </div>
+            <div class="item-content">
+                运单号: <span class="color-b">3342035045253 </span>,收件: <span class="color-b">15013701266 </span>M0211 / 11号门 姓名:<span>15986667658</span> 电话:<span class="color-b">15986667658 </span>公司:申通 用户取出 2017-10-27 09:29:18 2017-10-27 12:58:36,用户少取一件，快递员确认投两件。
+            </div>
+            <div class="item flex-g flex-pack-justify">
+                <span>通知邮箱:</span>
+                <span id="email">94059585@qq.com</span>
+            </div>
+        </div>
+    </div>
+    <div class="h8"></div>
+    <div class="info">
+        <div class="info-title flex-g flex-pack-justify">
+            <span class="f15">申请信息</span>
+            <a href="javascript:;">详细说明</a>
+        </div>
+        <div class="info-item">
+            <div class="item flex-g flex-pack-justify">
+                <span class="item-title done">支付押金</span>
+                <span>10.30 14:20</span>
+            </div>
+            <div class="item flex-g flex-pack-justify">
+                <span class="item-title active">正在安排</span>
+            </div>
+            <div class="item flex-g flex-pack-justify">
+                <span class="item-title">调取中</span>
+            </div>
+            <div class="item flex-g flex-pack-justify">
+                <span class="item-title">已完成</span>
+            </div>
+        </div>
+    </div>
+    <script src="//cdn.bootcss.com/zepto/1.2.0/zepto.min.js"></script>
+    <script>
+        function checkEmail(value) {
+            if (!value) {
+                return '邮箱不能为空';
+            }
+            var email_reg = /^[a-zA-Z0-9_-]+@([a-zA-Z0-9]+\.)+(com|cn|net|org)$/;
+            if (!email_reg.test(value)) {
+                return '请输入正确的邮箱';
+            }
+            return '';
+        }
+
+        function showErrorTip(txt) {
+            if (!txt) return false;
+            var mgAlert = document.getElementById("mgAlert");
+            mgAlert.style.top = '35%';
+            mgAlert.setAttribute('class', 'mgAlert center fixed f14 mgAlert-error showAlert');
+            mgAlert.innerHTML = txt;
+            if (window.errorTimer) {
+                clearTimeout(window.errorTimer);
+                window.errorTimer = null;
+            }
+            window.errorTimer = setTimeout(function() {
+                mgAlert.setAttribute('class', 'mgAlert center fixed f14');
+                setTimeout(function() {
+                    mgAlert.style.top = '-35%';
+                }, 300);
+            }, 2000);
+        }
+        $(document).ready(function() {
+            $('#submit').click(function() {
+                var user_email = $('#user_email').val(),
+                    check_msg = checkEmail(user_email);
+                if (check_msg != '') {
+                    showErrorTip(check_msg);
+                    return false;
+                }
+                console.log('1');
+            })
+        })
+    </script>
+</body>
+
+</html>

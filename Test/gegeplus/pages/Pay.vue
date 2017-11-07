@@ -56,27 +56,32 @@
 }
 
 .item {
-    display: flex;
     height: 35px;
 }
 
 .total {
     height: 42px;
-    align-items: center;
     border-top: 1px solid #ececec;
-    justify-content: space-between;
 }
 
 .footer-box {
-    height: 42px;
-    font-size: 14px;
+    height: 55px;
+    font-size: 16px;
     font-weight: bold;
-    justify-content: space-between;
-    align-items: center;
     bottom: 0;
-    display: flex;
     width: 100%;
     color: #fff;
+}
+.payBtn{
+    height: 55px;
+    line-height: 55px;
+    width: 30%;
+    background:#f88f1e;
+    text-align: center;
+
+}
+.payBtn:active{
+      background: rgba(246, 143, 30, .7);
 }
 </style>
 
@@ -93,29 +98,29 @@
                 </div>
                 <div class="pay-img">
                 </div>
-                <div class="flex-g" style="align-items: center;justify-content: space-between;">
+                <div class="flex-g flex-pack-justify flex-align-center">
                     <div class="arch" style="margin-left:-18px"></div>
                     <div class="dotted"></div>
                     <div class="arch" style="margin-right:-18px;"></div>
                 </div>
                 <div style="padding:16px;">
-                    <div class="item" v-for="item in items" :key="item.id">
+                    <div class="item flex-g" v-for="item in items" :key="item.id">
                         <div style="width:70%">{{item.title}}</div>
                         <div style="width:10%;text-align:center;" class="c-gary">×{{item.rfid_codes.length}}</div>
                         <div style="width:20%;text-align:right;">{{item.price/100*item.rfid_codes.length}}元</div>
                     </div>
                 </div>
                 <div style="padding-left:16px;padding-right:16px;">
-                    <div class="flex-g total">
+                    <div class="flex-g total flex-pack-justify flex-align-center">
                         <span style="font-weight:bold">商品总额</span>
                         <span class="c-blue">{{sum}}</span>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="footer-box fixed">
-            <div style="width:70%;background:#454545;height:42px;line-height:42px;padding-left:10px;">支付金额：{{sum}}元</div>
-            <div style="width:30%;background:#f88f1e;height:42px;line-height:42px;text-align:center" @click="goPay">确认扣款</div>
+        <div class="footer-box fixed flex-g flex-pack-justify flex-align-center">
+            <div style="width:70%;background:#454545;height:55px;line-height:55px;padding-left:10px;">支付金额：{{sum}}元</div>
+            <div class="payBtn" @click="goPay" >确认扣款</div>
         </div>
     </div>
 </template>
@@ -127,7 +132,7 @@ export default {
         return {
             pageTitle: '付款',
             btnconfig: {
-                isgoback: 1
+                isgoback: 0
             },
             sum: 0,
             res: {},
@@ -184,7 +189,7 @@ export default {
                         that.order.pay_type=res.data.data.pay_type;
 
                         if(that.order.order_id){
-                            if(that.order.pay_id && [2101, 2501, 2502].indexOf(that.order.status) > -1){
+                            if(that.order.pay_id&& [2101, 2501, 2502].indexOf(that.order.order_status) > -1){
                                 that.confirmPay(that.order.pay_id, function () {});
                             }
                         }
@@ -199,7 +204,7 @@ export default {
         ajaxPay(data, callback) {
             $.ajax({
                 type: "post",
-                url: window.config.PAY + '/pay/' + pay_id,
+                url: window.config.PAY + '/pay/' + data.pay_id,
                 data: JSON.stringify(data),
                 dataType: 'json',
                 contentType: 'application/json',
@@ -214,18 +219,18 @@ export default {
                 }
             });
         },
-        wxPay(data) {
+        wxPay(pay_info, order_id) {
             let that = this;
             window.wxsdk(function() {
                 wx.chooseWXPay({
-                    "timestamp": data.order_info.timestamp.toString(), //时间戳，自 1970 年以来的秒数
-                    "nonceStr": data.order_info.noncestr, //随机串
-                    "package": data.order_info.package_value,
-                    "signType": data.order_info.sign_type, //微信签名方式:
-                    "paySign": data.order_info.pay_sign, //微信签名
+                    "timestamp": pay_info.order_info.timestamp.toString(), //时间戳，自 1970 年以来的秒数
+                    "nonceStr": pay_info.order_info.noncestr, //随机串
+                    "package": pay_info.order_info.package_value,
+                    "signType": pay_info.order_info.sign_type, //微信签名方式:
+                    "paySign": pay_info.order_info.pay_sign, //微信签名
                     "success": function(res) {
                         var data = {
-                            "pay_id": that.payInfo.pay_id,
+                            "pay_id": pay_info.pay_id,
                             "pay_type": 4,
                             "pay_info": res,
                             "error_msg": '支付成功',
@@ -236,12 +241,13 @@ export default {
                                 that.order.pay_id = '';
                                 that.order.pay_type = 0;
                             }
-                            that.url('/pay/success', {}, true);
+                            $('#sysLoading').hide();
+                            that.url('/ncshop/pay/success', {order_id: order_id}, true);
                         });
                     },
                     "cancel": function(res) {
                         var data = {
-                            "pay_id": that.payInfo.pay_id,
+                            "pay_id": pay_info.pay_id,
                             "pay_type": 4,
                             "pay_info": res,
                             "error_msg": '用户主动取消',
@@ -253,12 +259,12 @@ export default {
                                 that.order.pay_type = 0;
                             }
                             $('#sysLoading').hide();
-                            _util.showErrorTip('正在取消，请稍后...');
+                            _util.showErrorTip('支付已被取消!');
                         });
                     },
                     "fail": function(res) {
                         var data = {
-                            "pay_id": that.payInfo.pay_id,
+                            "pay_id": pay_info.pay_id,
                             "pay_type": 4,
                             "pay_info": res,
                             "error_msg": res.err_msg,
@@ -270,19 +276,20 @@ export default {
                                 that.order.pay_type = 0;
                             }
                             $('#sysLoading').hide();
-                            _util.showErrorTip('正在取消，请稍后...');
+                            _util.showErrorTip('支付失败:' + res.errMsg);
                         });
                     }
                 });
             })
         },
         aliPay(data) {
-
+            window.location.href = "http://wappaygw.alipay.com/service/rest.htm?" + data.order_info.params;
         },
         confirmPay(pay_id, callback) {
+            let that=this;
             var data = {
                 "pay_id": pay_id,
-                "pay_type": 4,
+                "pay_type":  that.order.pay_type,
                 "pay_info": {},
                 "error_msg": '用户主动取消',
                 "result": 200
@@ -292,7 +299,7 @@ export default {
                     that.order.pay_id = '';
                     that.order.pay_type = 0;
                 }
-                callback();
+                callback(data);
             });
         },
         submitPay(order_id){
@@ -304,10 +311,20 @@ export default {
                 pay_type: pay_type,
                 order_ids: [order_id],
                 service: 'trading_order_service',
-                weixin_id: window.wxid || '',
-                open_id: window.open_id || '',
                 device_info: _util.getDeviceInfo()
             };
+
+            if(pay_type == 4){
+                data.weixin_id = window.wxid || '';
+                data.open_id = window.open_id || '';
+            }else{
+                data.call_back_url = window.config.BASE_URL + '/ncshop/pay/alipay/{pay_id}/' + order_id + '/' + (window.dot_id || 0);
+                data.merchant_url = window.config.BASE_URL + '/ncshop/pay/alipay/{pay_id}/' + order_id + '/' + (window.dot_id || 0);
+                if(window.ncshop_config && window.ncshop_config.alipay_account){
+                    data.account = window.ncshop_config.alipay_account;
+                }
+            }
+
             $.ajax({
                 type: "post",
                 url: window.config.PAY + '/pay',
@@ -320,28 +337,30 @@ export default {
                 success: function(data) {
                     if(data.status == 0){
                         that.order.pay_id = data.data.pay_id;
-                        that.order.pay_type = data.data.pay_id;
+                        that.order.pay_type = data.data.pay_type;
+                        that.order.order_status = 2101;
                         if(pay_type == 4){
-                            that.wxPay(data.data);
+                            that.wxPay(data.data, order_id);
                         }else{
                             that.aliPay(data.data);
                         }
                     }
                     else{
                         $('#sysLoading').hide();
-                        _util.showErrorTip(data.data.msg);
+                        _util.showErrorTip(data.msg);
                     }
                 },
                 error: function(data) {
                     $('#sysLoading').hide();
-                    _util.showErrorTip(data.data.msg);
+                    _util.showErrorTip(data.msg);
                 }
             });
         },
         goPay() {
             let that = this;
+            $('#sysLoading').show();
             if(that.order.order_id){
-                if(that.order.pay_id && [2101, 2501, 2502].indexOf(that.order.status) > -1){
+                if(that.order.pay_id && [2101, 2501, 2502].indexOf(that.order.order_status) > -1){
                     that.confirmPay(that.order.pay_id, function () {
                         that.submitPay(that.order.order_id);
                     });
@@ -370,7 +389,9 @@ export default {
                         total_num: this.order.total_num,
                         pay_fee: this.order.total_fee,
                         remark: "",
-                        terminal_code:this.order.terminal_code
+                        order_type: "ncshop",
+                        terminal_code:this.order.terminal_code,
+                        cart_id: that.$route.query.cart_id
                     }
                 ],
                 total_fee: this.order.total_fee,
@@ -390,7 +411,7 @@ export default {
                 }).catch(function(err) {
                     $('#sysLoading').hide();
                     _util.showErrorTip('您的网络可能出了点问题:(');
-                })
+                });
         }
     }
 }

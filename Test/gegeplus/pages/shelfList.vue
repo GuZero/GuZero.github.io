@@ -39,25 +39,27 @@
 .item {
     height: 35px;
     line-height: 35px;
+    color: #323232;
 }
 
 .total {
     height: 42px;
     border-top: 1px solid #ececec;
 }
-.footer-box{
+
+.footer-box {
     background: #fff;
     border-top: 1px solid #d2d2d2;
     width: 100%;
     text-align: center;
     height: 45px;
     line-height: 45px;
-    color:#008cff;
+    color: #008cff;
     bottom: 0px;
 }
 </style>
 <template>
-    <div class="Pay">
+    <div class="shelf-List">
         <HeaderBar :title="pageTitle" :btnconfig="btnconfig"></HeaderBar>
         <div class="content-box">
             <div class="list flex-g">
@@ -85,15 +87,15 @@
                     </div>
                 </div>
                 <div style="padding-left:16px;padding-right:16px;">
-                    <div class="flex-g total flex-pack-justify  flex-align-center">
-                        <span style="font-weight:bold">商品总额</span>
+                    <div class="flex-g total flex-pack-justify flex-align-center">
+                        <span style="font-weight:bold;color:#323232;">商品总额</span>
                         <span class="c-blue">{{order.total_fee}}</span>
                     </div>
                 </div>
             </div>
         </div>
         <div class="footer-box fixed">
-            如对订单有疑问，请拨打客服电话：400-033-8888
+            如对订单有疑问，请拨打客服电话：{{consumer_phone}}
         </div>
     </div>
 </template>
@@ -101,69 +103,80 @@
 <script>
 import HeaderBar from '../components/Header'
 export default {
+    mixins: [require('../components/mixin/BodyBg')],
     data() {
         return {
             pageTitle: '订单详情',
+            bodyBg: 'gray',
             btnconfig: {
                 isgoback: 1
             },
-            order:{
-                order_id:'',
-                terminal_name:'',
-                pay_fee:0,
-                pay_at:'',
-                pay_type:0,
-                total_fee:0,              
+            order: {
+                order_id: '',
+                terminal_name: '',
+                pay_fee: 0,
+                pay_at: '',
+                pay_type: 0,
+                total_fee: 0,
             },
-            goods:[]
+            goods: [],
+            consumer_phone: (window.ncshop_config && window.ncshop_config.consumer_phone) || '400-033-8888'
         }
     },
     components: {
         HeaderBar
     },
-    created(){
-        this.getData();
-    },
-    mounted() {
+    created() {
 
     },
+    mounted() {
+        this.getData();
+    },
+    watch: {
+        '$route': function() {
+            if (this.$route.path == ('/ncshop/shelf/order/' + this.$route.params.order_id)) {
+                this.getData();
+            }
+        }
+    },
     methods: {
-         getData(){
+        getData() {
             let that = this;
             $('#sysLoading').show();
-            axios.get('/ncshop/order/'+that.$route.params.order_id)
-                .then(function (res) {
+            axios.get('/ncshop/shelf/order/' + that.$route.params.order_id)
+                .then(function(res) {
                     $('#sysLoading').hide();
                     if (res.data.status == 0) {
-                        let data=res.data.data.order;
-                        that.order.order_id=data.order_id;
-                        that.order.terminal_name=data.terminal.terminal_name;
-                        that.order.pay_fee=data.pay_fee/100;
-                        that.order.pay_at=data.pay_at;
-                        that.order.total_fee=data.total_fee/100;
+                        let data = res.data.data.order;
+                        that.order.order_id = data.order_id;
+                        that.order.terminal_name = data.shelf.name;
+                        that.order.pay_fee = data.pay_fee / 100;
+                        that.order.pay_at = data.pay_at;
+                        that.order.total_fee = data.total_fee / 100;
                         switch (data.pay_type) {
                             case 3:
-                                that.order.pay_type='支付宝支付';
+                                that.order.pay_type = '支付宝支付';
                                 break;
                             case 4:
-                                that.order.pay_type='微信支付';
+                                that.order.pay_type = '微信支付';
                                 break;
                             default:
-                                that.order.pay_type='支付宝支付';
+                                that.order.pay_type = '支付宝支付';
                                 break;
                         }
-                        let goodses=data.goodses;
-                        for(let i=0;i<goodses.length;i++){
-                            let obj=Object.create(null);
-                            obj.title=goodses[i].trading.title;
-                            obj.num=goodses[i].num;
-                            obj.pay_fee=goodses[i].total_fee
+                        let goodses = data.goodses;
+                        that.goods = [];
+                        for (let i = 0; i < goodses.length; i++) {
+                            let obj = Object.create(null);
+                            obj.title = goodses[i].trading.title;
+                            obj.num = goodses[i].num;
+                            obj.pay_fee = goodses[i].price;
                             that.goods.push(obj);
                         }
                     } else {
                         if (res.data.msg) _util.showErrorTip(res.data.msg);
                     }
-                }).catch(function (err) {
+                }).catch(function(err) {
                     $('#sysLoading').hide();
                     _util.showErrorTip('您的网络可能出了点问题:(');
                 })
