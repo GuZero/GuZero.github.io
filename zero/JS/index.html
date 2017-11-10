@@ -35,6 +35,25 @@
         my_file.addEventListener('change', function(e) {
             handFile(e.target.files[0])
         })
+        function getQueryStringArgs(){
+            var qs=(location.search.length>0?location.search.substring(1):''),
+                args={},
+                items=qs.length?qs.split("&"):[],
+                item=null,
+                name=null,
+                value=null,
+                i=null,
+                len=items.length;
+            for(i=0;i<len;i++){
+                item=items[i].split("=");
+                name=decodeURIComponent(item[0]);
+                value=decodeURIComponent(item[0]);
+                if(name.length){
+                    args[name]=value;
+                }
+            }
+            return args   
+        }
     </script>
 </body>
 

@@ -39,8 +39,13 @@
         }
         
         .container-item .item {
-            height: 32px;
-            line-height: 32px;
+            padding: 5px 0;
+        }
+        
+        .container-item .item .text {
+            word-break: break-all;
+            text-align: right;
+            width: 80%;
         }
         
         .container-item .item-content {
@@ -133,7 +138,7 @@
             </div>
             <div class="item flex-g flex-pack-justify">
                 <span>终端:</span>
-                <span>文锦花园格格货栈(深圳市)</span>
+                <span class="text">文锦花园格格货栈(深圳市)</span>
             </div>
             <div class="item-content">
                 运单号: <span class="color-b">3342035045253 </span>,收件: <span class="color-b">15013701266 </span>M0211 / 11号门 姓名:<span>15986667658</span> 电话:<span class="color-b">15986667658 </span>公司:申通 用户取出 2017-10-27 09:29:18 2017-10-27 12:58:36,用户少取一件，快递员确认投两件。
@@ -168,17 +173,6 @@
     </div>
     <script src="//cdn.bootcss.com/zepto/1.2.0/zepto.min.js"></script>
     <script>
-        function checkEmail(value) {
-            if (!value) {
-                return '邮箱不能为空';
-            }
-            var email_reg = /^[a-zA-Z0-9_-]+@([a-zA-Z0-9]+\.)+(com|cn|net|org)$/;
-            if (!email_reg.test(value)) {
-                return '请输入正确的邮箱';
-            }
-            return '';
-        }
-
         function showErrorTip(txt) {
             if (!txt) return false;
             var mgAlert = document.getElementById("mgAlert");
@@ -196,17 +190,7 @@
                 }, 300);
             }, 2000);
         }
-        $(document).ready(function() {
-            $('#submit').click(function() {
-                var user_email = $('#user_email').val(),
-                    check_msg = checkEmail(user_email);
-                if (check_msg != '') {
-                    showErrorTip(check_msg);
-                    return false;
-                }
-                console.log('1');
-            })
-        })
+        $(document).ready(function() {})
     </script>
 </body>
 
