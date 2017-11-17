@@ -52,10 +52,7 @@
             "select",
             "selectText",
             "options",
-            "optionJsonConfig",
-            "id",
-            "value"
-            
+            "optionJsonConfig"            
         ],
         methods: {
             setParentVar(value) {
@@ -80,6 +77,7 @@
 </script>
 
 <style lang="sass" scoped>
+    
     .filed {
         background-color: #fff;
         min-height: 54px;
@@ -95,7 +93,7 @@
         .text {
             left: 0;
             top: 0;
-            width: 88px;
+            width: 94px;
             padding: 16px 0;
         }
         .box {
@@ -110,6 +108,7 @@
                 top: 13px;
                 left: 0;
                 font-size: 13px;
+                padding-left:8px;
             }
             textarea {
                 height: 87px;

@@ -106,6 +106,29 @@
             font-size: 16px;
             color: #4285f4;
         }
+        .fail-info p{
+            text-align: center;
+            color: #4285f4;
+            line-height: 120px;
+        }
+         #submit {
+            height: 40px;
+            line-height: 40px;
+            font-size: 18px;
+            color: #fff;
+            border-radius: 25px;
+            width: 80%;
+            margin: 0 auto;
+            background: #4285f4;
+            text-align: center;
+        }
+        
+        #submit:active {
+            background: #6398ee;
+        }
+        .hide{
+            display: none;
+        }
     </style>
 </head>
 
@@ -150,7 +173,7 @@
         </div>
     </div>
     <div class="h8"></div>
-    <div class="info">
+    <div class="info hide">
         <div class="info-title flex-g flex-pack-justify">
             <span class="f15">申请信息</span>
             <a href="javascript:;">详细说明</a>
@@ -170,6 +193,12 @@
                 <span class="item-title">已完成</span>
             </div>
         </div>
+    </div>
+    <div class="fail-info">
+        <p>支付失败请重新支付</p>
+          <div id="submit">
+              重新支付
+          </div>
     </div>
     <script src="//cdn.bootcss.com/zepto/1.2.0/zepto.min.js"></script>
     <script>

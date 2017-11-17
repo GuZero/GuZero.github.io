@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <img id="dragImg" draggable="true" />
+    <div id="dragTarget"></div>
+    <script>
+        document.getElementById("dragImg").addEventListener("dragstart", function(event) {
+            event.dataTransfer.setData("Text", ev.target.id);
+        }, false);
+        document.getElementById("dragTarget").addEventListener("dragenter", function(event) {
+            event.preventDefault();
+        }, false);
+        document.getElementById("dragTarget").addEventListener("dragover", function(event) {
+            event.preventDefault()
+        }, false);
+        document.getElementById("dragTarget").addEventListener("drop", function(event) {
+            event.preventDefault();
+            var data = event.dataTransfer.getData("Text");
+            event.target.appendChild(document.getElementById(data))
+        }, false)
+    </script>
+</body>
+
+</html>

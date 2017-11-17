@@ -35,15 +35,20 @@
 </head>
 
 <body>
-    <div class="input-dev">
+    <div class="input-dev" id="btn">
         上传图片
         <input type="file" id="files">
     </div>
-    <img src="./blank.jpg" id="preview">
+    <img src="/blank.jpg" id="preview">
     <script>
         var ipt = document.getElementById('files'),
             img = document.getElementById('preview'),
+            btn=document.getElementById('btn'),
             Orientation = null;
+        btn.onclick=function(){
+            console.log('1')
+            // ipt.click();
+        }
         ipt.onchange = function() {
             var file = ipt.files[0],
                 reader = new FileReader(),

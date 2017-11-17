@@ -169,12 +169,12 @@
         },
         created() {
             window.canGoBack = true;
-            window.origin = "terminal";
+            // window.origin = "terminal";
 
         },
         activated() {
             window.canGoBack = true;
-            window.origin = "terminal";
+            // window.origin = "terminal";
             let that = this;
             that.terminal_name = '';
             that.terminal_code = '';

@@ -4,19 +4,10 @@
             :title="pageTitle"
         )
         div.mt44.pb60(style="margin-top: 52px;")
+            Field(tag="终端名称", placeholder="请输入终端名称（必填）", v-model="terminalName", :input="true", @changeCallback="goInfo", readonly="readonly",autocomplete="new-password" )
+            Field(tag="报修人", placeholder="手机号", :input="true",v-model.trim="report")
             Field(
-                tag="工单类型",
-                v-model="ordertype",
-                placeholder="请选择（必选）",
-                :optionJsonConfig="{valuename: 'id', textname: 'name', idname: 'id'}",
-                :options="ordertypes",
-                :selectText="ordertype",
-                :select="true",
-                :arrow="true",
-                @input="getID"
-            )
-            Field(
-                tag="分类",
+                tag="现场现象",
                 v-model="scene",
                 placeholder="请选择（必选）",
                 :optionJsonConfig="{valuename: 'id', textname: 'name', idname: 'id'}",
@@ -26,13 +17,10 @@
                 :arrow="true",
                 @input="getValue",
                 @changeCallback="testChange"
-            )
-            Field(tag="终端名称", placeholder="请输入终端名称（必填）", v-model="terminalName", :input="true", @changeCallback="goInfo", readonly="readonly",autocomplete="new-password" )
-            //- Field(tag="故障等级", :pvalue="fault", :p="true")
-            Field(tag="标题",:input="true",v-model.trim="title")
-            Field(tag="问题描述", placeholder="请输入问题描述", v-model.trim="desc", :textarea="true", autocomplete="new-password")
+            )            
+            Field(tag="故障等级", :pvalue="fault", :p="true")
             Field(tag="超时设置", placeholder="请选择超时间", :input="true", v-model="date", type="datetime-local")
-            Field(tag="报修人", placeholder="手机号", :input="true",v-model.trim="report")
+            Field(tag="问题描述", placeholder="请输入问题描述", v-model.trim="desc", :textarea="true", autocomplete="new-password")
             Field(tag="通知用户", placeholder="用户手机号(非必填)", :input="true",v-model.trim="customer_mobile")
         SubmitBtn(@submitCallback="submitFun", text="提交", theme="white")
 
@@ -49,13 +37,12 @@
         data() {
             return {
                 bodyBg: 'dark',
-                pageTitle: '创建/修改工单',
+                pageTitle: '柜子运维工单',
                 ordertype: '',
                 ordertypes: [],
-                terminalName: "",
+                terminalName:'',
                 scene: '',
                 scenes: [],
-                // fault: '（系统根据现场现象自动选择）',
                 desc: '',
                 val: '',
                 project_id: '',
@@ -84,7 +71,7 @@
                 window.localStorage.setItem('terminal_code', "");
             }
             //获取现场现象
-            this.getInfo();
+            this.getInfo();            
         },
         activated() {
             window.canGoBack = true;
@@ -92,19 +79,18 @@
         },
         watch: {
             '$route': function() {
-                if (this.$route.path == ('/order/edit')) {
+                if (this.$route.path == ('/order/maintain')) {
                     //清空页面内容
-                    this.ordertypes = [];
+                    this.ordertypes = [];                   
                     if (!localStorage.terminal_name) {
                         this.scene = '请选择（必选）';
                         this.scenes = [];
                     }
-                    // this.fault = '';
                     this.date = '';
                     this.desc = '';
                     this.title = '';
                     this.report = '';
-                    this.customer_mobile = '';
+                    this.customer_mobile = '';  
                     this.getInfo();
                     localStorage.terminal_name = ''
                 }
@@ -128,10 +114,6 @@
                     _util.showErrorTip('请输入问题描述！');
                     return false;
                 };
-                //                if (!this.date) {
-                //                    _util.showErrorTip('请输入超时时间！');
-                //                    return false;
-                //                };
                 if (!this.report) {
                     _util.showErrorTip('请输入报修人手机号！');
                     return false;
@@ -145,7 +127,7 @@
                         project_id: this.project_id,
                         pid: 0,
                         type: this.val,
-                        terminal_code: localStorage.terminal_code,
+                        terminal_code: terminal_code,
                         title: this.title,
                         content: this.desc,
                         report: this.report,
@@ -175,7 +157,7 @@
                     _util.showErrorTip('您的网络可能出了点问题:(');
                 })
             },
-            /*testChange() {
+            testChange() {
                 for (let i = 0; i < this.scenes.length; i++) {
                     for (let item in this.scenes[i]) {
                         if (item == 'id') {
@@ -199,16 +181,12 @@
                         }
                     }
                 }
-            },*/
-            //获取工单类型ID
-            getID(val) {
-                this.project_id = val;
             },
             getValue(val) {
                 this.val = val;
             },
             goInfo() {
-                this.url('/searchterminal');
+               this.url('/searchterminal');
             },
             setDate(str) {
                 let x = str,
@@ -227,18 +205,15 @@
                 var arry = []
                 for (var key of Object.keys(data)) {
                     let obj = Object.create(null);
-                    obj.id=key;
-                    obj.name=data[key];
+                    obj.id = key;
+                    obj.name = data[key];
                     arry.push(obj);
                 }
                 return arry
             },
-            getInfo() {
-                this.ordertypes = [{
-                    id: '1',
-                    name: '柜子运维'
-                }];
+            getInfo() {   
                 this.terminalName = localStorage.terminal_name;
+                this.project_id=this.$route.query._id;
                 let that = this;
                 //获取现场现象
                 _util.showSysLoading();

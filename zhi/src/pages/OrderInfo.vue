@@ -88,7 +88,11 @@
             SubmitBtn
         },
         watch: {
-            '$route': 'getData'
+            '$route':function(){
+                if(this.$route.path == ('/order/' + this.$route.params.id)){
+                    this.getData();
+                }
+            }
         },
         mounted() {
             window.canGoBack = true;
@@ -142,7 +146,7 @@
             },
             delete() {
               let that=this;
-              axios.post(ajaxUrls.orderinfo + that.$route.params.id, {
+              axios.post(ajaxUrls.orderinfo+ that.$route.params.id+'/delete' , {
               }, {
                   withCredentials: true,
                   headers: {
@@ -185,17 +189,11 @@
                 });
             },
             getData() {
-                let that = this,
-                    uid=localStorage.userJson.uid;
-                if (!(that.$route.path == ('/order/' + that.$route.params.id))) {
-                    return false;
-                }
+                let that = this;
                 _util.showSysLoading();
                 getAjaxRequest("order_cache", ajaxUrls.orderinfo + that.$route.params.id, that.version, 10 * 1000, 0.5 * 60 * 60 * 1000, function(response) {
                     _util.hideSysLoading();
                     if (response.status == 0) {
-                        console.log(response.data);
-
                         that.username = response.data.creator.realname;
                         that.project = response.data.project_desc;
                         that.data.terminalName = response.data.terminal_name;
@@ -248,7 +246,6 @@
                     _util.showErrorTip('您的网络可能出了点问题:(');
                 });
             }
-
         }
     }
 

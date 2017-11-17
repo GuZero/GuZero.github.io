@@ -5,8 +5,8 @@
         )
         div(style="margin-top:50px;padding-left:16px;color:#828282") {{name}}
         div.pb60
-            Field.border(tag="跟进说明", placeholder="可以补充最新故障说明或者问题描述或者给出预处理时间", v-model.trim="content", :textarea="true")
-            Field.border(
+            Field(tag="跟进说明", placeholder="可以补充最新故障说明或者问题描述或者给出预处理时间", v-model.trim="content", :textarea="true")
+            Field(
                   tag="通知用户",
                   v-model="customer_mobile",
                   placeholder="请输入用户手机号（非必填）",

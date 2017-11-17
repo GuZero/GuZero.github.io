@@ -5,13 +5,13 @@
         )
         div(style="margin-top:50px;padding-left:16px;color:#828282") {{name}}
         div.pb60
-            Field.border(tag="姓名：",
+            Field(tag="姓名：",
          placeholder="请选择转发人员姓名",
          v-model="userName", :input="true",
         @changeCallback="gotoTerminal",
         readonly="readonly",
         autocomplete="new-password" )
-            Field.border(tag="备注：", placeholder="转发描述", v-model.trim="desc", :textarea="true")
+            Field(tag="备注：", placeholder="转发描述", v-model.trim="desc", :textarea="true")
             ModalDialog(ref="confirmModal", @confirmCallback="deal")
         SubmitBtn(@submitCallback="submitFun", text="提交", theme="white")
 
@@ -31,7 +31,7 @@
                 bodyBg: 'gray',
                 pageTitle: '转发',
                 userName: '',
-                name:'',
+                name: '',
                 userID: '',
                 desc: '',
                 _id: this.$route.query._id || '',
@@ -49,9 +49,9 @@
             window.canGoBack = true;
             window.origin = null;
             //请求数据
-            if (localStorage.user_Name||localStorage.user_ID) {
+            if (localStorage.user_Name || localStorage.user_ID) {
                 this.userName = "";
-                this.userID="";
+                this.userID = "";
             } else {
                 window.localStorage.setItem('user_Name', "");
                 window.localStorage.setItem('user_ID', "");
@@ -62,33 +62,33 @@
             window.canGoBack = true;
             window.origin = null;
         },
-       watch: {
-         '$route': function() {
-             if (this.$route.path == ('/order/forward')) {
-                this.desc='';
-                this.getInfo();
-                localStorage.user_Name = '';
-                localStorage.user_ID= '';
-             }
-         }
-       },
+        watch: {
+            '$route': function() {
+                if (this.$route.path == ('/order/forward')) {
+                    this.desc = '';
+                    this.getInfo();
+                    localStorage.user_Name = '';
+                    localStorage.user_ID = '';
+                }
+            }
+        },
         methods: {
             submitFun() {
-              let that=this;
-              if (!that.userName) {
-                  _util.showErrorTip('请选择要输入的转发的姓名');
-                  return false;
-              };
-              if (!that.desc) {
-                  _util.showErrorTip('请输入问题备注！');
-                  return false;
-              };
-              this.$refs.confirmModal.showModal({
-                  text: '确认是否转发给' + that.userName + '为处理？'
-              });
+                let that = this;
+                if (!that.userName) {
+                    _util.showErrorTip('请选择要输入的转发的姓名');
+                    return false;
+                };
+                if (!that.desc) {
+                    _util.showErrorTip('请输入问题备注！');
+                    return false;
+                };
+                this.$refs.confirmModal.showModal({
+                    text: '确认是否转发给' + that.userName + '为处理？'
+                });
             },
-            gotoTerminal(){
-              this.url('/transmit');
+            gotoTerminal() {
+                this.url('/transmit');
             },
             getInfo() {
                 let that = this;
@@ -106,15 +106,15 @@
                 });
             },
             deal() {
-                let  data={
-                    owner_id:this.userID,
-                    priority:'1',
-                    content:this.desc
-                },
+                let data = {
+                        owner_id: this.userID,
+                        priority: '1',
+                        content: this.desc
+                    },
                     that = this;
                 axios.post(ajaxUrls.orderinfo + that.$route.query._id + '/deal', {
-                    action:'forward',
-                    data:data
+                    action: 'forward',
+                    data: data
                 }, {
                     withCredentials: true,
                     headers: {
@@ -139,8 +139,9 @@
 
 </script>
 <style lang="sass" scoped>
-    .border{
+    .border {
         border-bottom: 1px solid #ccc;
-        border-top:1px solid #ccc;
+        border-top: 1px solid #ccc;
     }
+
 </style>

@@ -707,3 +707,45 @@ input[type="datetime-local"] {
     -webkit-appearance: none;
     border: none;
 }
+
+.flex-g {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+.flex-wrap {
+    -webkit-flex-wrap: wrap;
+    -moz-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+.flex-justify-center {
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+
+.flex-justify-between {
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+}
+
+.flex-justify-around {
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-around;
+    -ms-flex-pack: justify;
+    justify-content: space-around;
+}
+
+.flex-align-center {
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+}

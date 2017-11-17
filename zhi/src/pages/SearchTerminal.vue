@@ -8,7 +8,6 @@
             placeholder='搜索终端名称',
             v-model="terminalName",
             @searchInfo="searchTerminal(1)",            
-            @changeCallback="a"
         )
         div.mt44.pt50.pb60
             div.areas.rel(v-for="t in terminals", @click.stop.prevent="goToInfo(t)")
@@ -56,17 +55,20 @@
             window.canGoBack = true;
             window.origin = null;
             this.loadTerminalData();
-            window.addEventListener('scroll', this.handleScroll);
+            $(document).on("scroll",this.handleScroll);
         },
         activated() { //开启<keep-alive>，会触发activated事件
             // this.resetScrollTop();
             window.canGoBack = true;
             window.origin = null;
-            window.addEventListener('scroll', this.handleScroll);
+        },
+         beforeRouteLeave: (to, from, next) => {
+            $(document).off("scroll",this.handleScroll);
+            next();
         },
         methods: {
             handleScroll() { //滚动加载监听事件
-                if (document.body.scrollTop + window.innerHeight >= document.body.scrollHeight - 1) {
+                if (($(document).scrollTop()+ window.innerHeight) >= document.body.scrollHeight - 1) {
                     this.loadTerminalData();
                 }
             },
@@ -181,7 +183,7 @@
             goToInfo(item) {
                 localStorage.terminal_code = item.terminal_code;
                 localStorage.terminal_name = item.terminal_name;
-                this.$router.replace('/order/edit');
+                this.$router.go(-1);
                 return {
 
                 };
