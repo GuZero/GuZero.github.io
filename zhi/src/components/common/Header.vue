@@ -28,10 +28,34 @@
             @click.prevent.stop="$emit('finishBtnCallback')",
             style="right: 0;"
         )
+        a.icmore(
+            v-if="hasConfig? btnconfig.ismore: false",
+            @click.prevent.stop="$emit('moreBtnCallback')",
+            style="right: 0;"
+        )
+        a.icset(
+            v-if="hasConfig? btnconfig.isset: false",
+            @click.prevent.stop="$emit('setBtnCallback')",
+            style="right: 0;"
+        )
+        a.icbatch(
+            v-if="hasConfig? btnconfig.isbatch: false",
+            @click.prevent.stop="$emit('batchBtnCallback')",
+            style="right: 0;"
+        ) 批量清柜
+        a.icend(
+            v-if="hasConfig? btnconfig.isend: false",
+            @click.prevent.stop="$emit('endBtnCallback')",
+            style="right: 0;"
+        ) 结束收货
         a.iclogout(
             v-if="hasConfig? btnconfig.islogout: false",
             @click.prevent.stop="$emit('logoutBtnCallback')"
         ) 退出
+        a.text-more(
+            v-if="hasConfig? btnconfig.is_more: false",
+            @click.prevent.stop="$emit('moreBtnCallback')"
+        ) 更多
 </template>
 
 <script>
@@ -50,6 +74,7 @@
             };
         },
         created() {
+            document.title = this.title;
             if (this.ismsg) {
                 this.fetchData();
             }

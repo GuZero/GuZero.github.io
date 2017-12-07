@@ -28,7 +28,8 @@
 				hideText: false,
 				buttons: 2,
 				showCancelBtn: true,
-				showConfirmBtn: true
+				showConfirmBtn: true,
+				timer: null
 			};
 		},
 		methods: {
@@ -38,16 +39,25 @@
 				if (options.cancelText) this.cancelText = options.cancelText;
 				if (options.confirmText) this.confirmText = options.confirmText;
 				if (!options.cancelText || !options.confirmText) this.buttons = 1;
-				if (!options.cancelText && !options.confirmText) this.buttons = 2;
+				if (!options.cancelText && !options.confirmText || (options.cancelText && options.confirmText)) this.buttons = 2;
 				if (!options.cancelText && options.confirmText) this.showCancelBtn = false;
 				if (options.cancelText && !options.confirmText) this.showConfirmBtn = false;
+				if (options.cancelText && options.confirmText) {
+					this.showConfirmBtn = true;
+					this.showCancelBtn = true;
+				}
 				if (options.hideTitle) this.hideTitle = options.hideTitle;
 				if (options.hideText) this.hideText = options.hideText;
 			},
 			showModal(options) {
 				let $ele = this.$el,
 					$layer = $ele.children[0],
-					$modal = $ele.children[1];
+					$modal = $ele.children[1],
+					that = this;
+					if (that.timer) {
+						clearTimeout(that.timer);
+						that.timer = null;
+					}
 				this.resetModalOptions(options);
 				$layer.addClassName('modal-layer-visible');
 				$modal.removeClassName('modal-out').removeClassName('hidden').addClassName('visible modal-in');
@@ -55,11 +65,13 @@
 			closeModal() {
 				let $ele = this.$el,
 					$layer = $ele.children[0],
-					$modal = $ele.children[1];
+					$modal = $ele.children[1],
+					that = this;
 				$layer.removeClassName('modal-layer-visible');
 				$modal.removeClassName('modal-in').addClassName('modal-out');
-				setTimeout(function() {
+				that.timer= setTimeout(function() {
 					$modal.addClassName('hidden');
+					that.timer = null;
 				}, 430);
 			},
             confirmHandle() {
@@ -138,12 +150,14 @@
 		&-title {
 			font-size: 18px;
 			text-align: center;
+			padding-top: 5px;
 			& p {
 				margin: 0;
 			}
 		}
 		&-text {
-			margin-top: 5px;
+			padding: 12px 0;
+			font-size: 16px;
 		}
 		&-button {
 			width: 100%;

@@ -1,44 +1,73 @@
 <template>
   <div id="app">
-   <p>{{count}}</p>
-   <p>
-      <button @click="increment">+</button>
-      <button @click="decrement">-</button>
-   </p>
+    <swipe class="my-swipe">
+      <swipe-item v-for="item in swipeInfo" :key="item.id">
+          <a :href="item.href">
+              <img :src="item.imgSrc">
+          </a>
+      </swipe-item>
+    </swipe>
   </div>
 </template>
-
 <script>
+require('vue-swipe/dist/vue-swipe.css');
+import {Swipe,SwipeItem} from 'vue-swipe'
 export default {
   name: 'app',
   data(){
     return{
-      count:0
+        show:true,
+        swipeInfo:[{
+            id:0,
+            href:'//www.baidu.com',
+            imgSrc:'//covteam.u.qiniudn.com/test21.jpg'
+        },{
+            id:1,
+            href:'//www.baidu.com',
+            imgSrc:'//covteam.u.qiniudn.com/test18.jpg'
+        },{
+            id:2,
+            href:'//www.baidu.com',
+            imgSrc:'//covteam.u.qiniudn.com/test19.jpg'
+        }]
     }
   },
-  computed:{
-    count(){
-      return this.$store.state.count
-    }
+  components: {
+      swipe:Swipe,
+      swipeItem:SwipeItem
   },
-  methods: {
-    increment(){
-      this.$store.commit('increment')
+  methods:{
+    close(){
+      this.show=false;
     },
-    decrement(){
-      this.$store.commit('decrement')
+    submit(){
+      this.show=false;
     }
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+  .my-swipe {
+    height: 200px;
+    color: #fff;
+    font-size: 30px;
+    text-align: center;
+  }
+  img{
+      width: 100%;
+      height: 100%;
+  }
+  .slide1 {
+    background-color: #0089dc;
+    color: #fff;
+  }
+  .slide2 {
+    background-color: #ffd705;
+    color: #000;
+  }
+  .slide3 {
+    background-color: #ff2d4b;
+    color: #fff;
+  }
 </style>

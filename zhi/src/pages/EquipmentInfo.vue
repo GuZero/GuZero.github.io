@@ -1,43 +1,48 @@
 <template lang="jade">
     div.equipmentinfo.pb60
         HeaderBar(
-        :title="pageTitle",
-        origin="terminal"
+        :title="pageTitle"
         )
-        template(v-if="isNoNetwork")
-            div.no-network
-                img.no-network-img(src='//img.aimoge.com/Fm6Kur5_5IsfnlIiRR2nErPqZkwE')
-                div.no-network-info 暂无网络
-                div.reload(@click.stop.prevent="fetchData") 重新加载
-        template(v-if="!isNoNetwork")
-            div.boxlist.mt44
-                div.title 箱柜列表
-                ul
-                    li.item(v-for='(item,index) in bins',:key="item.rack_id")
-                        div.item-info
-                            label.label {{item.position}}
-                            template(v-if="item.asset_num")
-                                p.info.ellipsis {{item.asset_num}}
-                            template(v-if="!item.asset_num")
-                                p.info.unactive 未填写
-            div.device
-                div.title 其他设备
-                ul
-                    li.item(v-for='(item,index) in other',:key="item.id")
-                        div.item-info
-                            label.label {{item.name}}
-                            template(v-if="item.asset_num")
-                                p.info.ellipsis(@click.stop.prevent="goToEidtEquipment('device_id',item.id,item.asset_num)") {{item.asset_num}}
-                            template(v-if="!item.asset_num")
-                                p.info.unactive(@click.stop.prevent="goToEidtEquipment('device_id',item.id,item.asset_num)") 未填写
-                            i.scan(@click.stop.prevent="goToScan('device_id',item.id,index)")
+        div.mt44
+            NoNetwork(v-show="isNoNetwork && !scroll_load_loading",@fetchDataCallBack="fetchData")
+            div(v-show="!isNoNetwork && !scroll_load_loading")
+                div.boxlist
+                    div.title 箱柜列表
+                    ul
+                        li.item(v-for='(item,index) in bins',:key="item.rack_id")
+                            div.item-info.flex.flex-align-center
+                                label.label {{item.position}}
+                                template(v-if="item.asset_num")
+                                    div.type_box(@click="goToViewType(item,$event)",:class="{s1:item.status==0,s2:item.status>0}")
+                                        i.type_img
+                                        div 查看
+                                    p.info.ellipsis.flexmodel(@click.stop.prevent="goToEidtEquipment('rack_id',item.rack_id,item.asset_num,$event)") {{item.asset_num}}
+                                template(v-if="!item.asset_num")
+                                    div 查看
+                                    p.info.unactive.flexmodel(@click.stop.prevent="goToEidtEquipment('rack_id',item.rack_id,item.asset_num,$event)") 未填写
+                                i.scan(@click.stop.prevent="goToScan('rack_id',item.rack_id,index,$event)")
+                div.device
+                    div.title 其他设备
+                    ul
+                        li.item(v-for='(item,index) in other',:key="item.id")
+                            div.item-info
+                                label.label {{item.name}}
+                                template(v-if="item.asset_num")
+                                    p.info.ellipsis(@click.stop.prevent="goToEidtEquipment('device_id',item.id,item.asset_num,$event)") {{item.asset_num}}
+                                template(v-if="!item.asset_num")
+                                    p.info.unactive(@click.stop.prevent="goToEidtEquipment('device_id',item.id,item.asset_num,$event)") 未填写
+                                i.scan(@click.stop.prevent="goToScan('device_id',item.id,index,$event)")
+            DataLoading(ref="loading")
         TransmitFooter(:footerconfig="footerconfig",:terminal_id="terminal_id")
         ModalDialog(ref="aboutModal")
 </template>
 <script>
     import HeaderBar from '../components/common/Header'
     import TransmitFooter from '../components/common/TransmitFooter'
-    import ModalDialog from '../components/elements/ModalDialog';
+    import ModalDialog from '../components/elements/ModalDialog'
+    import NoNetwork from '../components/elements/NoNetwork'
+    import DataLoading from '../components/common/DataLoading'
+
     export default {
         mixins: [require('../components/mixin/BodyBg')],
         data() {
@@ -52,35 +57,45 @@
                 current_type: '',
                 current_index: '',
                 isNoNetwork: false,
+                scroll_load_loading: false,
                 footerconfig: {
                     isequipment: true
                 }
             }
         },
-
-        activated() {
+        created(){
             window.canGoBack = true;
-            // window.origin = "terminal";
+        },
+        mounted(){
             this.fetchData();
         },
         components: {
             HeaderBar,
             TransmitFooter,
-            ModalDialog
+            NoNetwork,
+            ModalDialog,
+            DataLoading
         },
         methods:{
+            showLoading() { //显示正在加载数据状态
+                this.scroll_load_loading = true;
+                this.$refs.loading && this.$refs.loading.showLoading();
+            },
+            hideLoading() { //隐藏正在加载数据状态
+                this.scroll_load_loading = false;
+                this.$refs.loading && this.$refs.loading.hideLoading();
+            },
             fetchData() {
                 let that = this;
                 that.bins=[].concat();
                 that.other=[].concat();
-                that.isNoNetwork = false;
                 that.terminal_id = that.$route.params.code;  
-                _util.showSysLoading();
+                that.showLoading();
                 setTimeout(function () {
                     getAjaxRequest("terminal_cache",ajaxUrls.basic + that.$route.params.code + '?info=device',that.version,20*1000,6*60*60*1000,
                         function (response) {
-                            _util.hideSysLoading();
-
+                            that.hideLoading();
+                            that.isNoNetwork = false;
                             if (response.status == 0) {
                                that.bins = response.data.bins.concat();
                                that.other= response.data.other.concat();                    
@@ -89,33 +104,33 @@
                             }
                         },
                         function (error) {
-                            _util.hideSysLoading();
-                            _util.showErrorTip('您的网络可能出了点问题:(');
+                            that.hideLoading();
+                            // _util.showErrorTip('您的网络可能出了点问题:(');
                             that.isNoNetwork = true;
                         })
                 },0);
             },
-            goToEidtEquipment(type,_id,info) {
+            goToViewType(_item,e){
+                this.url('/terminal/'+this.terminal_id+'/equipmentinfo/'+_item.rack_id);
+            },
+            goToEidtEquipment(type,_id,info,e) {
                 if (type == "rack_id") {
                     this.url('/terminal/'+this.terminal_id+'/equipmentinfo/edit',{rack_id:_id,asset_num:info})
                 }else{
                     this.url('/terminal/'+this.terminal_id+'/equipmentinfo/edit',{device_id:_id,asset_num:info})
                 }
             },
-            goToScan(type,_id,index) {
+            goToScan(type,_id,index,e) {
                 this.current_type = type;
                 this.current_id=_id;
                 this.current_index=index;
                 var that = this;
-//                if (_util.isIOS()) {
-//                    if (window.webkit && window.webkit.messageHandlers) {
-//                        window.webkit.messageHandlers.startQRScan.postMessage();
-//                    }
-//                }else{
+
                     if (window.mogeItsupport) {
                         window.mogeItsupport.startQRScan();
+                    }else{
+                        _util.showErrorTip('请使用APP进行此操作！');
                     }
-//                }
                 window.QRScanSuccess = function(result){
                     window.QRScanSuccess = undefined;
                     that.saveEquipment(result);
@@ -205,31 +220,6 @@
             color: #747474;
             padding: 0 16px;
         }
-        .no-network {
-            padding-top: 159px;
-            .no-network-img {
-                display: block;
-                width: 122px;
-                height: 122px;
-                margin: 0 auto 16px;
-            }
-            .no-network-info {
-                font-size: 14px;
-                color: #6e6e6e;
-                text-align: center;
-            }
-            .reload{
-                margin: 42px auto 0;
-                background: #07689f;
-                height: 40px;
-                line-height: 40px;
-                width: 160px;
-                color: #fff;
-                font-size: 16px;
-                text-align: center;
-                border-radius: 24px;
-            }
-        }
         ul{
             padding-left: 16px;
             background-color: #fff;
@@ -273,6 +263,33 @@
                     .info.unactive{
                         color: #cfcfcf;
                     }
+                    .type_box{
+                        width: 30px;
+                        min-width: 30px;
+                        text-align: center;
+                        line-height: 16px;
+                        margin-right: 12px;
+                        .type_img{
+                            display: inline-block;
+                            width: 14px;
+                            height: 14px;
+                            background-size: 100%;
+                            background-repeat: no-repeat;
+                        }
+                        &.s1{
+                            color: #a4d748;
+                            .type_img{
+                                background-image: url("//img.aimoge.com/FoSwqghIf_uF504pPDsAEWTbBTJ_");
+                            }
+                        }
+                        &.s2{
+                            color: #d75a48;
+                            .type_img{
+                                background-image: url("//img.aimoge.com/Fs3sPZGoiBl2zPIi_FS7yOrCw_15");
+                            }
+                        }
+                    }
+                    
                 }
                 .scan {
                     content: '';

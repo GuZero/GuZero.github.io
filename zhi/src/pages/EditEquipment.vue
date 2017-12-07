@@ -41,19 +41,8 @@
             window.canGoBack = true;
             window.origin = null;
         },
-        activated() {
-            window.canGoBack = true;
-            window.origin = null;
-        },
         components: {
             HeaderBar
-        },
-        watch: {
-          '$route': function (route) {
-                this.rack_id = this.$route.query.rack_id;
-                this.device_id = this.$route.query.device_id;
-                this.asset_num = this.$route.query.asset_num;
-            }
         },
         methods: {
             goToFinish() {
@@ -83,7 +72,8 @@
                 }).then(function(rsp) {
                     _util.hideSysLoading();
                     if (rsp.data.status == 0) {
-                        that.url('/terminal/'+that.$route.params.code + '/equipmentinfo');
+                        // that.url('/terminal/'+that.$route.params.code + '/equipmentinfo');
+                        that.$router.go(-1);
                     } else {
                         if (rsp.data.msg) _util.showErrorTip(rsp.data.msg);
                     }

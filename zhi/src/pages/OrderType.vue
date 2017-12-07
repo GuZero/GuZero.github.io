@@ -59,25 +59,9 @@
             ModalDialog,
             SubmitBtn
         },
-        watch: {
-            '$route': function() {
-                if (this.$route.path == ('/order/type')) {
-                    this.scene = '请选择（必选）';
-                    this.ordertype = '请选择（必选）';
-                    this.ordertypes = [];
-                    this.scenes = [];
-                    this.getInfo();
-                }
-            }
-        },
         mounted() {
             window.canGoBack = true;
             window.origin = null;
-            if (!localStorage.type_name) {
-                window.localStorage.setItem('type_name', '')
-            } else {
-                localStorage.type_name = '';
-            }
             this.getInfo();
         },
         activated() {
@@ -148,18 +132,19 @@
                 };
                 let id = this.project_id,
                     that = this;
-                localStorage.type_name = that.type[id]['0'][that.scene];
                 switch (id) {
                     case '1':
                         this.url('/order/maintain', {
                             _id: id,
-                            type_id: that.type_id
+                            type_id: that.type_id,
+                            type_name:that.type[id]['0'][that.scene]
                         })
                         break;
                     case '2':
                         this.url('/order/operation', {
                             _id: id,
-                            type_id: that.type_id
+                            type_id: that.type_id,
+                            type_name:that.type[id]['0'][that.scene]
                         })
                         break;
                     case '3':
@@ -171,7 +156,8 @@
                     case '4':
                         this.url('/order/cooperate', {
                             _id: id,
-                            type_id: that.type_id
+                            type_id: that.type_id,
+                            type_name:that.type[id]['0'][that.scene]
                         })
                         break;
                     default:

@@ -1,5 +1,5 @@
 <template lang="jade">
-    div.create-order
+    div.search-terminal
         HeaderBar(
             :title="pageTitle"
         )
@@ -7,13 +7,18 @@
             class="top44 fixed",
             placeholder='搜索终端名称',
             v-model="terminalName",
-            @searchInfo="searchTerminal(1)",            
+            @searchInfo="searchTerminal",            
         )
         div.mt44.pt50.pb60
-            div.areas.rel(v-for="t in terminals", @click.stop.prevent="goToInfo(t)")
-                div.div
-                   div.title.rel {{ t.terminal_name }}
-                   div.line.rel {{ t.terminal_code }}
+            NoNetwork(v-show="isNoNetwork && !scroll_load_loading",@fetchDataCallBack="loadTerminalData")
+            div(v-show="!isNoNetwork")
+                div.empty(v-if="!terminals.length && !scroll_load_loading")
+                    img.empty-img( src="//img.aimoge.com/FuBwJB9xafDv2zrrJWQDq3sKYXyp")
+                    p.empty-info 暂无终端
+                div.areas.rel(v-for="t in terminals", @click.stop.prevent="goToInfo(t)")
+                    div.div
+                       div.title.rel {{ t.terminal_name }}
+                       div.line.rel {{ t.terminal_code }}
             DataLoading(ref="loading")
 </template>
 
@@ -21,6 +26,7 @@
     import HeaderBar from '../components/common/Header'
     import Search from '../components/common/Search'
     import DataLoading from '../components/common/DataLoading'
+    import NoNetwork from '../components/elements/NoNetwork'
 
     export default {
         mixins: [require('../components/mixin/BodyBg')],
@@ -32,44 +38,53 @@
                 page: 1,
                 pageList: [],
                 terminals: [],
-                scrollTop: 0,
                 scroll_load_loading: false,
                 scroll_load_end: false,
-                //搜索结果状态
-                tn_page: 1,
-                tn_pageList: [],
-                tn_terminals: [],
-                tn_scrollTop: 0,
-                tn_scroll_load_loading: false,
-                tn_scroll_load_end: false,
-                tn_delay: null,
-                userID: ''
+                delay: null,
+                NoNetwork: false
             }
         },
         components: {
             HeaderBar,
             Search,
-            DataLoading
+            DataLoading,
+            NoNetwork
+        },
+        created() { //开启<keep-alive>，会触发activated事件
+            window.canGoBack = true;
+            window.origin = null;
         },
         mounted() {
-            window.canGoBack = true;
-            window.origin = null;
             this.loadTerminalData();
-            $(document).on("scroll",this.handleScroll);
-        },
-        activated() { //开启<keep-alive>，会触发activated事件
-            // this.resetScrollTop();
-            window.canGoBack = true;
-            window.origin = null;
+            window.addEventListener('scroll', this.handleScroll);
         },
          beforeRouteLeave: (to, from, next) => {
-            $(document).off("scroll",this.handleScroll);
+            window.removeEventListener('scroll', this.handleScroll);
             next();
         },
         methods: {
             handleScroll() { //滚动加载监听事件
-                if (($(document).scrollTop()+ window.innerHeight) >= document.body.scrollHeight - 1) {
+                let scrollTop =document.body.scrollTop || document.documentElement.scrollTop;
+                if (scrollTop + window.innerHeight >= document.body.scrollHeight - 1) {
                     this.loadTerminalData();
+                }
+            },
+            isLoading() { //是否已显示“正在加载数据状态”节点
+                this.$refs.loading && this.$refs.loading.isLoading();
+            },
+            showLoading() { //显示正在加载数据状态
+                this.scroll_load_loading = true;
+                this.$refs.loading && this.$refs.loading.showLoading();
+            },
+            hideLoading() { //隐藏正在加载数据状态
+                this.scroll_load_loading = false;
+                this.$refs.loading && this.$refs.loading.hideLoading();
+            },
+            showLoadEnd() { //显示没有更多数据状态
+                this.hideLoading();
+                this.scroll_load_end = true;
+                if (this.terminals.length) {
+                    this.$refs.loading && this.$refs.loading.showEnd();
                 }
             },
             loadTerminalData() {
@@ -89,6 +104,7 @@
                 that.scroll_load_loading = true;
                 getAjaxRequest("order_cache", ajaxUrls.searchTerminal + _key.trim() + "&page=" + page, that.version, 2 * 60 * 1000, 6 * 60 * 60 * 1000, function(response) {
                     that.hideLoading();
+                    that.isNoNetwork = false;
                     if (response.status == 0) {
                         that.scroll_load_loading = false;
                         if (response.data && response.data.length) {
@@ -107,101 +123,30 @@
                     }
                 }, function(error) {
                     that.hideLoading();
+                    that.isNoNetwork = true;
                     _util.showErrorTip('您的网络可能出了点问题:(');
                 });
             },
             searchTerminal(isFirst) {
-                let that = this,
-                    page = 1,
-                    _key = that.terminalName;
-                if (isFirst) {
-                    that.tn_page = 1;
-                    that.tn_pageList = [];
+                let that = this;
+                that.delay = setTimeout(function() {
+                    window.clearTimeout(that.delay);
+                    that.delay = null;
+                    that.page = 1;
+                    that.pageList = [];
                     that.terminals = [];
-                    that.tn_scrollTop = 0;
-                    that.tn_scroll_load_loading = false;
-                    that.tn_scroll_load_end = false;
                     document.body.scrollTop = 0;
-                }
-                page = that.tn_page;
-                if (!_key || !_key.trim()) {
-                    that.resetScrollTop(1);
-                    return false;
-                }
-                if (that.tn_delay) {
-                    return false;
-                }
-                if (that.tn_scroll_load_loading || that.isLoading()) {
-                    return false;
-                }
-                if (that.tn_scroll_load_end) {
-                    return false;
-                }
-                if (that.tn_pageList.indexOf(page) > -1) {
-                    return false;
-                }
-                //延时350ms触发搜索事件
-                that.tn_delay = setTimeout(function() {
-                    window.clearTimeout(that.tn_delay);
-                    that.tn_delay = null;
-                    that.showLoading();
-                    that.tn_scroll_load_loading = true;
-                    axios.get(ajaxUrls.searchTerminal + _key.trim() + '&page=' + page)
-                        .then(function(rsp) {
-                            let d = rsp.data;
-                            that.hideLoading();
-                            that.tn_scroll_load_loading = false;
-                            if (d.status == 0 && d.data && d.data.length) {
-                                that.terminals = that.terminals.concat(d.data);
-                                that.tn_page += 1;
-                                that.tn_pageList = that.tn_pageList.concat([page]);
-
-                                if (d.data.length < that.numPerPage) {
-                                    that.tn_scroll_load_end = true;
-                                }
-                            } else {
-                                that.tn_scroll_load_end = true;
-                                if (isFirst) {
-                                    that.showLoadEnd();
-                                }
-                            }
-                        });
+                    document.documentElement.scrollTop = 0;
+                    that.scroll_load_loading = false;
+                    that.scroll_load_end = false;
+                    that.loadTerminalData();
                 }, 350);
-            },
-            resetScrollTop(showLoadEnd) {
-                if (showLoadEnd) this.showLoadEnd();
-                if (this.terminalName && this.terminalName.trim()) {
-                    document.body.scrollTop = this.tn_scrollTop;
-                } else {
-                    if (this.tabIndex == 2 && this.scrollTop) {
-                        document.body.scrollTop = this.scrollTop;
-                    } else {
-                        document.body.scrollTop = 0;
-                    }
-                }
             },
             goToInfo(item) {
                 localStorage.terminal_code = item.terminal_code;
                 localStorage.terminal_name = item.terminal_name;
                 this.$router.go(-1);
-                return {
-
-                };
-            },
-            isLoading() { //是否已显示“正在加载数据状态”节点
-                this.$refs.loading && this.$refs.loading.isLoading();
-            },
-            showLoading() { //显示正在加载数据状态
-                this.scroll_load_loading = true;
-                this.$refs.loading && this.$refs.loading.showLoading();
-            },
-            hideLoading() { //隐藏正在加载数据状态
-                this.scroll_load_loading = false;
-                this.$refs.loading && this.$refs.loading.hideLoading();
-            },
-            showLoadEnd() { //显示没有更多数据状态
-                this.hideLoading();
-                this.$refs.loading && this.$refs.loading.showEnd();
+                return false;
             }
         }
     }

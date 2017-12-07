@@ -20,7 +20,7 @@
                  img( src="//img.aimoge.com/FuBwJB9xafDv2zrrJWQDq3sKYXyp" width="100%" height="100%")
                  p.c_g(style="text-align: center") 暂无搜索结果
             div.pd_16(v-if="isFlag1")
-                div.list(v-for="d in result" v-if="!flag")
+                div.list(v-for="d in result" @click.stop.prevent="" v-if="!flag")
                     div
                        label.c_g1 订单状态：
                        lable {{d.state}}
@@ -188,7 +188,8 @@
         },
         methods: {
             handleScroll() { //滚动加载监听事件
-                if (document.body.scrollTop + window.innerHeight >= document.body.scrollHeight - 1) {
+                let scrollTop =document.body.scrollTop || document.documentElement.scrollTop;
+                if (scrollTop + window.innerHeight >= document.body.scrollHeight - 1) {
                     if (this.result.length < 16) {
                         return false;
                     } else {
@@ -365,6 +366,9 @@
                 this.num = 0;
                 this.flag = true;
                 this.terminalName="";
+            },
+            into_details_order(item){
+                this.$router.push('/search/' + item.order_id+'/details');
             },
             isLoading() { //是否已显示“正在加载数据状态”节点
                 this.$refs.loading && this.$refs.loading.isLoading();

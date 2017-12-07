@@ -63,8 +63,6 @@ Vue.prototype.emptyJson = function(json) {
     if (Object.keys(json).length) flag = false;
     return flag;
 };
-//eventBus
-window.eventBus = new Vue();
 //设置缓存
 window.setStore = function(storeName, urlKey, data, headers, version) {
     let now_ts = (new Date()).getTime();
@@ -123,8 +121,9 @@ new Vue({
     router,
     template: `<div id="app">
                     <keep-alive>
-                        <router-view class="view"></router-view>
+                        <router-view v-if="$route.meta.keepAlive" class="view"></router-view>
                     </keep-alive>
+                    <router-view v-if="!$route.meta.keepAlive" class="view"></router-view>
                 </div>`,
     beforeCreate() {
         _util.initDomEvents();
@@ -134,6 +133,7 @@ new Vue({
         _util.addLinkTouchEvent();
         window.canGoBack = false; //是否可以回退
         window.origin = null; //此页面的来源
+        store.remove('RecvBoxInfo');
         window.goBack = function() {
             if (window.canGoBack) {
                 that.goback(window.origin);

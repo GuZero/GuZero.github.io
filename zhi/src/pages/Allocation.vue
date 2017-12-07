@@ -12,12 +12,14 @@
             v-focus
         )
         div.content.mt90
-            template(v-if="nameList.length <= 0 && !isSearch")
-                p.rel.item 无搜索结果
-            template(v-else)
-                ul.rel(v-for="item in nameList",:key="item.user_id")
-                    li.rel.item(@click.stop.prevent="chooseOperator(item.user_id,item.name)") {{item.name}} 
-                        label(v-if="item.mobile") （{{item.mobile}}）
+            NoNetwork(v-show="isNoNetwork && !scroll_load_loading",@fetchDataCallBack="searchOperator")
+            div(v-show="!isNoNetwork")
+                template(v-if="nameList.length <= 0 && !scroll_load_loading")
+                    p.rel.item 无搜索结果
+                template(v-else)
+                    ul.rel(v-for="item in nameList",:key="item.user_id")
+                        li.rel.item(@click.stop.prevent="chooseOperator(item.user_id,item.name)") {{item.name}} 
+                            label(v-if="item.mobile") （{{item.mobile}}）
             DataLoading(ref="loading")
         ModalDialog(ref="confirmModal", @confirmCallback="confirmChoose")
 </template>
@@ -27,6 +29,7 @@
     import Search from '../components/common/Search'
     import ModalDialog from '../components/elements/ModalDialog'
     import DataLoading from '../components/common/DataLoading'
+    import NoNetwork from '../components/elements/NoNetwork'
 
     export default {
         mixins: [require('../components/mixin/BodyBg')],
@@ -43,7 +46,8 @@
                 operator: this.$route.query.operator,
                 userid: '',
                 nameList: [],
-                isSearch: false
+                isNoNetwork: false,
+                scroll_load_loading: false
             }
         },
         directives: {
@@ -58,25 +62,15 @@
             HeaderBar,
             Search,
             DataLoading,
-            ModalDialog
+            ModalDialog,
+            NoNetwork
+        },
+        created() {
+            window.canGoBack = true;
+            window.origin = null;
         },
         mounted() {
             this.hideLoading();
-            window.canGoBack = true;
-            window.origin = null;
-
-        },
-        activated() {
-            window.canGoBack = true;
-            window.origin = null;
-        },
-        watch: {
-          '$route': function (route) {
-                this.old_userid = this.$route.query.old_userid;
-                this.operator = this.$route.query.operator;
-                this.operator_name = '';
-                this.nameList = [];
-            }
         },
         methods: {
             showLoading() { //显示正在加载数据状态
@@ -87,10 +81,6 @@
                 this.scroll_load_loading = false;
                 this.$refs.loading && this.$refs.loading.hideLoading();
             },
-            showLoadEnd() { //显示没有更多数据状态
-                this.hideLoading();
-                this.$refs.loading && this.$refs.loading.showEnd();
-            },
             searchOperator() {
                 let that = this,
                     name = that.operator_name.replace(/(^\s*)|(\s*$)/g, "");
@@ -100,14 +90,13 @@
                 if (that.isSearch) {
                     return false;
                 }
-                that.showLoading();
-                that.isSearch = true;
                 that.nameList = [];
+                that.showLoading();
                 setTimeout(function () {
                     getAjaxRequest("terminal_cache",ajaxUrls.users + '?name='+name,that.version,2*60*1000,6*60*60*1000,
                         function (response) {
                             that.hideLoading();
-                            that.isSearch = false;
+                            that.isNoNetwork = false;
                             if (response.status == 0) {
                                that.nameList = response.data;                 
                             }else {
@@ -115,9 +104,8 @@
                             }
                         },
                         function (error) {
-                            that.isSearch = false;
                             that.hideLoading();
-                            _util.showErrorTip("您的网络可能出了点问题:(");
+                            that.isNoNetwork = true;
                         })
                 },150);
             },

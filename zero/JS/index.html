@@ -6,53 +6,125 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+        
+        .banner {
+            overflow: hidden;
+            width: 100%;
+            height: 300px
+        }
+        
+        .banner .img-wrap {
+            position: relative;
+            height: 100%
+        }
+        
+        .banner img {
+            display: block;
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 100%
+        }
+    </style>
 </head>
 
 <body>
-    <input type="file" accept="*.txt" id="my_file">
+    <div class="layout">
+        <p class="banner">
+            <p class="img-wrap" id="imgWrap">
+                <img src="//covteam.u.qiniudn.com/test18.jpg" data-index="-1">
+                <img src="//covteam.u.qiniudn.com/test19.jpg" data-index="0">
+                <img src="//covteam.u.qiniudn.com/test20.jpg" data-index="1">
+                <img src="//covteam.u.qiniudn.com/test18.jpg" data-index="2">
+                <img src="//covteam.u.qiniudn.com/test19.jpg" data-index="3">
+            </p>
+        </p>
+    </div>
     <script>
-        var my_file = document.getElementById('my_file');
-
-        function getResult(arr) {
-            var rusult = 0;
-            for (var i = 0; i < arr.length; i++) {
-                if (arr[i]) {
-                    rusult += (parseInt(arr[i]));
-                }
+        function transitionEnd(dom, callback) {
+            if (!dom || typeof dom != 'object') {
+                return false;
             }
-            console.log(rusult.toString(16));
-            return rusult.toString(16);
+            var isMove = false;
+            var time = 0;
+            dom.addEventListener('touchstart', function() {
+                time = Date.now();
+            })
+            dom.addEventListener('touchmove', function() {
+                callback && callback();
+            })
+            window.addEventListener('touchend', function(e) {
+                callback && callback();
+            })
         }
 
-        function handFile(file) {
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                var array = e.target.result.split(/[\r\n]/);
-                getResult(array);
-            };
-            reader.readAsText(file, 'gb2312');
-        }
-        my_file.addEventListener('change', function(e) {
-            handFile(e.target.files[0])
-        })
-        function getQueryStringArgs(){
-            var qs=(location.search.length>0?location.search.substring(1):''),
-                args={},
-                items=qs.length?qs.split("&"):[],
-                item=null,
-                name=null,
-                value=null,
-                i=null,
-                len=items.length;
-            for(i=0;i<len;i++){
-                item=items[i].split("=");
-                name=decodeURIComponent(item[0]);
-                value=decodeURIComponent(item[0]);
-                if(name.length){
-                    args[name]=value;
-                }
+        function tap(dom, callback) {
+            if (!dom || typeof dom != 'object') {
+                return false;
             }
-            return args   
+            var isMove = false;
+            var time = 0;
+            dom.addEventListener('touchstart', function() {
+                time = Date.now();
+            });
+            dom.addEventListener('touchmove', function() {
+                isMove = true;
+            })
+            window.addEventListener('touchend', function(e) {
+                if (!isMove && (Date.now() - time) < 150) {
+                    callback && callback(e)
+                }
+                isMove = false;
+                time = 0;
+            })
+        }
+        window.onload = function() {
+            var banner = document.querySelector('.banner');
+            var width = banner.offsetWidth;
+            var imageBox = banner.querySelector('ul:first-child');
+            var pointBox = banner.querySelector('ul:last-child');
+            var points = pointBox.querySelectorAll('li');
+
+            var addTransition = function() {
+                imageBox.style.transition = "all 0.3s";
+                imageBox.style.webkitTransition = "all 0.3s";
+            }
+            var removeTransition = function() {
+                imageBox.style.transition = "none";
+                imageBox.style.webkitTransition = "none";
+            }
+            var setTranslateX = function(translateX) {
+                imageBox.style.transform = "translateX(" + translateX + "px)";
+                imageBox.style.webkitTransition = "translateX(" + translateX + "px)";
+            }
+            var index = 1;
+            var timer = setInterval(function() {
+                index++;
+                addTransition();
+                setTranslateX(-index * width);
+            }, 2000);
+            transitionEnd(imageBox, function() {
+                if (index > 3) {
+                    index = 1;
+                } else if (index <= 0) {
+                    index = 3;
+                }
+                removeTransition();
+                setTranslateX(-index * width);
+                setPoint();
+            });
+            var setPoint = function() {
+                for (var i = 0; i < points.length; i++) {
+                    points[i].className = " ";
+                }
+                points[index - 1].className = "now";
+            }
         }
     </script>
 </body>

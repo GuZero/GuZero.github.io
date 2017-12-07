@@ -114,7 +114,9 @@ p.small {
 .hide {
     display: none;
 }
-
+.show {
+    display: none;
+}
 .bold {
     font-weight: bold;
 }
@@ -201,6 +203,9 @@ p.small {
     display: -moz-box;
     display: -webkit-box;
     display: box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
     -moz-box-orient: horizontal;
     -webkit-box-orient: horizontal;
     box-orient: horizontal;
@@ -213,6 +218,9 @@ img {
 .flexmodel {
     box-flex: 1;
     -webkit-box-flex: 1;
+    flex-grow: 1;
+    -webkit-flex-grow: 1;
+
 }
 
 .f11 {
@@ -436,7 +444,21 @@ body {
     background: url('//img.aimoge.com/FjmANRvf07CVvfV-21eJlqTNHC3u') no-repeat;
     background-size: 100%;
 }
-
+.empty {
+    text-align: center;
+    padding-top: 64px;
+}
+.empty .empty-img {
+    display: block;
+    width: 144px;
+    height: 144px;
+    margin: 0 auto 16px;
+}
+.empty .empty-info {
+    font-size: 14px;
+    color: #6e6e6e;
+    text-align: center;
+}
 
 /** loadingWarp **/
 
@@ -500,6 +522,14 @@ body {
     top: 0;
 }
 
+
+/*批量清柜，结束收货按钮特殊处理*/
+
+.gege-header a.icbatch,
+.gege-header a.icend {
+    width: 70px;
+}
+
 .gege-header a:active {
     opacity: .5;
 }
@@ -556,6 +586,25 @@ body {
 
 .icfinish:before {
     background-image: url('//img.aimoge.com/FnL-WpHNd6pm7vn75TnNq97gkNGN');
+}
+
+.icset:before {
+    background-image: url('//img.aimoge.com/FgrfascsibX5xrtL5wfdrEOTvnuo');
+}
+
+.gege-header .icmore:before {
+    background-size: 100% auto;
+    height: 24px;
+    width: 24px;
+    left: 10px;
+    top: 8px;
+    display: block;
+    content: '';
+    position: absolute;
+}
+
+.icmore:before {
+    background-image: url('//img.aimoge.com/FpTgsH_NgTVLb3ORaK1Sm3-VC1oS');
 }
 
 .footer {
@@ -716,6 +765,9 @@ input[type="datetime-local"] {
 }
 
 .flex-wrap {
+    -moz-box-lines: multiple; /*Firefox*/
+    -webkit-box-lines: multiple; /*Safari,Opera,Chrome*/
+    box-lines: multiple;/*允许换行*/
     -webkit-flex-wrap: wrap;
     -moz-flex-wrap: wrap;
     -ms-flex-wrap: wrap;
@@ -748,4 +800,18 @@ input[type="datetime-local"] {
     -webkit-align-items: center;
     -ms-flex-align: center;
     align-items: center;
+}
+
+.box-triangle:before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: 50%;
+    border-top: 6px solid #666;
+    display: block;
+    border-right: 8px solid #666;
+    border-left: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
 }

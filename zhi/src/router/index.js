@@ -24,120 +24,319 @@ const BasicInfo = r => require.ensure([], () => r(require('../pages/BasicInfo'))
 const SearchTerminal = r => require.ensure([], () => r(require('../pages/SearchTerminal')), 'SearchTerminal');
 const Allocation = r => require.ensure([], () => r(require('../pages/Allocation')), 'Allocation');
 const EditEquipment = r => require.ensure([], () => r(require('../pages/EditEquipment')), 'EditEquipment');
-const Test = r => require.ensure([], () => r(require('../pages/test')), 'Test');
+const CleanTerminal = r => require.ensure([], () => r(require('../pages/CleanTerminal')), 'CleanTerminal');
+const ManageBox = r => require.ensure([], () => r(require('../pages/ManageBox')), 'ManageBox');
+const ManageBoxDetail = r => require.ensure([], () => r(require('../pages/ManageBoxDetail')), 'ManageBoxDetail');
+const RecvBox = r => require.ensure([], () => r(require('../pages/RecvBox')), 'RecvBox');
+const EditRecvBox = r => require.ensure([], () => r(require('../pages/EditRecvBox')), 'EditRecvBox');
+const EndRecvBox = r => require.ensure([], () => r(require('../pages/EndRecvBox')), 'EndRecvBox');
+const DetailsOrder = r => require.ensure([], () => r(require('../pages/DetailsOrder')), 'DetailsOrder');
+const CourierSearch = r => require.ensure([], () => r(require('../pages/CourierSearch')), 'CourierSearch');
+const CourierDetails = r => require.ensure([], () => r(require('../pages/CourierDetails')), 'CourierDetails');
+const CourierRecord = r => require.ensure([], () => r(require('../pages/CourierRecord')), 'CourierRecord');
+const EquipmentBoxType = r => require.ensure([], () => r(require('../pages/EquipmentBoxType')), 'EquipmentBoxType');
+const DepositRecord = r => require.ensure([], () => r(require('../pages/DepositRecord')), 'DepositRecord');
+
 
 Vue.use(VueRouter)
 
 export default new VueRouter({
     // mode: 'history',
-    routes: [{
+    routes: [
+        {
             path: '/',
             name: 'Order',
-            component: Order
-        }, {
+            component: Order,
+            meta: {
+                keepAlive: true
+            }
+        }
+        , {
             path: '/search',
             name: 'Search',
-            component: Search
-        }, {
+            component: Search,
+            meta: {
+                keepAlive: true
+            }
+        }
+        , {
             path: '/message',
             name: 'Message',
-            component: Message
-        }, {
+            component: Message,
+            meta: {
+                keepAlive: true
+            }
+        }
+        , {
             path: '/order/edit',
             name: 'OrderCreate',
-            component: OrderCreate
-        }, {
+            component: OrderCreate,
+            meta: {
+                keepAlive: true
+            }
+        }
+        , {
             path: '/order/close',
             name: 'OrderClose',
-            component: OrderClose
-        }, {
+            component: OrderClose,
+            meta: {
+                keepAlive: true
+            }
+        }
+        , {
             path: '/order/follow',
             name: 'OrderFollow',
-            component: OrderFollow
-        }, {
+            component: OrderFollow,
+            meta: {
+                keepAlive: true
+            }
+        }
+        , {
             path: '/order/type',
             name: 'OrderType',
-            component: OrderType
-        }, {
+            component: OrderType,
+            meta: {
+                keepAlive: false
+            }
+        }
+        , {
             path: '/order/forward',
             name: 'OrderTerminal',
-            component: OrderTerminal
-        }, {
+            component: OrderTerminal,
+            meta: {
+                keepAlive: true
+            }
+        }
+        , {
             path: '/order/maintain',
             name: 'OrderMainTain',
-            component: OrderMainTain
-        }, {
+            component: OrderMainTain,
+            meta: {
+                keepAlive: true
+            }
+        }
+        , {
             path: '/order/operation',
             name: 'OrderOperation',
-            component: OrderOperation
-        }, {
+            component: OrderOperation,
+            meta: {
+                keepAlive: true
+            }
+        }
+        , {
             path: '/order/install',
             name: 'OrderInstall',
-            component: OrderInstall
-        }, {
+            component: OrderInstall,
+            meta: {
+                keepAlive: true
+            }
+        }
+        , {
             path: '/order/cooperate',
             name: 'OrderCooperate',
-            component: OrderCooperate
-        }, {
+            component: OrderCooperate,
+            meta: {
+                keepAlive: true
+            }
+        }
+        , {
             path: '/order/:id',
             name: 'OrderInfo',
-            component: OrderInfo
-        }, {
+            component: OrderInfo,
+            meta: {
+                keepAlive: true
+            }
+        }
+        , {
             path: '/transmit',
             name: 'Transmit',
-            component: Transmit
-        }, {
+            component: Transmit,
+            meta: {
+                keepAlive: true
+            }
+        }
+        , {
             path: '/terminal',
             name: 'Terminal',
-            component: Terminal
-        }, {
+            component: Terminal,
+            meta: {
+                keepAlive: true
+            }
+        }
+        , {
             path: '/terminal/:code',
             name: 'BasicInfo',
-            component: BasicInfo
-        }, {
+            component: BasicInfo,
+            meta: {
+                keepAlive: false
+            }
+        }
+        , {
             path: '/terminal/:code/equipmentinfo',
             name: 'EquipmentInfo',
-            component: EquipmentInfo
-        }, {
+            component: EquipmentInfo,
+            meta: {
+                keepAlive: false
+            }
+        }
+        , {
             path: '/terminal/:code/journal',
             name: 'Journal',
-            component: Journal
-        }, {
+            component: Journal,
+            meta: {
+                keepAlive: true
+            }
+        }
+        , {
             path: '/terminal/:code/adinfo',
             name: 'AdInfo',
-            component: AdInfo
-        }, {
+            component: AdInfo,
+            meta: {
+                keepAlive: true
+            }
+        }
+        , {
             path: '/terminal/:code/allocation',
             name: 'Allocation',
-            component: Allocation
-        }, {
-            path: '/terminal/:code/equipmentinfo/edit',
-            name: 'EditEquipment',
-            component: EditEquipment
-        }, {
+            component: Allocation,
+            meta: {
+                keepAlive: false
+            }
+        }
+        , {
             path: '/mine',
             name: 'Mine',
-            component: Mine
-        }, {
+            component: Mine,
+            meta: {
+                keepAlive: true
+            }
+        }
+        , {
             path: '/mine/password',
             name: 'EditPassword',
-            component: EditPassword
-        }, {
+            component: EditPassword,
+            meta: {
+                keepAlive: true
+            }
+        }
+        , {
             path: '/login',
             name: 'Login',
             component: Login,
             meta: {
-                requiresAuth: false
+                requiresAuth: false,
+                keepAlive: true
+
             }
-        }, {
+        }
+        , {
             path: '/searchterminal',
             name: 'SearchTerminal',
-            component: SearchTerminal
-        },
-        {
-            path: '/test',
-            name: 'Test',
-            component: Test
+            component: SearchTerminal,
+            meta: {
+                keepAlive: false
+            }
+        }, {
+            path: '/search/:code/details',
+            name: 'DetailsOrder',
+            component: DetailsOrder,
+            meta: {
+                keepAlive: false
+            }
+        }, {
+            path: '/search/courier',
+            name: 'CourierSearch',
+            component: CourierSearch,
+            meta: {
+                keepAlive: false
+            }
+        }, {
+            path: '/couires/record/:code',
+            name: 'CourierRecord',
+            component: CourierRecord,
+            meta: {
+                keepAlive: false
+            }
+        }, {
+            path: '/couires/details/:code',
+            name: 'CourierDetails',
+            component: CourierDetails,
+            meta: {
+                keepAlive: false
+            }
+        }
+        , {
+            path: '/deposit',
+            name: 'DepositRecord',
+            component: DepositRecord,
+            meta: {
+                keepAlive: true
+            }
+        }
+        ,{
+            path: '/terminal/:code/clean',
+            name: 'CleanTerminal',
+            component: CleanTerminal,
+            meta: {
+                keepAlive: false
+            }
+        }
+        ,{
+            path: '/terminal/:code/manage',
+            name: 'ManageBox',
+            component: ManageBox,
+            meta: {
+                keepAlive: false
+            }
+        }
+        ,{
+            path: '/terminal/:code/manage/:id',
+            name: 'ManageBoxDetail',
+            component: ManageBoxDetail,
+            meta: {
+                keepAlive: false
+            }
+        }
+
+        , {
+            path: '/recvbox',
+            name: 'RecvBox',
+            component: RecvBox,
+            meta: {
+                keepAlive: false
+            }
+        }
+        , {
+            path: '/recvbox/edit',
+            name: 'EditRecvBox',
+            component: EditRecvBox,
+            meta: {
+                keepAlive: false
+            }
+        }
+        , {
+            path: '/recvbox/end',
+            name: 'EndRecvBox',
+            component: EndRecvBox,
+            meta: {
+                keepAlive: false
+            }
+        }       
+        , {
+            path: '/terminal/:code/equipmentinfo/:rackid',
+            name: 'EquipmentBoxType',
+            component: EquipmentBoxType,
+            meta: {
+                keepAlive: false
+            }
+        }
+        , {
+            path: '/terminal/:code/equipmentinfo/edit',
+            name: 'EditEquipment',
+            component: EditEquipment,
+            meta: {
+                keepAlive: false
+            }
         }
 
     ]

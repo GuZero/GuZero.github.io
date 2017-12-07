@@ -7,8 +7,9 @@ div.home
 		@msgBtnCallback="goToMsg",
 		@searchBtnCallback="isSearch"
 	)
-	div.search.fixed(v-if="searchFlag")
-		div.item(v-for="d in searchInfo", @click.stop.prevent="goToSearch(d)") {{d.value}}
+	div.fixed.more-box.box-triangle(v-if="searchFlag")
+		ul
+			li.rel(v-for="d in searchInfo", @click.stop.prevent="goToSearch(d)") {{d.value}}
 	div.nav.top44.fixed
 		div.left.tab.rel(:class="{active: activeTab == 0}", @click="switchTab(0)")
 			div
@@ -25,17 +26,21 @@ div.home
 		div.left.tab.rel(:class="{active: activeTab == 3}", @click="switchTab(3)")
 			div
 				label 我的已办
-				label
-	div.mt44.pt50.pb60
-		div.item.rel(v-for="item in list", @click.stop.prevent="goInfo(item.task_id)")
+				label 		
+		Screen.abs.screen(v-model="search_info",@isSearch="select_serach",@isScreen="select_screen",@cancelFun="cancel",@searchFun="search",:show="isScreen",v-if="choice_screen") 
+	div.mt80.pt50.pb60(v-if="choice_screen")
+		div.item.rel(v-for="item in list", @click.stop.prevent="goInfo(item)")
 			img.abs(:src="item.head")
 			div.div
 				div.title.rel
 					label.user.ellipsis.rel {{ item.creator }} 发起的{{item.project}}工单
 					label.time.f12.abs {{ item.time }}
 				div.line.f12.rel
+					label.gray.rel 标&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp题:
+					label {{ item.title }} 	   
+				div.line.f12.rel
 					label.gray.rel 终端名称:
-					label {{ item.terminal_name }}
+					label {{ item.terminal_name?item.terminal_name:'无' }}
 				div.line.f12.rel
 					label.gray.rel 创建时间:
 					label {{ item.created_at }}
@@ -43,14 +48,31 @@ div.home
 				div.status.f12.s2.rel(v-if="item.status_code == 4") {{ item.status }}
 				div.status.f12.s3.rel(v-if="item.status_code == 2") {{ item.status }}
 		DataLoading(ref="loading")
-	div.add.f12.center.fixed(@click="addOne") 创建
-	FooterBar.fixed(:footerconfig="footerconfig")
+	div.add.f12.center.fixed(@click="addOne", v-if="choice_screen") 创建
+	FooterBar.fixed(:footerconfig="footerconfig",v-if="choice_screen")
+	div(v-else)
+		div.screen-info
+			div.screen-item
+				div.item-title 类型
+				div.item-content.flex-g.flex-justify-between.flex-wrap
+					div.item-btn(v-for="item in screen_type['project']",:class="{'item-btn-active':item.checked}", @click.stop.prevent="check_screen(item)") {{item.value}}
+			div.screen-item
+				div.item-title.mt-6 状态
+				div.item-content.flex-g.flex-justify-between.flex-wrap
+					div.item-btn(v-for="item in screen_type['status']",:class="{'item-btn-active':item.checked}", @click.stop.prevent="check_screen(item)") {{item.value}}
+			div.screen-item
+				div.item-title.mt-6 超时
+				div.item-content.flex-g.flex-justify-between.flex-wrap
+					div.item-btn(v-for="item in screen_type['timeout']",:class="{'item-btn-active':item.checked}", @click.stop.prevent="check_screen(item)") {{item.value}}
+		div.screen-footer.fixed
+			div.confirm-btn(@click.stop.prevent="confirm_screen") 确定	
 </template>
 
 <script>
     import HeaderBar from '../components/common/Header'
     import FooterBar from '../components/common/Footer'
     import DataLoading from '../components/common/DataLoading'
+    import Screen from '../components/common/Screen'
 
     export default {
         mixins: [require('../components/mixin/BodyBg')],
@@ -81,14 +103,105 @@ div.home
                 list2: [],
                 list3: [],
                 searchInfo: [],
-                searchFlag: false
+                searchFlag: false,
+				isScreen:false,
+				search_info:'',
+                choice_screen:true,
+				screen_type:null,
+                screen_project:'',
+                screen_status:'',
+                screen_timeout:'',
+
             }
         },
         components: {
             HeaderBar,
             FooterBar,
-            DataLoading
+            DataLoading,
+            Screen
         },
+		created(){
+			this.screen_type={
+				project:[{
+                    type:'project',
+					value:'全部',
+					checked:false,
+					project_id:'all'
+				},{
+                    type:'project',
+					value:'柜子运维',
+					checked:false,
+					project_id:'1'
+				},{
+                    type:'project',
+					value:'柜子开发运营',
+					checked:false,
+					project_id:'2'
+				},{
+                    type:'project',
+					value:'柜子安装',
+					checked:false,
+					project_id:'3'
+				},{
+                    type:'project',
+					value:'商业合作',
+					checked:false,
+					project_id:'4'
+				},{
+                    type:'project',
+					value:'客服工单',
+					checked:false,
+					project_id:'5'
+				},{
+                    type:'project',
+					value:'告警工单',
+					checked:false,
+					project_id:'6'
+				}],
+				status:[{
+                    type:'status',
+					value:'全部',
+					checked:false,
+					status_id:'all'
+				},{
+                    type:'status',
+					value:'待处理',
+					checked:false,
+					status_id:'1'
+				},{
+                    type:'status',
+					value:'个人处理中',
+					checked:false,
+					status_id:'3'
+				},{
+                    type:'status',
+					value:'转发处理中',
+					checked:false,
+					status_id:'4'
+				},{
+                    type:'status',
+					value:'已完成',
+					checked:false,
+					status_id:'2'
+				}],
+				timeout:[{
+                    type:'timeout',
+					value:'全部',
+					checked:false,
+					timeout_status:'all'
+				},{
+                    type:'timeout',
+					value:'已超时',
+					checked:false,
+					timeout_status:'0'
+				},{
+                    type:'timeout',
+					value:'未超时',
+					checked:false,
+					timeout_status:'1'
+				}]
+			}							
+		},
         mounted() {
             this.switchTab(2);
             window.localStorage.setItem('task_id', '01');
@@ -150,7 +263,7 @@ div.home
             this;
         },
         methods: {
-            fetchData() {
+            fetchData(screen_status,search_info) {
                 let that = this;
                 if (that.scroll_load_loading) {
                     return false;
@@ -161,11 +274,19 @@ div.home
                 if (that.page == 1) {
                     document.body.scrollTop = 0;
                 }
+                let api='';
+                if(screen_status){
+                    api=ajaxUrls.tasks + 'filter=' + that.filter+screen_status+ '&page=' + that.page;
+                }else if(search_info){
+                    api=ajaxUrls.tasks + 'filter=' + that.filter+'&terminal_name='+search_info+ '&page=' + that.page;
+                }else{
+                    api=ajaxUrls.tasks + 'filter=' + that.filter+ '&page=' + that.page;
+                }
                 that.showLoading();
                 //获取待办工单数量
                 getAjaxRequest("order_cache", ajaxUrls.num, that.version, 1 * 1000, 0.5 * 60 * 60 * 1000, function(response) {
                     if (response.status == 0) {
-                        
+
                         that.num = response.data.task_numbers;
                     } else {
                         if (response.msg) _util.showErrorTip(response.data.msg);
@@ -174,7 +295,7 @@ div.home
                     _util.showErrorTip('您的网络可能出了点问题:(');
                 });
                 that.scroll_load_loading = true;
-                getAjaxRequest("order_cache", ajaxUrls.tasks + 'filter=' + that.filter + '&page=' + that.page, that.version, 1 * 1000, 0.5 * 60 * 60 * 1000, function(response) {
+                getAjaxRequest("order_cache", api, that.version, 1 * 1000, 0.5 * 60 * 60 * 1000, function(response) {
                     that.hideLoading();
                     if (response.status == 0) {
                         //测试用 //img.aimoge.com/FlJ81rMZKlvsiYP-EXr3P492r4ZS
@@ -204,6 +325,9 @@ div.home
                                 that.list = that.list2;
                                 break;
                         }
+                        if(screen_status||search_info){
+                            that.list=response.data;
+                        }
                         that.isFirst = false;
                         that.showLoadEnd();
                     } else {
@@ -223,9 +347,15 @@ div.home
                 this.list1 = [];
                 this.list2 = [];
                 this.list3 = [];
+                this.screen_project='';
+                this.screen_status='';
+                this.screen_timeout='';
+                this.isScreen=false;
+				this.search_info="";
             },
             switchTab(index) {
                 this.searchFlag = false;
+				if(!this.choice_screen) this.choice_screen=true;
                 if (!this.scroll_load_loading) {
                     index > -1 ? this.activeTab = index : void 0;
                     switch (index) {
@@ -254,34 +384,51 @@ div.home
                 this.searchFlag = !this.searchFlag;
             },
             goToSearch(item) {
-                localStorage.express_id = item.id;
                 this.searchFlag = false;
-                this.url('/search/')
+                if(item.id!='05'){
+                    localStorage.express_id = item.id;
+                    this.url('/search/')
+                }else{
+                    this.url('/search/courier')
+                }
             },
-            goToMsg() {
-                this.url('/message');
+           goToMsg() {
+                let time = (new Date()).getTime();
+                this.url('/message',{"ts":time});
             },
             addOne() {
-//                this.url('/order/edit');
+                //                this.url('/order/edit');
                 this.url('/order/type');
             },
-            goInfo(_id) {
+            goInfo(item) {
                 this.searchFlag = false;
-                this.url('/order/' + _id);
+                this.url('/order/'+item.task_id,{
+                    _id:item.project_id,
+                    type_id:item.type_id
+                });
             },
             handleScroll() { //滚动加载监听事件
                 if (this.$route.path == ('/')) {
-                    if (document.body.scrollTop + window.innerHeight >= document.body.scrollHeight - 1) {
+                    let scrollTop =document.body.scrollTop || document.documentElement.scrollTop;
+                    if ((scrollTop+ window.innerHeight) >= document.body.scrollHeight - 1) {
                         if (this.list.length < 16) {
                             return false;
                         } else {
-                            this.loadTerminalData();
+                            if(this.screen_project||this.screen_status||this.screen_timeout){
+                                let screen_status='&project='+this.screen_project+'&status='+this.screen_status+'&screen_timeout='+this.screen_timeout;
+                                this.loadTerminalData(screen_status);
+                            }else if(this.search_info){
+                                this.loadTerminalData(0,this.search_info);
+                            }else{
+                                this.loadTerminalData();
+                            }                            
                         }
                     }
                 }
             },
-            loadTerminalData() {
+            loadTerminalData(screen_status,search_info) {
                 let that = this,
+                    api='',
                     page = that.page;
                 switch (this.activeTab) {
                     case 0:
@@ -300,9 +447,16 @@ div.home
                         that.filter = 'handle'
                         break;
                 }
+                if(screen_status){
+                    api=ajaxUrls.tasks + 'filter=' + that.filter+screen_status+ '&page=' + that.page;
+                }else if(search_info){
+                    api=ajaxUrls.tasks + 'filter=' + that.filter+'&terminal_name='+search_info+ '&page=' + that.page;
+                }else{
+                    api=ajaxUrls.tasks + 'filter=' + that.filter+ '&page=' + that.page;
+                }
                 that.showLoading();
                 that.scroll_load_loading = true;
-                getAjaxRequest("order_cache", ajaxUrls.tasks + 'filter=' + that.filter + '&page=' + that.page, that.version, 1 * 1000, 0.5 * 60 * 60 * 1000, function(response) {
+                getAjaxRequest("order_cache", api, that.version, 1 * 1000, 0.5 * 60 * 60 * 1000, function(response) {
                     if (response.status == 0) {
                         that.hideLoading();
                         //测试用 //img.aimoge.com/FlJ81rMZKlvsiYP-EXr3P492r4ZS
@@ -325,6 +479,66 @@ div.home
                     _util.showErrorTip('您的网络可能出了点问题:(');
                 });
             },
+			select_serach(){
+                this.searchFlag=false;
+				this.isScreen=true;
+			},
+			select_screen(){
+                this.resetData();
+                this.choice_screen=false;
+                let screen_type=['project','status','timeout'];
+                for(let i=0;i<screen_type.length;i++){
+                    this.resetItem(screen_type[i]);
+                }
+			},
+			cancel(){
+				this.isScreen=false;
+			},
+			search(){
+                if(!this.search_info){
+                   _util.showErrorTip('请输入终端号或者其他字符');
+                   return false;
+                }else{
+                    this.fetchData(0,this.search_info);
+                }
+			},
+            resetItem(name){
+                for(let i=0;i<this.screen_type[name].length;i++){
+                    this.screen_type[name][i].checked=false;
+                }
+            },
+			check_screen(item){
+                switch (item.type) {
+                    case 'project':
+                        this.resetItem('project');
+                        item.checked=true;
+                        break;
+                    case 'status':
+                        this.resetItem('status');
+                        item.checked=true;
+                        break;
+                    case 'timeout':
+                        this.resetItem('timeout');
+                        item.checked=true;
+                        break;    
+                    default:
+                        break;
+                }
+                if(item.project_id&&item.checked){
+                    this.screen_project=item.project_id;
+                }else if(item.status_id&&item.checked){
+                    this.screen_status=item.status_id;
+                }else if(item.timeout_status&&item.checked){
+                    this.screen_timeout=item.timeout_status;
+                }
+			},
+			confirm_screen(){
+				this.choice_screen=true;
+                if(this.screen_project||this.screen_status||this.screen_timeout){
+                    let screen_status='&project='+this.screen_project+'&status='+this.screen_status+'&screen_timeout='+this.screen_timeout;
+                    this.fetchData(screen_status);
+                }
+			},
             showLoading() { //显示正在加载数据状态
                 this.scroll_load_loading = true;
                 this.$refs.loading && this.$refs.loading.showLoading();
@@ -346,8 +560,9 @@ div.home
         right: 5px;
         left: auto;
     }
+    
     @media screen and (max-width:370px) {
-        .font-10{
+        .font-10 {
             font-size: 10px;
         }
     }
@@ -361,8 +576,8 @@ div.home
     }
     
     .search {
-        background: #8c8c8c;
-        top: 6%;
+        background: #666;
+        top: 6.5%;
         right: 0px;
         z-index: 9999;
         .item {
@@ -482,5 +697,81 @@ div.home
             }
         }
     }
+	.screen{
+		width:100%;
+		top:43px;
+	}
+	.mt80{
+		margin-top:86px;
+	}
+	.screen-info{
+		margin-top:86px;
+		padding:0 30px;
+		.screen-item{
+			.mt-6{
+				margin-top: -6px
+			}
+			.item-title{
+				height:36px;
+				line-height:36px;
+			}
+			.item-content{
+				width:100%;
+				.item-btn{
+					width:42%;
+					border:1px solid #ccc;
+					text-align:center;
+					padding:4px 0;
+					border-radius:10px;
+					margin-bottom:6px;
+				}
+				.item-btn-active{
+					background:#07689f;
+					color:#fff;
+				}
+			}
+		}
 
+	}
+	.screen-footer{
+		width:100%;
+		bottom:0;
+		.confirm-btn{
+			width:100%;
+			color:#fff;
+			text-align:center;
+			padding:10px 0;
+			background:#07689f;
+			font-size:16px;
+		}
+	}
+	.more-box{
+        right: 0;
+        top: 7%;
+        background-color: #666;
+        z-index: 8888;
+        li{
+            padding: 8px 20px;
+            text-align: center;
+            border-bottom: 1px solid #fff;
+            color: #fff;
+        }
+        select {
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: none;
+            color: transparent;
+            border: none;
+            outline: none;
+            appearance: none;
+            -moz-appearance: none;
+            -webkit-appearance: none;
+            z-index: 301;
+            option {
+                color: #333;
+            }
+        }
+    }
 </style>

@@ -25,50 +25,52 @@
                     label 合同
                     label
         div.mt44.pt50
-            template(v-if="list.length <= 0 && !isFirst")
-                div.empty
-                    img.empty-img(src='//img.aimoge.com/FuBwJB9xafDv2zrrJWQDq3sKYXyp')
-                    div.empty-info 暂无消息通知
-            template(v-if="list.length > 0")
-                template(v-if="activeTab == 1")
-                    div.list(v-for="(item,index) in list",:key="item.id")
-                        div.item.rel(@click.stop.prevent="goDetail(item.id,item.href,index)")
-                            p.time {{item.created_at | converTime}}
-                            div.rel.info
-                                i(:class='{ unreadStatus: converReadTime(item.readed_at) }')
-                                div.detail
-                                    div.flag {{item.type}}
-                                    div.title {{item.content}}
-                                    div.line.f12.rel
-                                        label.gray.rel.desc 终端名称:
-                                        label {{item.terminal_name}}
-                                    div.line.f12.rel
-                                        label.gray.rel.desc 创建时间:
-                                        label {{item.created_at}}
-                template(v-if="activeTab == 2")
-                    div.list(v-for="item in list2",:key="item.id")
-                        div.item.rel
-                            p.time 8月10日 10:30 
-                            div.rel.info
-                                i(:class='{unreadStatus: !read}')
-                                div.detail
-                                    div.title 青山湾花园格格货栈
-                                    div.line.f12.rel
-                                        label.gray.rel.desc 告警时间:
-                                        label 2016-09-21 19:40:30
-                                    div.line.f12.rel
-                                        label.gray.rel.desc 告警内容:
-                                        label 开门失败
-                                    div.line.f12.rel
-                                        label.gray.rel.desc 格口编码:
-                                        label M0420
-        DataLoading(ref="loading")
+            NoNetwork(v-show="isNoNetwork && !scroll_load_loading",@fetchDataCallBack="fetchData")
+            div(v-show="!isNoNetwork")
+                template(v-if="list.length <= 0 && !isFirst")
+                    div.empty
+                        img.empty-img(src='//img.aimoge.com/FuBwJB9xafDv2zrrJWQDq3sKYXyp')
+                        div.empty-info 暂无消息通知
+                template(v-if="list.length > 0")
+                    template(v-if="activeTab == 1")
+                        div.list(v-for="(item,index) in list",:key="item.id")
+                            div.item.rel(@click.stop.prevent="goDetail(item.id,item.href,index)")
+                                p.time {{item.created_at | converTime}}
+                                div.rel.info
+                                    i(:class='{ unreadStatus: converReadTime(item.readed_at) }')
+                                    div.detail
+                                        div.flag {{item.type}}
+                                        div.title {{item.content}}
+                                        div.line.f12.rel
+                                            label.gray.rel.desc 终端名称:
+                                            label {{item.terminal_name}}
+                                        div.line.f12.rel
+                                            label.gray.rel.desc 创建时间:
+                                            label {{item.created_at}}
+                    template(v-if="activeTab == 2")
+                        div.list(v-for="item in list2",:key="item.id")
+                            div.item.rel
+                                p.time 8月10日 10:30 
+                                div.rel.info
+                                    i(:class='{unreadStatus: !read}')
+                                    div.detail
+                                        div.title 青山湾花园格格货栈
+                                        div.line.f12.rel
+                                            label.gray.rel.desc 告警时间:
+                                            label 2016-09-21 19:40:30
+                                        div.line.f12.rel
+                                            label.gray.rel.desc 告警内容:
+                                            label 开门失败
+                                        div.line.f12.rel
+                                            label.gray.rel.desc 格口编码:
+                                            label M0420
+            DataLoading(ref="loading")
 </template>
 
 <script>
     import HeaderBar from '../components/common/Header'
-    //    import FooterBar from '../components/common/Footer'
     import DataLoading from '../components/common/DataLoading'
+    import NoNetwork from '../components/elements/NoNetwork'
 
     export default {
         data() {
@@ -81,6 +83,8 @@
                     issearch: 1
                 },
                 version: '1',
+                ts: null,
+                isNoNetwork: false,
                 activeTab: 1,
                 warn_num: '0',
                 task_num: '0',
@@ -103,19 +107,17 @@
         components: {
             HeaderBar,
             //            FooterBar,
-            DataLoading
+            DataLoading,
+            NoNetwork
         },
         mounted() {
             window.canGoBack = true;
             window.origin = null;
-            window.addEventListener('scroll', this.handleScroll);
         },
         activated() {
             window.canGoBack = true;
             window.origin = null;
-            if (window.localStorage.messageToOther === '1' && window.localStorage.homeToMessage != '1' ) {
-                document.body.scrollTop = window.localStorage.messageScrollTop;
-            } else {
+            if ( this.$route.query.ts != this.ts || !this.ts) {
                 this.activeTab = 1;
                 this.warn_num = '0';
                 this.task_num = '0';
@@ -124,29 +126,20 @@
                 this.filter = '';
                 this.resetData();
                 this.switchTab(1);
+                this.ts = this.$route.query.ts;
+                document.body.scrollTop = 0;
+                document.documentElement.scrollTop = 0;
+            }else{
+                let  scrollTop = parseInt(store.get("messageScrollTop"));
+                document.body.scrollTop = scrollTop;
+                document.documentElement.scrollTop = scrollTop;
             }
             window.addEventListener('scroll', this.handleScroll);
-            window.localStorage.removeItem('messageScrollTop');
-            window.localStorage.removeItem('homeToMessage');
-        },
-        beforeRouteEnter(to, from, next) {
-            next();
-        },
-        beforeRouteUpdate(to, from, next) {
-            this;
         },
         beforeRouteLeave(to, from, next) {
-            if (to.path !== '/') {
-                window.localStorage.setItem('messageToOther', '1');
-                window.localStorage.removeItem('homeToMessage');
-                window.localStorage.setItem('messageScrollTop', document.body.scrollTop);
-            } 
-            next();
-        },
-        beforeRouteLeave(to, from, next) {
-            if (to.path == '/message') {
-                window.localStorage.setItem('homeToMessage', '1');
-            } 
+            let scrollTop =document.body.scrollTop || document.documentElement.scrollTop;
+            store.set("messageScrollTop",scrollTop);
+            window.removeEventListener('scroll', this.handleScroll);
             next();
         },
 
@@ -162,7 +155,8 @@
         },
         methods: {
             handleScroll() { //滚动加载监听事件
-                if (document.body.scrollTop + window.innerHeight >= document.body.scrollHeight - 1) {
+                let scrollTop =document.body.scrollTop || document.documentElement.scrollTop;
+                if (scrollTop + window.innerHeight >= document.body.scrollHeight - 1) {
                     this.fetchData();
                 }
             },
@@ -269,9 +263,6 @@
                     //                    that.showLoadEnd();
                     return false;
                 }
-                if (that.isFirst && that.page == 1) {
-                    document.body.scrollTop = 0;
-                }
                 if (that.isFirst) {
                     getAjaxRequest("message_cache", ajaxUrls.messages + 'numbers', that.version, 5 * 1000, 6 * 60 * 60 * 1000,
                         function(response) {
@@ -322,6 +313,7 @@
                             } else {
                                 that.hideLoading();
                             }
+                            that.isNoNetwork = false;
                             that.isFirst = false;
                         } else {
                             that.hideLoading();
@@ -331,6 +323,7 @@
                     function(error) {
                         that.hideLoading();
                         _util.showErrorTip('您的网络可能出了点问题:(');
+                        that.isNoNetwork = true;
                     })
             },
             goDetail(_id, href, index) {
