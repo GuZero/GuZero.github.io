@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script>
+	if (!Object.keys) {
+        alert('object.keys')
+                    Object.keys = function(obj) {
+                        var out = [], key;
+                        for (key in obj) {
+                        if (Object.prototype.hasOwnProperty.call(obj, key)) {
+                                out.push(key);
+                            }
+                        }
+                        return out;
+                    };
+    } 
+</script>
+</body>
+</html>
