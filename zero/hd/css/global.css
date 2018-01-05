@@ -28,6 +28,7 @@ td {
     margin: 0;
     padding: 0
 }
+
 address,
 caption,
 cite,
@@ -148,15 +149,18 @@ img {
 body {
     max-width: 640px;
     margin: 0 auto;
-    background-color: #f8f9fc;
+    font: normal 14px/22px Arial;
+    color: #323232;
 }
 
 img {
     outline: none;
 }
 
-// flex
-.flex{
+
+/* flex */
+
+.flex {
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
@@ -198,8 +202,16 @@ img {
     align-items: center;
 }
 
+.flex-v {
+    -webkit-box-orient: vertical;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+}
 
-// 弹出框
+
+/* 弹出框 */
+
 .layer {
     position: absolute;
     left: 0;
@@ -242,7 +254,7 @@ img {
 }
 
 .mgAlert.showAlert {
-    opacity: .9;
+    opacity: 1;
     -webkit-transition-duration: 400ms;
     transition-duration: 400ms;
     -webkit-transform: translate3d(0, 0, 0) scale(1);
@@ -263,8 +275,8 @@ img {
 .mgAlert-error,
 .mgAlert-success {
     color: #fff;
-    background-color: #333333;
-    border-color: #333333;
+    background-color: rgba(0, 0, 0, .6);
+    /* border-color: rgba(0, 0, 0, .6); */
 }
 
 .mgAlert.mgAlert-success:before,
@@ -282,7 +294,10 @@ img {
     margin-bottom: 8px;
     margin-top: 8px;
 }
-// load
+
+
+/* loading */
+
 .sysLoading {
     display: none;
     background: #000;
@@ -306,6 +321,7 @@ img {
     left: 50%;
     margin-left: -19px;
 }
+
 .mgLoadingWarp {
     display: none;
     margin-top: 10px;
@@ -342,7 +358,6 @@ img {
 .mgLoadingWarp span.load {
     text-indent: 38px;
 }
-
 
 .f11 {
     font-size: 11px;
@@ -411,6 +426,11 @@ img {
 .f27 {
     font-size: 27px;
 }
+
+.fw {
+    font-weight: 600
+}
+
 .clearfix:after {
     content: ".";
     display: block;
@@ -422,6 +442,7 @@ img {
 .clearfix {
     zoom: 1;
 }
+
 .fl {
     float: left
 }
@@ -457,13 +478,16 @@ img {
 .hide {
     display: none
 }
+
 .ellipsis {
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
 }
 
-// header
+
+/*  header */
+
 .gege-header,
 .gege-header a {
     color: #fff;
@@ -472,14 +496,14 @@ img {
 
 .gege-header {
     padding: 5px;
-    background-color: #008cff;
+    background-color: #4285f4;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     width: 100%;
     height: 44px;
     top: 0;
     left: 0;
-    z-index: 8888;
+    z-index: 8;
 }
 
 .gege-header a {
@@ -504,4 +528,20 @@ img {
     margin-top: -22px;
     background: url('//img.aimoge.com/FuGSEC9x9qNjuZhJ4gYjJ_81iPjf') no-repeat left 7px;
     background-size: 28px 28px;
+}
+
+.aw-r::after {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-top: 2px #c7c7cc solid;
+    border-right: 2px #c7c7cc solid;
+    border-top-right-radius: 2px;
+    transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
 }

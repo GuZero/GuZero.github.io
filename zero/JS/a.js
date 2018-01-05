@@ -1,12 +1,21 @@
-function fun(n, o) {
-  console.log(o);
-  return {
-    fun: function(m) {
-      return fun(m, n);
-    }
-  }
+function extract(filterFn, mapFn, col) {
+    // body...
 }
-fun(0).fun(1).fun(2);
-let fn = fun(0).fun(1).fun;
-fn(2);
-fn(3)
+var array = [{
+    count: 1,
+    succed_count: 11,
+    end_date: "2018-01-18",
+    price: 1,
+    box_type: 1,
+    charge: 1,
+    start_date: "2017-12-16"
+}];
+function formatData(currentValue){
+	let object = {};
+		object.price=currentValue.price;
+		return object;
+}
+function extractData(arr,mapFn) {
+	return arr.map(mapFn)
+}
+console.log(extractData(array,formatData));

@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, max-age=0, must-revalidate, no-siteapp" />
+    <meta name="x5-orientation" content="portrait" />
+    <meta name="x5-page-mode" content="app" />
+    <meta name="screen-orientation" content="portrait" />
+    <meta name="browsermode" content="application" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="renderer" content="webkit" />
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <title>Document</title>
+    <link href="./css/global.css" type="text/css" rel="stylesheet">
+    <style>
+        body {
+            background: #efeff4;
+        }
+        
+        .container {
+            padding-top: 44px;
+        }
+        
+        .header {
+            background: #4285f4;
+            color: #fff;
+            font-size: 16px;
+            padding: 16px;
+        }
+        
+        .container .title {
+            font-size: 30px;
+            margin-bottom: 28px;
+        }
+        
+        .container .header a.abs {
+            right: 30px;
+            color: #fff;
+            top: 14px;
+        }
+        
+        .aw-r::after {
+            border-top: 2px #fff solid;
+            border-right: 2px #fff solid;
+            top: 4px;
+            right: -16px;
+        }
+        
+        .info-box {
+            background-color: #fff;
+            border-bottom: 1px solid #dfdfdf;
+            margin-bottom: 16px;
+            font-size: 14px;
+            color: #8a8a8a;
+        }
+        
+        .info-box>div {
+            position: relative;
+            overflow: hidden;
+            padding: 11px 15px;
+            -webkit-touch-callout: none;
+        }
+        
+        .info-box>div.up-screen-info::after,
+        .info-box>div.pay-amount::after {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            left: 15px;
+            height: 1px;
+            content: '';
+            -webkit-transform: scaleY(.5);
+            transform: scaleY(.5);
+            background-color: #c8c7cc;
+        }
+        
+        .info-box .item {
+            line-height: 28px;
+        }
+        
+        .info-box .item .item-scroll {
+            min-width: 65%;
+            max-height: 60px;
+            overflow-y: scroll;
+            text-align: right;
+        }
+        
+        .hide {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="mgAlert" class="mgAlert center fixed f14"></div>
+    <div id="sysLoading" class="sysLoading fixed">
+        <i class="ion-loading-c"></i>
+    </div>
+    <div class="gege-header fixed">
+        <div class="title center ellipsis f16 abs">格格礼品送祝福</div>
+        <a class="icgoback" href="/hd"></a>
+    </div>
+    <div class="container">
+        <div class="header rel flex flex-align-center">
+            <div>
+                <div class="title"></div>
+                <div class="content"></div>
+            </div>
+            <a class="flex abs hide" id="event">
+                <span>上屏中</span>
+                <div class="aw-r"></div>
+            </a>
+        </div>
+        <div class="info-box">
+            <div class="up-screen-info">
+                <div class="item flex flex-justify-between">
+                    <span>上屏柜机</span>
+                    <div class="item-scroll"></div>
+                </div>
+            </div>
+            <div class="up-screen-time">
+                <div class="flex flex-justify-between">
+                    <span>上屏时间</span>
+                    <p></p>
+                </div>
+            </div>
+        </div>
+        <div class="info-box hide" id="order_info">
+            <div class="pay-amount">
+                <div class="flex flex-justify-between">
+                    <span>支付金额</span>
+                    <p id="order_fee"></p>
+                </div>
+            </div>
+            <div class="order-time">
+                <div class="flex flex-justify-between">
+                    <span>下单时间</span>
+                    <p id="order_crts"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="./lib/util.js"></script>
+    <script>
+        window.data = {};
+
+        function formatDate(date) {
+            function getzf(num) {
+                if (parseInt(num) < 10) {
+                    num = '0' + num;
+                }
+                return num;
+            }
+            return (getzf(date.getMonth() + 1)) + '-' + getzf(date.getDate()) + ' ' + getzf(date.getHours()) + ':' + getzf(date.getMinutes());
+        }
+
+        function getOrder() {
+            $('#sysLoading').show();
+            var url_prmt = _util.getUrlPrmt();
+            _util.ajaxData('GET', _util.config.API + '/media/adinteraction/' + url_prmt._id, null, function(res) {
+                if (res.status == 0) {
+                    var data = res.data;
+                    window.data = {
+                        terminal_codes: data.terminal_codes,
+                        terminals: data.terminals,
+                        city_name: data.city ? data.city.name : '',
+                        start_date: data.start_date,
+                        end_date: data.end_date,
+                        fee: data.fee,
+                        status: data.status,
+                        crts: formatDate(new Date(res.data.crts * 1000)),
+                        topic_id: data.topic_id,
+                        order: null
+                    };
+                    if ([31, 32, 33, 34, 36, 37].indexOf(data.status) > -1) {
+                        window.data.order = {
+                            order_id: data._id,
+                            total_fee: data.fee,
+                            pay_id: data.pay_id,
+                            status: data.status,
+                            pay_type: data.pay_type
+                        }
+                    };
+                    initInfo();
+                    $('#sysLoading').hide();
+                } else {
+                    $('#sysLoading').hide();
+                    if (res.data.msg) _util.showErrorTip(res.data.msg);
+                }
+            }, function(err) {
+                _util.showErrorTip('您的网络可能出了点问题:(');
+            })
+        }
+        //初始页面信息
+        function initInfo() {
+            var obj = checkStatus(window.data.status);
+            if (obj.value && obj.methods) {
+                $('#event span').html(obj.value);
+                $('#event').attr('onClick', obj.methods);
+                $('#event').show();
+            }
+            $('.header .title').html(obj.title);
+            $('.header .content').html(obj.content);
+            if (window.data.terminal_codes.length) {
+                var _html = '',
+                    items = window.data.terminals;
+                for (var i = 0; i < items.length; i++) {
+                    _html += '<p>' + items[i].terminal_name + '</p>'
+                }
+                $('.item-scroll').html(_html);
+            } else {
+                $('.item-scroll').html('<p>' + window.data.city_name + '</p>')
+            }
+            $('.up-screen-time p').html(window.data.start_date + '----' + window.data.end_date);
+            if (obj.is_pass) {
+                $('#order_fee').html((window.data.fee / 100) + '元');
+                $('#order_crts').html(window.data.crts);
+                $('#order_info').show();
+            }
+        }
+        //检查订单状态
+        function checkStatus(status) {
+            var obj = {
+                title: '',
+                content: '',
+                value: '',
+                methods: '',
+                is_pass: false
+            };
+            if ([1].indexOf(status) > -1) {
+                obj.title = '审核中';
+                obj.content = '24小时内将完成审核，若不通过则自动退款';
+            }
+            if ([2, 12, 41, 42, 43].indexOf(status) > -1) {
+                obj.title = '未通过';
+                obj.content = '内容不符，已安排微信退款，请注意查收';
+                is_pass = true;
+            }
+            if ([11].indexOf(status) > -1) {
+                obj.title = '上屏中';
+                obj.content = '作品已发布上柜，点击查看互动评论';
+                obj.value = '上屏中';
+                obj.methods = 'gotoWWdetails();';
+            }
+            if ([31, 32, 33, 34, 36, 37].indexOf(status) > -1) {
+                obj.title = '金额：' + (window.data.fee / 100) + '元';
+                obj.content = ' ';
+                obj.value = '去支付';
+                obj.methods = 'goPay();';
+            }
+            return obj;
+        }
+
+        function gotoWWdetails() {
+            if (window.data.topic_id != '000000000000000000000000') {
+                window.location.href = _util.config.BASE_URL + '/forum/000000000000000000000000/topic/' + window.data.topic_id;
+            }
+        }
+
+        function goPay() {
+            var order = window.data.order,
+                data = {
+                    order_id: order.order_id,
+                    service: 'media_adinteraction_service',
+                    pay_type: 4,
+                    total_fee: order.total_fee,
+                    total_num: 1,
+                    callbackurl: encodeURIComponent('/examine')
+                }
+
+            function pay() {
+                var url = '/pay?&payType=' + data.pay_type + '&payTypes=' + data.pay_type + '&order_ids=' + data.order_id + '&service=' + data.service + '&total_fee=' + data.total_fee + '&total_num=' + data.total_num + '&callbackurl=' + data.callbackurl;
+                window.location.href = '/user/loading/55eba9799c7684b7098b4569?redirect=' + encodeURIComponent(url);
+            }
+            if (window.data.status == 211) {
+                confirmPayCancel(pay);
+            } else {
+                pay();
+            }
+        }
+
+        function confirmPayCancel(callback) {
+            var data = {
+                "service": "media_adinteraction_service",
+                "pay_id": window.data.order.pay_id,
+                "pay_type": window.data.order.pay_type,
+                "result": 300,
+                "error_msg": '用户主动取消',
+                "pay_info": {}
+            }
+            _util.ajaxData('POST', _util.config.PAY + '/pay' + window.data.order.pay_id, data, function(rsp) {
+                if (rsp.status == 0 && rsp.data) {
+                    if (callback) callback();
+                } else {
+                    _util.showErrorTip('支付失败')
+                }
+            })
+        }
+        $(document).ready(function() {
+            getOrder();
+        })
+    </script>
+</body>
+
+</html>
