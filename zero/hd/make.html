@@ -117,6 +117,7 @@
         
         .choice-box .item-1 {
             color: #4285f4;
+            border: 3px solid #4285f4;
             background: url('//img.aimoge.com/FtRLlVNKgiD2aEgS78a-YIvCYGke') center center;
             background-size: 100% 100%;
         }
@@ -250,29 +251,29 @@
                     <input id="file" type="file" accept="image/jpeg,image/jpg,image/png" multiple class="abs" />
                     <p class="gray center f12">建议上传1M以上 清晰度高的图片</p>
                 </div>
-                <div id="view hide"></div>
+                <div id="view" class="hide"></div>
             </div>
         </div>
         <div class="text-box gray">
             <div>
                 <p>点击输入文字</p>
-                <input type="text" maxlength="20" placeholder="打字要满八个字，很长的字" class="hide">
+                <input type="text" maxlength="20" placeholder="打字要满八个字，很长的字" class="hide" oninput="checkContent();">
             </div>
         </div>
         <div class="choice-box">
             <div class="flex flex-justify-between">
-                <div class="item item-1">交友派</div>
-                <div class="item item-2">交友派</div>
-                <div class="item item-3">交友派</div>
+                <div class="item item-1" data-index='1'>交友派</div>
+                <div class="item item-2" data-index='2'>交友派</div>
+                <div class="item item-3" data-index='3'>交友派</div>
             </div>
             <div class="flex flex-justify-between mt-10">
-                <div class="item item-4">交友派</div>
-                <div class="item item-5">交友派</div>
-                <div class="item item-6">交友派</div>
+                <div class="item item-4" data-index='4'>交友派</div>
+                <div class="item item-5" data-index='5'>交友派</div>
+                <div class="item item-6" data-index='6'>自定义</div>
             </div>
         </div>
         <div class="btn-box center">
-            <div class="btn">下一步</div>
+            <div class="btn" id="next_step">下一步</div>
         </div>
         <div class="sysLoading fixed prompt-box">
             <div class="prompt-info">
@@ -291,12 +292,14 @@
     <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script src="//cdn.bootcss.com/iScroll/5.2.0/iscroll-zoom.min.js"></script>
     <script src="//cdn.bootcss.com/hammer.js/2.0.8/hammer.min.js"></script>
-    <script src="//cdn.bootcss.com/store.js/1.3.20/store.min.js"></script>
-    <script src="./lib/lrz.all.bundle.js"></script>
-    <script src="./lib/Photoclip.js"></script>
+    <script src="./lib/Photoclip/lrz.all.bundle.js"></script>
+    <script src="./lib/Photoclip/Photoclip.js"></script>
     <script src="./lib/util.js"></script>
     <script>
-        window.data = {};
+        window.data = {
+            category: '交友派',
+            color: '#4285f4'
+        };
         //设置裁剪图片属性
         var clipArea = new PhotoClip("#clipArea", {
             size: [310, 290],
@@ -308,13 +311,15 @@
                 maskBorder: '1px dashed #ddd'
             },
             loadStart: function() {
-                console.log("照片读取中");
+                $('#sysLoading').show();
+                console.log('照片读取中');
             },
             loadComplete: function() {
-                console.log("照片读取完成");
+                $('#sysLoading').hide();
+                console.log('照片读取完成');
             },
             done: function(dataURL) {
-                console.log(dataURL);
+                window.data.user_img = dataURL;
             },
             fail: function(msg) {
                 alert(msg);
@@ -333,7 +338,7 @@
             })
         }
 
-        function postImg(data, callback) {
+        function postImg(data, callback) { //上传到七牛云
             var blobBin = atob(data.split(',')[1]);
             var array = [];
             for (var i = 0; i < blobBin.length; i++) {
@@ -354,7 +359,7 @@
                 dataType: 'json',
                 processData: false,
                 success: function(respond) {
-                    if (callback) callback();
+                    if (callback) callback(respond.name);
                 },
                 error: function(err) {
                     _util.showErrorTip('您的网络可能出了点问题:(');
@@ -362,41 +367,130 @@
             });
         }
 
-        function generatePicture(img_url1, img_url2) {
+        function generatePicture(local_img, user_img) { //合成图片
             var _img1 = new Image(),
                 _img2 = new Image(),
                 dataURL = '';
-            Img1.setAttribute('crossOrigin', 'anonymous');
-            Img2.setAttribute('crossOrigin', 'anonymous');
-            _img1.src = img_url1;
-            _img2.src = img_url2;
+            _img1.setAttribute('crossOrigin', 'anonymous');
+            _img2.setAttribute('crossOrigin', 'anonymous');
+            _img1.src = local_img;
+            _img2.src = user_img;
             var canvas = document.createElement('canvas'),
                 ctx = canvas.getContext('2d');
-            _img2.onload = function() {
+            $('.prompt-box').show();
+            _img1.onload = function() {
                 try {
                     canvas.width = 926;
                     canvas.height = 864;
                     let w = (926 - 623) / 2;
                     let h = 716;
-                    ctx.drawImage(Img1, 0, 0, 926, 864);
-                    ctx.drawImage(Img2, w, 44, 623, 623);
+                    ctx.drawImage(_img1, 0, 0, 926, 864);
+                    ctx.drawImage(_img2, w, 44, 623, 623);
                     ctx.font = "36px microsoft yahei";
-                    ctx.fillStyle = that.color;
-                    ctx.fillText(content, w, h);
+                    ctx.fillStyle = window.data.color;
+                    ctx.fillText($('.text-box input').val(), w, h);
                     dataURL = canvas.toDataURL("image/png");
-                    postImg(dataURL);
+                    postImg(dataURL, callback);
                 } catch (error) {
                     alert(error);
                 }
             }
         }
 
-        function choiceTheme(item, str, color) {
-            var url = './image/' + str + '.png',
+        function choiceTheme(item, index, color) {
+            var url = './image/' + index + '.png',
                 el = $(item);
-            window.data.category
-
+            if (index == 6) {
+                if (window.data.user_img) {
+                    window.data.category = el.html();
+                    el.css({
+                        'border': '3px solid ' + color
+                    })
+                    $('.upload-box').hide();
+                    $('.bg-img').attr('src', window.data.user_img);
+                }
+            } else {
+                if ($('.upload-box').is(':hidden')) $('.upload-box').show();
+                window.data.category = el.html();
+                window.data.color = color;
+                el.css({
+                    'border': '3px solid ' + color
+                })
+                $('.bg-img').attr('src', url);
+            }
         }
+
+        function checkContent() {
+            if ($('.text-box input').val().length == 20) {
+                _util.showErrorTip('最多输入二十个字噢');
+            }
+        }
+
+        function callback(url) {
+            var data = {
+                content: $('.text-box input').val(),
+                category: window.data.category,
+                user_img: url
+            }
+            window.sessionStorage.setItem('_img', JSON.stringify(data));
+            $('.prompt-box').hide();
+            window.location.href = 'submit';
+        }
+
+        function nextStep() {
+            if (!$('.text-box input').val()) {
+                _util.showErrorTip('请输入您想要说的话');
+                return false;
+            }
+            if (!window.data.user_img) {
+                _util.showErrorTip("请您上传一张图片");
+                return false;
+            }
+            if (window.data.category == '自定义') {
+                $('.prompt-box').show();
+                postImg(window.data.user_img, callback);
+            } else {
+                var local_img = $('.bg-img').attr('src'),
+                    user_img = window.data.user_img;
+                generatePicture(local_img, user_img);
+            }
+        }
+        $(document).ready(function() {
+            getToken();
+            $('.choice-box .item').click(function() {
+                $('.choice-box .item').each(function(i) {
+                    $(this).css({
+                        'border': 'none'
+                    })
+                })
+                var index = $(this).data('index'),
+                    color = $(this).css('color');
+                choiceTheme(this, index, color);
+            })
+            $('.upload-btn').click(function() { //上传图片
+                $('.htmleaf-container').fadeIn(300);
+                $('#file').click();
+            })
+            $('#cancle').click(function() { //取消上传图片
+                $('.htmleaf-container').fadeOut(300);
+            })
+            $('#finish').click(function() { //完成上传图片
+                $('.text-view').hide();
+                $('#view').show();
+                $('.htmleaf-container').fadeOut(300);
+            })
+            $('#view').click(function() { //重新上传
+                $('.htmleaf-container').fadeIn(300);
+                $('#file').click();
+            })
+            $('.text-box p').click(function() {
+                $(this).hide();
+                $('.text-box input').show();
+            })
+            $('#next_step').click(function() {
+                nextStep();
+            })
+        })
     </script>
 </body>
 

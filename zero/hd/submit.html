@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, max-age=0, must-revalidate, no-siteapp" />
+    <meta name="x5-orientation" content="portrait" />
+    <meta name="x5-page-mode" content="app" />
+    <meta name="screen-orientation" content="portrait" />
+    <meta name="browsermode" content="application" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="renderer" content="webkit" />
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <title>Document</title>
+    <link href="./css/global.css" type="text/css" rel="stylesheet">
+    <link href="./lib/LCalendar/css/LCalendar.css" type="text/css" rel="stylesheet">
+    <style>
+        .container {
+            padding: 0 16px;
+            padding-top: 44px;
+            color: #8f8f94;
+        }
+        
+        .time-box {
+            padding: 18px 0;
+        }
+        
+        .iocn {
+            width: 25px;
+            margin-right: 16px;
+        }
+        
+        .blue {
+            color: #4285f4;
+        }
+        
+        .dividing-line {
+            height: 8px;
+            background: #ececec;
+            width: 100%;
+            left: 0;
+        }
+        
+        input:-ms-input-placeholder {
+            color: #8f8f94;
+        }
+        
+        input::-webkit-input-placeholder {
+            color: #8f8f94;
+        }
+        
+        .time-box .input-box {
+            width: 100%;
+            padding: 6px 36px;
+        }
+        
+        .time-box .input-box input {
+            border: none;
+            font-size: 14px;
+            width: 40%;
+            padding: 0px;
+            height: 25px;
+            margin-bottom: 0px;
+        }
+        
+        .choice-box {
+            margin-top: 8px;
+            padding: 16px 0;
+        }
+        
+        .choice-box .choice-icon {
+            width: 28px;
+        }
+        
+        .choice-box .add-icon {
+            width: 36px;
+            height: 25px;
+            color: #fff;
+            background: #4285f4;
+            font-size: 24px;
+            text-align: center;
+            line-height: 25px;
+            border-radius: 4px;
+            right: 0;
+        }
+        
+        .charge-box {
+            margin: 8px;
+            padding-top: 16px;
+        }
+        
+        .charge-box .charge-title p {
+            right: 0;
+        }
+        
+        .charge-box .text {
+            margin-top: 12px;
+        }
+        
+        .btn {
+            background-color: #4285f4;
+            font-size: 15px;
+            padding: 7px 0;
+            width: 100%;
+            border-radius: 4px;
+            color: #fff;
+            text-align: center;
+        }
+        
+        .btn:active {
+            background-color: #3463af;
+        }
+        
+        .agreement-box {
+            width: 100%;
+            text-align: center;
+            margin-top: 30%;
+        }
+        
+        .agreement-box .agree-icon {
+            width: 18px;
+            margin-top: -2px;
+            margin-right: 6px;
+        }
+        
+        .agreement-box a {
+            color: #bfbfbf;
+            text-decoration: underline;
+        }
+        
+        .btn-box {
+            margin-top: 16px;
+        }
+        
+        .prompt-box {
+            /* display: block; */
+            background: rgba(0, 0, 0, 0.4);
+            opacity: 1;
+        }
+        
+        .prompt-box .prompt-info {
+            width: 70%;
+            height: 130px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin-left: -35%;
+            margin-top: -65px;
+            background: #fff;
+            line-height: 30px;
+            font-size: 16px;
+            text-align: center;
+            border-radius: 5px;
+            padding-top: 16px;
+        }
+        
+        .prompt-box .prompt-info img {
+            width: 25%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="mgAlert" class="mgAlert center fixed f14"></div>
+    <div id="sysLoading" class="sysLoading fixed">
+        <i class="ion-loading-c"></i>
+    </div>
+    <div class="gege-header fixed">
+        <div class="title center ellipsis f16 abs">格格礼品送祝福</div>
+        <a class="icgoback" href="/hd"></a>
+    </div>
+    <div class="container">
+        <div class="time-box">
+            <div class="time-title flex">
+                <div class="iocn time-icon">
+                    <img src="//img.aimoge.com/FoWx8gJnGyp3c_Ov9fWCG0eVgMUH" alt="time-icon">
+                </div>
+                <p>选择时间(已选<span id="day" class="blue">&nbsp&nbsp1&nbsp&nbsp</span>天)</p>
+            </div>
+            <div class="input-box flex flex-justify-between">
+                <input type="text" id="start_date" placeholder="开始时间" readonly readonlyunselectable="on" class="center">
+                <span>----</span>
+                <input type="text" id="end_date" placeholder="结束时间" readonly readonlyunselectable="on" class="center">
+            </div>
+        </div>
+        <div class="dividing-line abs"></div>
+        <div class="choice-box">
+            <div class="choice-title flex rel">
+                <div class="iocn choice-icon">
+                    <img src="//img.aimoge.com/Fv1Ojcrc0kcNoo0OdHAeMvHATYdn" alt="choice-icon">
+                </div>
+                <p>选择柜机（已选<span id="chest" class="blue">&nbsp&nbsp1&nbsp&nbsp</span>个）</p>
+                <div class="add-icon abs">+</div>
+            </div>
+            <div class="choice-content">
+
+            </div>
+        </div>
+        <div class="dividing-line abs"></div>
+        <div class="charge-box">
+            <div class="charge-title flex rel">
+                <div class="iocn charge-icon">
+                    <img src="//img.aimoge.com/FgrEPLTkazeV_rEeBomK3P3gr15p" alt="">
+                </div>
+                <span>收费标注</span>
+                <p class="blue f16 abs">共计<span id="total">1</span>元</p>
+            </div>
+            <p class="text f16">特惠1元/柜/天</p>
+        </div>
+        <div class="agreement-box flex flex-justify-center">
+            <div class="agree-icon">
+                <img src="//img.aimoge.com/FqfmB3mlFn4U9FLh8saH4QE7UhCj" alt="agree-icon">
+            </div>
+            <a href="#">同意柜机屏幕展示协议</a>
+        </div>
+        <div class="btn-box">
+            <div class="btn" id="pay">支付</div>
+        </div>
+        <div class="sysLoading fixed prompt-box">
+            <div class="prompt-info">
+                <img src="//img.aimoge.com/FsNN9KaeHuuk90DQlqyLtNxOPfdd" alt="">
+                <p>互动屏预定中...</p>
+            </div>
+        </div>
+    </div>
+    <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="./lib/LCalendar/js/LCalendar.js"></script>
+    <script src="./lib/LCalendar/js/date.js"></script>
+    <script>
+        var endDate = null;
+
+        function getDateStr(day_count) {
+            var dd = new Date();
+            dd.setDate(dd.getDate() + day_count);
+            var y = dd.getFullYear();
+            var m = dd.getMonth() + 1;
+            var d = dd.getDate();
+            return [y, m, d];
+        }
+
+        function initLCalendar() {
+            var start_date = initDate('start_date', 1),
+                end_date = initDate('end_date', 1);
+            var startDate = new LCalendar();
+            endDate = new LCalendar();
+            startDate.init(start_date);
+            endDate.init(end_date);
+        }
+
+        function initDate(id, day) {
+            var time = new Date().getHours(),
+                addDayCount = day,
+                minDateArr = null,
+                maxDateArr = null,
+                obj = {};
+            if (time > 17 || time == 17) {
+                addDayCount = addDayCount + 1;
+            }
+            minDateArr = getDateStr(addDayCount);
+            maxDateArr = getDateStr(addDayCount + 13);
+            obj.trigger = '#' + id;
+            obj.type = 'date';
+            obj.minDate = minDateArr[0] + '-' + minDateArr[1] + '-' + minDateArr[2];
+            obj.maxDate = maxDateArr[0] + '-' + maxDateArr[1] + '-' + maxDateArr[2];
+            return obj;
+        }
+
+        function initEndDate(day) {
+            var day = parseInt($('#start_date').val().split('-').pop()) - (new Date()).getDate();
+            if (day < 0) {
+                current_day = getCurrentMonthDays();
+                day = current_day + day;
+            }
+        }
+
+        function getCurrentMonthDays() {
+            var date = new Date(),
+                year = date.getFullYear(),
+                month = date.getMonth() + 1;
+            time = new Date(year, month, 0);
+            return time.getDate();
+        }
+
+        $(document).ready(function() {
+            initLCalendar();
+            $('#start_date').click(function() {
+                if ($('#end_date').val().length) {
+                    $('#end_date').val('');
+                }
+            })
+        })
+    </script>
+</body>
+
+</html>
