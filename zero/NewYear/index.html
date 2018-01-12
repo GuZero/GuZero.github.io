@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, max-age=0, must-revalidate, no-siteapp" />
+    <meta name="x5-orientation" content="portrait" />
+    <meta name="x5-page-mode" content="app" />
+    <meta name="screen-orientation" content="portrait" />
+    <meta name="browsermode" content="application" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="renderer" content="webkit" />
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <title>新年开运红包</title>
+    <link rel="stylesheet" href="./css/global.css">
+    <link href="//cdn.bootcss.com/Swiper/3.4.2/css/swiper.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./lib/swiper-animate/animate.min.css">
+    <style>
+        body {
+            background: #fff;
+            font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            margin: 0;
+            padding: 0;
+        }
+        
+        html,
+        body {
+            position: relative;
+            height: 100%;
+        }
+        
+        .preload {
+            text-align: center;
+        }
+        
+        .preload div {
+            position: relative;
+            top: 40%;
+        }
+        
+        .preload div img {
+            width: 6%;
+        }
+        
+        .preload #loadcount {
+            color: #ff7800;
+            font-family: SimHei;
+            font-size: 1em;
+        }
+        
+        .wh100 {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .swiper-container {
+            width: 100%;
+            height: 100%;
+            display: none;
+        }
+        
+        .bg1 {
+            height: 100%;
+        }
+        
+        .page01 .theme-png {
+            width: 80%;
+            top: 10%;
+            left: 50%;
+            margin-left: -40%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="preload wh100">
+        <div>
+            <img src="http://img.aimoge.com/FuTnb72OEzUItTSN6t0db_orMIrf">
+            <p id="loadcount">loading...</p>
+        </div>
+    </div>
+    <div class="swiper-container" id="leafContainer">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide page01">
+                <img src="//img.aimoge.com/Fog78Ep1ru94tw5n8aXZm3jt6orX" alt="bg1" class="bg1 abs">
+                <div class="theme-png abs">
+                    <img src="//img.aimoge.com/FjQ7t__a3F3VbmqlU1zAUbQDOHew" alt="">
+                </div>
+            </div>
+            <div class="swiper-slide page02">
+                <p>点击进入</p>
+            </div>
+        </div>
+    </div>
+    <script src="//cdn.bootcss.com/PreloadJS/1.0.1/preloadjs.min.js"></script>
+    <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="//cdn.bootcss.com/Swiper/3.4.2/js/swiper.jquery.min.js"></script>
+    <script src="./lib/swiper-animate/swiper.animate1.0.2.min.js"></script>
+    <script>
+        var swiper;
+        window.preloads = [
+            '//img.aimoge.com/Fog78Ep1ru94tw5n8aXZm3jt6orX',
+            '//img.aimoge.com/FjQ7t__a3F3VbmqlU1zAUbQDOHew'
+        ];
+
+        function filePreload(file, process, success, error) {
+            var preload = new createjs.LoadQueue(true);
+            preload.on('fileload', function(e) {});
+            preload.on('progress', process);
+            preload.on('complete', success);
+            if (error) preload.on('error', error);
+            preload.loadManifest(file);
+        }
+
+        function initSwiper() {
+            swiper = new Swiper('.swiper-container', {
+                paginationClickable: true,
+                direction: 'vertical',
+                speed: 300,
+                onInit: function(swiper) {
+
+                },
+                onSlideChangeEnd: function(swiper) {
+
+                },
+                onTransitionEnd: function(swiper) {
+
+                },
+                watchSlidesProgress: true
+            })
+        }
+        filePreload(window.preloads, function(e) {
+            var p = "LOADING   " + parseInt(e.loaded * 100) + '%';
+            $("#loadcount").html(p);
+        }, function(e) {
+            $('.preload').hide();
+            $('.swiper-container').show();
+            initSwiper();
+        })
+
+        function enterPage() {
+            swiper.slideTo(1, 500, false)
+        }
+    </script>
+</body>
+
+</html>
