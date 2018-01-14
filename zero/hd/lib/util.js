@@ -1,6 +1,6 @@
 var _util = (function(mod) {
     mod.config = {
-        API: '//api.dev.aimoge.com/v1',
+        API: '//api.aimoge.com/v1',
         BASE_URL: window.location.host,
         PAY: '//pay.aimoge.com/v1'
     }

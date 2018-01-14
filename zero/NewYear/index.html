@@ -29,52 +29,222 @@
             margin: 0;
             padding: 0;
         }
-        
+
         html,
         body {
             position: relative;
             height: 100%;
         }
-        
+
         .preload {
             text-align: center;
         }
-        
+
         .preload div {
             position: relative;
             top: 40%;
         }
-        
+
         .preload div img {
             width: 6%;
         }
-        
+
         .preload #loadcount {
             color: #ff7800;
             font-family: SimHei;
             font-size: 1em;
         }
-        
+
         .wh100 {
             width: 100%;
             height: 100%;
         }
-        
+
         .swiper-container {
             width: 100%;
             height: 100%;
             display: none;
         }
-        
-        .bg1 {
+
+        .bg {
             height: 100%;
         }
-        
+
         .page01 .theme-png {
             width: 80%;
             top: 10%;
             left: 50%;
             margin-left: -40%;
+        }
+
+        .page01 .gift-png {
+            width: 90%;
+            bottom: 0;
+            right: 0;
+        }
+
+        .next-page-icon {
+            width: 6%;
+            bottom: 10px;
+            left: 50%;
+            margin-left: -3%;
+        }
+
+        .page01 .theme-png {
+            animation-duration: 3.5s;
+            -webkit-animation-duration: 3.5s;
+            -moz-animation-duration: 3.5s;
+        }
+
+        .page01 .gift-png {
+            -webkit-animation-delay: .6s;
+            -moz-animation-delay: .6s;
+            animation-delay: .6s;
+        }
+
+        .chest-png {
+            width: 56%;
+            bottom: 16px;
+            left: 50%;
+            margin-left: -30%;
+        }
+
+        .chest-png {
+            animation-duration: 4.5s;
+            -webkit-animation-duration: 4.5s;
+            -moz-animation-duration: 4.5s;
+        }
+
+        .page02 .text-box {
+            top: 5%;
+            right: 3%;
+            font-size: 20px;
+            line-height: 46px;
+            text-align: right;
+        }
+
+        .page02 .text-box span {
+            color: #d23c30;
+            font-size: 32px;
+        }
+
+        .page02 .medal-png {
+            width: 56%;
+            top: 30%;
+            left: 50%;
+            margin-left: -28%;
+        }
+
+        .page03 .text-box {
+            top: 8%;
+            left: 4%;
+        }
+
+        .page03 .text-box p {
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .page03 .select-box {
+            width: 80%;
+            top: 14%;
+            left: 50%;
+            margin-left: -40%;
+        }
+
+        .page03 .select-box .item {
+            position: absolute;
+            width: 70%;
+            top: 40%;
+            left: 50%;
+            margin-left: -35%;
+            text-align: center;
+            padding: 0 26px;
+        }
+
+        .page03 .select-box p {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 6%;
+        }
+
+        .page03 .select-box p span {
+            font-size: 30px;
+        }
+
+        .page03 .select-box .sex-box .flex {
+            padding: 0 10px;
+        }
+
+        .page03 .select-box .sex-box .flex div {
+            width: 26%;
+        }
+
+        .page03 .select-box .age-box {
+            width: 100%;
+            margin-left: -50%;
+            padding: 0 19%;
+        }
+
+        .page03 .select-box .item-box {
+            margin-top: 8px;
+            margin-right: 2px;
+        }
+
+        .page03 .select-box .item-box .icon {
+            width: 20px;
+            margin-right: 4px;
+        }
+
+        .page03 .select-box .life-box {
+            width: 80%;
+            margin-left: -40%;
+        }
+        .page03 .matching-box{
+            margin-top: 10%;
+        }
+        .page03 .matching-box p{
+            font-size: 14px;
+            font-weight: normal;
+        }
+        .page03 .match-success-box {
+            margin-top: 10%;
+        }
+        .page03 .match-success-box .success-png{
+            width: 36%;
+            margin: 0 auto;
+        }
+        .page03 .match-success-box p{
+            margin-top: 10px;
+            font-size: 14px;
+            font-weight: normal;
+        }
+        .page03 .receive-btn {
+           width: 96%;
+           height: 46px;
+           background: url('//img.aimoge.com/FlAcEMkmECdJ_q1x5eL2ZGm1j0LO') no-repeat left;
+           background-size: 100% 100%;
+           color: #fff;
+           text-align: center;
+           line-height: 46px;
+           left: 50%;
+           bottom: 22%;
+           margin-left: -48%;
+        }
+        .page03 .receive-btn img{
+            max-height: 100%;
+        }
+        @media screen and (max-width: 320px) {
+            .page03 .select-box .age-box {
+                font-size: 12px;
+            }
+            .page03 .select-box .item-box .icon {
+                width: 18px;
+            }
+            .page03 .select-box .life-box {
+                width: 84%;
+                margin-left: -42%;
+            }
         }
     </style>
 </head>
@@ -89,13 +259,161 @@
     <div class="swiper-container" id="leafContainer">
         <div class="swiper-wrapper">
             <div class="swiper-slide page01">
-                <img src="//img.aimoge.com/Fog78Ep1ru94tw5n8aXZm3jt6orX" alt="bg1" class="bg1 abs">
-                <div class="theme-png abs">
-                    <img src="//img.aimoge.com/FjQ7t__a3F3VbmqlU1zAUbQDOHew" alt="">
+                <img src="//img.aimoge.com/Fog78Ep1ru94tw5n8aXZm3jt6orX" alt="bg1" class="bg abs">
+                <div class="ani theme-png abs" swiper-animate-effect="fadeIn" swiper-animate-duration="3.5s" swiper-animate-delay="0.3s">
+                    <img src="//img.aimoge.com/FjQ7t__a3F3VbmqlU1zAUbQDOHew" alt="theme-png">
+                </div>
+                <div class="ani gift-png abs" swiper-animate-effect="fadeInRight" swiper-animate-delay=".8s">
+                    <img src="//img.aimoge.com/FtE15wpostCQjhFd447I14xK8yss" alt="gift-png">
+                </div>
+                <div class="next-page-icon abs">
+                    <img src="//img.aimoge.com/Fo4t0CcVYY3jEjqxjdhlDqVBvyhI" alt="next-page-icon">
                 </div>
             </div>
             <div class="swiper-slide page02">
-                <p>点击进入</p>
+                <img src="//img.aimoge.com/Fnwu1fYduiOXy3z1q-ulyFf3CXP5" alt="bg2" class="bg abs">
+                <div class="text-box abs">
+                    <p class="ani" swiper-animate-effect="fadeInLeft">这一年</p>
+                    <p class="ani" swiper-animate-effect="fadeInLeft" swiper-animate-delay=".3s">你在格格货栈</p>
+                    <p class="ani" swiper-animate-effect="fadeInLeft" swiper-animate-delay=".6s">共收到
+                        <span>666</span>件包裹</p>
+                </div>
+                <div class="ani medal-png abs" swiper-animate-effect="bounceIn" swiper-animate-delay=".6s">
+                    <img src="//img.aimoge.com/FhIgPVTdDrq8R1rrknLEtnBJos4r" alt="medal-png">
+                </div>
+                <div class="ani chest-png abs" swiper-animate-effect="fadeIn" swiper-animate-duration="2.2s">
+                    <img src="//img.aimoge.com/Fg6jnmDRvZAMX7SkqvTDYfBPRe6u" alt="chest-png">
+                </div>
+                <div class="next-page-icon abs">
+                    <img src="//img.aimoge.com/Fo4t0CcVYY3jEjqxjdhlDqVBvyhI" alt="next-page-icon">
+                </div>
+            </div>
+            <div class="swiper-slide page03">
+                <img src="//img.aimoge.com/FqMrbfba_qGHg7f0--ZasTSxhqvQ" alt="bg3" class="bg abs">
+                <div class="text-box abs">
+                    <p>给你最心仪的礼包</p>
+                </div>
+                <div class="select-box abs">
+                    <img src="//img.aimoge.com/Fuz1oFBYq86TUeb_snrR586zi6ds" alt="select-box-png">
+                    <div class="item sex-box">
+                        <p>你是
+                            <span>？</span>
+                        </p>
+                        <div class="flex flex-justify-between">
+                            <div class="boy-png" data-index=0>
+                                <img src="//img.aimoge.com/Fmu5ynHYNByjKBlqLzOkKnioz80V" alt="boy-png">
+                            </div>
+                            <div class="girl-png" data-index=1>
+                                <img src="//img.aimoge.com/FuG6yJ3D_g4CySxihCWpizr_MUJy" alt="girl-png">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item age-box hide">
+                        <p>你是
+                            <span>？</span>
+                        </p>
+                        <div class="flex flex-justify-between flex-wrap">
+                            <div class="item-box flex" data-index=0>
+                                <span class="icon">
+                                    <img src="//img.aimoge.com/FtUdtD5Uub0fp4gepRCzwtsPcOmz" alt="">
+                                </span>
+                                <span>70后</span>
+                            </div>
+                            <div class="item-box flex" data-index=1>
+                                <span class="icon">
+                                    <img src="//img.aimoge.com/FtUdtD5Uub0fp4gepRCzwtsPcOmz" alt="">
+                                </span>
+                                <span>75后</span>
+                            </div>
+                            <div class="item-box flex" data-index=2>
+                                <span class="icon">
+                                    <img src="//img.aimoge.com/FtUdtD5Uub0fp4gepRCzwtsPcOmz" alt="">
+                                </span>
+                                <span>80后</span>
+                            </div>
+                            <div class="item-box flex" data-index=3>
+                                <span class="icon">
+                                    <img src="//img.aimoge.com/FtUdtD5Uub0fp4gepRCzwtsPcOmz" alt="">
+                                </span>
+                                <span>85后</span>
+                            </div>
+                            <div class="item-box flex" data-index=4>
+                                <span class="icon">
+                                    <img src="//img.aimoge.com/FtUdtD5Uub0fp4gepRCzwtsPcOmz" alt="">
+                                </span>
+                                <span>90后</span>
+                            </div>
+                            <div class="item-box flex" data-index=6>
+                                <span class="icon">
+                                    <img src="//img.aimoge.com/FtUdtD5Uub0fp4gepRCzwtsPcOmz" alt="">
+                                </span>
+                                <span>95后</span>
+                            </div>
+                            <div class="item-box flex" data-index=7>
+                                <span class="icon">
+                                    <img src="//img.aimoge.com/FtUdtD5Uub0fp4gepRCzwtsPcOmz" alt="">
+                                </span>
+                                <span>00后</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item life-box hide">
+                        <p>你是
+                            <span>？</span>
+                        </p>
+                        <div class="flex flex-justify-between flex-wrap">
+                            <div class="item-box flex" data-index=0>
+                                <span class="icon">
+                                    <img src="//img.aimoge.com/FtUdtD5Uub0fp4gepRCzwtsPcOmz" alt="">
+                                </span>
+                                <span>单身</span>
+                            </div>
+                            <div class="item-box flex" data-index=1>
+                                <span class="icon">
+                                    <img src="//img.aimoge.com/FtUdtD5Uub0fp4gepRCzwtsPcOmz" alt="">
+                                </span>
+                                <span>热恋</span>
+                            </div>
+                            <div class="item-box flex" data-index=2>
+                                <span class="icon">
+                                    <img src="//img.aimoge.com/FtUdtD5Uub0fp4gepRCzwtsPcOmz" alt="">
+                                </span>
+                                <span>辣妈俏爸</span>
+                            </div>
+                            <div class="item-box flex" data-index=3>
+                                <span class="icon">
+                                    <img src="//img.aimoge.com/FtUdtD5Uub0fp4gepRCzwtsPcOmz" alt="">
+                                </span>
+                                <span>三代同堂</span>
+                            </div>
+                            <div class="item-box flex" data-index=4>
+                                <span class="icon">
+                                    <img src="//img.aimoge.com/FtUdtD5Uub0fp4gepRCzwtsPcOmz" alt="">
+                                </span>
+                                <span>都不是</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item matching-box hide">
+                        <p>立即为你匹配</p>
+                        <p>符合你气质的礼包...</p>
+                    </div>
+                    <div class="item match-success-box hide">
+                        <div class="success-png">
+                            <img src="//img.aimoge.com/Fk2PjPupMLx3fIXTxd7HbgKOv_DE" alt="success-png">
+                        </div>
+                        <p>已为你匹配成功</p>
+                    </div>
+                </div>
+                <div class="receive-btn abs hide">
+                    <p>点击领取专属好礼</p>
+                </div>
+                <div class="ani chest-png abs" swiper-animate-effect="fadeIn" swiper-animate-duration="2.2s">
+                    <img src="//img.aimoge.com/Fg6jnmDRvZAMX7SkqvTDYfBPRe6u" alt="chest-png">
+                </div>
+                <div class="next-page-icon abs">
+                    <img src="//img.aimoge.com/Fo4t0CcVYY3jEjqxjdhlDqVBvyhI" alt="next-page-icon">
+                </div>
             </div>
         </div>
     </div>
@@ -104,15 +422,31 @@
     <script src="//cdn.bootcss.com/Swiper/3.4.2/js/swiper.jquery.min.js"></script>
     <script src="./lib/swiper-animate/swiper.animate1.0.2.min.js"></script>
     <script>
+        window.data = {
+            user_info: {}
+        }
         var swiper;
         window.preloads = [
             '//img.aimoge.com/Fog78Ep1ru94tw5n8aXZm3jt6orX',
-            '//img.aimoge.com/FjQ7t__a3F3VbmqlU1zAUbQDOHew'
+            '//img.aimoge.com/FjQ7t__a3F3VbmqlU1zAUbQDOHew',
+            '//img.aimoge.com/FtE15wpostCQjhFd447I14xK8yss',
+            '//img.aimoge.com/Fo4t0CcVYY3jEjqxjdhlDqVBvyhI',
+            '//img.aimoge.com/Fnwu1fYduiOXy3z1q-ulyFf3CXP5',
+            '//img.aimoge.com/FhIgPVTdDrq8R1rrknLEtnBJos4r',
+            '//img.aimoge.com/Fg6jnmDRvZAMX7SkqvTDYfBPRe6u',
+            '//img.aimoge.com/FqMrbfba_qGHg7f0--ZasTSxhqvQ',
+            '//img.aimoge.com/Fuz1oFBYq86TUeb_snrR586zi6ds',
+            '//img.aimoge.com/Fmu5ynHYNByjKBlqLzOkKnioz80V',
+            '//img.aimoge.com/FtUdtD5Uub0fp4gepRCzwtsPcOmz',
+            '//img.aimoge.com/FlVBj17dR4MQsrfcyPIsjEvQpfdC',
+            '//img.aimoge.com/Fk2PjPupMLx3fIXTxd7HbgKOv_DE',
+            '//img.aimoge.com/FlAcEMkmECdJ_q1x5eL2ZGm1j0LO'
+
         ];
 
         function filePreload(file, process, success, error) {
             var preload = new createjs.LoadQueue(true);
-            preload.on('fileload', function(e) {});
+            preload.on('fileload', function (e) {});
             preload.on('progress', process);
             preload.on('complete', success);
             if (error) preload.on('error', error);
@@ -121,25 +455,27 @@
 
         function initSwiper() {
             swiper = new Swiper('.swiper-container', {
+                initialSlide: 2,
                 paginationClickable: true,
                 direction: 'vertical',
                 speed: 300,
-                onInit: function(swiper) {
-
+                onInit: function (swiper) {
+                    swiperAnimateCache(swiper); //隐藏动画元素 
+                    swiperAnimate(swiper); //初始化完成开始动画
                 },
-                onSlideChangeEnd: function(swiper) {
-
+                onSlideChangeEnd: function (swiper) {
+                    swiperAnimate(swiper); //每个slide切换结束时也运行当前slide动画
                 },
-                onTransitionEnd: function(swiper) {
+                onTransitionEnd: function (swiper) {
 
                 },
                 watchSlidesProgress: true
             })
         }
-        filePreload(window.preloads, function(e) {
+        filePreload(window.preloads, function (e) {
             var p = "LOADING   " + parseInt(e.loaded * 100) + '%';
             $("#loadcount").html(p);
-        }, function(e) {
+        }, function (e) {
             $('.preload').hide();
             $('.swiper-container').show();
             initSwiper();
@@ -148,6 +484,60 @@
         function enterPage() {
             swiper.slideTo(1, 500, false)
         }
+
+        function selectUserInfo(status, index) {
+            var aSex = ['男', '女'],
+                aAge = ['70后', '75后', '80后', '85后', '90后', '95后', '00后'],
+                aLife = ['单身', '热恋', '辣妈俏爸', '三代同堂', '都不是'],
+                data = window.data;
+            switch (status) {
+                case 1:
+                    data.user_info.sex = aSex[index];
+                    break;
+                case 2:
+                    data.user_info.age = aAge[index];
+                    break;
+                case 3:
+                    data.user_info.life = aLife[index];
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        function checkedIcon(name, that) {
+            $(name+' .item-box').each(function (i, el) {
+                $(el).find('img').attr('src', '//img.aimoge.com/FtUdtD5Uub0fp4gepRCzwtsPcOmz');
+            })
+            $(that).find('img').attr('src', '//img.aimoge.com/FlVBj17dR4MQsrfcyPIsjEvQpfdC')
+        }
+        $(document).ready(function () {
+            $('.next-page-icon').click(function () {
+                enterPage();
+            })
+            $('.sex-box>.flex>div').click(function () {
+                var index = $(this).data('index');
+                selectUserInfo(1, index);
+                $('.sex-box').fadeOut(300);
+                $('.age-box').fadeIn(300);
+            })
+            $('.age-box .item-box').click(function () {
+                var that=this,
+                    index=$(this).data('index');
+                checkedIcon('.age-box',that);
+                selectUserInfo(2,index);
+                $('.age-box').fadeOut(300);
+                $('.life-box').fadeIn(300);       
+            })
+            $('.life-box .item-box').click(function () {
+                var that=this,
+                    index=$(this).data('index');
+                checkedIcon('.life-box',that);
+                selectUserInfo(3,index);
+                $('.life-box').fadeOut(300);
+                $('.matching-box').fadeIn(300);       
+            })
+        })
     </script>
 </body>
 
