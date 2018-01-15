@@ -273,8 +273,28 @@
         }
         
         .page04 .title-png {
-            width: 100%;
+            width: 30%;
+            left: 50%;
+            margin-left: -15%;
             top: 10%;
+        }
+        .page04 .year-png{
+            width: 60%;
+            left: 50%;
+            margin-left: -30%;
+            top: 20%;
+        }
+        .page04 .greetings-png{
+            width: 60%;
+            left: 50%;
+            margin-left: -30%;
+            top: 44%;
+        }
+        .page04 .text-png{
+            width: 40%;
+            left: 50%;
+            margin-left: -20%;
+            top: 50%;
         }
     </style>
 </head>
@@ -449,13 +469,16 @@
             <div class="swiper-slide page04">
                 <img src="//img.aimoge.com/FvMEH5C0XK0f2qqWKWQ4jKuTYatt" alt="bg4" class="bg abs">
                 <div class="title-png abs">
-                    <p>格格祝您</p>
+                    <img src="//img.aimoge.com/Fr2d6sGYIUpamldpt1jFrhJvAd5_" alt="title-png">
                 </div>
-                <div class="year-pan abs">
-                    <img src="" alt="">
+                <div class="year-png abs">
+                    <img src="//img.aimoge.com/FqsGwUXLpFGGK1LLI8nFAoou2afS" alt="year-png">
                 </div>
                 <div class="greetings-png abs">
-                    <p></p>
+                    <img src="//img.aimoge.com/FpTlfnMfaylaREPNA4KVdrVsc2Qn" alt="greetings-png">
+                </div>
+                <div class="text-png abs">
+                    <img src="//img.aimoge.com/Fkz_5tNFV5fJT56ycFKYVYLJXuFz" alt="text-png">
                 </div>
                 <div class="ani chest-png abs" swiper-animate-effect="fadeIn" swiper-animate-duration="2.2s">
                     <img src="//img.aimoge.com/Fg6jnmDRvZAMX7SkqvTDYfBPRe6u" alt="chest-png">
@@ -492,7 +515,12 @@
             '//img.aimoge.com/FlVBj17dR4MQsrfcyPIsjEvQpfdC',
             '//img.aimoge.com/Fk2PjPupMLx3fIXTxd7HbgKOv_DE',
             '//img.aimoge.com/FlAcEMkmECdJ_q1x5eL2ZGm1j0LO',
-            '//img.aimoge.com/FvMEH5C0XK0f2qqWKWQ4jKuTYatt'
+            '//img.aimoge.com/FvMEH5C0XK0f2qqWKWQ4jKuTYatt',
+            '//img.aimoge.com/Fr2d6sGYIUpamldpt1jFrhJvAd5_',
+            '//img.aimoge.com/FpTlfnMfaylaREPNA4KVdrVsc2Qn',
+            '//img.aimoge.com/Fkz_5tNFV5fJT56ycFKYVYLJXuFz',
+            '//img.aimoge.com/Fg6jnmDRvZAMX7SkqvTDYfBPRe6u',
+            '//img.aimoge.com/FnZ3AuWcsKbTp4euIBnXqMAFGg52'//弹出窗
 
         ];
 
@@ -507,7 +535,7 @@
 
         function initSwiper() {
             swiper = new Swiper('.swiper-container', {
-                // initialSlide: 2,
+                initialSlide: 3,
                 paginationClickable: true,
                 direction: 'vertical',
                 speed: 300,

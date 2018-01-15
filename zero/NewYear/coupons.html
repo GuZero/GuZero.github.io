@@ -35,9 +35,7 @@
         .item {
             margin-top: 16px;
             width: 100%;
-            /* background-color: #fff; */
-            /* background: rebeccapurple; */
-            background: url('//img.aimoge.com/FgUXV_9i_ScBdMZWUqqvcCjR6NoB') no-repeat;
+            background: url('//img.aimoge.com/FinoVe1QEuvrRkk3AZPMk6iTHo8M') no-repeat;
             background-size: 100% 100%;
             padding: 10px;
         }
@@ -90,7 +88,6 @@
         
         .item .down-btn {
             width: 100%;
-            border-top: 1px dashed #e2e2e2;
             height: 26px;
         }
         
@@ -103,7 +100,7 @@
             width: 90%;
             left: 50%;
             margin-left: -45%;
-            border-top: 1px dashed #e2e2e2;
+            /* border-top: 1px dashed #e2e2e2; */
             border-bottom: 1px dashed #e2e2e2;
             background: #fff;
         }
@@ -141,7 +138,7 @@
                     <p class="gray f12">666人领</p>
                 </div>
             </div>
-            <div class="down-btn flex flex-justify-center">
+            <div class="down-btn flex flex-justify-center ">
                 <span class="aw-b"></span>
             </div>
             <div class="content abs hide">
@@ -161,10 +158,12 @@
         $(document).ready(function() {
             $('.item .down-btn').click(function() {
                 $(this).hide();
+                // $('.item').css({'background':'url(//img.aimoge.com/Fj98eI5d_CdNM5ch9KZumTCBy4xH) no-repeat'})
                 $('.item .content').slideDown('slow');
             })
             $('.item .content').click(function() {
                 $(this).slideUp('slow', function() {
+                    // $('.item').css({'background':'url(//img.aimoge.com/FinoVe1QEuvrRkk3AZPMk6iTHo8M) no-repeat'})
                     $('.item .down-btn').show();
                 });
             })
