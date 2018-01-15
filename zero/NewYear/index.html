@@ -29,92 +29,93 @@
             margin: 0;
             padding: 0;
         }
-
+        
         html,
         body {
             position: relative;
             height: 100%;
         }
-
+        
         .preload {
             text-align: center;
         }
-
+        
         .preload div {
             position: relative;
             top: 40%;
         }
-
+        
         .preload div img {
             width: 6%;
         }
-
+        
         .preload #loadcount {
             color: #ff7800;
             font-family: SimHei;
             font-size: 1em;
         }
-
+        
         .wh100 {
             width: 100%;
             height: 100%;
         }
-
+        
         .swiper-container {
             width: 100%;
             height: 100%;
             display: none;
         }
-
+        
         .bg {
+            width: 100%;
             height: 100%;
         }
-
+        
         .page01 .theme-png {
             width: 80%;
             top: 10%;
             left: 50%;
             margin-left: -40%;
         }
-
+        
         .page01 .gift-png {
             width: 90%;
             bottom: 0;
             right: 0;
         }
-
+        
         .next-page-icon {
             width: 6%;
             bottom: 10px;
             left: 50%;
             margin-left: -3%;
         }
-
+        
         .page01 .theme-png {
             animation-duration: 3.5s;
             -webkit-animation-duration: 3.5s;
             -moz-animation-duration: 3.5s;
         }
-
+        
         .page01 .gift-png {
             -webkit-animation-delay: .6s;
             -moz-animation-delay: .6s;
             animation-delay: .6s;
         }
-
+        
         .chest-png {
             width: 56%;
             bottom: 16px;
             left: 50%;
             margin-left: -30%;
         }
-
+        
         .chest-png {
             animation-duration: 4.5s;
             -webkit-animation-duration: 4.5s;
             -moz-animation-duration: 4.5s;
         }
-
+        
         .page02 .text-box {
             top: 5%;
             right: 3%;
@@ -122,36 +123,46 @@
             line-height: 46px;
             text-align: right;
         }
-
+        
         .page02 .text-box span {
             color: #d23c30;
             font-size: 32px;
         }
-
+        
         .page02 .medal-png {
             width: 56%;
             top: 30%;
             left: 50%;
             margin-left: -28%;
         }
-
+        
+        .page02 .medal-png span {
+            color: #fff;
+            width: 60%;
+            text-align: center;
+            font-size: 30px;
+            top: 30%;
+            left: 50%;
+            margin-left: -30%;
+        }
+        
         .page03 .text-box {
             top: 8%;
             left: 4%;
         }
-
+        
         .page03 .text-box p {
             font-size: 22px;
             font-weight: 700;
         }
-
+        
         .page03 .select-box {
             width: 80%;
             top: 14%;
             left: 50%;
             margin-left: -40%;
         }
-
+        
         .page03 .select-box .item {
             position: absolute;
             width: 70%;
@@ -161,79 +172,87 @@
             text-align: center;
             padding: 0 26px;
         }
-
+        
         .page03 .select-box p {
             font-size: 22px;
             font-weight: 600;
             margin-bottom: 6%;
         }
-
+        
         .page03 .select-box p span {
             font-size: 30px;
         }
-
+        
         .page03 .select-box .sex-box .flex {
             padding: 0 10px;
         }
-
+        
         .page03 .select-box .sex-box .flex div {
             width: 26%;
         }
-
+        
         .page03 .select-box .age-box {
             width: 100%;
             margin-left: -50%;
             padding: 0 19%;
         }
-
+        
         .page03 .select-box .item-box {
             margin-top: 8px;
             margin-right: 2px;
         }
-
+        
         .page03 .select-box .item-box .icon {
             width: 20px;
             margin-right: 4px;
         }
-
+        
         .page03 .select-box .life-box {
             width: 80%;
             margin-left: -40%;
         }
-        .page03 .matching-box{
+        
+        .page03 .matching-box {
             margin-top: 10%;
         }
-        .page03 .matching-box p{
+        
+        .page03 .matching-box p {
             font-size: 14px;
             font-weight: normal;
         }
+        
         .page03 .match-success-box {
             margin-top: 10%;
         }
-        .page03 .match-success-box .success-png{
+        
+        .page03 .match-success-box .success-png {
             width: 36%;
             margin: 0 auto;
         }
-        .page03 .match-success-box p{
+        
+        .page03 .match-success-box p {
             margin-top: 10px;
             font-size: 14px;
             font-weight: normal;
         }
+        
         .page03 .receive-btn {
-           width: 96%;
-           height: 46px;
-           background: url('//img.aimoge.com/FlAcEMkmECdJ_q1x5eL2ZGm1j0LO') no-repeat left;
-           background-size: 100% 100%;
-           color: #fff;
-           text-align: center;
-           line-height: 46px;
-           left: 50%;
-           bottom: 22%;
-           margin-left: -48%;
+            width: 96%;
+            height: 46px;
+            background: url('//img.aimoge.com/FlAcEMkmECdJ_q1x5eL2ZGm1j0LO') no-repeat left;
+            background-size: 100% 100%;
+            color: #fff;
+            text-align: center;
+            line-height: 46px;
+            left: 50%;
+            bottom: 22%;
+            margin-left: -48%;
         }
-        .page03 .receive-btn img{
+        
+        .page03 .receive-btn img {
             max-height: 100%;
         }
+        
         @media screen and (max-width: 320px) {
             .page03 .select-box .age-box {
                 font-size: 12px;
@@ -245,6 +264,17 @@
                 width: 84%;
                 margin-left: -42%;
             }
+        }
+        
+        .page04 p {
+            font-size: 30px;
+            text-align: center;
+            color: #fff;
+        }
+        
+        .page04 .title-png {
+            width: 100%;
+            top: 10%;
         }
     </style>
 </head>
@@ -266,7 +296,7 @@
                 <div class="ani gift-png abs" swiper-animate-effect="fadeInRight" swiper-animate-delay=".8s">
                     <img src="//img.aimoge.com/FtE15wpostCQjhFd447I14xK8yss" alt="gift-png">
                 </div>
-                <div class="next-page-icon abs">
+                <div class="next-page-icon abs" data-index=0>
                     <img src="//img.aimoge.com/Fo4t0CcVYY3jEjqxjdhlDqVBvyhI" alt="next-page-icon">
                 </div>
             </div>
@@ -279,21 +309,22 @@
                         <span>666</span>件包裹</p>
                 </div>
                 <div class="ani medal-png abs" swiper-animate-effect="bounceIn" swiper-animate-delay=".6s">
+                    <span class="abs" id="type">剁手型</span>
                     <img src="//img.aimoge.com/FhIgPVTdDrq8R1rrknLEtnBJos4r" alt="medal-png">
                 </div>
                 <div class="ani chest-png abs" swiper-animate-effect="fadeIn" swiper-animate-duration="2.2s">
                     <img src="//img.aimoge.com/Fg6jnmDRvZAMX7SkqvTDYfBPRe6u" alt="chest-png">
                 </div>
-                <div class="next-page-icon abs">
+                <div class="next-page-icon abs" data-index=1>
                     <img src="//img.aimoge.com/Fo4t0CcVYY3jEjqxjdhlDqVBvyhI" alt="next-page-icon">
                 </div>
             </div>
             <div class="swiper-slide page03">
                 <img src="//img.aimoge.com/FqMrbfba_qGHg7f0--ZasTSxhqvQ" alt="bg3" class="bg abs">
-                <div class="text-box abs">
+                <div class="ani text-box abs" swiper-animate-effect="fadeInLeft">
                     <p>给你最心仪的礼包</p>
                 </div>
-                <div class="select-box abs">
+                <div class="ani select-box abs" swiper-animate-effect="fadeInDown" swiper-animate-delay="0.7s">
                     <img src="//img.aimoge.com/Fuz1oFBYq86TUeb_snrR586zi6ds" alt="select-box-png">
                     <div class="item sex-box">
                         <p>你是
@@ -411,12 +442,32 @@
                 <div class="ani chest-png abs" swiper-animate-effect="fadeIn" swiper-animate-duration="2.2s">
                     <img src="//img.aimoge.com/Fg6jnmDRvZAMX7SkqvTDYfBPRe6u" alt="chest-png">
                 </div>
-                <div class="next-page-icon abs">
+                <div class="next-page-icon abs" data-index=2>
                     <img src="//img.aimoge.com/Fo4t0CcVYY3jEjqxjdhlDqVBvyhI" alt="next-page-icon">
+                </div>
+            </div>
+            <div class="swiper-slide page04">
+                <img src="//img.aimoge.com/FvMEH5C0XK0f2qqWKWQ4jKuTYatt" alt="bg4" class="bg abs">
+                <div class="title-png abs">
+                    <p>格格祝您</p>
+                </div>
+                <div class="year-pan abs">
+                    <img src="" alt="">
+                </div>
+                <div class="greetings-png abs">
+                    <p></p>
+                </div>
+                <div class="ani chest-png abs" swiper-animate-effect="fadeIn" swiper-animate-duration="2.2s">
+                    <img src="//img.aimoge.com/Fg6jnmDRvZAMX7SkqvTDYfBPRe6u" alt="chest-png">
                 </div>
             </div>
         </div>
     </div>
+    <script>
+        window.config = {
+            API: '//api.dev.aimoge.com/v1'
+        }
+    </script>
     <script src="//cdn.bootcss.com/PreloadJS/1.0.1/preloadjs.min.js"></script>
     <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script src="//cdn.bootcss.com/Swiper/3.4.2/js/swiper.jquery.min.js"></script>
@@ -440,13 +491,14 @@
             '//img.aimoge.com/FtUdtD5Uub0fp4gepRCzwtsPcOmz',
             '//img.aimoge.com/FlVBj17dR4MQsrfcyPIsjEvQpfdC',
             '//img.aimoge.com/Fk2PjPupMLx3fIXTxd7HbgKOv_DE',
-            '//img.aimoge.com/FlAcEMkmECdJ_q1x5eL2ZGm1j0LO'
+            '//img.aimoge.com/FlAcEMkmECdJ_q1x5eL2ZGm1j0LO',
+            '//img.aimoge.com/FvMEH5C0XK0f2qqWKWQ4jKuTYatt'
 
         ];
 
         function filePreload(file, process, success, error) {
             var preload = new createjs.LoadQueue(true);
-            preload.on('fileload', function (e) {});
+            preload.on('fileload', function(e) {});
             preload.on('progress', process);
             preload.on('complete', success);
             if (error) preload.on('error', error);
@@ -455,34 +507,38 @@
 
         function initSwiper() {
             swiper = new Swiper('.swiper-container', {
-                initialSlide: 2,
+                // initialSlide: 2,
                 paginationClickable: true,
                 direction: 'vertical',
                 speed: 300,
-                onInit: function (swiper) {
+                onInit: function(swiper) {
                     swiperAnimateCache(swiper); //隐藏动画元素 
                     swiperAnimate(swiper); //初始化完成开始动画
                 },
-                onSlideChangeEnd: function (swiper) {
+                onSlideChangeEnd: function(swiper) {
                     swiperAnimate(swiper); //每个slide切换结束时也运行当前slide动画
                 },
-                onTransitionEnd: function (swiper) {
-
+                onTransitionEnd: function(swiper) {
+                    swiperAnimate(swiper);
                 },
                 watchSlidesProgress: true
             })
         }
-        filePreload(window.preloads, function (e) {
+        filePreload(window.preloads, function(e) {
             var p = "LOADING   " + parseInt(e.loaded * 100) + '%';
             $("#loadcount").html(p);
-        }, function (e) {
+        }, function(e) {
             $('.preload').hide();
             $('.swiper-container').show();
             initSwiper();
         })
 
-        function enterPage() {
-            swiper.slideTo(1, 500, false)
+        function enterPage(index) {
+            var index = index + 1;
+            swiper.slideTo(index, 500, false);
+            setTimeout(function() {
+                swiperAnimate(swiper);
+            }, 500);
         }
 
         function selectUserInfo(status, index) {
@@ -506,36 +562,37 @@
         }
 
         function checkedIcon(name, that) {
-            $(name+' .item-box').each(function (i, el) {
+            $(name + ' .item-box').each(function(i, el) {
                 $(el).find('img').attr('src', '//img.aimoge.com/FtUdtD5Uub0fp4gepRCzwtsPcOmz');
             })
             $(that).find('img').attr('src', '//img.aimoge.com/FlVBj17dR4MQsrfcyPIsjEvQpfdC')
         }
-        $(document).ready(function () {
-            $('.next-page-icon').click(function () {
-                enterPage();
+        $(document).ready(function() {
+            $('.next-page-icon').click(function() {
+                var index = $(this).data('index');
+                enterPage(index);
             })
-            $('.sex-box>.flex>div').click(function () {
+            $('.sex-box>.flex>div').click(function() {
                 var index = $(this).data('index');
                 selectUserInfo(1, index);
                 $('.sex-box').fadeOut(300);
                 $('.age-box').fadeIn(300);
             })
-            $('.age-box .item-box').click(function () {
-                var that=this,
-                    index=$(this).data('index');
-                checkedIcon('.age-box',that);
-                selectUserInfo(2,index);
+            $('.age-box .item-box').click(function() {
+                var that = this,
+                    index = $(this).data('index');
+                checkedIcon('.age-box', that);
+                selectUserInfo(2, index);
                 $('.age-box').fadeOut(300);
-                $('.life-box').fadeIn(300);       
+                $('.life-box').fadeIn(300);
             })
-            $('.life-box .item-box').click(function () {
-                var that=this,
-                    index=$(this).data('index');
-                checkedIcon('.life-box',that);
-                selectUserInfo(3,index);
+            $('.life-box .item-box').click(function() {
+                var that = this,
+                    index = $(this).data('index');
+                checkedIcon('.life-box', that);
+                selectUserInfo(3, index);
                 $('.life-box').fadeOut(300);
-                $('.matching-box').fadeIn(300);       
+                $('.matching-box').fadeIn(300);
             })
         })
     </script>

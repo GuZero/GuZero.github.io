@@ -24,21 +24,97 @@
         body {
             height: 100%;
         }
-
+        
         .container {
             width: 100%;
             height: 100%;
+            background: url('//img.aimoge.com/Fh485KjhYxmryOoqYQxM-nEov1tI') no-repeat;
+            padding: 0 16px;
         }
-
-        .bg {
+        
+        .item {
+            margin-top: 16px;
             width: 100%;
-            height: 100%;
-            position: absolute;
-            left: 0;
-            top: 0;
+            /* background-color: #fff; */
+            /* background: rebeccapurple; */
+            background: url('//img.aimoge.com/FgUXV_9i_ScBdMZWUqqvcCjR6NoB') no-repeat;
+            background-size: 100% 100%;
+            padding: 10px;
         }
-        .item{
-            
+        
+        .item .left-box {
+            width: 68%;
+        }
+        
+        .item .left-box .img-box {
+            width: 32%;
+        }
+        
+        .item .left-box .text-box {
+            padding: 0 5px;
+        }
+        
+        .gray {
+            color: #9c9c9c;
+        }
+        
+        .item p.f20 {
+            margin-bottom: 3%;
+        }
+        
+        .right-box {
+            width: 32%;
+            text-align: center;
+            padding: 0 4px;
+            border-left: 1px dashed #e2e2e2;
+        }
+        
+        .right-box .submit-btn {
+            color: #fff;
+            border-radius: 6px;
+            background-color: #e83100;
+            width: 80%;
+            margin: 0 auto;
+            padding: 6px;
+        }
+        
+        @media screen and (max-width: 320px) {
+            .left-box .text-box p.f20 {
+                font-size: 14px;
+            }
+            .right-box .submit-btn {
+                padding: 4px;
+                width: 90%;
+            }
+        }
+        
+        .item .down-btn {
+            width: 100%;
+            border-top: 1px dashed #e2e2e2;
+            height: 26px;
+        }
+        
+        .item .down-btn .aw-b {
+            margin-top: 7px;
+        }
+        
+        .item .content {
+            padding: 6px;
+            width: 90%;
+            left: 50%;
+            margin-left: -45%;
+            border-top: 1px dashed #e2e2e2;
+            border-bottom: 1px dashed #e2e2e2;
+            background: #fff;
+        }
+        
+        .item .content img {
+            width: 100%;
+            padding: 4px 0;
+        }
+        
+        .mb-5 {
+            margin-bottom: 5px;
         }
     </style>
 </head>
@@ -49,22 +125,49 @@
     </div>
     <div id="mgAlert" class="mgAlert center fixed f14"></div>
     <div class="container rel" id="leafContainer">
-        <img src="//img.aimoge.com/Fh485KjhYxmryOoqYQxM-nEov1tI" alt="bg" class="bg">
-        <div class="item">
-
+        <div class="item rel">
+            <div class="flex mb-5">
+                <div class="left-box flex">
+                    <div class="img-box">
+                        <img src="//img.aimoge.com/FltfPjSOIRlht4mmwQTEtV6CxM6A" alt="">
+                    </div>
+                    <div class="text-box">
+                        <p class="f20">格格土鸡蛋抵扣券</p>
+                        <p class="gray f12">格格小区App用户专享</p>
+                    </div>
+                </div>
+                <div class="right-box flex  flex-justify-center flex-v">
+                    <div class="submit-btn">立即领取</div>
+                    <p class="gray f12">666人领</p>
+                </div>
+            </div>
+            <div class="down-btn flex flex-justify-center">
+                <span class="aw-b"></span>
+            </div>
+            <div class="content abs hide">
+                <p>128包月的土鸡蛋=20枚/次 共计4次配送</p>
+                <p>128包月的土鸡蛋=20枚/次 共计4次配送</p>
+                <p>128包月的土鸡蛋=20枚/次 共计4次配送</p>
+                <p>128包月的土鸡蛋=20枚/次 共计4次配送</p>
+                <div class="img">
+                    <img src="//img.aimoge.com/FltfPjSOIRlht4mmwQTEtV6CxM6A" alt="">
+                </div>
+            </div>
         </div>
     </div>
-    <script>
-        window.config = {
-            API: '//api.dev.aimoge.com/v1'
-        }
-    </script>
     <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script src="./lib/util.js"></script>
-    <!-- <script src="./lib/snowEffect.js"></script> -->
     <script>
-        $(document).ready(function () {
-
+        $(document).ready(function() {
+            $('.item .down-btn').click(function() {
+                $(this).hide();
+                $('.item .content').slideDown('slow');
+            })
+            $('.item .content').click(function() {
+                $(this).slideUp('slow', function() {
+                    $('.item .down-btn').show();
+                });
+            })
         })
     </script>
 </body>
