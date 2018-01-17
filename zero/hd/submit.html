@@ -181,7 +181,7 @@
                 <div class="iocn time-icon">
                     <img src="//img.aimoge.com/FoWx8gJnGyp3c_Ov9fWCG0eVgMUH" alt="time-icon">
                 </div>
-                <p>选择时间(已选<span id="day" class="blue">&nbsp&nbsp1&nbsp&nbsp</span>天)</p>
+                <p>选择时间（已选&nbsp&nbsp<span id="day" class="blue">1</span>&nbsp&nbsp天）</p>
             </div>
             <div class="input-box flex flex-justify-between">
                 <input type="text" id="start_date" placeholder="开始时间" readonly readonlyunselectable="on" class="center">
@@ -195,7 +195,7 @@
                 <div class="iocn choice-icon">
                     <img src="//img.aimoge.com/Fv1Ojcrc0kcNoo0OdHAeMvHATYdn" alt="choice-icon">
                 </div>
-                <p>选择柜机（已选<span id="chest" class="blue">&nbsp&nbsp1&nbsp&nbsp</span>个）</p>
+                <p>选择柜机（已选&nbsp&nbsp<span id="chest" class="blue">1</span>&nbsp&nbsp个）</p>
                 <div class="add-icon abs">+</div>
             </div>
             <div class="choice-content">
@@ -231,53 +231,10 @@
     </div>
     <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script src="./lib/LCalendar/js/LCalendar.js"></script>
-    <script src="./lib/LCalendar/js/date.js"></script>
+    <script src="./lib/util.js"></script>
     <script>
-        var endDate = null;
-
-        function getDateStr(day_count) {
-            var dd = new Date();
-            dd.setDate(dd.getDate() + day_count);
-            var y = dd.getFullYear();
-            var m = dd.getMonth() + 1;
-            var d = dd.getDate();
-            return [y, m, d];
-        }
-
-        function initLCalendar() {
-            var start_date = initDate('start_date', 1),
-                end_date = initDate('end_date', 1);
-            var startDate = new LCalendar();
-            endDate = new LCalendar();
-            startDate.init(start_date);
-            endDate.init(end_date);
-        }
-
-        function initDate(id, day) {
-            var time = new Date().getHours(),
-                addDayCount = day,
-                minDateArr = null,
-                maxDateArr = null,
-                obj = {};
-            if (time > 17 || time == 17) {
-                addDayCount = addDayCount + 1;
-            }
-            minDateArr = getDateStr(addDayCount);
-            maxDateArr = getDateStr(addDayCount + 13);
-            obj.trigger = '#' + id;
-            obj.type = 'date';
-            obj.minDate = minDateArr[0] + '-' + minDateArr[1] + '-' + minDateArr[2];
-            obj.maxDate = maxDateArr[0] + '-' + maxDateArr[1] + '-' + maxDateArr[2];
-            return obj;
-        }
-
-        function initEndDate(day) {
-            var day = parseInt($('#start_date').val().split('-').pop()) - (new Date()).getDate();
-            if (day < 0) {
-                current_day = getCurrentMonthDays();
-                day = current_day + day;
-            }
-        }
+        _util.dateFormat();
+        var model = {};
 
         function getCurrentMonthDays() {
             var date = new Date(),
@@ -287,11 +244,76 @@
             return time.getDate();
         }
 
+        function countDay(startTm, endTm) {
+            var howTime = (new Date(endTm).getTime() - new Date(startTm).getTime()) + 86400000;
+            model.how = Math.round(howTime / 86400000);
+            initDom();
+        }
+
+        function initDom() {
+            $('#day').html(model.how);
+        }
+
+        function initDate() { //初始化时间组件
+            //设置初始时间
+            var currHour = new Date().getHours();
+            var oneDay = 86400000; //定义一天的时长
+            model.startTm = (new Date(new Date().getTime() + (currHour >= 17 ? oneDay * 2 : oneDay))).format('yyyy-MM-dd');
+            model.endTm = (new Date(new Date(model.startTm.startTm).getTime() + oneDay * 13)).format('yyyy-MM-dd');
+            var calendarStart = new lCalendar(); //开始时间实例
+            var calendarEnd = new lCalendar(); //结束时间实例
+            var startTimeDom = $('#start_date'); //开始时间DOM
+            var endTimeDom = $('#end_date'); //结束时间DOM
+            // 设置开始时间 
+            var startTmMin = (new Date(new Date().getTime() + (currHour >= 17 ? oneDay * 2 : oneDay))).format('yyyy-MM-dd'); //开始-起始时间
+            var startTmMax = (new Date(new Date().getTime() + oneDay * 14)).format('yyyy-MM-dd'); //开始-结束时间
+            //设置结束时间
+            var numDate = oneDay; //默认增加一天
+            if (currHour >= 17) {
+                numDate = oneDay * 2;
+            }
+            var endTmMin = (new Date(new Date(model.startTm).getTime())).format('yyyy-MM-dd'); //结束-开始时间
+            var endTmMax = (new Date(new Date(model.startTm).getTime() + oneDay * 14)).format('yyyy-MM-dd'); //结束-结束时间
+            // 设置滑动回调
+            startTimeDom.attr('data-lcalendar', startTmMin + ',' + startTmMax); //设置起始时间
+            calendarStart.init({
+                'trigger': '#start_date',
+                'type': 'date',
+                'callBack': function(_this, _curr) {
+                    model.startTm = _curr.yy + "-" + (_curr.mm < 10 ? '0' + _curr.mm : _curr.mm) + "-" + (_curr.dd < 10 ? '0' + _curr.dd : _curr.dd);
+                    endTmMin = (new Date(new Date(model.startTm).getTime())).format('yyyy-MM-dd'); //结束-开始时间
+                    endTmMax = (new Date(new Date(model.startTm).getTime() + oneDay * 14)).format('yyyy-MM-dd'); //结束-结束时间
+                    model.endTm = endTmMin;
+                    endTimeDom.attr('data-lcalendar', endTmMin + ',' + endTmMax);
+                    calendarEnd.init({
+                        'trigger': '#end_date',
+                        'type': 'date',
+                        'callBack': function(_this, _curr) {
+                            model.endTm = _curr.yy + "-" + (_curr.mm < 10 ? '0' + _curr.mm : _curr.mm) + "-" + (_curr.dd < 10 ? '0' + _curr.dd : _curr.dd);
+                        }
+                    })
+                }
+            });
+            endTimeDom.attr('data-lcalenar', endTmMin + ',' + endTmMax);
+            calendarEnd.init({
+                'trigger': '#end_date',
+                'type': 'date',
+                'callBack': function(_this, _curr) {
+                    model.endTm = _curr.yy + "-" + (_curr.mm < 10 ? '0' + _curr.mm : _curr.mm) + "-" + (_curr.dd < 10 ? '0' + _curr.dd : _curr.dd);
+                }
+            });
+        }
+
         $(document).ready(function() {
-            initLCalendar();
+            initDate();
             $('#start_date').click(function() {
                 if ($('#end_date').val().length) {
                     $('#end_date').val('');
+                }
+            })
+            $('body').on('click', '.lcalendar_finish', function() {
+                if ($('#start_date').val().length && $('#end_date').val().length) {
+                    countDay(model.startTm, model.endTm);
                 }
             })
         })

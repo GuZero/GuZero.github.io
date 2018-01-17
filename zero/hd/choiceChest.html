@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, max-age=0, must-revalidate, no-siteapp" />
+    <meta name="x5-orientation" content="portrait" />
+    <meta name="x5-page-mode" content="app" />
+    <meta name="screen-orientation" content="portrait" />
+    <meta name="browsermode" content="application" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="renderer" content="webkit" />
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <title>Document</title>
+    <link href="./css/global.css" type="text/css" rel="stylesheet">
+    <style>
+        .gege-header .confirm-btn {
+            right: 10px;
+            line-height: 32px;
+        }
+        
+        .container {
+            padding-top: 44px;
+        }
+        
+        .search-box {
+            margin: 0;
+            z-index: 300;
+            width: 100%;
+            height: 60px;
+            /* line-height: 60px; */
+            padding: 0 16px;
+            font-size: 14px;
+            color: #c3c3c3;
+            border-bottom: 1px #eee solid;
+            background-color: #4285f4;
+            box-sizing: border-box;
+        }
+        
+        .search-box input {
+            color: #666;
+            font-size: 14px;
+            height: 35px;
+            line-height: 35px;
+            background-color: #fff;
+            border-radius: 4px;
+            padding: 0 32px 0 16px;
+        }
+        
+        .search-box .search-btn {
+            width: 50px;
+            height: 34px;
+            line-height: 34px;
+            border: 1px solid #fff;
+            border-radius: 3px;
+            color: #fff;
+            text-align: center;
+            margin-left: 16px;
+        }
+        
+        .search-box .tag {
+            right: 5px;
+            top: 50%;
+            background-image: url('//img.aimoge.com/Fp5Fb_0YJWJASyYvqsDVGCrPXbvC');
+            background-repeat: no-repeat;
+            background-size: 22px 22px;
+            background-position: center center;
+            width: 22px;
+            height: 22px;
+            z-index: 300;
+            margin-top: -12px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="mgAlert" class="mgAlert center fixed f14"></div>
+    <div id="sysLoading" class="sysLoading fixed">
+        <i class="ion-loading-c"></i>
+    </div>
+    <div class="gege-header fixed">
+        <div class="title center ellipsis f16 abs">格格礼品送祝福</div>
+        <a class="icgoback" href="/hd"></a>
+        <a class="confirm-btn f16">确定</a>
+    </div>
+    <div class="container">
+        <div class="search-box flex flex-justify-between flex-align-center fixed">
+            <div class="input-box rel">
+                <input type="text" placeholder="输入小区名">
+                <div class="tag abs"></div>
+            </div>
+            <div class="search-btn">搜索</div>
+        </div>
+        <div class="city-box">
+            <div class="city-title">包城示爱选项</div>
+            <div class="city-content">
+                <span>包城示爱</span>
+                <div class="aw-r"></div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="//webapi.amap.com/maps?v=1.3&key=14c2e56f9158a06febd6aa31f3e6eb18"></script>
+    <script>
+        window.data = {}
+
+        function wxGetPosition() {}
+
+        function aMapGetPosition() { //初始化地理位置定位
+            var map, geolocation;
+            //加载地图，调用浏览器定位服务
+            map = new AMap.Map('container', {
+                resizeEnable: true
+            });
+            map.plugin('AMap.Geolocation', function() {
+                geolocation = new AMap.Geolocation({
+                    enableHighAccuracy: true, //是否使用高精度定位，默认:true
+                    timeout: 10000, //超过10秒后停止定位，默认：无穷大
+                    buttonOffset: new AMap.Pixel(10, 20), //定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+                    zoomToAccuracy: true, //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+                    buttonPosition: 'RB'
+                });
+                map.addControl(geolocation);
+                geolocation.getCurrentPosition();
+                AMap.event.addListener(geolocation, 'complete', onComplete); //返回定位信息
+                AMap.event.addListener(geolocation, 'error', onError); //返回定位出错信息
+            });
+        }
+
+        function onComplete(data) { //地理定位解析成功
+            window.data.lng = data.position.getLng();
+            window.data.lat = data.position.getLat();
+        }
+
+        function getFlatternDistance(lat1, lng1, lat2, lng2) {
+            var that = this;
+            var PI = Math.PI;
+            var radLat1 = that.getRad(lat1);
+            var radLat2 = that.getRad(lat2);
+            var a = radLat1 - radLat2;
+            var b = that.getRad(lng1) - that.getRad(lng2);
+            var s = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a / 2), 2) + Math.cos(radLat1) * Math.cos(radLat2) * Math.pow(Math.sin(b / 2), 2)));
+            s = s * 6378.137; // EARTH_RADIUS;
+            s = Math.round(s * 1000) / 1000;
+            return s;
+            return d * (1 + fl * (h1 * sf * (1 - sg) - h2 * (1 - sf) * sg));
+        }
+
+        function onError(msg) { //地理定位解析错误
+            var text = "";
+            switch (msg) {
+                case "NOT_SUPPORTED":
+                    text = "当前浏览器不支持定位功能";
+                    break;
+                case "PERMISSION_DENIED":
+                    text = "您关闭了地理定位功能，请手动打开";
+                    break;
+                case "POSITION_UNAVAILABLE":
+                    text = "无法获取当前位置";
+                    break;
+                case "TIMEOUT":
+                    text = "定位超时，请刷新重试";
+                    break;
+                default:
+                    text = "您关闭了地理定位功能，请手动打开";
+                    break;
+            }
+            _util.showErrorTip(text);
+        }
+    </script>
+</body>
+
+</html>
