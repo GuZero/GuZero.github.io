@@ -103,6 +103,47 @@
             margin-top: 12px;
         }
         
+        .checice-content {
+            max-height: 120px;
+            overflow-y: scroll;
+        }
+        
+        .choice-content .item {
+            color: #4d4d4d;
+            margin: 10px auto;
+        }
+        
+        .choice-content .item p {
+            width: 70%;
+            word-break: break-all;
+        }
+        
+        .choice-content .item .check-box {
+            width: 18px;
+            height: 17px;
+            border: 1px solid #979797;
+            border-radius: 3px;
+            margin-top: 2px;
+            margin-right: 16px;
+        }
+        
+        .choice-content .item .check-box .checked-icon {
+            width: 10px;
+            height: 5px;
+            border-bottom: 2px solid #4788f4;
+            border-left: 2px solid #4788f4;
+            transform: rotate(-45deg);
+            -ms-transform: rotate(-45deg);
+            /* IE 9 */
+            -moz-transform: rotate(-45deg);
+            /* Firefox */
+            -webkit-transform: rotate(-45deg);
+            /* Safari 和 Chrome */
+            -o-transform: rotate(-45deg);
+            margin-top: 3px;
+            margin-left: 3px;
+        }
+        
         .btn {
             background-color: #4285f4;
             font-size: 15px;
@@ -199,7 +240,12 @@
                 <div class="add-icon abs">+</div>
             </div>
             <div class="choice-content">
-
+                <div class="item flex">
+                    <div class="check-box">
+                        <div class="checked-icon"></div>
+                    </div>
+                    <p>选择柜机（已选</p>
+                </div>
             </div>
         </div>
         <div class="dividing-line abs"></div>

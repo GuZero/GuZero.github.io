@@ -76,6 +76,106 @@
             z-index: 300;
             margin-top: -12px;
         }
+        
+        .city-box {
+            margin-top: 60px;
+        }
+        
+        .city-box .city-title {
+            height: 24px;
+            line-height: 24px;
+            background: #ececec;
+            color: #606060;
+            padding-left: 16px;
+            font-size: 16px;
+        }
+        
+        .city-box .city-content {
+            font-size: 16px;
+            padding: 14px 16px;
+            color: #ef8b80;
+            font-weight: 700;
+        }
+        
+        .city-box .city-content span {
+            background: url(//img.aimoge.com/FswDzMCJr7d3IrV5x5y9Nu1MzMQy) no-repeat right center;
+            padding-right: 30px;
+            background-size: 24px 24px;
+        }
+        
+        .city-box .city-content .aw-r {
+            width: 20px;
+        }
+        
+        .city-box .city-content .aw-r::after {
+            border-top: 2px #ef8b80 solid;
+            border-right: 2px #ef8b80 solid;
+            margin-top: 5px;
+        }
+        
+        .nearby-box .nearby-title {
+            height: 24px;
+            line-height: 24px;
+            background: #ececec;
+            color: #606060;
+            padding-left: 16px;
+            font-size: 16px;
+        }
+        
+        .nearby-box .nearby-content {
+            padding: 0 16px;
+        }
+        
+        .nearby-box .nearby-content .item {
+            color: #4d4d4d;
+            margin: 16px auto;
+        }
+        
+        .nearby-box .nearby-content .item p {
+            width: 70%;
+            word-break: break-all;
+        }
+        
+        .nearby-box .nearby-content .item .check-box {
+            width: 18px;
+            height: 17px;
+            border: 1px solid #979797;
+            border-radius: 3px;
+            margin-top: 2px;
+            margin-right: 6px;
+        }
+        
+        .nearby-box .nearby-content .item .check-box .checked-icon {
+            width: 10px;
+            height: 5px;
+            border-bottom: 2px solid #4788f4;
+            border-left: 2px solid #4788f4;
+            transform: rotate(-45deg);
+            -ms-transform: rotate(-45deg);
+            /* IE 9 */
+            -moz-transform: rotate(-45deg);
+            /* Firefox */
+            -webkit-transform: rotate(-45deg);
+            /* Safari 和 Chrome */
+            -o-transform: rotate(-45deg);
+            margin-top: 3px;
+            margin-left: 3px;
+        }
+        
+        .mgLoadingWarp {
+            /* display: block; */
+        }
+        
+        .mgLoadingWarp i {
+            margin-left: -52px;
+        }
+        
+        .nearby-box .empty {
+            text-align: center;
+            color: #888;
+            margin-top: 30px;
+            display: none;
+        }
     </style>
 </head>
 
@@ -92,25 +192,58 @@
     <div class="container">
         <div class="search-box flex flex-justify-between flex-align-center fixed">
             <div class="input-box rel">
-                <input type="text" placeholder="输入小区名">
-                <div class="tag abs"></div>
+                <input type="text" placeholder="输入小区名" id="word" oninput="showClearBtn();">
+                <div class="tag abs hide"></div>
             </div>
             <div class="search-btn">搜索</div>
         </div>
         <div class="city-box">
             <div class="city-title">包城示爱选项</div>
-            <div class="city-content">
+            <div class="city-content flex flex-justify-between">
                 <span>包城示爱</span>
                 <div class="aw-r"></div>
             </div>
         </div>
+        <div class="nearby-box">
+            <div class="nearby-title">附近的格格货栈</div>
+            <div class="nearby-content">
+            </div>
+            <div id="mgLoadingWarp" class="mgLoadingWarp rel">
+                <span><i class="icon ion-loading-c rel"></i>加载中...</span>
+            </div>
+            <div class="empty">┗|'O'|┛ 嗷~~抱歉暂时没有找到您想要的</div>
+        </div>
     </div>
     <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-    <script type="text/javascript" src="//webapi.amap.com/maps?v=1.3&key=14c2e56f9158a06febd6aa31f3e6eb18"></script>
+    <script src="//webapi.amap.com/maps?v=1.3&key=14c2e56f9158a06febd6aa31f3e6eb18"></script>
+    <script src="//res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+    <script src="./lib/util.js"></script>
     <script>
-        window.data = {}
+        window.wxid = "55dad5ff9c7684a7048b4568";
+        var data = {
+            scroll_load_loading: false,
+            scroll_load_end: false,
+            latitude: 32.015198941158,
+            longitude: 118.79287282351,
+            aPages: [],
+            page: '',
+            aItems: []
+        }
 
-        function wxGetPosition() {}
+        function wxGetPosition() {
+            wx.ready(function() {
+                wx.getLocation({
+                    success: function(res) {
+                        data.latitude = res.latitude;
+                        data.longitude = res.longitude;
+                        findNearbyBoxes();
+                    },
+                    cancel: function(err) {
+                        _util.showErrorTip('用户拒绝授权获取地理位置');
+                    }
+                })
+            })
+        }
 
         function aMapGetPosition() { //初始化地理位置定位
             var map, geolocation;
@@ -131,11 +264,34 @@
                 AMap.event.addListener(geolocation, 'complete', onComplete); //返回定位信息
                 AMap.event.addListener(geolocation, 'error', onError); //返回定位出错信息
             });
-        }
 
-        function onComplete(data) { //地理定位解析成功
-            window.data.lng = data.position.getLng();
-            window.data.lat = data.position.getLat();
+            function onComplete(data) { //地理定位解析成功
+                data.longitude = data.position.getLng();
+                data.latitude = data.position.getLat();
+                findNearbyBoxes();
+            }
+
+            function onError(msg) { //地理定位解析错误
+                var text = "";
+                switch (msg) {
+                    case "NOT_SUPPORTED":
+                        text = "当前浏览器不支持定位功能";
+                        break;
+                    case "PERMISSION_DENIED":
+                        text = "您关闭了地理定位功能，请手动打开";
+                        break;
+                    case "POSITION_UNAVAILABLE":
+                        text = "无法获取当前位置";
+                        break;
+                    case "TIMEOUT":
+                        text = "定位超时，请刷新重试";
+                        break;
+                    default:
+                        text = "您关闭了地理定位功能，请手动打开";
+                        break;
+                }
+                _util.showErrorTip(text);
+            }
         }
 
         function getFlatternDistance(lat1, lng1, lat2, lng2) {
@@ -152,28 +308,194 @@
             return d * (1 + fl * (h1 * sf * (1 - sg) - h2 * (1 - sf) * sg));
         }
 
-        function onError(msg) { //地理定位解析错误
-            var text = "";
-            switch (msg) {
-                case "NOT_SUPPORTED":
-                    text = "当前浏览器不支持定位功能";
-                    break;
-                case "PERMISSION_DENIED":
-                    text = "您关闭了地理定位功能，请手动打开";
-                    break;
-                case "POSITION_UNAVAILABLE":
-                    text = "无法获取当前位置";
-                    break;
-                case "TIMEOUT":
-                    text = "定位超时，请刷新重试";
-                    break;
-                default:
-                    text = "您关闭了地理定位功能，请手动打开";
-                    break;
+        function findNearbyBoxes(isFirst, callback) {
+            var word = $('#word').val(),
+                page = data.page;
+            if (data.scroll_load_loading) {
+                return false;
             }
-            _util.showErrorTip(text);
+            if (data.scroll_load_end) {
+                return false;
+            }
+            isShowLoading(isFirst, true);
+            _util.ajaxData('GET',
+                _util.config.API + '/media/adinteraction/terminal/near?longitude=' + data.longitude + '&latitude=' + data.latitude + '&cursor=' + data.page + '&word=' + word,
+                null,
+                function(res) {
+                    if (res.status == 0) {
+                        isShowLoading(isFirst);
+                        if (res.data.terminals && res.data.terminals.length > 0) {
+                            if (data.aPages.indexOf(page) >= 0) return false;
+                            data.aPages.push(page);
+                            data.page = res.data.next_cursor || '';
+                            data.aItems = data.aItems.concat(res.data.terminals);
+                            if (res.data.terminals && res.data.terminals.length < data.numberPage) {
+                                data.scroll_load_end = true;
+                            }
+                            dataFormat();
+                        } else {
+                            if (callback) callback();
+                        }
+
+                    } else {
+                        isShowLoading(isFirst);
+                        if (res.msg) _util.showErrorTip(res.msg);
+                    }
+                },
+                function(err) {
+                    isShowLoading(isFirst);
+                    _util.showErrorTip('您的网络可能出了点问题:(');
+                })
         }
+
+        function getRad(d) {
+            let PI = Math.PI;
+            return d * PI / 180.0;
+        }
+
+        function dataFormat() {
+            var item = null,
+                aTerminal = JSON.parse(window.sessionStorage.getItem('_terminal')) || [],
+                tempItems = [];
+            for (var i = 0; i < data.aItems.length; i++) {
+                item = data.aItems[i];
+                item.distance = getFlatternDistance(data.latitude, data.longitude, item.geo[1], item.geo[0]);
+                if (aTerminal.length) {
+                    for (var j = 0; j < aTerminal.length; j++) {
+                        if (data.aItems[i].terminal_code == aTerminal[j].terminal_code) {
+                            item.checked = true;
+                        } else {
+                            item.checked = false;
+                        }
+                    }
+                } else {
+                    item.checked = false;
+                }
+                tempItems.push(item);
+            }
+            data.aItems = tempItems;
+            initDom(data.aItems);
+        }
+
+        function initDom(data) {
+            var _html = '',
+                class_name = '';
+            for (var i = 0; i < data.length; i++) {
+                if (data[i].checked) {
+                    class_name = 'show';
+                } else {
+                    class_name = 'hide';
+                }
+                _html += ' <div class="item flex" data-index=' + i + '><div class="check-box"><div class="checked-icon ' + class_name + '"></div></div>' +
+                    '<p>' + data[i].terminal_name + '</p>' +
+                    '<span>' + data[i].distance + 'KM</span></div>';
+            }
+            $('.nearby-content').html(_html);
+        }
+
+        function checkedIcon(that) {
+            var icon = that.find('.checked-icon'),
+                index = that.data('index');
+            if (icon.is(':visible')) {
+                data.aItems[index].checked = false;
+                icon.removeClass('show').addClass('hide');
+            } else {
+                data.aItems[index].checked = true;
+                icon.removeClass('hide').addClass('show');
+            }
+        }
+
+        function filterData(data) {
+            var array = [];
+            for (var i = 0; i < data.length; i++) {
+                if (data[i].checked) {
+                    array.push(data[i]);
+                }
+            }
+            return array;
+        }
+
+        function isShowLoading(status, show) {
+            if (status) {
+                if (show) {
+                    $('#sysLoading').show();
+                } else {
+                    $('#sysLoading').hide();
+                }
+            } else {
+                if (show) {
+                    $('#mgLoadingWarp').show();
+                } else {
+                    $('#mgLoadingWarp').hide();
+                }
+            }
+        }
+
+        function handleScroll() {
+            if (($(document).scrollTop() + window.innerHeight) >= document.body.scrollHeight - 1) {
+                if (data.aItems.length < 16) {
+                    return false;
+                } else {
+                    findNearbyBoxes();
+                }
+            }
+        }
+
+        function noResult() {
+            if (!data.aItems.length) {
+                $('.nearby-content').hide();
+                $('.empty').show();
+            }
+        }
+
+        function searchTerminal() {
+            if (!$('#word').val()) {
+                _util.showErrorTip('请输入您要搜索的小区名称');
+                return false;
+            }
+            data.page = '';
+            data.aPages = [];
+            data.aItems = [];
+            data.scroll_load_end = false;
+            data.scroll_load_loading = false;
+            findNearbyBoxes(1, noResult);
+        }
+
+        function showClearBtn() {
+            if ($('.tag').is(':hidden')) {
+                $('.tag').show();
+            }
+        }
+        // if (_util.isWeixin()) {
+        //     _util.initJWeiXin();
+        //     wxGetPosition();
+        // } else {
+        //     aMapGetPosition();
+        // }
+        findNearbyBoxes(1);
+        $(document).ready(function() {
+            $(document).on('scroll', handleScroll);
+            $('.nearby-content').on('click', '.item', function() {
+                var that = $(this);
+                checkedIcon(that);
+            })
+            $('.tag').click(function() {
+                $('#word').val('');
+                $(this).hide();
+                if (!data.aItems.length) {
+                    $('.nearby-content').show();
+                    $('.empty').hide();
+                }
+            })
+            $('.search-btn').click(function() {
+                searchTerminal();
+            })
+            $('.confirm-btn').click(function() {
+                var terminal_data = filterData(data.aItems);
+                window.sessionStorage.setItem('_terminal', JSON.stringify(terminal_data));
+            })
+        })
     </script>
 </body>
 
-</html>
+</html
