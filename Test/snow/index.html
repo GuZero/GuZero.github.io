@@ -213,6 +213,15 @@
     </div>
     <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script src="./js/snowEffect.js?t=1516344874092"></script>
+    <script>
+        $('#mobile').on('focus', function() {
+            var that = this;
+            setTimeout(function() {
+                that.scrollIntoView(true);
+                that.scrollIntoViewIfNeeded();
+            }, 200)
+        })
+    </script>
 </body>
 
 </html>
