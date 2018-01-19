@@ -570,29 +570,22 @@ img {
     max-width: 100px;
     max-height: 100px;
     animation-iteration-count: infinite;
-    -moz-animation-iteration-count: infinite;
-    animation-iteration-count: infinite;
+    -webkit-animation-iteration-count: infinite;
     animation-direction: normal;
-    -moz-animation-direction: normal;
     -webkit-animation-direction: normal;
     animation-timing-function: linear, ease-in;
     -webkit-animation-timing-function: linear, ease-in;
-    -moz-animation-timing-function: linear, ease-in;
 }
 
 #leafContainer>.snow>img {
     width: 100%;
     animation-iteration-count: infinite;
-    -moz-animation-iteration-count: infinite;
     -webkit-animation-iteration-count: infinite;
     animation-direction: alternate;
-    -moz-animation-direction: alternate;
     -webkit-animation-direction: alternate;
     animation-timing-function: ease-in-out;
-    -moz-animation-timing-function: ease-in-out;
     -webkit-animation-timing-function: ease-in-out;
     transform-origin: 50% -100%;
-    -moz-transform-origin: 50% -100%;
     -webkit-transform-origin: 50% -100%;
 }
 
@@ -620,54 +613,25 @@ img {
     }
 }
 
-@-webkit-keyframes drop {
-    0% {
-        transform: translate(0px, -50px);
-        -webkit-transform: translate(0px, -50px);
-        -ms-transform: translate(0px, -50px);
-        -moz-transform: translate(0px, -50px);
-        -o-transform: translate(0px, -50px);
-    }
-    100% {
-        transform: translate(0px, 650px);
-        -webkit-transform: translate(0px, 650px);
-        -ms-transform: translate(0px, 650px);
-        -moz-transform: translate(0px, 650px);
-        -o-transform: translate(0px, 650px);
-    }
-}
-
 @keyframes drop {
     0% {
         transform: translate(0px, -50px);
         -webkit-transform: translate(0px, -50px);
-        -ms-transform: translate(0px, -50px);
-        -moz-transform: translate(0px, -50px);
-        -o-transform: translate(0px, -50px);
     }
     100% {
         transform: translate(0px, 650px);
         -webkit-transform: translate(0px, 650px);
-        -ms-transform: translate(0px, 650px);
-        -moz-transform: translate(0px, 650px);
-        -o-transform: translate(0px, 650px);
     }
 }
 
-@-webkit-keyframes clockwiseSpin {
+@-webkit-keyframes drop {
     0% {
-        transform: rotate(-50deg);
-        -webkit-transform: rotate(-50deg);
-        -ms-transform: rotate(-50deg);
-        -moz-transform: rotate(-50deg);
-        -o-transform: rotate(-50deg);
+        transform: translate(0px, -50px);
+        -webkit-transform: translate(0px, -50px);
     }
     100% {
-        transform: rotate(50deg);
-        -webkit-transform: rotate(50deg);
-        -ms-transform: rotate(50deg);
-        -moz-transform: rotate(50deg);
-        -o-transform: rotate(50deg);
+        transform: translate(0px, 650px);
+        -webkit-transform: translate(0px, 650px);
     }
 }
 
@@ -675,33 +639,21 @@ img {
     0% {
         transform: rotate(-50deg);
         -webkit-transform: rotate(-50deg);
-        -ms-transform: rotate(-50deg);
-        -moz-transform: rotate(-50deg);
-        -o-transform: rotate(-50deg);
     }
     100% {
         transform: rotate(50deg);
         -webkit-transform: rotate(50deg);
-        -ms-transform: rotate(50deg);
-        -moz-transform: rotate(50deg);
-        -o-transform: rotate(50deg);
     }
 }
 
-@-webkit-keyframes counterclockwiseSpinAndFlip {
+@-webkit-keyframes clockwiseSpin {
     0% {
-        transform: scale(-1, 1) rotate(50deg);
-        -webkit-transform: scale(-1, 1) rotate(50deg);
-        -ms-transform: scale(-1, 1) rotate(50deg);
-        -moz-transform: scale(-1, 1) rotate(50deg);
-        -o-transform: scale(-1, 1) rotate(50deg);
+        transform: rotate(-50deg);
+        -webkit-transform: rotate(-50deg);
     }
     100% {
-        transform: scale(-1, 1) rotate(-50deg);
-        -webkit-transform: scale(-1, 1) rotate(-50deg);
-        -ms-transform: scale(-1, 1) rotate(-50deg);
-        -moz-transform: scale(-1, 1) rotate(-50deg);
-        -o-transform: scale(-1, 1) rotate(-50deg);
+        transform: rotate(50deg);
+        -webkit-transform: rotate(50deg);
     }
 }
 
@@ -709,15 +661,20 @@ img {
     0% {
         transform: scale(-1, 1) rotate(50deg);
         -webkit-transform: scale(-1, 1) rotate(50deg);
-        -ms-transform: scale(-1, 1) rotate(50deg);
-        -moz-transform: scale(-1, 1) rotate(50deg);
-        -o-transform: scale(-1, 1) rotate(50deg);
     }
     100% {
         transform: scale(-1, 1) rotate(-50deg);
         -webkit-transform: scale(-1, 1) rotate(-50deg);
-        -ms-transform: scale(-1, 1) rotate(-50deg);
-        -moz-transform: scale(-1, 1) rotate(-50deg);
-        -o-transform: scale(-1, 1) rotate(-50deg);
+    }
+}
+
+@-webkit-keyframes counterclockwiseSpinAndFlip {
+    0% {
+        transform: scale(-1, 1) rotate(50deg);
+        -webkit-transform: scale(-1, 1) rotate(50deg);
+    }
+    100% {
+        transform: scale(-1, 1) rotate(-50deg);
+        -webkit-transform: scale(-1, 1) rotate(-50deg);
     }
 }
