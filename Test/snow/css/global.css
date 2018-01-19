@@ -608,6 +608,35 @@ img {
     }
 }
 
+@-webkit-keyframes fade {
+    0% {
+        opacity: 1;
+    }
+    95% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+@-webkit-keyframes drop {
+    0% {
+        transform: translate(0px, -50px);
+        -webkit-transform: translate(0px, -50px);
+        -ms-transform: translate(0px, -50px);
+        -moz-transform: translate(0px, -50px);
+        -o-transform: translate(0px, -50px);
+    }
+    100% {
+        transform: translate(0px, 650px);
+        -webkit-transform: translate(0px, 650px);
+        -ms-transform: translate(0px, 650px);
+        -moz-transform: translate(0px, 650px);
+        -o-transform: translate(0px, 650px);
+    }
+}
+
 @keyframes drop {
     0% {
         transform: translate(0px, -50px);
@@ -625,6 +654,23 @@ img {
     }
 }
 
+@-webkit-keyframes clockwiseSpin {
+    0% {
+        transform: rotate(-50deg);
+        -webkit-transform: rotate(-50deg);
+        -ms-transform: rotate(-50deg);
+        -moz-transform: rotate(-50deg);
+        -o-transform: rotate(-50deg);
+    }
+    100% {
+        transform: rotate(50deg);
+        -webkit-transform: rotate(50deg);
+        -ms-transform: rotate(50deg);
+        -moz-transform: rotate(50deg);
+        -o-transform: rotate(50deg);
+    }
+}
+
 @keyframes clockwiseSpin {
     0% {
         transform: rotate(-50deg);
@@ -639,6 +685,23 @@ img {
         -ms-transform: rotate(50deg);
         -moz-transform: rotate(50deg);
         -o-transform: rotate(50deg);
+    }
+}
+
+@-webkit-keyframes counterclockwiseSpinAndFlip {
+    0% {
+        transform: scale(-1, 1) rotate(50deg);
+        -webkit-transform: scale(-1, 1) rotate(50deg);
+        -ms-transform: scale(-1, 1) rotate(50deg);
+        -moz-transform: scale(-1, 1) rotate(50deg);
+        -o-transform: scale(-1, 1) rotate(50deg);
+    }
+    100% {
+        transform: scale(-1, 1) rotate(-50deg);
+        -webkit-transform: scale(-1, 1) rotate(-50deg);
+        -ms-transform: scale(-1, 1) rotate(-50deg);
+        -moz-transform: scale(-1, 1) rotate(-50deg);
+        -o-transform: scale(-1, 1) rotate(-50deg);
     }
 }
 
