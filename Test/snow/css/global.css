@@ -562,23 +562,6 @@ img {
     -o-transform: rotate(135deg);
 }
 
-@keyframes mysnow {
-    0% {
-        bottom: 100%;
-        opacity: 1;
-        transform: rotate(0deg);
-    }
-    50% {
-        opacity: .5;
-        transform: rotate(60deg);
-    }
-    100% {
-        transform: rotate(90deg);
-        opacity: 0;
-        bottom: 0%;
-    }
-}
-
 
 /* 下雪动画 */
 
@@ -586,12 +569,12 @@ img {
     position: absolute;
     max-width: 100px;
     max-height: 100px;
-    animation-iteration-count: infinite, infinite;
-    -moz-animation-iteration-count: infinite, infinite;
-    animation-iteration-count: infinite, infinite;
-    -webkit-animation-direction: normal, normal;
-    -moz-animation-direction: normal, normal;
-    -webkit-animation-direction: normal, normal;
+    animation-iteration-count: infinite;
+    -moz-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    animation-direction: normal;
+    -moz-animation-direction: normal;
+    -webkit-animation-direction: normal;
     animation-timing-function: linear, ease-in;
     -webkit-animation-timing-function: linear, ease-in;
     -moz-animation-timing-function: linear, ease-in;
