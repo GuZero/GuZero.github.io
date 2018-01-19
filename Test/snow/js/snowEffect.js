@@ -39,9 +39,11 @@ function createALeaf() {
     var spinAnimationName =
         Math.random() < 0.5 ? "clockwiseSpin" : "counterclockwiseSpinAndFlip";
 
-    leafDiv.style.webkitAnimationName = "fade, drop";
+    // leafDiv.style.webkitAnimationName = "fade, drop";
+    $(leafDiv).css({ 'webkitAnimationName': 'fade, drop' });
 
-    image.style.webkitAnimationName = spinAnimationName;
+    // image.style.webkitAnimationName = spinAnimationName;
+    $(image).css({ 'webkitAnimationName': spinAnimationName });
 
     var fadeAndDropDuration = durationValue(randomFloat(5, 11));
 
