@@ -17,16 +17,131 @@
     <meta name="apple-touch-fullscreen" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <title>Document</title>
+    <title>格格新春开运礼包</title>
     <link rel="stylesheet" href="./css/global.css">
+    <link rel="stylesheet" href="./css/common.css">
+    <link href="//cdn.bootcss.com/animate.css/3.5.2/animate.css" rel="stylesheet">
     <style>
         html,
         body {
             height: 100%;
         }
         
-        body {
-            background-color: #ccc;
+        .container {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        .bg {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        
+        .text-box {
+            color: #000;
+            width: 80%;
+            text-align: center;
+            font-size: 22px;
+            top: 10%;
+        }
+        
+        .text-box p {
+            margin-top: 40px;
+        }
+        
+        .text-box span {
+            color: #d23c30;
+            font-size: 32px;
+        }
+        
+        .form {
+            top: 36%;
+            left: -3%;
+        }
+        
+        .form input::-ms-input-placeholder {
+            color: #797979
+        }
+        
+        .form input::-webkit-input-placeholder {
+            color: #797979
+        }
+        
+        .form .item input {
+            border-bottom: 1px solid #000;
+        }
+        
+        .form .item.pass a {
+            background: url('//img.aimoge.com/Ft40xpCOJGoQgPbBTCSGQBCt7uDW') no-repeat;
+            text-align: center;
+            color: #fff;
+            margin-top: -22px;
+            border-radius: 3px;
+        }
+        
+        .start-box {
+            right: 14px;
+            top: 82px;
+        }
+        
+        .start-box .line-png {
+            height: 46vh;
+            margin-left: 47px;
+        }
+        
+        .start-box .gift-png {
+            width: 100px;
+            margin-top: -20px;
+        }
+        
+        .start-box .line-png img {
+            height: 100%;
+        }
+        
+        .chest-png {
+            width: 56%;
+            bottom: 16px;
+            left: 50%;
+            margin-left: -30%;
+        }
+        
+        #delay_2 {
+            -webkit-animation-delay: .2s;
+            -moz-animation-delay: .2s;
+            animation-delay: .2s;
+        }
+        
+        .form {
+            -webkit-animation-delay: .6s;
+            -moz-animation-delay: .6s;
+            animation-delay: .6s;
+        }
+        
+        .start-box {
+            -webkit-animation-delay: .8s;
+            -moz-animation-delay: .8s;
+            animation-delay: .8s;
+        }
+        
+        .chest-png {
+            animation-duration: 4.5s;
+            -webkit-animation-duration: 4.5s;
+            -moz-animation-duration: 4.5s;
+        }
+        
+        .layer-box {
+            opacity: 1;
+            background: rgba(122, 122, 122, 0.3)
+        }
+        
+        .layer-box .img-box {
+            width: 70%;
+            margin: 0 auto;
+            margin-top: 45%;
         }
         
         #leafContainer {
@@ -37,13 +152,72 @@
             top: 0;
             overflow: hidden;
         }
+        
+        .start-box {
+            animation-iteration-count: infinite;
+            -webkit-animation-iteration-count: infinite;
+        }
     </style>
 </head>
 
 <body>
+    <div id="sysLoading" class="sysLoading fixed">
+        <i class="ion-loading-c"></i>
+    </div>
+    <div id="mgAlert" class="mgAlert center fixed f14"></div>
+    <div class="container rel " id="leafContainer">
+        <img src="//img.aimoge.com/FvilfVCqDHyzdAihhdJrRl-YXS1t" alt="bg" class="bg">
+        <div class="text-box abs">
+            <p class="animated bounceInLeft"><span>1200</span>万格格用户，</p>
+            <p class="animated bounceInLeft" id="delay_2">这里有没有你？</p>
+        </div>
+        <div class="imgCode fixed" id="imgCode">
+            <img src="//img.aimoge.com/FgSgIducS7NfJNk-ZqN933p7JEaJ" class="abs closePic" onclick="hideImgCode();">
+            <div class="pic rel">
+                <div class="div rel">
+                    <img id="captchacode_image" />
+                    <div class="reflush abs" onclick="loadCaptchacodeIamge()"></div>
+                </div>
+                <div class="picode rel">
+                    <input id="captchacode_code" type="text" placeholder="填写验证码" />
+                </div>
+                <div class="ok rel" onclick="doNextSendAction()">提交</div>
+            </div>
+        </div>
+        <div class="animated fadeInUp form abs" id="form">
+            <div class="form-content" id="form-content">
+                <div class="item rel">
+                    <div class="input rel">
+                        <input id="mobile" type="tel" placeholder="输入手机号" maxlength="11" />
+                    </div>
+                </div>
+                <div class="item rel pass">
+                    <div class="input rel">
+                        <input id="code" type="tel" placeholder="输入验证码" />
+                    </div>
+                    <a href="javascript:;" class="abs" id="getCode" onclick="sendCode();">获取验证码</a>
+                </div>
+            </div>
+        </div>
+        <div class="animated swing start-box abs">
+            <div class="line-png">
+                <img src="//img.aimoge.com/FnO07Sr-8_L-JbGvfrfLbXziF6V6" alt="line-png">
+            </div>
+            <div class="gift-png">
+                <img src="//img.aimoge.com/Fkrhr4KP27UbKtzswgQJ6EZwgYmL" alt="Gift-box-png">
+            </div>
+        </div>
+        <div class="animated fadeIn chest-png abs">
+            <img src="//img.aimoge.com/Fg6jnmDRvZAMX7SkqvTDYfBPRe6u" alt="chest-png">
+        </div>
+    </div>
+    <div class="sysLoading fixed layer-box">
+        <div class="img-box">
+            <img src="//img.aimoge.com/FnZ3AuWcsKbTp4euIBnXqMAFGg52" alt="img-box">
+        </div>
+    </div>
     <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-    <script src="./js/snowEffect.js?t=1516328324132"></script>
-    <div id="leafContainer"></div>
+    <script src="./js/snowEffect.js?t=1516330190400"></script>
 </body>
 
 </html>
