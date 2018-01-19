@@ -39,21 +39,36 @@ function createALeaf() {
     var spinAnimationName =
         Math.random() < 0.5 ? "clockwiseSpin" : "counterclockwiseSpinAndFlip";
 
-    leafDiv.style.webkitAnimationName = "fade, drop";
+    // leafDiv.style.webkitAnimationName = "fade, drop";
+    $(leafDiv).css({
+        'webkitAnimationName': 'fade, drop'
+    })
 
-    image.style.webkitAnimationName = spinAnimationName;
+    // image.style.webkitAnimationName = spinAnimationName;
+    $(image).css({
+        'webkitAnimationName': spinAnimationName
+    })
 
     var fadeAndDropDuration = durationValue(randomFloat(5, 11));
 
     var spinDuration = durationValue(randomFloat(4, 8));
 
-    leafDiv.style.webkitAnimationDuration = fadeAndDropDuration + ", " + fadeAndDropDuration;
+    // leafDiv.style.webkitAnimationDuration = fadeAndDropDuration + ", " + fadeAndDropDuration;
+    $(leafDiv).css({
+        'webkitAnimationDuration': fadeAndDropDuration + ',' + fadeAndDropDuration
+    })
 
     var leafDelay = durationValue(randomFloat(0, 5));
 
-    leafDiv.style.webkitAnimationDelay = leafDelay + ", " + leafDelay;
+    // leafDiv.style.webkitAnimationDelay = leafDelay + ", " + leafDelay;
+    $(leafDiv).css({
+        'webkitAnimationDelay': leafDelay + ',' + leafDelay
+    })
 
-    image.style.webkitAnimationDuration = spinDuration;
+    // image.style.webkitAnimationDuration = spinDuration;
+    $(image).css({
+        'webkitAnimationDuration': spinDuration
+    })
 
     leafDiv.appendChild(image);
 
