@@ -47,13 +47,16 @@ function createALeaf() {
 
     var spinDuration = durationValue(randomFloat(4, 8));
 
-    leafDiv.style.webkitAnimationDuration = fadeAndDropDuration + ", " + fadeAndDropDuration;
+    $(leafDiv).css({ 'webkitAnimationDuration': fadeAndDropDuration + ',' + fadeAndDropDuration })
+        // leafDiv.style.webkitAnimationDuration = fadeAndDropDuration + ", " + fadeAndDropDuration;
 
     var leafDelay = durationValue(randomFloat(0, 5));
 
-    leafDiv.style.webkitAnimationDelay = leafDelay + ", " + leafDelay;
+    // leafDiv.style.webkitAnimationDelay = leafDelay + ", " + leafDelay;
+    $(leafDiv).css({ 'webkitAnimationDelay': leafDelay + ',' + leafDelay });
 
-    image.style.webkitAnimationDuration = spinDuration;
+    // image.style.webkitAnimationDuration = spinDuration;
+    $(image).css({ 'webkitAnimationDuration': spinDuration });
 
     leafDiv.appendChild(image);
 
