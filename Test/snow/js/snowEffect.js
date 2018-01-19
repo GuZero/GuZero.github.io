@@ -32,33 +32,68 @@ function createALeaf() {
 
     image.src = "./images/snow" + randomInteger(1, 5) + ".png";
 
-    leafDiv.style.top = "-10px";
+    // leafDiv.style.top = "-10px";
 
-    leafDiv.style.left = pixelValue(randomInteger(0, 1000));
+    // leafDiv.style.left = pixelValue(randomInteger(0, 1000));
 
     var spinAnimationName =
         Math.random() < 0.5 ? "clockwiseSpin" : "counterclockwiseSpinAndFlip";
 
     // leafDiv.style.webkitAnimationName = "fade, drop";
-    $(leafDiv).css({ 'AnimationName': 'fade, drop' });
+    // $(leafDiv).css({ 'webkitAnimationName': 'fade, drop' });
+    // $(leafDiv).attr({
+    //     'style': 'animation-name:fade, drop;-webkit-animation-name:fade, drop',
+    // })
 
     // image.style.webkitAnimationName = spinAnimationName;
-    $(image).css({ 'AnimationName': spinAnimationName });
+    // $(image).css({ 'webkitAnimationName': spinAnimationName });
+    // $(image).attr({
+    //     'style': 'animation-name:' + spinAnimationName + ';-webkit-animation-name:' + spinAnimationName
+    // })
 
     var fadeAndDropDuration = durationValue(randomFloat(5, 11));
 
     var spinDuration = durationValue(randomFloat(4, 8));
 
-    $(leafDiv).css({ 'AnimationDuration': fadeAndDropDuration + ',' + fadeAndDropDuration })
-        // leafDiv.style.webkitAnimationDuration = fadeAndDropDuration + ", " + fadeAndDropDuration;
+    // $(leafDiv).css({ 'webkitAnimationDuration': fadeAndDropDuration + ',' + fadeAndDropDuration })
+    // $(leafDiv).attr({
+    //         'style': 'animation-duration:' + fadeAndDropDuration + ',' + fadeAndDropDuration + ';-webkit-animation-duration:' + fadeAndDropDuration + ',' + fadeAndDropDuration
+    //     })
+    // leafDiv.style.webkitAnimationDuration = fadeAndDropDuration + ", " + fadeAndDropDuration;
 
     var leafDelay = durationValue(randomFloat(0, 5));
 
     // leafDiv.style.webkitAnimationDelay = leafDelay + ", " + leafDelay;
-    $(leafDiv).css({ 'AnimationDelay': leafDelay + ',' + leafDelay });
+    // $(leafDiv).css({ 'webkitAnimationDelay': leafDelay + ',' + leafDelay });
+    var a = {
+        'top': '-10px',
+        'left': pixelValue(randomInteger(0, 1000)),
+        'animation-name': 'fade, drop',
+        '-webkit-animation-name': 'fade, drop',
+        'animation-duration': fadeAndDropDuration + ',' + fadeAndDropDuration,
+        '-webkit-animation-duration': fadeAndDropDuration + ',' + fadeAndDropDuration
+    }
+    var b = {
+        'animation-name': spinAnimationName,
+        '-webkit-animation-name': spinAnimationName,
+        'animation-duration': spinDuration,
+        '-webkit-animation-duration': spinDuration
+    }
+
+    $(leafDiv).attr({
+        'style': 'top:-10px;left:' + pixelValue(randomInteger(0, 1000)) + ';animation-name:fade, drop;-webkit-animation-name:fade, drop' +
+            'animation-duration:' + fadeAndDropDuration + ',' + fadeAndDropDuration + ';' +
+            '-webkit-animation-duration:' + fadeAndDropDuration + ',' + fadeAndDropDuration
+    })
 
     // image.style.webkitAnimationDuration = spinDuration;
-    $(image).css({ 'AnimationDuration': spinDuration });
+    // $(image).css({ 'webkitAnimationDuration': spinDuration });
+    $(image).attr({
+        'style': 'animation-name:' + spinAnimationName + ';' +
+            '-webkit-animation-name:' + spinAnimationName + ';' +
+            'animation-duration:' + spinDuration + ';' +
+            '-webkit-animation-duration:' + spinDuration
+    })
 
     leafDiv.appendChild(image);
 
