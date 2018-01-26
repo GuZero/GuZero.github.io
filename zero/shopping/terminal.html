@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>无人便利店</title>
+    <script src="js/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/common.css">
+    <style>
+        .p-title {
+            color: #fff;
+            top: 4%;
+        }
+        
+        .p1 .item {
+            position: absolute;
+            width: 20%;
+            line-height: 30px;
+        }
+        
+        .p1 img {
+            max-width: 80%;
+        }
+        
+        .p1 .item .item-title {
+            font-size: 26px;
+            font-weight: 600;
+            color: #008cff;
+        }
+        
+        .p1 .item .item-content {
+            margin-top: 10px;
+            font-size: 16px;
+            color: #fff;
+        }
+        
+        .p1 .item1 {
+            top: 68.5%;
+            left: 31%;
+        }
+        
+        .p1 .item2 {
+            top: 68.5%;
+            left: 57%;
+        }
+        
+        .p1 .item3 {
+            top: 82%;
+            left: 31%;
+        }
+        
+        .p1 .item4 {
+            top: 82%;
+            left: 57%;
+        }
+        
+        .p1 .p1-text {
+            color: #008cff;
+            font-size: 16px;
+            width: 50%;
+            left: 50%;
+            margin-left: -25%;
+            bottom: 0.5%;
+            text-align: center;
+            line-height: 22px;
+        }
+        
+        .p2 .item {
+            color: #fff;
+            font-size: 18px;
+            position: absolute;
+            line-height: 26px;
+            width: 14%;
+            top: 88%;
+        }
+        
+        .p2 .item1 {
+            left: 24.5%;
+        }
+        
+        .p2 .item2 {
+            left: 43%;
+        }
+        
+        .p2 .item3 {
+            left: 64%;
+        }
+        
+        .p4 .p4-title {
+            top: 1%;
+        }
+        
+        @media screen and (max-width:1068px) {
+            .container img {
+                max-width: 100%;
+            }
+            .p1 {
+                margin-top: -2px;
+            }
+            .p2 {
+                margin-top: -2px;
+            }
+            .p3 {
+                margin-top: -2px;
+            }
+            .p4 {
+                margin-top: -2px;
+            }
+            .p1 .item .item-title {
+                font-size: 26px;
+            }
+            .p1 .item {
+                width: 27%;
+            }
+            .p1 .item1 {
+                top: 68.5%;
+                left: 24.5%;
+            }
+            .p1 .item2 {
+                top: 68.5%;
+                left: 58%;
+            }
+            .p1 .item3 {
+                top: 82%;
+                left: 24.5%;
+            }
+            .p1 .item4 {
+                top: 82%;
+                left: 58%;
+            }
+            .p2 .item1 {
+                left: 16%;
+            }
+            .p2 .item2 {
+                left: 40%;
+            }
+            .p2 .item3 {
+                left: 68%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="clearfix">
+        <div class="logo">
+            <img src="http://img.aimoge.com/FhrrVOU-1fdmZzoYFRGuJfSVORHW">
+        </div>
+        <ul class="nav clearfix" id="nav">
+            <li><a href="./index.html">首页</a></li>
+            <li><a href="./store.html">无人便利店</a></li>
+            <li><a href="./terminal.html" class="active">自助零售终端</a></li>
+            <li><a href="./shelves.html">无人货架</a></li>
+            <li><a href="./join.html">加盟</a></li>
+        </ul>
+        <div class="phone">
+            电话号码
+        </div>
+    </header>
+    <header class="clearfix" id="m-hd">
+        <div class="logo">
+            <img src="//img.aimoge.com/FhrrVOU-1fdmZzoYFRGuJfSVORHW" alt="logo">
+        </div>
+        <div class="m-trigger"></div>
+        <ul class="m-nav clearfix">
+            <li><a href="./index.html">首页</a></li>
+            <li><a href="./store.html">无人便利店</a></li>
+            <li><a href="./terminal.html">自助零售终端</a></li>
+            <li><a href="./shelves.html">无人货架</a></li>
+            <li><a href="./join.html">加盟</a></li>
+        </ul>
+    </header>
+    <div class="container">
+        <div class="terminal page3" id="terminal">
+            <div class="p1 bg_black3 rel">
+                <div>
+                    <img src="//img.aimoge.com/FmWQvPEzy9pt06Hv7eCkgTB6zCOv" alt="p1-bg">
+                </div>
+                <div class="p-title abs">
+                    <p>自助零售终端——RFID售货机</p>
+                    <p>_____</p>
+                </div>
+                <div class="item item1">
+                    <p class="item-title">17寸广告屏幕</p>
+                    <p class="item-content">商品介绍、广告宣传，一切精彩都在屏幕里，赋予了终端拥有无限的可能性</p>
+                </div>
+                <div class="item item2">
+                    <p class="item-title">最自然的购买体验</p>
+                    <p class="item-content">AI技术，关门自动结算</p>
+                </div>
+                <div class="item item3">
+                    <p class="item-title">容量更多、产品更丰富</p>
+                    <p class="item-content">对商品没有标准尺寸要求，兼容商品的多样性</p>
+                </div>
+                <div class="item item4">
+                    <p class="item-title">360°安全保障</p>
+                    <p class="item-content">RFID技术，视频监控，后台数据可溯源</p>
+                </div>
+                <div class="p1-text abs">
+                    <p>尺寸：550mm（长）*2200（高）*550（宽）；“TAKE&GO”：安全性好，用户体验好，适用于全场景 </p>
+                </div>
+            </div>
+            <div class="p2 bg_black3 rel">
+                <div>
+                    <img src="//img.aimoge.com/FtNhwmwM9DX0MKfM5H8WM2fw2FvW" alt="p2-bg">
+                </div>
+                <div class="p-title abs">
+                    <p>自助零售终端-RFID自助书柜</p>
+                    <p>_____</p>
+                </div>
+                <div class="item item1">
+                    <p>扫码开门</p>
+                </div>
+                <div class="item item2">
+                    <p>自选书籍或商品</p>
+                </div>
+                <div class="item item3">
+                    <p>关门自动结算</p>
+                </div>
+            </div>
+            <div class="p3 bg_black3 rel">
+                <div>
+                    <img src="//img.aimoge.com/Fgo7mlq4WoaDfoPl6VpkCSJg_SlX" alt="p3-bg">
+                </div>
+                <div class="p-title abs">
+                    <p>自助零售终端——自助咖啡机</p>
+                    <p>_____</p>
+                </div>
+            </div>
+            <div class="p4 bg_black3 rel">
+                <div>
+                    <img src="//img.aimoge.com/FuXkdvpvO3uB2bvSfwQu_e3w_br_" alt="p4-bg">
+                </div>
+                <div class="p4-title p-title abs">
+                    <p>自助零售终端——自助售卖机</p>
+                    <p>_____</p>
+                </div>
+            </div>
+            <!-- <div class="bg_black3">
+                <img src="http://img.aimoge.com/FvWkTBZv4D9MXtwrcfuzf4H6yQfF">
+            </div>
+            <div class="bg_black3">
+                <img src="http://img.aimoge.com/Fkjw-ZRMzdtgpX0Wef0H-_WFzzpJ">
+            </div>
+            <div class="bg_black3">
+                <img src="http://img.aimoge.com/FsID8W0h1752hz7tLrtd10QdHokE">
+            </div>
+            <div class="bg_black3">
+                <img src="http://img.aimoge.com/Frw3c47OtKSxy-ucA8lNDiOhmB4S">
+            </div> -->
+        </div>
+    </div>
+    <script>
+        $(document).ready(function() {
+            $('#m-hd .m-trigger').click(function() {
+                if ($('#m-hd .m-nav').is(':visible')) {
+                    $('#m-hd .m-nav').hide();
+                } else {
+                    $('#m-hd .m-nav').show();
+                }
+            })
+        })
+    </script>
+</body>
+
+</html>

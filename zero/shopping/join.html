@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>无人便利店</title>
+    <script src="js/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/common.css">
+    <style>
+        .p1 .p1-title {
+            color: #008cff;
+            top: 6%;
+        }
+        
+        .p2 .p2-title {
+            color: #fff;
+            top: 4%;
+        }
+        
+        .p2 .item {
+            position: absolute;
+            width: 36%;
+            line-height: 30px;
+        }
+        
+        .p2 .item .item-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: #008cff;
+        }
+        
+        .p2 .item .item-content {
+            font-size: 16px;
+            color: #fff;
+        }
+        
+        .p2 .item1 {
+            top: 15.5%;
+            left: 58%;
+        }
+        
+        .p2 .item2 {
+            top: 24%;
+            left: 58%;
+        }
+        
+        .p2 .item3 {
+            top: 33%;
+            left: 58%;
+        }
+        
+        .p2 .item4 {
+            top: 41%;
+            left: 58%;
+        }
+        
+        .p2 .item5 {
+            top: 50%;
+            left: 58%;
+        }
+        
+        .p3 .p3-title {
+            top: 4%;
+            color: #fff;
+        }
+        
+        .p3 .item {
+            position: absolute;
+            width: 20%;
+            line-height: 30px;
+        }
+        
+        .p3 .item .item-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: #008cff;
+        }
+        
+        .p3 .item .item-content {
+            font-size: 16px;
+            color: #fff;
+        }
+        
+        .p3 .item1 {
+            top: 30%;
+            left: 9%;
+        }
+        
+        .p3 .item2 {
+            top: 24%;
+            left: 70%;
+        }
+        
+        .p3 .item3 {
+            top: 53%;
+            left: 9%;
+        }
+        
+        .p3 .item4 {
+            top: 52%;
+            left: 70%;
+        }
+        
+        .p3 .item5 {
+            top: 74%;
+            left: 44.5%;
+        }
+        
+        @media screen and (max-width:1068px) {
+            .p2 .item2 {
+                line-height: 22px;
+            }
+            .p2 .item .item-title {
+                font-size: 20px;
+            }
+            .p2 .item .item-content {
+                font-size: 14px;
+            }
+            .p2 .item1 {
+                top: 12.5%;
+                left: 58%;
+            }
+            .p2 .item2 {
+                top: 24%;
+                left: 58%;
+            }
+            .p2 .item3 {
+                top: 33%;
+                left: 58%;
+            }
+            .p2 .item4 {
+                top: 43%;
+                left: 58%;
+            }
+            .p2 .item5 {
+                top: 53%;
+                left: 58%;
+            }
+            .p3 {
+                margin-top: -2px;
+            }
+            .p3 .item5 {
+                left: 42%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="clearfix">
+        <div class="logo">
+            <img src="http://img.aimoge.com/FhrrVOU-1fdmZzoYFRGuJfSVORHW">
+        </div>
+        <ul class="nav clearfix" id="nav">
+            <li><a href="./index.html">首页</a></li>
+            <li><a href="./store.html">无人便利店</a></li>
+            <li><a href="./terminal.html">自助零售终端</a></li>
+            <li><a href="./shelves.html">无人货架</a></li>
+            <li><a href="./join.html" class="active">加盟</a></li>
+        </ul>
+        <div class="phone">
+            电话号码
+        </div>
+    </header>
+    <header class="clearfix" id="m-hd">
+        <div class="logo">
+            <img src="//img.aimoge.com/FhrrVOU-1fdmZzoYFRGuJfSVORHW" alt="logo">
+        </div>
+        <div class="m-trigger"></div>
+        <ul class="m-nav clearfix">
+            <li><a href="./index.html">首页</a></li>
+            <li><a href="./store.html">无人便利店</a></li>
+            <li><a href="./terminal.html">自助零售终端</a></li>
+            <li><a href="./shelves.html">无人货架</a></li>
+            <li><a href="./join.html">加盟</a></li>
+        </ul>
+    </header>
+    <div class="container">
+        <div class="join page5" id="join">
+            <div class="p1 rel">
+                <div>
+                    <img src="//img.aimoge.com/FpjB6kBbxJ9mocSVn-uUCo7E502L" alt="p1-bg">
+                </div>
+                <div class="p1-title p-title abs">
+                    <p>加盟/为什么选择我们</p>
+                    <p>_____</p>
+                </div>
+            </div>
+            <div class="p2 bg_black rel">
+                <div>
+                    <img src="//img.aimoge.com/Fukge2toFWVY-MggEHKnzuVGSo1W" alt="p1-bg">
+                </div>
+                <div class="p2-title p-title abs">
+                    <p>强大的运营支撑后台</p>
+                    <p>_____</p>
+                </div>
+                <div class="item item1">
+                    <p class="item-title">会学习有大脑的零售</p>
+                    <p class="item-content">依据商品销售，客户购买行为的AI自学习系统提升销售水准</p>
+                </div>
+                <div class="item item2">
+                    <p class="item-title">完善的智能SaaS系统</p>
+                    <p class="item-content">多年实际应用中打磨出的基于云计算技术的SaaS系统，支撑系统规模应用</p>
+                </div>
+                <div class="item item3">
+                    <p class="item-title">智能库存盘点系统</p>
+                    <p class="item-content">多年实际应用中打磨出的基于云计算技术的SaaS系统，支撑系统规模应用</p>
+                </div>
+                <div class="item item4">
+                    <p class="item-title">智能客服营销系统</p>
+                    <p class="item-content">以专业化、智能化的客服营销系统，支撑客户服务与主动营销</p>
+                </div>
+                <div class="item item5">
+                    <p class="item-title">清晰透明的报表系统</p>
+                    <p class="item-content">为管理者的经营管理提供最清晰准确的第一手数据</p>
+                </div>
+            </div>
+            <div class="p3 bg_black rel">
+                <div>
+                    <img src="//img.aimoge.com/Fih31uJHIhcKp9ME1X4UmsqgpfkJ" alt="p2-bg">
+                </div>
+                <div class="p3-title p-title abs">
+                    <p>专业的支撑服务</p>
+                    <p>_____</p>
+                </div>
+                <div class="item item1">
+                    <p class="item-title">首次现场培训</p>
+                    <p class="item-content">设备销售后首次进行现场培训，指导设备使用和维护</p>
+                </div>
+                <div class="item item2">
+                    <p class="item-title">12小时在线支撑</p>
+                    <p class="item-content">400服务热线，提供12小时的在线支撑</p>
+                </div>
+                <div class="item item3">
+                    <p class="item-title">合作渠道推荐</p>
+                    <p class="item-content">利用公司资源推荐供应链资源给设备供应单位</p>
+                </div>
+                <div class="item item4">
+                    <p class="item-title">专业的运营指导</p>
+                    <p class="item-content">提供专业的运营团队进行运营指导，提升合作单位利润</p>
+                </div>
+                <div class="item item5">
+                    <p class="item-title">软件的终身服务</p>
+                    <p class="item-content">永久享受软件问题的支持</p>
+                </div>
+            </div>
+            <!-- <div>
+                <img src="http://img.aimoge.com/FnzuXbG7QP7P0aVdg8tZV_u0uX68">
+            </div>
+            <div class="bg_black">
+                <img src="http://img.aimoge.com/FlVMGEci6HUpmmE5msSYzjBwNWpc">
+            </div>
+            <div class="bg_black">
+                <img src="http://img.aimoge.com/FpBtbi4r-Qhc25OLqPCjFOYXGeLs">
+            </div> -->
+        </div>
+    </div>
+    <script>
+        $(document).ready(function() {
+            $('#m-hd .m-trigger').click(function() {
+                if ($('#m-hd .m-nav').is(':visible')) {
+                    $('#m-hd .m-nav').hide();
+                } else {
+                    $('#m-hd .m-nav').show();
+                }
+            })
+        })
+    </script>
+</body>
+
+</html>

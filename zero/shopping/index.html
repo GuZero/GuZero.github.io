@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>无人便利店</title>
+    <script src="js/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/common.css">
+    <style type="text/css">
+        .container .page1_1 img {
+            display: block;
+            max-width: 100%;
+        }
+        
+        .f26 {
+            font-size: 26px;
+        }
+        
+        .f50 {
+            font-size: 50px;
+        }
+        
+        .bg img {
+            display: block;
+            max-width: 100%;
+        }
+        
+        .p1 {
+            font-size: 30px;
+            color: #fff;
+            letter-spacing: 6px;
+        }
+        
+        .p1 .content {
+            top: 36%;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .p1 .content p {
+            line-height: 50px;
+        }
+        
+        .p1 .content p.f50 {
+            margin-bottom: 16px;
+        }
+        
+        .p1 .content p.f50 span {
+            top: -18px;
+        }
+        
+        .p2 {
+            width: 100%;
+            background-color: #fff;
+            font-size: 30px;
+        }
+        
+        .p2 .p2-title {
+            color: #008cff;
+        }
+        
+        .p2 .content {
+            color: #008cff;
+            width: 100%;
+            text-align: center;
+            line-height: 36px;
+            padding: 60px;
+            box-sizing: border-box;
+            padding-bottom: 0;
+        }
+        
+        .p2 .content .item-box {
+            margin-top: 60px;
+        }
+        
+        .p2 .content .item {
+            background-color: #008cff;
+            width: 24%;
+            color: #fff;
+            padding: 16px;
+            padding-bottom: 40px;
+        }
+        
+        .p2 .content .item .item-title {
+            text-align: center;
+            margin-bottom: 50px;
+            letter-spacing: 2px;
+        }
+        
+        .p3 .p3-title {
+            top: 4%;
+            color: #fff;
+        }
+        
+        .p3 .p3-text1 {
+            width: 100%;
+            font-size: 18px;
+            color: #888888;
+            top: 35.5%;
+            text-align: center;
+        }
+        
+        .p3 .content {
+            bottom: 3.6%;
+            right: 14%;
+            width: 38%;
+            line-height: 30px;
+            font-size: 22px;
+            font-weight: 600;
+        }
+        
+        .p3 .content .item {
+            margin-top: 60px;
+        }
+        
+        .mt-60 {
+            margin-top: 60px;
+        }
+        
+        .p3 .content .text-right {
+            text-align: right;
+            font-weight: normal;
+            margin-top: 30px;
+        }
+        
+        .p4 .p4-title {
+            color: #fff;
+            top: 5%;
+        }
+        
+        .p4 .item {
+            position: absolute;
+            width: 20%;
+            line-height: 30px;
+        }
+        
+        .p4 .item .item-title {
+            font-size: 28px;
+            font-weight: 600;
+            color: #008cff;
+        }
+        
+        .p4 .item .item-content {
+            margin-top: 10px;
+            font-size: 18px;
+            color: #fff;
+        }
+        
+        .p4 .item1 {
+            top: 35%;
+            left: 32.5%;
+        }
+        
+        .p4 .item2 {
+            top: 35%;
+            left: 61.5%;
+        }
+        
+        .p4 .item3 {
+            top: 60%;
+            left: 32.5%;
+        }
+        
+        .p4 .item4 {
+            top: 60%;
+            left: 61.5%;
+        }
+        
+        .p4 .p4-text {
+            width: 100%;
+            text-align: center;
+            color: #888888;
+            font-size: 16px;
+            bottom: 9%;
+        }
+        
+        .p5 .p5-title {
+            color: #008cff;
+            top: 2%
+        }
+        
+        .p5 .p5-text {
+            font-size: 20px;
+            font-weight: 600;
+            position: absolute;
+        }
+        
+        .p5 .p5-text1 {
+            left: 34%;
+            top: 36.6%;
+        }
+        
+        .p5 .p5-text2 {
+            left: 34%;
+            top: 42%;
+        }
+        
+        .p5 .item-box {
+            width: 40%;
+            background-color: #f0f0f0;
+            padding: 30px 16px;
+            box-sizing: border-box;
+            line-height: 24px;
+            top: 30%;
+            right: 6%;
+        }
+        
+        .p5 .item .item-title {
+            font-size: 22px;
+            color: #e66f6f;
+        }
+        
+        .p5 .item .item-content {
+            font-size: 16px;
+            color: #464646;
+        }
+        
+        .p5 .item2 {
+            margin-top: 30px;
+        }
+        
+        .p5 .item2 .item-title {
+            color: #7abe73;
+        }
+        
+        .p5 .p5-title2 {
+            color: #008cff;
+            top: 66%;
+        }
+        
+        .p5 .p5-text3 {
+            font-size: 28px;
+            color: #000;
+            width: 100%;
+            text-align: center;
+            bottom: 4%;
+        }
+        
+        .p5 .p5-text3 span {
+            color: #008cff;
+            font-size: 40px;
+            font-weight: 600;
+        }
+        
+        .p6 .p6-title {
+            color: #fff;
+            top: 4%;
+        }
+        
+        @media screen and (max-width:1068px) {
+            .p2 img {
+                max-width: 100%;
+            }
+            .p3 img {
+                max-width: 100%;
+            }
+            .p3 .content {
+                width: 44%;
+                right: 5%;
+                line-height: 26px;
+            }
+            .p4 img {
+                max-width: 100%;
+            }
+            .p4 {
+                margin-top: -2px;
+            }
+            .p4 .item {
+                width: 30%;
+            }
+            .p4 .item1 {
+                top: 35%;
+                left: 27.5%;
+            }
+            .p4 .item2 {
+                top: 35%;
+                left: 65.5%;
+            }
+            .p4 .item3 {
+                top: 60%;
+                left: 27.5%;
+            }
+            .p4 .item4 {
+                top: 60%;
+                left: 65.5%;
+            }
+            .p4 .item .item-content {
+                font-size: 20px;
+            }
+            .p5 .p5-text1 {
+                left: 33%;
+                top: 35.6%;
+            }
+            .p5 .item .item-content {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="clearfix" id="hd">
+        <div class="logo">
+            <img src="http://img.aimoge.com/FhrrVOU-1fdmZzoYFRGuJfSVORHW">
+        </div>
+        <ul class="nav clearfix" id="nav">
+            <li><a href="./index.html" class="active">首页</a></li>
+            <li><a href="./store.html">无人便利店</a></li>
+            <li><a href="./terminal.html">自助零售终端</a></li>
+            <li><a href="./shelves.html">无人货架</a></li>
+            <li><a href="./join.html">加盟</a></li>
+        </ul>
+        <div class="phone">
+            电话号码
+        </div>
+    </header>
+    <header class="clearfix" id="m-hd">
+        <div class="logo">
+            <img src="//img.aimoge.com/FhrrVOU-1fdmZzoYFRGuJfSVORHW" alt="logo">
+        </div>
+        <div class="m-trigger"></div>
+        <ul class="m-nav clearfix">
+            <li><a href="./index.html">首页</a></li>
+            <li><a href="./store.html">无人便利店</a></li>
+            <li><a href="./terminal.html">自助零售终端</a></li>
+            <li><a href="./shelves.html">无人货架</a></li>
+            <li><a href="./join.html">加盟</a></li>
+        </ul>
+    </header>
+    <div class="container">
+        <div class="home page1" id="home">
+            <div class="p1 rel">
+                <div class="bg">
+                    <img src="//img.aimoge.com/FiStRVeewqEObeiFIh0f0oyUl4_v" alt="p1-bg">
+                </div>
+                <div class="content abs">
+                    <p class="f50 rel">24小时<span class="abs">+</span>&nbsp;&nbsp;&nbsp;无人零售设备</p>
+                    <p>全面的无人零售产品</p>
+                    <p>完善的产品使用体验</p>
+                    <p>专业的无人零售解决方案</p>
+                </div>
+            </div>
+            <div class="p2">
+                <div class="content">
+                    <div class="p2-title p-title">
+                        <p>零售行业新趋势：零售总额逐年上涨</p>
+                        <p>_____</p>
+                    </div>
+                    <div class="item-box flex flex-justify-between">
+                        <div class="item">
+                            <p class="item-title">1334亿元</p>
+                            <p class="f26">无人便利店市场规模：2016年便利店零售额占实体零售额的0.65%，比2013年增长了22.64%。2016年我国便利店市场的总零售额1334亿元</p>
+                        </div>
+                        <div class="item">
+                            <p class="item-title">约200亿元</p>
+                            <p class="f26">无人货架市场规模：以北京20万个潜在点位，每个点位月销售额5000元计算，北京市场规模约为20亿，估计全国无人货架规模约在20</p>
+                        </div>
+                        <div class="item">
+                            <p class="item-title">20万台</p>
+                            <p class="f26">智能货柜市场规模：2016年中国自动售货机消费量为20万台左右，每年的市场增速在25%，随着GDP增长市场规模增速加快</p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <img src="//img.aimoge.com/Fskpi72lKOHYjDstwKo9_PcMio2g" alt="p2-bg">
+                </div>
+            </div>
+            <div class="p3 rel bg_black">
+                <div>
+                    <img src="//img.aimoge.com/FjqPdbqyRrLwFwuKI-wQncjDTPJq" alt="p3-bg">
+                </div>
+                <div class="p3-title p-title abs">
+                    <p>零售行业新趋势：场地租金上涨，人工成本上升</p>
+                    <p>_____</p>
+                </div>
+                <div class="p3-text1 abs">
+                    <p class="">数据来源：中国连锁经营协会与波士顿咨询公司，《2017中国便利店发展报告》</p>
+                </div>
+                <div class="content abs">
+                    <div class="item">
+                        <p>未来的十年、二十年，没有电子商务这一说，只有新零售，也就是说线上线下和物流必须结合在一起，才能诞生真正的新零售。</p>
+                        <p class="text-right">——2016杭州云栖大会，马云 </p>
+                    </div>
+                    <div class="item">
+                        <p>新零售：以消费者体验为中心的数据驱动的泛零售形态。 其核心是重构人货场：从“货-场-人”到“人-货-场”，即数字化消费者，按需</p>
+                        <p class="text-right">——《C时代 新零售》，阿里研究院 </p>
+                    </div>
+                </div>
+            </div>
+            <div class="p4 rel bg_black">
+                <div>
+                    <img src="//img.aimoge.com/Fjcul0CKltrB7jYXgqvMlvMFEx35" alt="p4-bg">
+                </div>
+                <div class="p4-title p-title abs">
+                    <p>无人零售的特征与定义</p>
+                    <p>_____</p>
+                </div>
+                <div class="item item1">
+                    <p class="item-title">限时购物</p>
+                    <p class="item-content">以用户体验为出发点，解决用户随时随地购物的即时购物需求</p>
+                </div>
+                <div class="item item2">
+                    <p class="item-title">自助选品 自助结算</p>
+                    <p class="item-content">通过自助选品与自助结算、减少人工参与，提升效率</p>
+                </div>
+                <div class="item item3">
+                    <p class="item-title">完成离开</p>
+                    <p class="item-content">通过分析用户行为数据，进行精准营销、库存优化、生产端定制 </p>
+                </div>
+                <div class="item item4">
+                    <p class="item-title">连接更多 消费场景</p>
+                    <p class="item-content">以无人终端为触点，连接更多消费场景，如理财、中介、社区服务等 </p>
+                </div>
+                <div class="p4-text abs">
+                    <p>无人零售是指消费者在无导购与无收银员服务情况下自助完成购物的新型业态。 </p>
+                </div>
+            </div>
+            <div class="p5 rel">
+                <div>
+                    <img src="//img.aimoge.com/Fp5WtqoE602x2vmrXCN4K74I0y1Y" alt="p5-bg">
+                </div>
+                <div class="p5-title p-title abs">
+                    <p>传统零售业面临变革</p>
+                    <p>_____</p>
+                </div>
+                <div class="p5-text p5-text1">
+                    <p>消费者效率提升</p>
+                </div>
+                <div class="p5-text p5-text2">
+                    <p>零售效率提升</p>
+                </div>
+                <div class="item-box abs">
+                    <div class="item item1">
+                        <p class="item-title">更优的体验</p>
+                        <div class="item-content">
+                            <p>更便利（7*24，5分钟距离、5分钟购物）</p>
+                            <p>无感知体验（扫码扫脸即会员、支付即会员，无感知购物）</p>
+                            <p>商品品类和陈列更加场景化（精SKU,基于LBS）</p>
+                        </div>
+                    </div>
+                    <div class="item item2">
+                        <p class="item-title">更低的成本和更高的效率</p>
+                        <div class="item-content">
+                            <p>门店运营效率的提升</p>
+                            <p>人工运营成本的优化</p>
+                            <p>运营成本有效控制（租金、水电）</p>
+                            <p>用户购物成本的降低（距离、时间）</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="p5-title2 p-title abs">
+                    <p>无人零售一体化解决方案</p>
+                    <p>_____</p>
+                </div>
+                <div class="p5-text3 abs">
+                    <p>自主研发的管理平台<span>&nbsp;&nbsp;+&nbsp;&nbsp;</span>全场景无人零售终端</p>
+                </div>
+            </div>
+            <div class="p6 rel bg_black2">
+                <div>
+                    <img src="//img.aimoge.com/FmlIqLzsMI2TpEOU4RFyGLQ40eCB" alt="p6-bg">
+                </div>
+                <div class="p6-title p-title abs">
+                    <p>自主研发的管理系统</p>
+                    <p>_____</p>
+                </div>
+            </div>
+            <!-- <div class="page1_1">
+                <img src="http://img.aimoge.com/FtzEz9A7zlPyPn-KRvbRhpI4e9wY">
+            </div>
+            <div class="">
+                <img src="http://img.aimoge.com/FsTzcjFac7oslDqo4CNHqswVbNFT">
+            </div>
+            <div class="bg_black">
+                <img src="http://img.aimoge.com/FvGaVlzxQHtzY10aYcXrY-bRfZ-p">
+            </div>
+            <div class="">
+                <img src="http://img.aimoge.com/Fg11E1-Xf4x0Fe_LB2tMuH1eUMFi">
+            </div>
+            <div class="bg_black2">
+                <img src="//img.aimoge.com/FhPI8_JZhtPuRWaFyaWLpOqwisnL">
+            </div> -->
+            <div>
+                <img src="//img.aimoge.com/FlD-MyxF596lX5qz0JqSUHIpYSIC">
+            </div>
+        </div>
+        <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('#m-hd .m-trigger').click(function() {
+                    if ($('#m-hd .m-nav').is(':visible')) {
+                        $('#m-hd .m-nav').hide();
+                    } else {
+                        $('#m-hd .m-nav').show();
+                    }
+                })
+            })
+        </script>
+        <script>
+            var _hmt = _hmt || [];
+            (function() {
+                var hm = document.createElement("script");
+                hm.src = "https://hm.baidu.com/hm.js?97696ec24d3628b2aeffa4355c6aef5c";
+                var s = document.getElementsByTagName("script")[0];
+                s.parentNode.insertBefore(hm, s);
+            })();
+        </script>
+</body>
+
+</html>

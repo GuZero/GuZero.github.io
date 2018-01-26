@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>无人便利店</title>
+    <script src="js/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/common.css">
+    <style>
+        .p1 .p1-title {
+            color: #fff;
+            top: 18%;
+        }
+        
+        .p2 .item {
+            position: absolute;
+            width: 24%;
+            line-height: 30px;
+        }
+        
+        .p2 .item .item-title {
+            font-size: 28px;
+            font-weight: 600;
+            color: #008cff;
+        }
+        
+        .p2 .item .item-content {
+            margin-top: 10px;
+            font-size: 18px;
+            color: #fff;
+        }
+        
+        .p2 .item1 {
+            top: 30%;
+            left: 6.5%;
+        }
+        
+        .p2 .item2 {
+            top: 15%;
+            left: 70.5%;
+        }
+        
+        .p2 .item3 {
+            top: 58%;
+            left: 61.5%;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="clearfix">
+        <div class="logo">
+            <img src="http://img.aimoge.com/FhrrVOU-1fdmZzoYFRGuJfSVORHW">
+        </div>
+        <ul class="nav clearfix" id="nav">
+            <li><a href="./index.html">首页</a></li>
+            <li><a href="./store.html">无人便利店</a></li>
+            <li><a href="./terminal.html">自助零售终端</a></li>
+            <li><a href="./shelves.html" class="active">无人货架</a></li>
+            <li><a href="./join.html">加盟</a></li>
+        </ul>
+        <div class="phone">
+            电话号码
+        </div>
+    </header>
+    <header class="clearfix" id="m-hd">
+        <div class="logo">
+            <img src="//img.aimoge.com/FhrrVOU-1fdmZzoYFRGuJfSVORHW" alt="logo">
+        </div>
+        <div class="m-trigger"></div>
+        <ul class="m-nav clearfix">
+            <li><a href="./index.html">首页</a></li>
+            <li><a href="./store.html">无人便利店</a></li>
+            <li><a href="./terminal.html">自助零售终端</a></li>
+            <li><a href="./shelves.html">无人货架</a></li>
+            <li><a href="./join.html">加盟</a></li>
+        </ul>
+    </header>
+    <div class="container">
+        <div class="shelves page4" id="shelves">
+            <div class="p1 rel">
+                <div>
+                    <img src="//img.aimoge.com/FnLJYNdx9QzXu2SMZ2d7x77Xk7Ak" alt="p1-bg">
+                </div>
+                <div class="p1-title p-title abs">
+                    <p>无人货架</p>
+                    <p>_____</p>
+                </div>
+            </div>
+            <div class="p2 bg_black rel">
+                <div>
+                    <img src="//img.aimoge.com/FvouFs7Y8WeSHoCVS2dOw6YFadAN" alt="p2-bg">
+                </div>
+                <div class="item item1">
+                    <p class="item-title">合理的布局设计</p>
+                    <p class="item-content">采用隔断和挂式结合，单组货架支撑＞30个SKU</p>
+                </div>
+                <div class="item item2">
+                    <p class="item-title">更低的成本投入</p>
+                    <p class="item-content">设备主要由货架构成，成本相对较低，适合大规模复制，抢占市场</p>
+                </div>
+                <div class="item item3">
+                    <p class="item-title">更快捷的商品支付</p>
+                    <p class="item-content">自有研发团队优化支付商品选择，实现商品结算秒选择，带来快捷的付款体验</p>
+                </div>
+            </div>
+            <!-- <div>
+                <img src="http://img.aimoge.com/FisYDvm3ZqJhJx145aVpDnhJXJ-u">
+            </div>
+            <div class="bg_black">
+                <img src="http://img.aimoge.com/FmV1FZb9O_YqyMhnOaFSGF1voW3P">
+            </div> -->
+        </div>
+    </div>
+    <script>
+        $(document).ready(function() {
+            $('#m-hd .m-trigger').click(function() {
+                if ($('#m-hd .m-nav').is(':visible')) {
+                    $('#m-hd .m-nav').hide();
+                } else {
+                    $('#m-hd .m-nav').show();
+                }
+            })
+        })
+    </script>
+</body>
+
+</html>
