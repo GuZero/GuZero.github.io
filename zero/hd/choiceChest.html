@@ -364,8 +364,6 @@
                     for (var j = 0; j < aTerminal.length; j++) {
                         if (data.aItems[i].terminal_code == aTerminal[j].terminal_code) {
                             item.checked = true;
-                        } else {
-                            item.checked = false;
                         }
                     }
                 } else {
@@ -493,6 +491,7 @@
             $('.confirm-btn').click(function() {
                 var terminal_data = filterData(data.aItems);
                 window.sessionStorage.setItem('_terminal', JSON.stringify(terminal_data));
+                window.location.href = 'submit';
             })
         })
     </script>

@@ -214,7 +214,7 @@
     </div>
     <div class="gege-header fixed">
         <div class="title center ellipsis f16 abs">格格礼品送祝福</div>
-        <a class="icgoback" href="/hd"></a>
+        <a class="icgoback" href="/hd/make"></a>
     </div>
     <div class="container">
         <div class="time-box">
@@ -222,7 +222,7 @@
                 <div class="iocn time-icon">
                     <img src="//img.aimoge.com/FoWx8gJnGyp3c_Ov9fWCG0eVgMUH" alt="time-icon">
                 </div>
-                <p>选择时间（已选&nbsp&nbsp<span id="day" class="blue">1</span>&nbsp&nbsp天）</p>
+                <p>选择时间（已选&nbsp&nbsp<span id="day" class="blue">0</span>&nbsp&nbsp天）</p>
             </div>
             <div class="input-box flex flex-justify-between">
                 <input type="text" id="start_date" placeholder="开始时间" readonly readonlyunselectable="on" class="center">
@@ -236,17 +236,10 @@
                 <div class="iocn choice-icon">
                     <img src="//img.aimoge.com/Fv1Ojcrc0kcNoo0OdHAeMvHATYdn" alt="choice-icon">
                 </div>
-                <p>选择柜机（已选&nbsp&nbsp<span id="chest" class="blue">1</span>&nbsp&nbsp个）</p>
+                <p>选择柜机（已选&nbsp&nbsp<span id="chest" class="blue">0</span>&nbsp&nbsp个）</p>
                 <div class="add-icon abs">+</div>
             </div>
-            <div class="choice-content">
-                <div class="item flex">
-                    <div class="check-box">
-                        <div class="checked-icon"></div>
-                    </div>
-                    <p>选择柜机（已选</p>
-                </div>
-            </div>
+            <div class="choice-content"></div>
         </div>
         <div class="dividing-line abs"></div>
         <div class="charge-box">
@@ -255,7 +248,7 @@
                     <img src="//img.aimoge.com/FgrEPLTkazeV_rEeBomK3P3gr15p" alt="">
                 </div>
                 <span>收费标注</span>
-                <p class="blue f16 abs">共计<span id="total">1</span>元</p>
+                <p class="blue f16 abs">共计<span id="total">0</span>元</p>
             </div>
             <p class="text f16">特惠1元/柜/天</p>
         </div>
@@ -280,24 +273,29 @@
     <script src="./lib/util.js"></script>
     <script>
         _util.dateFormat();
-        var model = {};
+        var model = {
+            isAgree: true
+        };
 
-        function getCurrentMonthDays() {
-            var date = new Date(),
-                year = date.getFullYear(),
-                month = date.getMonth() + 1;
-            time = new Date(year, month, 0);
-            return time.getDate();
-        }
-
-        function countDay(startTm, endTm) {
+        function countDay(startTm, endTm) { //计算用户选择了多少天
             var howTime = (new Date(endTm).getTime() - new Date(startTm).getTime()) + 86400000;
             model.how = Math.round(howTime / 86400000);
-            initDom();
+            $('#day').html(model.how);
+            CountTerminalPrice();
         }
 
         function initDom() {
-            $('#day').html(model.how);
+            var _html = '';
+            for (var i = 0; i < model.terminals.length; i++) {
+                _html += '<div class="item flex" data-index=' + i + '><div class="check-box"><div class="checked-icon"></div></div><p>' + model.terminals[i].terminal_name + '</p></div>';
+            }
+            $('#chest').html(model.terminals.length);
+            $('.choice-content').html(_html);
+            if (!$.isEmptyObject(model.oldTime)) {
+                $('#start_date').val(model.oldTime.startTm);
+                $('#end_date').val(model.oldTime.endTm);
+                countDay(model.oldTime.startTm, model.oldTime.endTm)
+            }
         }
 
         function initDate() { //初始化时间组件
@@ -305,21 +303,21 @@
             var currHour = new Date().getHours();
             var oneDay = 86400000; //定义一天的时长
             model.startTm = (new Date(new Date().getTime() + (currHour >= 17 ? oneDay * 2 : oneDay))).format('yyyy-MM-dd');
-            model.endTm = (new Date(new Date(model.startTm.startTm).getTime() + oneDay * 13)).format('yyyy-MM-dd');
+            model.endTm = (new Date(new Date(model.startTm).getTime() + oneDay * 13)).format('yyyy-MM-dd');
             var calendarStart = new lCalendar(); //开始时间实例
             var calendarEnd = new lCalendar(); //结束时间实例
             var startTimeDom = $('#start_date'); //开始时间DOM
             var endTimeDom = $('#end_date'); //结束时间DOM
             // 设置开始时间 
             var startTmMin = (new Date(new Date().getTime() + (currHour >= 17 ? oneDay * 2 : oneDay))).format('yyyy-MM-dd'); //开始-起始时间
-            var startTmMax = (new Date(new Date().getTime() + oneDay * 14)).format('yyyy-MM-dd'); //开始-结束时间
+            var startTmMax = (new Date(new Date().getTime() + oneDay * 13)).format('yyyy-MM-dd'); //开始-结束时间
             //设置结束时间
             var numDate = oneDay; //默认增加一天
             if (currHour >= 17) {
                 numDate = oneDay * 2;
             }
             var endTmMin = (new Date(new Date(model.startTm).getTime())).format('yyyy-MM-dd'); //结束-开始时间
-            var endTmMax = (new Date(new Date(model.startTm).getTime() + oneDay * 14)).format('yyyy-MM-dd'); //结束-结束时间
+            var endTmMax = (new Date(new Date(model.startTm).getTime() + oneDay * 13)).format('yyyy-MM-dd'); //结束-结束时间
             // 设置滑动回调
             startTimeDom.attr('data-lcalendar', startTmMin + ',' + startTmMax); //设置起始时间
             calendarStart.init({
@@ -328,7 +326,7 @@
                 'callBack': function(_this, _curr) {
                     model.startTm = _curr.yy + "-" + (_curr.mm < 10 ? '0' + _curr.mm : _curr.mm) + "-" + (_curr.dd < 10 ? '0' + _curr.dd : _curr.dd);
                     endTmMin = (new Date(new Date(model.startTm).getTime())).format('yyyy-MM-dd'); //结束-开始时间
-                    endTmMax = (new Date(new Date(model.startTm).getTime() + oneDay * 14)).format('yyyy-MM-dd'); //结束-结束时间
+                    endTmMax = (new Date(new Date(model.startTm).getTime() + oneDay * 13)).format('yyyy-MM-dd'); //结束-结束时间
                     model.endTm = endTmMin;
                     endTimeDom.attr('data-lcalendar', endTmMin + ',' + endTmMax);
                     calendarEnd.init({
@@ -340,27 +338,209 @@
                     })
                 }
             });
-            endTimeDom.attr('data-lcalenar', endTmMin + ',' + endTmMax);
+            endTimeDom.attr('data-lcalendar', endTmMin + ',' + endTmMax);
             calendarEnd.init({
                 'trigger': '#end_date',
                 'type': 'date',
+                'countDay': function() {
+                    //点击完成时计算用户选择多少天
+                    countDay(model.startTm, model.endTm);
+                },
                 'callBack': function(_this, _curr) {
                     model.endTm = _curr.yy + "-" + (_curr.mm < 10 ? '0' + _curr.mm : _curr.mm) + "-" + (_curr.dd < 10 ? '0' + _curr.dd : _curr.dd);
                 }
             });
         }
 
+        function verifyTerminal(terminalCode, startTm, endTm) { //校验终端是否合法
+            _util.ajaxData('GET', _util.config.API + '/media/adinteraction/inspect?city_id=' + model.city_id + terminalCode + '&start_date=' + startTm + '&end_date=' + endTm,
+                null,
+                function(res) {
+                    console.log(res);
+                },
+                function(err) {
+                    _util.showErrorTip('您的网络可能出了点问题:(');
+                })
+        }
+
+        function checkedIcon(that) {
+            var icon = that.find('.checked-icon'),
+                index = that.data('index');
+            if (icon.is(':visible')) {
+                icon.removeClass('show').addClass('hide');
+                model.terminals[index].checked = false;
+            } else {
+                icon.removeClass('hide').addClass('show');
+                model.terminals[index].checked = true;
+            }
+        }
+
+        function getTerminal() { //获取用户选择的终端
+            model.terminals = JSON.parse(window.sessionStorage.getItem('_terminal') || '[]');
+            model.oldTime = JSON.parse(window.sessionStorage.getItem('_time') || '{}');
+            if (!$.isEmptyObject(model.oldTime) && model.terminals.length) {
+                filterData();
+                var terminal_codes = '';
+                for (var i = 0; i < model.terminal_codes.length; i++) {
+                    terminal_codes = '&terminal_code=' + model.terminal_codes[i];
+                }
+                verifyTerminal(terminal_codes, model.oldTime.startTm, model.oldTime.endTm);
+            }
+            initDom();
+        }
+
+        function setLocalData() {
+            var data = {
+                startTm: model.startTm,
+                endTm: model.endTm,
+            }
+            window.sessionStorage.setItem('_time', JSON.stringify(data));
+        }
+
+        function CountTerminalPrice() { //计算终端价格
+            var terminalPrice = 0,
+                terminalNum = 0;
+            for (var i = 0; i < model.terminals.length; i++) {
+                terminalNum++;
+            }
+            terminalPrice = model.how * 1 * terminalNum;
+            $('#total').html(terminalPrice);
+        }
+
+        function checkMassage() {
+            if (!$('#start_date').val().length || !$('#end_date').val().length) {
+                return '请选择展示的日期'
+            }
+            if (!model.terminals.length) {
+                return '请选择柜机'
+            }
+            if (!model.isAgree) {
+                return '抱歉您还没有同意展示协议'
+            }
+            return '';
+        }
+
+        function filterData() { //获取用户选择的终端
+            model.terminal_codes = [];
+            for (var i = 0; i < model.terminals.length; i++) {
+                if (model.terminals[i].checked) {
+                    model.city_id = model.terminals[i].city_id;
+                    model.terminal_codes.push(model.terminals[i].terminal_code);
+                }
+            }
+        }
+
+        function submitData() {
+            var msg = checkMassage(),
+                userImgInfo = JSON.parse(window.sessionStorage.getItem('_img') || '{}');
+            if ($.isEmptyObject(userImgInfo)) {
+                _util.showErrorTip('用户的图片信息不存');
+                return false;
+            }
+            if (!msg == '') {
+                _util.showErrorTip(msg);
+                return false;
+            }
+            filterData();
+            var data = {
+                content: userImgInfo.content,
+                image: userImgInfo.user_img,
+                category: userImgInfo.category,
+                terminal_codes: model.terminal_codes,
+                city_id: model.city_id,
+                start_date: model.startTm,
+                end_date: model.endTm
+            }
+            $('.prompt-box').show();
+            _util.ajaxData('POST', _util.config.API + '/media/adinteraction', data, function(res) {
+                $('.prompt-box').hide();
+                if (res.status == 0) {
+                    model.order = {
+                        order_id: data._id,
+                        total_fee: data.fee,
+                        pay_id: data.pay_id,
+                        status: data.status
+                    }
+                } else {
+                    if (res.msg) _util.showErrorTip(res.msg);
+                }
+            }, function(err) {
+                $('.prompt-box').hide();
+                _util.showErrorTip('您的网络可能出了点问题:(')
+            })
+
+        }
+
+        function goPay() {
+            var data = {
+                order_id: model.order.order_id,
+                service: 'media_adinteraction_service',
+                pay_Type: 4,
+                total_fee: model.order.total_fee,
+                total_num: 1,
+                callbackurl: encodeURIComponent('/examine')
+            }
+
+            function pay() {
+                var url = '/pay?&payType=' + data.pay_Type + '&payTypes=' + data.pay_Type + '&order_ids=' + data.order_id + '&service=' + data.service + '&total_fee=' + data.total_fee + '&total_num=' + data.total_num + '&callbackurl=' + data.callbackurl;
+                window.location.href = '/user/loading/55eba9799c7684b7098b4569?redirect=' + encodeURIComponent(url);
+            }
+            if (model.order.status == 211) {
+                confirmPayCancel(pay);
+            } else {
+                pay();
+            }
+        }
+
+        function confirmPayCancel(callback) {
+            var data = {
+                service: 'media_adinteraction_service',
+                pay_id: model.order.pay_id,
+                pay_type: 4,
+                result: 300,
+                error_msg: '用户主动取消',
+                pay_info: {}
+            }
+            _util.ajaxData('POST', _util.config.PAY + '/pay/' + model.order.pay_id, data, function(res) {
+                if (res.data && res.status == 0) {
+                    if (callback) callback();
+                }
+            }, function(err) {
+                _util.showErrorTip('支付失败');
+            })
+        }
         $(document).ready(function() {
             initDate();
+            getTerminal();
             $('#start_date').click(function() {
                 if ($('#end_date').val().length) {
                     $('#end_date').val('');
                 }
             })
-            $('body').on('click', '.lcalendar_finish', function() {
-                if ($('#start_date').val().length && $('#end_date').val().length) {
-                    countDay(model.startTm, model.endTm);
+            $('.add-icon').click(function() {
+                if (!$('#start_date').val().length || !$('#end_date').val().length) {
+                    _util.showErrorTip('请先选择时间再选择柜机');
+                    return false;
                 }
+                window.location.href = 'choiceChest';
+                setLocalData()
+            })
+            $('.choice-content').on('click', '.item', function() {
+                var that = $(this);
+                checkedIcon(that);
+            })
+            $('.agree-icon').click(function() {
+                if (model.isAgree) {
+                    $(this).find('img').attr('src', '//img.aimoge.com/FqfmB3mlFn4U9FLh8saH4QE7UhCj');
+                    model.isAgree = false;
+                } else {
+                    $(this).find('img').attr('src', '//img.aimoge.com/FhHbgqJrv_v_bFqO3f3Cckg5tuHT');
+                    model.isAgree = true;
+                }
+
+            })
+            $('#pay').click(function() {
+                submitData();
             })
         })
     </script>
