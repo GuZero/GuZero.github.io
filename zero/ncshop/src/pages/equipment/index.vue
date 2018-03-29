@@ -2,15 +2,25 @@
 .equipment-page .gege-header{
     background-color: #be6835;
 }
-.equipment-page  .h-164 {
-    height: 164px;
+.equipment-page  .h-184 {
+    height: 184px;
+}
+.equipment-page .prompt-msg{
+    height: 26px;
+    background-color: #fadaa5;
+    color: #4a4a4a;
+    width: 100%;
+    left: 0;
+    top: 44px;
+    text-align: center;
+    font-size: 12px;
 }
 .equipment-page .banner-box{
     height: 88px;
     padding: 16px;
     width: 100%;
     background-color: #fff5ed;
-    top: 44px;
+    top: 64px;
     left: 0;
     text-align: center;
 }
@@ -167,7 +177,7 @@
 .equipment-page  .footer-box .item-box {
     width: 100%;
     color: #323232;
-    background-color: #fff;
+    background-color: #fff5ed;
     bottom: 44px;
     padding: 0 16px;
     box-sizing: border-box;
@@ -181,8 +191,11 @@
 .equipment-page .footer-box .item-box .list-title {
     font-size: 14px;
     line-height: 40px;
+    
 }
-
+.equipment-page .footer-box .item-box .title-solid{
+    border-bottom: 1px solid #be6835;
+}
 .equipment-page .footer-box .item-box .f-item {
     height: 36px;
 }
@@ -239,6 +252,12 @@
 .equipment-page .f-weight{
     font-weight: 600;
 }
+.equipment-page .mgLoadingWarp{
+    display: block;
+}
+.equipment-page .mgLoadingWarp i{
+    margin-left: -54px;
+}
 .flex-direction-column{-webkit-box-orient:vertical;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;}
 </style>
 
@@ -246,10 +265,11 @@
     <div class="equipment-page">
         <div class="shelf-layer" @click="isShow"></div>
         <HeaderBar :title="pageTitle" :btnconfig="btnconfig" @confirmCallback="gotoOrder"></HeaderBar>
+        <div class="prompt-msg fixed">兑换码有效期15天，过期将自动退款</div>
         <div class="banner-box fixed">
             <img src="//img.aimoge.com/Fg8A6M9DPo25_t0iUtCQXpce6nsR" alt="qudian-baner">
         </div>
-        <div class="h-164"></div>
+        <div class="h-184"></div>
         <div class="main  flex-g">
             <div class="left-box fixed">
                 <div class="l-item f14 rel" v-for="(item,index) in categorys" :key="index" :class="{active:activeTab==index}" @click="switchTab(index)">
@@ -260,16 +280,16 @@
             <div class="right-box pd-46 flex-g flex-wrap">
                 <div class="r-item flex-g" v-for="item in current_tradings" :key="item._id">
                     <div class="image">
-                        <img :src="'//img.aimoge.com/'+item.trading.image.substring(0,28)" alt="icon">
+                        <img :src="'//img.aimoge.com/'+item.image.substring(0,28)" alt="icon">
                     </div>
                     <div class="flex-g flex-pack-justify item-text flex-direction-column">
                         <div>
-                            <span class="r-title">{{item.trading.title}}</span>
-                            <div v-if="item.trading.price-item.trading.discount_price!=0">
-                                <span class="discount-price"><span class="f10 c-coffee">￥</span>{{item.trading.discount_price/100}}</span>
-                                <span :class="{del:item.trading.discount_price}" class="f12">￥{{item.trading.price/100}}</span>
+                            <span class="r-title">{{item.title}}</span>
+                            <div v-if="item.price-item.discount_price!=0">
+                                <span class="discount-price"><span class="f10 c-coffee">￥</span>{{item.discount_price/100}}</span>
+                                <span :class="{del:item.discount_price}" class="f12">￥{{item.price/100}}</span>
                             </div>
-                            <span  v-else class="c-coffee f-weight">￥{{(item.trading.price)/100}}</span>
+                            <span  v-else class="c-coffee f-weight">￥{{(item.price)/100}}</span>
                         </div>
                         <div class="flex-g flex-pack-justify flex-align-center">
                             <div class="width-50 flex-g flex-pack-justify">
@@ -280,17 +300,20 @@
                         </div>
                     </div>
                 </div>
+                <div id="mgLoadingWarp" class="mgLoadingWarp rel" v-show="scroll_load_end||scroll_load_loading">
+                    <span><i class="icon ion-loading-c rel" v-if="scroll_load_loading"></i>{{load_msg}}</span>
+                </div>
             </div>
         </div>
 
         <div class="footer-box fixed flex-g flex-pack-justify flex-align-center">
             <div class="abs link-box">
-                <router-link to="/ncshop/equipment/extraction">
+                <router-link to="/ncshop/equipment/coffee/extraction">
                     查看提取方式
                 </router-link>
             </div>
             <div class="abs item-box">
-                <div class="list-title">
+                <div class="list-title" :class="{'title-solid':store_carts.length}">
                     已选择商品({{trade.num}})
                 </div>
                 <div class="f-item flex-g flex-pack-justify flex-align-center" v-for="item in store_carts" :key="item.id" v-if="item.cart_num!=0">
@@ -300,7 +323,6 @@
                         <span class="del f10 mg-l-4">￥{{item.price/100}}</span>
                     </span>
                     <span style="width:24%" v-else>￥{{item.price/100}}</span>
-                    <span style="width:20%;color:red" v-if="item.lack" class="f12">库存不足</span>
                     <span style="width:10%" class="sub-btn" :class="{disabled:item.cart_num==0}" @click="cart_reduce(item.trading_id)"></span>
                     <span style="width:6%;text-align:center;">{{item.cart_num || 0}}</span>
                     <span style="width:10%" class="add-btn" @click="cart_add(item.trading_id)"></span>
@@ -333,7 +355,7 @@ export default {
                 isgoback: 0,
                 isorder: 1
             },
-            terminal_code: '',
+            dot_id: '',
             activeTab: 0,
             scroll_load_loading: false,
             scroll_load_end: false,
@@ -351,7 +373,7 @@ export default {
             store_carts:[],
             cart_loaded:false,
             category_loaded:false,
-            good_loaded:false
+            load_msg:'加载中...'
         }
     },
     components: {
@@ -373,9 +395,9 @@ export default {
     methods: {
         getInfo(){
             $('#sysLoading').show();
-            this.terminal_code=this.$route.query.terminal_code;
+            this.dot_id=this.$route.query.dot_id;
             let data = JSON.parse(localStorage.getItem("ncstore_cart")) || {};
-            if ((new Date()).getTime() - (data.ts || 0) <= 24 * 60 * 60 * 1000 && data.terminal_code == this.terminal_code) {
+            if ((new Date()).getTime() - (data.ts || 0) <= 24 * 60 * 60 * 1000 && data.dot_id == this.dot_id) {
                 this.store_carts = data.goodses || [];
                 for (var i = 0; i < this.store_carts.length; i++) {
                     this.loadCart(this.store_carts[i]);
@@ -386,12 +408,12 @@ export default {
             if (!this.store_carts.length) {
                 this.cart_loaded = true;
             }
-            this.loadCategory()
+            this.loadCategory();
         },
         loadCategory() {  //获取咖啡机商品分类
             let that = this;
-            this.terminal_code=this.$route.query.terminal_code;
-            axios.get('/ncshop/equipment/category?terminal_code=' + that.terminal_code)
+            this.dot_id=this.$route.query.dot_id;
+            axios.get('/ncshop/equipment/category?dot_id=2')
                 .then(function(res) {
                     if (res.data.status == 0) {
                         that.categorys = res.data.data.categorys;
@@ -401,7 +423,10 @@ export default {
                         that.loaded();
                     }
                 }).catch(function(err) {
-                    console.log(err);
+                    that.category_loaded = true;
+                    if (that.cart_loaded && that.category_loaded) {
+                        that.loaded();
+                    }
                 });  
         },
         loadGoodlist(category_id,load_next_page){//获取商品列表
@@ -425,31 +450,20 @@ export default {
 
             let category_page = that.category_pages[category_id] || {};
             that.scroll_load_loading = true;
-            axios.get('/ncshop/equipment/trading?terminal_code='+that.terminal_code+'&category_id='+category_id+"&cursor=" + (category_page["current_page"] || ''))
+            axios.get('/ncshop/equipment/trading?dot_id='+that.dot_id+'&category_id='+category_id+"&cursor=" + (category_page["current_page"] || ''))
                 .then(function(res) {
                     if (res.data.status == 0) {
                         that.scroll_load_loading = false;
                         let data=res.data.data;
-                        if(!category_page['pages'].length){
-                            for(let i=0;i<8;i++){
-                                data.tradings.push((data.tradings[0]));
-                            }
-                        }else{
-                            // setTimeout(()=>{
-                                for(let i=0;i<5;i++){
-                                    data.tradings.push(that.category_tradings[category_id][0])
-                                }
-                            // },1000)
+                        if(!data.tradings.length&&category_page["pages"].length){
+                            that.load_msg='没用更多了...'
+                            that.scroll_load_end=true;
                         }
-                        // if(!data.tradings.length){
-                        //     that.scroll_load_end=true;
-                        // }
                         if (category_page["pages"].indexOf(category_page["current_page"] || '') >= 0) {
                             return;
                         }
                         category_page["pages"].push(category_page["current_page"] || '');
                         category_page["current_page"] = data.next_cursor;
-                        that.category_pages[category_id]=category_page;
                         if (!that.category_tradings[category_id]) {
                             that.category_tradings[category_id] = [];
                             that.category_carts[category_id] = {};
@@ -458,9 +472,9 @@ export default {
                         that.current_tradings=that.category_tradings[category_id];
                         for (var i = 0; i < that.current_tradings.length; i++) {
                             for (var j = 0; j < that.store_carts.length; j++) {
-                                if (that.store_carts[j].trading_id == that.current_tradings[i].trading_id) {
+                                if (that.store_carts[j].trading_id == that.current_tradings[i]._id) {
                                     that.current_tradings[i].cart_num = that.store_carts[j].cart_num;
-                                    that.category_carts[category_id][that.current_tradings[i].trading_id] = that.current_tradings[i];
+                                    that.category_carts[category_id][that.current_tradings[i]._id] = that.current_tradings[i];
                                 }
                             }
                         }
@@ -468,7 +482,7 @@ export default {
                 }).catch(function(err) {
                     console.log(err);
                     that.scroll_load_loading = false;
-                    
+                    _util.showErrorTip('您的网络可能出了点问题:(');                 
                 });
         },
         loadCart(item) {//获取购物车的商品
@@ -493,22 +507,13 @@ export default {
                 }
             }
 
-            axios.get(window.config.API + '/ncshop/equipment/trading/' + item.trading_id + '?terminal_code=' + that.terminal_code)
+            axios.get(window.config.API + '/ncshop/equipment/trading/' + item.trading_id + '?dot_id=' + that.dot_id)
                 .then(function(res) {
                     if (res.data.status == 0) {
                         let data=res.data.data.trading;
-                        if (item.cart_num > ((data.num - data.sale_num))) {
-                            let diff = data.num - data.sale_num;
-                            if (diff) {
-                                item.cart_num = diff;
-                            } else {
-                                item.cart_num = item.cart_num;
-                                item.lack = true;
-                            }
-                        }
-                        item.title = data.trading.title;
-                        item.price = data.trading.price;
-                        item.discount_price=data.trading.discount_price;
+                        item.title = data.title;
+                        item.price = data.price;
+                        item.discount_price=data.discount_price;
                         item.trading = data;
                     }
                     item.loaded = true;
@@ -522,7 +527,7 @@ export default {
             for (var fi = 0; fi < this.categorys.length; fi++) {
                 var current_tradings = this.category_tradings[this.categorys[fi]['_id']] || [];
                 for (var i = 0; i < current_tradings.length; i++) {
-                    if (current_tradings[i].trading_id == trading.trading_id) {
+                    if (current_tradings[i]._id == trading._id) {
                         current_tradings[i].cart_num = (current_tradings[i].cart_num || 0) + cart_num;
                     }
                 }
@@ -531,7 +536,7 @@ export default {
         loaded() {
             this.getTotal();
             this.setLocalData();
-            this.switchTab(1);
+            this.switchTab(0);
             $('#sysLoading').hide();
         },
         switchTab(index) {
@@ -550,28 +555,26 @@ export default {
             }
         },
         add(item) {
-            var cart = false;
-            var trading = item;
+            var cart = null;
             for (var i = 0; i < this.store_carts.length; i++) {
-                if (this.store_carts[i].trading_id == item.trading_id) {
+                if (this.store_carts[i].trading_id == item._id) {
                     cart = this.store_carts[i];
-                    trading = cart.trading;
                     break;
                 }
             }
 
-            if ((cart ? cart.cart_num || 0 : 0) < (trading.num - trading.sale_num)) {
+            if (item._id) {
                 this.update_trading_cart_num(item, 1);
                 if (cart) {
                     cart.cart_num++;
                 }
                 else {
                     this.store_carts.push({
-                        "trading_id": item.trading_id,
+                        "trading_id": item._id,
                         "cart_num": 1,
-                        "price": item.trading.price,
-                        "discount_price":item.trading.discount_price,
-                        'title': item.trading.title,
+                        "price": item.price,
+                        "discount_price":item.discount_price,
+                        'title': item.title,
                         "trading": item
                     });
                 }
@@ -583,20 +586,19 @@ export default {
             }
         },
         reduce(item) {
-            var cart = false;
+            var cart = null;
             for (var i = 0; i < this.store_carts.length; i++) {
-                if (this.store_carts[i].trading_id == item.trading_id) {
+                if (this.store_carts[i].trading_id == item._id) {
                     cart = this.store_carts[i];
                     break;
                 }
             }
-
-            if (cart && (cart.cart_num || 0) > 0) {
+            if (cart) {
                 this.update_trading_cart_num(item, -1);
                 if (cart.cart_num == 1) {
                     var store_carts = [];
                     for (var i = 0; i < this.store_carts.length; i++) {
-                        if (this.store_carts[i].trading_id != item.trading_id) {
+                        if (this.store_carts[i].trading_id != item._id) {
                             store_carts.push(this.store_carts[i]);
                         }
                     }
@@ -636,8 +638,8 @@ export default {
                 });
             }
             let data = {
-                'terminal_code': this.terminal_code,
-                'total': this.total,
+                'dot_id': this.dot_id,
+                'total': this.trade.total,
                 'goodses': goodses,
                 'ts': (new Date()).getTime()
             };
@@ -672,11 +674,11 @@ export default {
                 _util.showErrorTip('请选择商品');
                 return false;
             } else {
-                this.url('/ncshop/shelf/pay');
+                this.url('/ncshop/equipmentCoffeePay');   
             }
         },
         gotoOrder() {
-            this.url('/ncshop/shelf/order');
+            this.url('/ncshop/equipment/coffee/order');
         },
         clearData() {
             this.scroll_load_loading = false;

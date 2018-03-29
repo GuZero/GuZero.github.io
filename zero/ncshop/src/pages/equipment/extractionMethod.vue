@@ -6,12 +6,14 @@
     color: #be6835
 }
 .extraction-page .container{
+    padding: 0;
     padding-top: 60px;
 }
 .extraction-page .item{
     padding: 15px 30px;
     font-size: 16px;
     width: 100%;
+    box-sizing: border-box;
     color: #3d3d3d;
 }
 .extraction-page .item .left-box{
@@ -75,7 +77,7 @@
                     <img src="//img.aimoge.com/FoyA0NQQkZJIwUI20-4kOzwTe3XU" alt="dashed-icon-2">
                 </div>
             </div>
-             <div class="item flex-g">
+             <div class="item flex-g rel">
                 <div class="left-box">
                     <img src="//img.aimoge.com/FjMyZ-7rllueiIBnTl4vwWnSEdyO" alt="icon">
                 </div>
@@ -84,6 +86,21 @@
                         <p>从咖啡机屏幕兑换</p>
                         <p>入口进入依次</p>
                         <p>输入<span class="c-coffee weight">兑换码</span>即可获得</p>
+                    </div>
+                </div>
+                <div class="dashed-icon-1 abs">
+                    <img src="//img.aimoge.com/FlNalQtH9j9NGwr0Bv_SqnVQkrEF" alt="dashed-icon-1">
+                </div>
+            </div>
+            <div class="item flex-g rel">
+                <div class="left-box">
+                    <img src="//img.aimoge.com/Fq6iNepGszJCih1FuvX5vMROLGm2" alt="icon">
+                </div>
+                <div class="right-box flex-g flex-pack-center flex-align-center">
+                    <div>
+                        <p><span class="c-coffee weight">15天</span>内未兑换</p>
+                        <p>将自动退款</p>
+                        <p>钱原路返回</p>
                     </div>
                 </div>
             </div>

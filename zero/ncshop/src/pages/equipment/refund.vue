@@ -68,11 +68,11 @@
             <div class="list-box">
                 <div class="flex flex-pack-justify">
                     <span>退款订单编号</span>
-                    <p>000000000000000</p>
+                    <p>{{refundOrder.order_id}}</p>
                 </div>
                 <div class="flex flex-pack-justify">
                     <span>退款金额</span>
-                    <p>￥45</p>
+                    <p>￥{{(refundOrder.pay_fee/100)}}</p>
                 </div>
                 <div class="flex flex-pack-justify">
                     <span>退款方式</span>
@@ -97,7 +97,7 @@
                     </div>
                 </div>
             </div>
-            <div class="refund-btn abs">
+            <div class="refund-btn abs" @click="refundFun">
                 申请退款
             </div>
         </div>
@@ -126,17 +126,78 @@ export default {
               value:'买多了/买错了',
               checked:false
           }
-      ]
+      ],
+      refundOrder:{
+          order_id:'',
+          pay_fee:0,
+          pay_type:4,
+          pay_id:''
+      }
     };
   },
   components: {
     HeaderBar
   },
   created() {},
-  mounted() {},
+  mounted() {
+      this.getOrder();
+  },
   methods: {
     selectCause(item){
         item.checked=item.checked?false:true;
+    },
+    getOrder(){
+        let that = this,
+        _id = this.$route.query._id;
+      $("#sysLoading").show();
+      axios
+        .get("/ncshop/equipment/order/" + _id)
+        .then(function(res) {
+          $("#sysLoading").hide();
+          if (res.data.status == 0) {
+            let data = res.data.data.order;
+            that.refundOrder.order_id = data.order_id;
+            that.refundOrder.pay_fee = data.pay_fee;
+            that.refundOrder.pay_id=data.pay_id;
+            that.refundOrder.pay_type=data.pay_type;
+          } else {
+            if (res.data.msg) _util.showErrorTip(res.data.msg);
+          }
+        })
+        .catch(function(err) {
+          $("#sysLoading").hide();
+          _util.showErrorTip("您的网络可能出了点问题:(");
+        });
+    },
+    refundFun(){
+        let that=this;
+        let refund_reason=[];
+        for(let i=0;i<this.cause.length;i++){
+            if(this.cause[i].checked){
+                refund_reason.push(this.cause[i].value);
+            }
+        }
+        if(!refund_reason.length){
+            _util.showErrorTip('请至少选择一项退款原因')
+            return false;
+        }
+        let data = {
+            service: "trading_order_service",
+            pay_id: this.refundOrder.pay_id,
+            pay_type: this.refundOrder.pay_type,
+            refund_type: this.refundOrder.pay_type,
+            reason: refund_reason.join(',')
+        };
+        axios.put(window.config.PAY+'/pay/'+this.refundOrder.pay_id,data)
+            .then(function(res){
+               if(res.data.status==0){
+                   that.url('/ncshop/equipment/coffee/order');
+               }else{
+                  if (res.data.msg) _util.showErrorTip(res.data.msg); 
+               }
+            }).catch(function(err){
+                _util.showErrorTip("您的网络可能出了点问题:(");
+            })
     }
   }
 };

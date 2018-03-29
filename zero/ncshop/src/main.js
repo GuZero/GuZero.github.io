@@ -78,14 +78,14 @@ router.beforeEach((to, from, next) => {
                 return to.meta.requiresAuth == undefined ? true : to.meta.requiresAuth;
             })
         ) {
-            if (!window.uid || !window.is_logged) {
+            if (!window.uid || !window.is_logged || (!to.meta.anonymousAuth && window.anonymous_uid == window.uid)) {
                 var prefix = 'shop';
                 if ((to.fullPath || "").indexOf("shelf") > 0) {
                     prefix = "shelf";
                 } else if ((to.fullPath || "").indexOf("equipment") > 0) {
                     prefix = "equipment";
                 }
-                if (window.ncshop_config[prefix + '_anonymous'] || window.ncshop_config.anonymous) {
+                if (to.meta.anonymousAuth && (window.ncshop_config[prefix + '_anonymous'] || window.ncshop_config.anonymous)) {
                     anonymousLogin();
                 } else {
                     next({ path: "/ncshop/login", query: { page_url: to.fullPath } });
@@ -135,6 +135,12 @@ Vue.prototype.url = function(path, query, replace) {
     }
 
     if (_util.isWeixin() && path == "/ncshop/shelf/pay") {
+        query = query || {};
+        query.wxid = window.wxid || '';
+        return window.location.href = path + "?" + _util.urlencode(query);
+    }
+
+    if (_util.isWeixin() && path == "/ncshop/equipmentCoffeePay") {
         query = query || {};
         query.wxid = window.wxid || '';
         return window.location.href = path + "?" + _util.urlencode(query);

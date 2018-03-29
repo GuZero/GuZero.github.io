@@ -16,6 +16,7 @@ const EquipmentExtraction = r => require.ensure([], () => r(require('../pages/eq
 const EquipmentOrder = r => require.ensure([], () => r(require('../pages/equipment/order')), 'EquipmentOrder');
 const EquipmentExchange = r => require.ensure([], () => r(require('../pages/equipment/exchange')), 'EquipmentExchange ');
 const EquipmentRefund = r => require.ensure([], () => r(require('../pages/equipment/refund')), 'EquipmentRefund ');
+const EquipmentStorePay = r => require.ensure([], () => r(require('../pages/equipment/pay')), 'EquipmentStorePay ');
 const EquipmentStorePaySuccess = r => require.ensure([], () => r(require('../pages/equipment/paySuccess')), 'EquipmentStorePaySuccess');
 Vue.use(VueRouter);
 export default new VueRouter({
@@ -73,36 +74,48 @@ export default new VueRouter({
     }, {
         path: '/ncshop/equipmentpay',
         name: 'EquipmentPay',
-        component: EquipmentPay
+        component: EquipmentPay,
+        meta: {
+            requiresAuth: true,
+            anonymousAuth: true
+        }
     }, {
         path: '/ncshop/equipment/pay/success',
         name: 'EquipmentPaySuccess',
-        component: EquipmentPaySuccess
+        component: EquipmentPaySuccess,
+        meta: {
+            requiresAuth: true,
+            anonymousAuth: true
+        }
     }, { //咖啡机商城
-        path: '/ncshop/equipment',
+        path: '/ncshop/equipment/coffee',
         name: 'Equipment',
         component: Equipment,
         meta: {
             requiresAuth: false
         }
     }, {
-        path: '/ncshop/equipment/extraction',
+        path: '/ncshop/equipment/coffee/extraction',
         name: 'EquipmentExtraction',
         component: EquipmentExtraction
     }, {
-        path: '/ncshop/equipment/order',
+        path: '/ncshop/equipment/coffee/order',
         name: 'EquipmentOrder',
         component: EquipmentOrder
     }, {
-        path: '/ncshop/equipment/exchange',
+        path: '/ncshop/equipment/coffee/exchange',
         name: 'EquipmentExchange',
         component: EquipmentExchange
     }, {
-        path: '/ncshop/equipment/refund',
+        path: '/ncshop/equipment/coffee/refund',
         name: 'EquipmentRefund',
         component: EquipmentRefund
     }, {
-        path: '/ncshop/equipment/store/paysuccess',
+        path: '/ncshop/equipmentCoffeePay',
+        name: 'EquipmentStorePay',
+        component: EquipmentStorePay
+    }, {
+        path: '/ncshop/equipment/coffee/paysuccess',
         name: 'EquipmentStorePaySuccess',
         component: EquipmentStorePaySuccess
     }],
