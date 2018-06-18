@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>上下货管理</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./css/global.css">
+    <link href="//cdn.bootcss.com/weui/1.1.2/style/weui.min.css" rel="stylesheet">
+    <style>
+        body {
+            /* height: 100vh; */
+            width: 100vw;
+            background-color: #f8f8f8;
+            box-sizing: border-box;
+        }
+        
+        .container {
+            padding-top: 104px;
+            padding-bottom: 20px;
+        }
+        
+        .page_hd {
+            width: 100%;
+            top: 14px;
+            left: 0;
+            z-index: 2;
+        }
+        
+        .page_hd>div {
+            background-color: #fff;
+        }
+        
+        .item {
+            display: block;
+            width: 100%;
+            background-color: #fff;
+            color: #666;
+            margin-top: 14px;
+            padding: 9px 16px;
+            border-top: 1px solid #f2f2f2;
+            border-bottom: 1px solid #f2f2f2;
+            font-size: 16px;
+            line-height: 28px;
+            position: relative;
+        }
+        
+        .item p {
+            display: flex;
+        }
+        
+        .item p label {
+            width: 30%;
+        }
+        
+        .item p span {
+            width: 70%;
+        }
+        
+        .item .right-arrow-icon {
+            height: 18px;
+            width: 18px;
+            position: absolute;
+            top: 50%;
+            margin-top: -18px;
+            right: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="mgAlert" class="mgAlert center fixed f14"></div>
+    <div id="sysLoading" class="sysLoading fixed">
+        <i class="ion-loading-c"></i>
+    </div>
+    <div class="container">
+        <div class="page_hd fixed">
+            <div class="weui-cell weui-cell_select weui-cell_select-after">
+                <div class="weui-cell__hd">
+                    <label for="" class="weui-label">终端选择</label>
+                </div>
+                <div class="weui-cell__bd">
+                    <select class="weui-select" id="terminal">
+                        <option value="all">全部</option>
+                        <option value="2">其他</option>
+                        <option value="3">2</option>
+                    </select>
+                </div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd">
+                    <label for="" class="weui-label">时间选择</label>
+                </div>
+                <div class="weui-cell__bd">
+                    <input class="weui-input" type="date" value="" id="time">
+                </div>
+            </div>
+        </div>
+        <div class="page-bd">
+            <a href="javascript:;" class="item">
+                <p>
+                    <label for="">终端名称：</label>
+                    <span>1865园区</span>
+                </p>
+                <p>
+                    <label for="">上下货时间：</label>
+                    <span>2017-9-19</span>
+                </p>
+                <p>
+                    <label for="">上架数量：</label>
+                    <span>22</span>
+                </p>
+                <p>
+                    <label for="">下架数量：</label>
+                    <span>22</span>
+                </p>
+                <div class="right-arrow-icon">
+                    <img src="//img.aimoge.com/Fith_CK39HbF-3CqSrMOYnu554FT" alt="right-arrow-icom">
+                </div>
+            </a>
+            <a href="javascript:;" class="item">
+                <p>
+                    <label for="">终端名称：</label>
+                    <span>1865园区</span>
+                </p>
+                <p>
+                    <label for="">上下货时间：</label>
+                    <span>2017-9-19</span>
+                </p>
+                <p>
+                    <label for="">上架数量：</label>
+                    <span>22</span>
+                </p>
+                <p>
+                    <label for="">下架数量：</label>
+                    <span>22</span>
+                </p>
+                <div class="right-arrow-icon">
+                    <img src="//img.aimoge.com/Fith_CK39HbF-3CqSrMOYnu554FT" alt="right-arrow-icom">
+                </div>
+            </a>
+            <a href="javascript:;" class="item">
+                <p>
+                    <label for="">终端名称：</label>
+                    <span>1865园区</span>
+                </p>
+                <p>
+                    <label for="">上下货时间：</label>
+                    <span>2017-9-19</span>
+                </p>
+                <p>
+                    <label for="">上架数量：</label>
+                    <span>22</span>
+                </p>
+                <p>
+                    <label for="">下架数量：</label>
+                    <span>22</span>
+                </p>
+                <div class="right-arrow-icon">
+                    <img src="//img.aimoge.com/Fith_CK39HbF-3CqSrMOYnu554FT" alt="right-arrow-icom">
+                </div>
+            </a>
+            <a href="javascript:;" class="item">
+                <p>
+                    <label for="">终端名称：</label>
+                    <span>1865园区</span>
+                </p>
+                <p>
+                    <label for="">上下货时间：</label>
+                    <span>2017-9-19</span>
+                </p>
+                <p>
+                    <label for="">上架数量：</label>
+                    <span>22</span>
+                </p>
+                <p>
+                    <label for="">下架数量：</label>
+                    <span>22</span>
+                </p>
+                <div class="right-arrow-icon">
+                    <img src="//img.aimoge.com/Fith_CK39HbF-3CqSrMOYnu554FT" alt="right-arrow-icom">
+                </div>
+            </a>
+            <a href="javascript:;" class="item">
+                <p>
+                    <label for="">终端名称：</label>
+                    <span>1865园区</span>
+                </p>
+                <p>
+                    <label for="">上下货时间：</label>
+                    <span>2017-9-19</span>
+                </p>
+                <p>
+                    <label for="">上架数量：</label>
+                    <span>22</span>
+                </p>
+                <p>
+                    <label for="">下架数量：</label>
+                    <span>22</span>
+                </p>
+                <div class="right-arrow-icon">
+                    <img src="//img.aimoge.com/Fith_CK39HbF-3CqSrMOYnu554FT" alt="right-arrow-icom">
+                </div>
+            </a>
+            <div id="mgLoadingWarp" class="mgLoadingWarp rel">
+                <span>
+                    <i class="icon ion-loading-c rel"></i>加载中...</span>
+            </div>
+        </div>
+    </div>
+    <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="./js/util.js"></script>
+    <script>
+        var data = {
+            scroll_load_loading: false,
+            scroll_load_end: false,
+            terminal_val: '',
+            time_val: '',
+            aPages: [],
+            page: '',
+            aItems: []
+        }
+
+        function initDate() {
+            data.time_val = (new Date().format('yyyy-MM-dd'));
+            $('#time').val(data.time_val);
+        }
+
+        function handleScroll() {
+            if (($(document).scrollTop() + window.innerHeight) >= document.body.scrollHeight - 1) {
+                if (data.aItems.length < 16) {
+                    return false;
+                } else {
+                    getInventoryInfo();
+                }
+            }
+        }
+
+        function isShowLoading(status, show) {
+            if (status) {
+                if (show) {
+                    $('#sysLoading').show();
+                } else {
+                    $('#sysLoading').hide();
+                }
+            } else {
+                if (show) {
+                    $('#mgLoadingWarp').show();
+                } else {
+                    $('#mgLoadingWarp').hide();
+                }
+            }
+        }
+
+        function getInventoryInfo(isFirst) {
+            var page = data.page;
+            if (data.scroll_load_loading) {
+                return false;
+            }
+            if (data.scroll_load_end) {
+                return false;
+            }
+            isShowLoading(isFirst, true);
+            _util.ajaxData('GET', '请求url', null,
+                function(res) {
+                    isShowLoading(isFirst);
+                    if (res.status == 0) {
+                        if (data.aPages.indexOf(page) >= 0) return false;
+                        data.aPages.push(page);
+                        data.page = res.data.next_cursor || '';
+                        data.aItems = data.aItems.concat(res.data.terminals);
+                        if (res.data.terminals && res.data.terminals.length < data.numberPage) {
+                            data.scroll_load_end = true;
+                        }
+                    } else {
+                        if (res.msg) _util.showErrorTip(res.msg);
+                    }
+                },
+                function(err) {
+                    isShowLoading(isFirst);
+                    _util.showErrorTip('您的网络可能出了点问题:(');
+                })
+        }
+        $(document).ready(function() {
+            $(document).on('scroll', handleScroll);
+            initDate();
+            $('#terminal').change(function() {
+                data.terminal_val = $(this).val();
+            })
+            $('#time').change(function() {
+                data.time_val = $(this).val();
+            })
+
+        })
+    </script>
+</body>
+
+</html>
