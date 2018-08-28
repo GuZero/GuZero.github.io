@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>入柜详情</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./css/global.css">
+    <link href="//cdn.bootcss.com/weui/1.1.2/style/weui.min.css" rel="stylesheet">
+    <style>
+        body {
+            width: 100vw;
+            background-color: #f8f8f8;
+            box-sizing: border-box;
+        }
+
+        .weui-form-preview__bd {
+            text-align: left;
+        }
+
+        .item-box {
+            margin-top: 20px;
+            background-color: #fff;
+            padding: 10px 30px;
+            color: #999;
+            text-align: center;
+            display: none;
+        }
+
+        .item-box .item-title {
+            color: #323232;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .item-box .item-content p {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .item-box span {
+            width: 25%;
+        }
+
+        .f-13 {
+            font-size: 13px;
+        }
+
+        .weui-cells {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="mgAlert" class="mgAlert center fixed f14"></div>
+    <div id="sysLoading" class="sysLoading fixed">
+        <i class="ion-loading-c"></i>
+    </div>
+    <div class="page">
+        <div class="page_bd">
+            <div class="weui-form-preview">
+                <div class="weui-form-preview__bd">
+                    <div class="weui-form-preview__item">
+                        <label class="weui-form-preview__label">小区名称：</label>
+                        <span class="weui-form-preview__value">1865创意产业园E16栋</span>
+                    </div>
+                    <div class="weui-form-preview__item">
+                        <label class="weui-form-preview__label">上下货时间：</label>
+                        <span class="weui-form-preview__value">2018年7月18日 17点46分</span>
+                    </div>
+                    <div class="weui-form-preview__item">
+                        <label class="weui-form-preview__label">已入柜包裹：</label>
+                        <span class="weui-form-preview__value">50</span>
+                    </div>
+                    <div class="weui-form-preview__item">
+                        <label class="weui-form-preview__label">总包裹：</label>
+                        <span class="weui-form-preview__value">50</span>
+                    </div>
+                </div>
+            </div>
+            <div class="item-box">
+                <div class="item-title">
+                    <span>用户名</span>
+                    <span>绑定包裹总数</span>
+                    <span>入柜数量</span>
+                    <span>取走数量</span>
+                </div>
+                <div class="item-content">
+                    <p>
+                        <span>Xiao</span>
+                        <span>3</span>
+                        <span>2</span>
+                        <span>1</span>
+                    </p>
+                </div>
+            </div>
+            <div class="weui-cells weui-cells_after-title">
+                <div class="weui-cell weui-cell_access list-title">
+                    <span class="weui-cell__bd f-13">用户名</span>
+                    <span class="weui-cell__bd f-13">绑定包裹总数</span>
+                    <span class="weui-cell__bd f-13">入柜数量</span>
+                    <span class="weui-cell__bd f-13">取走数量</span>
+                </div>
+                <div class="weui-cell cell_access weui-cells_after-title">
+                    <span class="weui-cell__bd f-13">Xiao</span>
+                    <span class="weui-cell__bd f-13">3</span>
+                    <span class="weui-cell__bd f-13">2</span>
+                    <span class="weui-cell__bd f-13">1</span>
+                </div>
+                <div class="weui-cell cell_access weui-cells_after-title">
+                    <span class="weui-cell__bd f-13">Xiao</span>
+                    <span class="weui-cell__bd f-13">3</span>
+                    <span class="weui-cell__bd f-13">2</span>
+                    <span class="weui-cell__bd f-13">1</span>
+                </div>
+                <div class="weui-cell cell_access weui-cells_after-title">
+                    <span class="weui-cell__bd f-13">Xiao</span>
+                    <span class="weui-cell__bd f-13">3</span>
+                    <span class="weui-cell__bd f-13">2</span>
+                    <span class="weui-cell__bd f-13">1</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="./js/util.js"></script>
+    <script>
+        var data = {
+
+        }
+        $(document).ready(function () {
+
+        })
+    </script>
+</body>
+
+</html>

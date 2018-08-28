@@ -1,15 +1,62 @@
-var _util = (function(mod) {
-    mod.config = {
+define(["layer", "axios"], function (layer, axios) {
+    var _util = {};
+    _util.config = {
         API: '//api.dev.aimoge.com/v1',
         BASE_URL: window.location.host,
-        PAY: '//pay.' + window.location.host.substring(2) + '/v1',
+        PAY: '//pay.dev.aimoge.com/v1',
         PREFIX_API: '//api.aimoge.com/v1'
-    }
-    mod.init = function() {
-        mod.dateFormat();
-        return mod;
-    }
-    mod.showErrorTip = function(txt) {
+    };
+    _util.init = function () {
+        _util.initAxios();
+        _util.dateFormat();
+        if (_util.config.BASE_URL.indexOf('dev') > -1) {
+            _util.config.API = '//api.dev.aimoge.com/v1';
+            _util.config.PAY = '//pay.dev.aimoge.com/v1';
+        } else {
+            _util.config.API = '//api.aimoge.com/v1';
+            _util.config.PAY = '//pay.aimoge.com/v1';
+        }
+    };
+    _util.initAxios = function () {
+        axios.defaults.baseURL = _util.config.API;
+        axios.defaults.withCredentials = true;
+        axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
+        axios.interceptors.request.use(function (config) {
+            _util.showLoading('加载中...');
+            return config;
+        }, function (error) {
+            return Promise.reject(error);
+        });
+        axios.interceptors.response.use(function (res) {
+            if (res.data != 0) {
+                if (res.data.msg) _util.showErrorTip(res.data.msg);
+            }
+            return res.data
+        }, function (error) {
+            return Promise.resolve(error.response);
+        })
+    };
+    _util.axios = function (opts, success) {
+        var httpDefaultOpts = { //http 默认配置
+            method: opts.method ? opts.method.toUpperCase() : 'GET',
+            url: opts.url,
+            timeout: 10000,
+            data: opts.data || null
+        }
+
+        if (opts.method == 'GET') {
+            delete httpDefaultOpts.data
+        }
+
+        axios(httpDefaultOpts).then(function (res) {
+            _util.hideLoading();
+            success(res);
+        }).catch(function (err) {
+            _util.hideLoading();
+            _util.showErrorTip('网络异常,请稍后重试')
+        })
+    };
+    _util.showErrorTip = function (txt) {
         if (!txt) return false;
         var mgAlert = document.getElementById("mgAlert");
         mgAlert.style.top = '35%';
@@ -19,14 +66,31 @@ var _util = (function(mod) {
             clearTimeout(window.errorTimer);
             window.errorTimer = null;
         }
-        window.errorTimer = setTimeout(function() {
+        window.errorTimer = setTimeout(function () {
             mgAlert.setAttribute('class', 'mgAlert center fixed f14');
-            setTimeout(function() {
+            setTimeout(function () {
                 mgAlert.style.top = '-35%';
             }, 300);
         }, 2000);
     }
-    mod.ajaxData = function(method, url, data, callback) {
+    _util.showLoading = function (text) {
+        layer.open({
+            type: 2,
+            content: text || ""
+        });
+    };
+    _util.hideLoading = function () {
+        layer.closeAll();
+    };
+    _util.showTips = function (text) {
+        layer.open({
+            content: text,
+            anim: false,
+            time: 4,
+            skin: 'msg'
+        });
+    };
+    _util.ajaxData = function (method, url, data, callback) {
         $.ajax({
             type: method || 'get',
             data: data,
@@ -35,18 +99,18 @@ var _util = (function(mod) {
             xhrFields: {
                 withCredentials: true
             },
-            success: function(data) {
+            success: function (data) {
                 if (callback) callback(data);
             },
-            error: function(data) {
-                mod.showErrorTip(data.msg);
+            error: function (data) {
+                _util.showErrorTip(data.msg);
             }
         })
-    }
-    mod.isWeixin = function() {
+    };
+    _util.isWeixin = function () {
         return window.navigator.userAgent.indexOf("MicroMessenger") > 0;
-    }
-    mod.getUrlPrmt = function(url) {
+    };
+    _util.getUrlPrmt = function (url) {
         url = url ? url : window.location.href;
         var _pa = url.substring(url.indexOf('?') + 1),
             _arrS = _pa.split('&'),
@@ -61,9 +125,9 @@ var _util = (function(mod) {
             _rs[name] = value;
         }
         return _rs;
-    }
-    mod.dateFormat = function() {
-        Date.prototype.format = function(format) {
+    };
+    _util.dateFormat = function () {
+        Date.prototype.format = function (format) {
             var date = {
                 "M+": this.getMonth() + 1,
                 "d+": this.getDate(),
@@ -84,11 +148,11 @@ var _util = (function(mod) {
             }
             return format;
         }
-    }
-    mod.initJWeiXin = function() {
-        if (window.wxid && mod.isWeixin()) {
-            mod.ajaxData('GET', mod.config.API + '/weixin/' + window.wxid + '/config?url=' + encodeURIComponent(window.wxUrl || window.location.href), null,
-                function(data) {
+    };
+    _util.initJWeiXin = function () {
+        if (window.wxid && _util.isWeixin()) {
+            _util.ajaxData('GET', _util.config.API + '/weixin/' + window.wxid + '/config?url=' + encodeURIComponent(window.wxUrl || window.location.href), null,
+                function (data) {
                     if (data && data.status) {
                         wx.config({
                             debug: true,
@@ -100,11 +164,13 @@ var _util = (function(mod) {
                         });
                     }
                 },
-                function(err) {
-                    mod.showErrorTip('网络异常,该页面将无法正常执行！');
+                function (err) {
+                    _util.showErrorTip('网络异常,该页面将无法正常执行！');
                 })
         }
-    }
-    mod.init();
-    return mod;
-})(window._util || {})
+    };
+
+    _util.init();
+
+    return _util;
+});

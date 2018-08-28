@@ -1,0 +1,17 @@
+{{each items item index}}
+<li>
+    <p>
+        <span class="gray">作品：</span>
+        <span>{{item.category}}</span>
+    </p>
+    <p>
+        <span class="gray">日期：</span>
+        <span>{{item.start_date.substring(0, 10)}}~{{item.end_date.substring(0, 10) }}</span>
+    </p>
+    <p>
+        <span class="gray">状态 ：</span>
+        <span class="blue">{{item.value}}</span>
+    </p>
+    <div class="aw-r"></div>
+</li>
+{{/each}}

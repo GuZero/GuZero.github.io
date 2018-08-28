@@ -15,23 +15,23 @@
             background-color: #f8f8f8;
             box-sizing: border-box;
         }
-        
+
         .container {
-            padding-top: 104px;
+            /* padding-top: 104px; */
             padding-bottom: 20px;
         }
-        
+
         .page_hd {
             width: 100%;
             top: 14px;
             left: 0;
             z-index: 2;
         }
-        
+
         .page_hd>div {
             background-color: #fff;
         }
-        
+
         .item {
             display: block;
             width: 100%;
@@ -45,19 +45,19 @@
             line-height: 28px;
             position: relative;
         }
-        
+
         .item p {
             display: flex;
         }
-        
+
         .item p label {
             width: 30%;
         }
-        
+
         .item p span {
             width: 70%;
         }
-        
+
         .item .right-arrow-icon {
             height: 18px;
             width: 18px;
@@ -65,6 +65,57 @@
             top: 50%;
             margin-top: -18px;
             right: 10px;
+        }
+
+        /* 2018-7-18 */
+
+        .weui-navbar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+        }
+
+        .groupbuy-box {
+            display: none;
+        }
+
+        .groupbuy-box .container {
+            padding-top: 50px;
+        }
+
+        .groupbuy-box .item {}
+
+        .groupbuy-box .item-title {
+            justify-content: space-between;
+        }
+
+        .groupbuy-box .item-title span {
+            font-weight: 600;
+        }
+
+        .groupbuy-box .item-title label {
+            text-align: right;
+            color: #ffb140;
+        }
+
+        .groupbuy-box .item {
+            padding: 0;
+            padding-left: 16px;
+        }
+
+        .groupbuy-box .item p {
+            border-bottom: 1px solid #f2f2f2;
+            padding: 6px 0;
+            padding-right: 16px;
+        }
+
+        .groupbuy-box .item p:last-child {
+            border: 0;
+        }
+
+        .groupbuy-box .item-btn a {
+            margin-right: 0;
         }
     </style>
 </head>
@@ -74,138 +125,238 @@
     <div id="sysLoading" class="sysLoading fixed">
         <i class="ion-loading-c"></i>
     </div>
-    <div class="container">
-        <div class="page_hd fixed">
-            <div class="weui-cell weui-cell_select weui-cell_select-after">
-                <div class="weui-cell__hd">
-                    <label for="" class="weui-label">终端选择</label>
+    <div class="page navbar js_show">
+        <div class="page__bd" style="height: 100%;">
+            <div class="weui-tab">
+                <div class="weui-navbar">
+                    <div class="weui-navbar__item weui-bar__item_on" data-type=0>
+                        柜机上下货
+                    </div>
+                    <div class="weui-navbar__item" data-type=1>
+                        预售上下货
+                    </div>
                 </div>
-                <div class="weui-cell__bd">
-                    <select class="weui-select" id="terminal">
-                        <option value="all">全部</option>
-                        <option value="2">其他</option>
-                        <option value="3">2</option>
-                    </select>
+                <div class="weui-tab__panel terminal-box">
+                    <div class="container">
+                        <div class="page_hd">
+                            <div class="weui-cell weui-cell_select weui-cell_select-after">
+                                <div class="weui-cell__hd">
+                                    <label for="" class="weui-label">终端选择</label>
+                                </div>
+                                <div class="weui-cell__bd">
+                                    <select class="weui-select" id="terminal">
+                                        <option value="all">全部</option>
+                                        <option value="2">其他</option>
+                                        <option value="3">2</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="weui-cell">
+                                <div class="weui-cell__hd">
+                                    <label for="" class="weui-label">时间选择</label>
+                                </div>
+                                <div class="weui-cell__bd">
+                                    <input class="weui-input" type="date" value="" id="time">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="page-bd">
+                            <a href="javascript:;" class="item">
+                                <p>
+                                    <label for="">终端名称：</label>
+                                    <span>1865园区</span>
+                                </p>
+                                <p>
+                                    <label for="">上下货时间：</label>
+                                    <span>2017-9-19</span>
+                                </p>
+                                <p>
+                                    <label for="">上架数量：</label>
+                                    <span>22</span>
+                                </p>
+                                <p>
+                                    <label for="">下架数量：</label>
+                                    <span>22</span>
+                                </p>
+                                <div class="right-arrow-icon">
+                                    <img src="//img.aimoge.com/Fith_CK39HbF-3CqSrMOYnu554FT" alt="right-arrow-icom">
+                                </div>
+                            </a>
+                            <a href="javascript:;" class="item">
+                                <p>
+                                    <label for="">终端名称：</label>
+                                    <span>1865园区</span>
+                                </p>
+                                <p>
+                                    <label for="">上下货时间：</label>
+                                    <span>2017-9-19</span>
+                                </p>
+                                <p>
+                                    <label for="">上架数量：</label>
+                                    <span>22</span>
+                                </p>
+                                <p>
+                                    <label for="">下架数量：</label>
+                                    <span>22</span>
+                                </p>
+                                <div class="right-arrow-icon">
+                                    <img src="//img.aimoge.com/Fith_CK39HbF-3CqSrMOYnu554FT" alt="right-arrow-icom">
+                                </div>
+                            </a>
+                            <a href="javascript:;" class="item">
+                                <p>
+                                    <label for="">终端名称：</label>
+                                    <span>1865园区</span>
+                                </p>
+                                <p>
+                                    <label for="">上下货时间：</label>
+                                    <span>2017-9-19</span>
+                                </p>
+                                <p>
+                                    <label for="">上架数量：</label>
+                                    <span>22</span>
+                                </p>
+                                <p>
+                                    <label for="">下架数量：</label>
+                                    <span>22</span>
+                                </p>
+                                <div class="right-arrow-icon">
+                                    <img src="//img.aimoge.com/Fith_CK39HbF-3CqSrMOYnu554FT" alt="right-arrow-icom">
+                                </div>
+                            </a>
+                            <a href="javascript:;" class="item">
+                                <p>
+                                    <label for="">终端名称：</label>
+                                    <span>1865园区</span>
+                                </p>
+                                <p>
+                                    <label for="">上下货时间：</label>
+                                    <span>2017-9-19</span>
+                                </p>
+                                <p>
+                                    <label for="">上架数量：</label>
+                                    <span>22</span>
+                                </p>
+                                <p>
+                                    <label for="">下架数量：</label>
+                                    <span>22</span>
+                                </p>
+                                <div class="right-arrow-icon">
+                                    <img src="//img.aimoge.com/Fith_CK39HbF-3CqSrMOYnu554FT" alt="right-arrow-icom">
+                                </div>
+                            </a>
+                            <a href="javascript:;" class="item">
+                                <p>
+                                    <label for="">终端名称：</label>
+                                    <span>1865园区</span>
+                                </p>
+                                <p>
+                                    <label for="">上下货时间：</label>
+                                    <span>2017-9-19</span>
+                                </p>
+                                <p>
+                                    <label for="">上架数量：</label>
+                                    <span>22</span>
+                                </p>
+                                <p>
+                                    <label for="">下架数量：</label>
+                                    <span>22</span>
+                                </p>
+                                <div class="right-arrow-icon">
+                                    <img src="//img.aimoge.com/Fith_CK39HbF-3CqSrMOYnu554FT" alt="right-arrow-icom">
+                                </div>
+                            </a>
+                            <div id="mgLoadingWarp" class="mgLoadingWarp rel">
+                                <span>
+                                    <i class="icon ion-loading-c rel"></i>加载中...</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="weui-cell">
-                <div class="weui-cell__hd">
-                    <label for="" class="weui-label">时间选择</label>
+                <div class="weui-tab__panel groupbuy-box">
+                    <div class="container">
+                        <div class="page_hd">
+                            <div class="weui-cell weui-cell_select weui-cell_select-after">
+                                <div class="weui-cell__hd">
+                                    <label for="" class="weui-label">小区选择</label>
+                                </div>
+                                <div class="weui-cell__bd">
+                                    <select class="weui-select" id="community">
+                                        <option value="all">全部</option>
+                                        <option value="2">南方花园</option>
+                                        <option value="3">1865创意产业园</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="page-bd">
+                            <div class="item">
+                                <p class="item-title">
+                                    <span>回家吃饭团</span>
+                                    <label>配送中</label>
+                                </p>
+                                <p>已入柜包裹数/总包裹数：100/100</p>
+                                <p class="item-btn">
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_primary">查看详情</a>
+                                </p>
+                            </div>
+                            <div class="item">
+                                <p class="item-title">
+                                    <span>回家吃饭团</span>
+                                    <label>配送中</label>
+                                </p>
+                                <p>已入柜包裹数/总包裹数：100/100</p>
+                                <p class="item-btn">
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_primary">查看详情</a>
+                                </p>
+                            </div>
+                            <div class="item">
+                                <p class="item-title">
+                                    <span>回家吃饭团</span>
+                                    <label>配送中</label>
+                                </p>
+                                <p>已入柜包裹数/总包裹数：100/100</p>
+                                <p class="item-btn">
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_primary">查看详情</a>
+                                </p>
+                            </div>
+                            <div class="item">
+                                <p class="item-title">
+                                    <span>回家吃饭团</span>
+                                    <label>配送中</label>
+                                </p>
+                                <p>已入柜包裹数/总包裹数：100/100</p>
+                                <p class="item-btn">
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_primary">查看详情</a>
+                                </p>
+                            </div>
+                            <div class="item">
+                                <p class="item-title">
+                                    <span>回家吃饭团</span>
+                                    <label>配送中</label>
+                                </p>
+                                <p>已入柜包裹数/总包裹数：100/100</p>
+                                <p class="item-btn">
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_primary">查看详情</a>
+                                </p>
+                            </div>
+                            <div class="item">
+                                <p class="item-title">
+                                    <span>回家吃饭团</span>
+                                    <label>配送中</label>
+                                </p>
+                                <p>已入柜包裹数/总包裹数：100/100</p>
+                                <p class="item-btn">
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_primary">查看详情</a>
+                                </p>
+                            </div>
+                        </div>
+                        <div id="mgLoadingWarp" class="mgLoadingWarp rel">
+                            <span>
+                                <i class="icon ion-loading-c rel"></i>加载中...</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="weui-cell__bd">
-                    <input class="weui-input" type="date" value="" id="time">
-                </div>
-            </div>
-        </div>
-        <div class="page-bd">
-            <a href="javascript:;" class="item">
-                <p>
-                    <label for="">终端名称：</label>
-                    <span>1865园区</span>
-                </p>
-                <p>
-                    <label for="">上下货时间：</label>
-                    <span>2017-9-19</span>
-                </p>
-                <p>
-                    <label for="">上架数量：</label>
-                    <span>22</span>
-                </p>
-                <p>
-                    <label for="">下架数量：</label>
-                    <span>22</span>
-                </p>
-                <div class="right-arrow-icon">
-                    <img src="//img.aimoge.com/Fith_CK39HbF-3CqSrMOYnu554FT" alt="right-arrow-icom">
-                </div>
-            </a>
-            <a href="javascript:;" class="item">
-                <p>
-                    <label for="">终端名称：</label>
-                    <span>1865园区</span>
-                </p>
-                <p>
-                    <label for="">上下货时间：</label>
-                    <span>2017-9-19</span>
-                </p>
-                <p>
-                    <label for="">上架数量：</label>
-                    <span>22</span>
-                </p>
-                <p>
-                    <label for="">下架数量：</label>
-                    <span>22</span>
-                </p>
-                <div class="right-arrow-icon">
-                    <img src="//img.aimoge.com/Fith_CK39HbF-3CqSrMOYnu554FT" alt="right-arrow-icom">
-                </div>
-            </a>
-            <a href="javascript:;" class="item">
-                <p>
-                    <label for="">终端名称：</label>
-                    <span>1865园区</span>
-                </p>
-                <p>
-                    <label for="">上下货时间：</label>
-                    <span>2017-9-19</span>
-                </p>
-                <p>
-                    <label for="">上架数量：</label>
-                    <span>22</span>
-                </p>
-                <p>
-                    <label for="">下架数量：</label>
-                    <span>22</span>
-                </p>
-                <div class="right-arrow-icon">
-                    <img src="//img.aimoge.com/Fith_CK39HbF-3CqSrMOYnu554FT" alt="right-arrow-icom">
-                </div>
-            </a>
-            <a href="javascript:;" class="item">
-                <p>
-                    <label for="">终端名称：</label>
-                    <span>1865园区</span>
-                </p>
-                <p>
-                    <label for="">上下货时间：</label>
-                    <span>2017-9-19</span>
-                </p>
-                <p>
-                    <label for="">上架数量：</label>
-                    <span>22</span>
-                </p>
-                <p>
-                    <label for="">下架数量：</label>
-                    <span>22</span>
-                </p>
-                <div class="right-arrow-icon">
-                    <img src="//img.aimoge.com/Fith_CK39HbF-3CqSrMOYnu554FT" alt="right-arrow-icom">
-                </div>
-            </a>
-            <a href="javascript:;" class="item">
-                <p>
-                    <label for="">终端名称：</label>
-                    <span>1865园区</span>
-                </p>
-                <p>
-                    <label for="">上下货时间：</label>
-                    <span>2017-9-19</span>
-                </p>
-                <p>
-                    <label for="">上架数量：</label>
-                    <span>22</span>
-                </p>
-                <p>
-                    <label for="">下架数量：</label>
-                    <span>22</span>
-                </p>
-                <div class="right-arrow-icon">
-                    <img src="//img.aimoge.com/Fith_CK39HbF-3CqSrMOYnu554FT" alt="right-arrow-icom">
-                </div>
-            </a>
-            <div id="mgLoadingWarp" class="mgLoadingWarp rel">
-                <span>
-                    <i class="icon ion-loading-c rel"></i>加载中...</span>
             </div>
         </div>
     </div>
@@ -219,7 +370,15 @@
             time_val: '',
             aPages: [],
             page: '',
-            aItems: []
+            aItems: [],
+            community_value: '',
+            group_buy: {
+                scroll_load_loading: false,
+                scroll_load_end: false,
+                aPages: [],
+                page: '',
+                aItems: [],
+            }
         }
 
         function initDate() {
@@ -233,6 +392,16 @@
                     return false;
                 } else {
                     getInventoryInfo();
+                }
+            }
+        }
+
+        function handleScrollGroupBuy() {
+            if (($(document).scrollTop() + window.innerHeight) >= document.body.scrollHeight - 1) {
+                if (data.group_buy.aItems.length < 16) {
+                    return false;
+                } else {
+                    getGroupBuyInfo();
                 }
             }
         }
@@ -261,9 +430,10 @@
             if (data.scroll_load_end) {
                 return false;
             }
+            console.warn
             isShowLoading(isFirst, true);
             _util.ajaxData('GET', '请求url', null,
-                function(res) {
+                function (res) {
                     isShowLoading(isFirst);
                     if (res.status == 0) {
                         if (data.aPages.indexOf(page) >= 0) return false;
@@ -277,21 +447,68 @@
                         if (res.msg) _util.showErrorTip(res.msg);
                     }
                 },
-                function(err) {
+                function (err) {
                     isShowLoading(isFirst);
                     _util.showErrorTip('您的网络可能出了点问题:(');
                 })
         }
-        $(document).ready(function() {
+        // 2018-7-18
+        function getGroupBuyInfo() {
+            var data = data.group_buy,
+                page = data.page;
+            if (data.scroll_load_loading) {
+                return false;
+            }
+            if (data.scroll_load_end) {
+                return false;
+            }
+            isShowLoading(0, true);
+            _util.ajaxData('GET', '请求url', null,
+                function (res) {
+                    isShowLoading(isFirst);
+                    if (res.status == 0) {
+                        if (data.aPages.indexOf(page) >= 0) return false;
+                        data.aPages.push(page);
+                        data.page = res.data.next_cursor || '';
+                        data.aItems = data.aItems.concat(res.data.terminals);
+                        if (res.data.terminals && res.data.terminals.length < data.numberPage) {
+                            data.scroll_load_end = true;
+                        }
+                    } else {
+                        if (res.msg) _util.showErrorTip(res.msg);
+                    }
+                },
+                function (err) {
+                    isShowLoading();
+                    _util.showErrorTip('您的网络可能出了点问题:(');
+                })
+        }
+        $(document).ready(function () {
             $(document).on('scroll', handleScroll);
             initDate();
-            $('#terminal').change(function() {
+            $('#terminal').change(function () {
                 data.terminal_val = $(this).val();
             })
-            $('#time').change(function() {
+            $('#time').change(function () {
                 data.time_val = $(this).val();
             })
-
+            $('#community').change(function () {
+                data.community_value = $(this).val();
+            })
+            // 2018-7-18
+            $('.weui-navbar__item').click(function () {
+                $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass(
+                    'weui-bar__item_on');
+                if ($(this).data('type') === 0) {
+                    $('.terminal-box').show();
+                    $('.groupbuy-box').hide();
+                    $(document).off('scroll', handleScrollGroupBuy).on('scroll', handleScroll);
+                } else {
+                    $('.terminal-box').hide();
+                    $('.groupbuy-box').show();
+                    $(document).off('scroll', handleScroll).on('scroll', handleScrollGroupBuy);
+                }
+            })
         })
     </script>
 </body>

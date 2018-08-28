@@ -1,0 +1,15 @@
+[2018-07-10T18:18:41.801] [ERROR] cheese - ikcamp
+[2018-07-10T18:18:41.802] [ERROR] cheese - ikcamp
+[2018-07-10T18:18:41.804] [INFO] cheese - 响应时间为0.03s
+[2018-07-10T18:20:52.835] [ERROR] cheese - ikcamp
+[2018-07-10T18:20:52.837] [ERROR] cheese - ikcamp
+[2018-07-10T18:20:52.839] [INFO] cheese - 响应时间为0.031s
+[2018-07-10T18:25:10.824] [ERROR] cheese - ikcamp
+[2018-07-10T18:25:10.825] [ERROR] cheese - ikcamp
+[2018-07-10T18:25:10.825] [INFO] cheese - 响应时间为0.003s
+[2018-07-10T18:30:00.377] [ERROR] cheese - {"projectName":"koa2-tutorial","serverIp":"172.16.0.153","method":"GET","url":"/text","host":"127.0.0.1:3000","message":"ikcamp","userAgent":"Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36"}
+[2018-07-10T18:30:00.380] [ERROR] cheese - {"projectName":"koa2-tutorial","serverIp":"172.16.0.153","method":"GET","url":"/text","host":"127.0.0.1:3000","message":"ikcamp","userAgent":"Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36"}
+[2018-07-10T18:30:00.382] [INFO] cheese - {"projectName":"koa2-tutorial","serverIp":"172.16.0.153","method":"GET","url":"/text","host":"127.0.0.1:3000","message":{"responseTime":"响应时间为0.034s"},"userAgent":"Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36"}
+[2018-07-10T18:34:10.990] [ERROR] cheese - {"projectName":"koa2-tutorial","serverIp":"172.16.0.153","method":"GET","url":"/text","host":"127.0.0.1:3000","message":"ikcamp","userAgent":"Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36"}
+[2018-07-10T18:34:10.992] [ERROR] cheese - {"projectName":"koa2-tutorial","serverIp":"172.16.0.153","method":"GET","url":"/text","host":"127.0.0.1:3000","message":"ikcamp","userAgent":"Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36"}
+[2018-07-10T18:34:10.994] [INFO] cheese - {"projectName":"koa2-tutorial","serverIp":"172.16.0.153","method":"GET","url":"/text","host":"127.0.0.1:3000","message":{"responseTime":"响应时间为0.032s"},"userAgent":"Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36"}
