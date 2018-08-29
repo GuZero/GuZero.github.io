@@ -14,9 +14,10 @@ export default {
 body {
   height: 100vh;
   width: 100vw;
-  /* background: url("//img.aimoge.com/Fv0KzRYzrg3_qzG1b0ujiM39hIds") no-repeat; */
+  background: url("//img.aimoge.com/llxjn1k6oSSnCjlQUvQOi184SVoe") no-repeat;
   background-size: 100% 100%;
   position: relative;
+  overflow: hidden;
 }
 #app {
   width: 100vw;

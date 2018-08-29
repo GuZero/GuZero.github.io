@@ -17,7 +17,6 @@ export default {
     initEcharts() {
       let myChart = echarts.init(document.getElementById("line_chart_2"));
       let option = {
-        backgroundColor: "#1f2387",
         color: ["#fff"],
         tooltip: {
           trigger: "axis",
@@ -139,7 +138,7 @@ export default {
 
 <style lang="scss" scoped>
 #line_chart_2 {
-  width: 490px;
-  height: 298px;
+  width: 100%;
+  height: 100%;
 }
 </style>

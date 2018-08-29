@@ -1,0 +1,119 @@
+.loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #0f2a42;
+  .img {
+    width: 10%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-top: -5%;
+    margin-left: -5%;
+  }
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+  padding: 1.29% 1.33%;
+  .title-box {
+    height: 2.77vh;
+    background: url("//img.aimoge.com/FjdYKmssnjMEcz1Q03FPr3cUD6aS") no-repeat;
+    background-size: 100% 100%;
+    margin-bottom: 10px;
+  }
+  .title-font {
+    font-size: 18px;
+    font-weight: 600;
+    color: #94c9ff;
+  }
+  .title-font-1 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #9afff9;
+  }
+  .title-font-2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #94c9ff;
+  }
+}
+
+.left-box {
+  width: 24%;
+  height: 100%;
+  .top-box {
+    height: 33%;
+    .content-box {
+      padding: 15px;
+      text-align: center;
+      background: url("//img.aimoge.com/FiW9IqKa77_jeYTNWKLXcUeg-Mdm") no-repeat;
+      background-size: 100% 100%;
+      div {
+        border-bottom: 1px solid #fdfdff;
+      }
+      p {
+        margin-top: 4px;
+      }
+      p span:first-child {
+        color: #4eccff
+      }
+      span {
+        width: 33.33%;
+        text-align: center;
+      }
+    }
+  }
+  .left-center-box {
+    height: 33%;
+    margin-top: 30px;
+    .content-box {
+      background: url("//img.aimoge.com/FiW9IqKa77_jeYTNWKLXcUeg-Mdm") no-repeat;
+      background-size: 100% 100%;
+      width: 100%; //   height: 26.66vh;
+      height: 90%;
+    }
+  }
+  .left-bottom-box {
+    height: 32%;
+    .bottom-item {
+      background: url("//img.aimoge.com/FjtJlTzcOu3XqWEfd0KJ0puz4Uu7") no-repeat;
+      background-size: 100% 100%;
+      margin-top: 6%;
+      width: 100%;
+      height: 40%;
+      .item-title {
+        width: 100%;
+        text-align: center;
+        margin-top: -8px;
+      }
+    }
+  }
+}
+
+.center-box {
+  width: 52%;
+  height: 100%;
+}
+
+.right-box {
+  width: 24%;
+  height: 100%;
+  .top-box,
+  .right-center-box,
+  .right-bottom-box {
+    height: 33%;
+    .title-box {
+      padding-left: 10px;
+    }
+    .content-box {
+      background: url("//img.aimoge.com/FiW9IqKa77_jeYTNWKLXcUeg-Mdm") no-repeat;
+      background-size: 100% 100%;
+      width: 100%;
+      height: 82%;
+    }
+  }
+}

@@ -16,7 +16,7 @@ export default {
   methods: {
     initEcharts() {
       let myChart = echarts.init(document.getElementById("pie_chart_1"));
-      let  data = [
+      let data = [
         {
           value: 26,
           name: "小炒肉",
@@ -151,22 +151,23 @@ export default {
       }
 
       let option = {
-        // backgroundColor: "#000",
         tooltip: {
           trigger: "item",
           formatter: "{b}"
         },
         avoidLabelOverlap: false,
-
         legend: {
           orient: "vertical",
-          top: "center",
-          right: 0,
+          top: "10%",
+          right: "10%",
+          itemHeight:6,
+          itemWidth:6,
+          padding:0,
           data: data_name,
+          icon: "circle",
           textStyle: {
-            color: "#000",
-            fontWeight: "normal",
-            fontFamily: "宋体"
+            color: "#fff",
+            fontsize:12
           }
         },
         series: [
@@ -174,6 +175,7 @@ export default {
             name: "销售额占比",
             roseType: "radius",
             type: "pie",
+            center:['20%','50%'],
             data: data,
             label: {
               show: false
@@ -184,7 +186,6 @@ export default {
           }
         ]
       };
-
       myChart.setOption(option);
     }
   }
@@ -192,8 +193,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#pie_chart_1 {
-  width: 900px;
-  height: 400px;
+#pie_chart_1{
+  width: 100%;
+  height: 100%;
 }
 </style>

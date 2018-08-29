@@ -1,11 +1,12 @@
 <template>
-  <div id="pie_chart_1"></div>
+  <div id="pie_chart_2"></div>
 </template>
 
 <script>
 const echarts = require("echarts/lib/echarts");
 require("echarts/lib/component/tooltip");
 require("echarts/lib/chart/pie");
+require("echarts/lib/component/title");
 export default {
   data() {
     return {};
@@ -15,154 +16,106 @@ export default {
   },
   methods: {
     initEcharts() {
-      let myChart = echarts.init(document.getElementById("pie_chart_1"));
-      let  data = [
+      let myChart = echarts.init(document.getElementById("pie_chart_2"));
+      //  颜色集合
+      let colorList = [
+        "#9ef13d",
+        "#3df36b",
+        "#3bf19e",
+        "#40fec0",
+        "#40ffdd",
+        "#40f8ff",
+        "#42d3ff",
+        "#41d2ff",
+        "#3dd4ff",
+        "#3e48ff"
+      ];
+
+      // 总和
+      let total = {
+        value: "昨日销售额",
+        name: "12,000"
+      };
+
+      let data = [
         {
-          value: 26,
-          name: "小炒肉",
-          sum: 2600,
-          itemStyle: {
-            normal: {
-              color: "#9ef13d"
-            }
-          }
+          value: 35,
+          sum: 3500,
+          name: "秦淮区"
         },
         {
-          value: 16.7,
-          name: "红烧狮头",
-          sum: 1670,
-          itemStyle: {
-            normal: {
-              color: "#3df36b"
-            }
-          }
+          value: 15,
+          sum: 1500,
+          name: "江宁区"
         },
         {
-          value: 12.4,
-          name: "酸菜鱼",
-          sum: 1240,
-          itemStyle: {
-            normal: {
-              color: "#3bf19e"
-            }
-          }
+          value: 25,
+          sum: 1500,
+          name: "雨花台区"
         },
         {
-          value: 12.2,
-          name: "新奇士橙",
-          sum: 1220,
-          itemStyle: {
-            normal: {
-              color: "#40fec0"
-            }
-          }
-        },
-        {
-          value: 8.4,
-          name: "小郑酥烧饼",
-          sum: 840,
-          itemStyle: {
-            normal: {
-              color: "#40ffdd"
-            }
-          }
-        },
-        {
-          value: 7.6,
-          name: "黑豆角烧鱼",
-          sum: 760,
-          itemStyle: {
-            normal: {
-              color: "#40f8ff"
-            }
-          }
-        },
-        {
-          value: 5.9,
-          name: "番茄炒蛋",
-          sum: 590,
-          itemStyle: {
-            normal: {
-              color: "#42d3ff"
-            }
-          }
-        },
-        {
-          value: 3.6,
-          name: "秘制鲜辣酱-特辣",
-          sum: 360,
-          itemStyle: {
-            normal: {
-              color: "#41d2ff"
-            }
-          }
-        },
-        {
-          value: 2.9,
-          name: "溧水草鸡蛋",
-          sum: 290,
-          itemStyle: {
-            normal: {
-              color: "#3dd4ff"
-            }
-          }
-        },
-        {
-          value: 2.2,
-          name: "徐想猕猴桃",
-          sum: 220,
-          itemStyle: {
-            normal: {
-              color: "#3ea3fd"
-            }
-          }
-        },
-        {
-          value: 1.7,
-          name: "迷你小菠萝",
-          sum: 170,
-          itemStyle: {
-            normal: {
-              color: "#407fff"
-            }
-          }
-        },
-        {
-          value: 0.4,
-          name: "吉林大米",
-          sum: 40,
-          itemStyle: {
-            normal: {
-              color: "#3e48ff"
-            }
-          }
+          value: 25,
+          sum: 2500,
+          name: "玄武区"
         }
       ];
       let data_name = [];
       for (let n in data) {
         data[n]["name"] =
           data[n]["name"] +
-          " " +
           data[n]["value"] +
           "%" +
-          "  ￥" +
+          "         ￥" +
           data[n]["sum"];
         data_name.push(data[n]["name"]);
       }
 
+      echarts.util.each(data, function(item, index) {
+        item.itemStyle = {
+          normal: {
+            color: colorList[index]
+          }
+        };
+      });
+
       let option = {
-        // backgroundColor: "#000",
         tooltip: {
           trigger: "item",
-          formatter: "{b}"
+          formatter: "{b}: {c} ({d}%)"
         },
-        avoidLabelOverlap: false,
-
+        backgroundColor: "#ffffff",
+        title: [
+          {
+            text: total.name,
+            left: "49%",
+            top: "46%",
+            textAlign: "center",
+            textBaseline: "middle",
+            textStyle: {
+              color: "#999",
+              fontWeight: "normal",
+              fontSize: 40
+            }
+          },
+          {
+            text: total.value,
+            left: "49%",
+            top: "56%",
+            textAlign: "center",
+            textBaseline: "middle",
+            textStyle: {
+              color: "#666",
+              fontWeight: "normal",
+              fontSize: 20
+            }
+          }
+        ],
         legend: {
           orient: "vertical",
-          top: "center",
-          right: 0,
+          bottom: 0,
+          right: "center",
           data: data_name,
+          icon: "circle",
           textStyle: {
             color: "#000",
             fontWeight: "normal",
@@ -171,20 +124,36 @@ export default {
         },
         series: [
           {
-            name: "销售额占比",
-            roseType: "radius",
+            hoverAnimation: false, //设置饼图默认的展开样式
+            radius: [60, 100],
+            name: "pie",
             type: "pie",
-            data: data,
+            selectedMode: "single",
+            selectedOffset: 16, //选中是扇区偏移量
+            clockwise: true,
+            startAngle: 90,
             label: {
-              show: false
+              normal: {
+                show: false
+              }
             },
             labelLine: {
-              show: false
-            }
+              normal: {
+                show: false
+              }
+            },
+            itemStyle: {
+              emphasis: {
+                borderWidth: 0,
+                shadowBlur: 5,
+                shadowOffsetX: 0,
+                shadowColor: "rgba(0, 0, 0, 0.2)"
+              }
+            },
+            data: data
           }
         ]
       };
-
       myChart.setOption(option);
     }
   }
@@ -192,8 +161,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#pie_chart_1 {
-  width: 900px;
-  height: 400px;
+#pie_chart_2 {
+  width: 300px;
+  height: 300px;
 }
 </style>
