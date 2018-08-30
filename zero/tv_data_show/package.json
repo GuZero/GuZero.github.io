@@ -13,7 +13,8 @@
     "axios": "^0.18.0",
     "echarts": "^4.1.0",
     "vue": "^2.5.2",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "vue-seamless-scroll": "^1.1.16"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

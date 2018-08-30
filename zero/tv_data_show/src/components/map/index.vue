@@ -237,7 +237,7 @@ export default {
 
 <style lang="scss" scoped>
 #main {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
 }
 </style>

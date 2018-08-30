@@ -19,44 +19,80 @@ export default {
       let myChart = echarts.init(document.getElementById("pie_chart_2"));
       //  颜色集合
       let colorList = [
-        "#9ef13d",
-        "#3df36b",
-        "#3bf19e",
-        "#40fec0",
+        "#9ef13c",
+        "#3cf16b",
+        "#3cf19a",
+        "#40ffbe",
         "#40ffdd",
         "#40f8ff",
-        "#42d3ff",
-        "#41d2ff",
-        "#3dd4ff",
-        "#3e48ff"
+        "#40d4ff",
+        "#40a3ff",
+        "#407eff",
+        "#405bff",
+        "#4045ff",
+        "#653dfc"
       ];
 
       // 总和
       let total = {
-        value: "昨日销售额",
-        name: "12,000"
+        value: "小站总数量",
+        name: "1000"
       };
-
       let data = [
         {
-          value: 35,
-          sum: 3500,
+          value: 4,
+          sum: 400,
+          name: "玄武区"
+        },
+        {
+          value: 6,
+          sum: 600,
           name: "秦淮区"
+        },
+        {
+          value: 9,
+          sum: 900,
+          name: "鼓楼区"
         },
         {
           value: 15,
           sum: 1500,
-          name: "江宁区"
+          name: "建邺区"
         },
         {
-          value: 25,
-          sum: 1500,
+          value: 21,
+          sum: 2100,
+          name: "栖霞区"
+        },
+        {
+          value: 10,
+          sum: 1000,
           name: "雨花台区"
+        },
+        {
+          value: 3,
+          sum: 300,
+          name: "浦口区"
         },
         {
           value: 25,
           sum: 2500,
-          name: "玄武区"
+          name: "江宁区"
+        },
+        {
+          value: 5,
+          sum: 500,
+          name: "六合区"
+        },
+        {
+          value: 10,
+          sum: 1000,
+          name: "溧水区"
+        },
+        {
+          value: 10,
+          sum: 1000,
+          name: "高淳区"
         }
       ];
       let data_name = [];
@@ -83,49 +119,50 @@ export default {
           trigger: "item",
           formatter: "{b}: {c} ({d}%)"
         },
-        backgroundColor: "#ffffff",
         title: [
           {
             text: total.name,
-            left: "49%",
-            top: "46%",
+            left: "48%",
+            top: "30%",
             textAlign: "center",
             textBaseline: "middle",
             textStyle: {
-              color: "#999",
+              color: "#fff",
               fontWeight: "normal",
-              fontSize: 40
+              fontSize: 12
             }
           },
           {
             text: total.value,
-            left: "49%",
-            top: "56%",
+            left: "48%",
+            top: "36%",
             textAlign: "center",
             textBaseline: "middle",
             textStyle: {
-              color: "#666",
+              color: "#fff",
               fontWeight: "normal",
-              fontSize: 20
+              fontSize: 12
             }
           }
         ],
         legend: {
           orient: "vertical",
-          bottom: 0,
+          bottom: 10,
           right: "center",
-          data: data_name,
+          data: data_name.slice(0, 4),
           icon: "circle",
+          itemHeight: 6,
+          itemWidth: 6,
           textStyle: {
-            color: "#000",
-            fontWeight: "normal",
-            fontFamily: "宋体"
+            color: "#fff",
+            fontsize: 12
           }
         },
         series: [
           {
             hoverAnimation: false, //设置饼图默认的展开样式
-            radius: [60, 100],
+            radius: ["40%", "60%"],
+            center: ["50%", "35%"],
             name: "pie",
             type: "pie",
             selectedMode: "single",
@@ -162,7 +199,7 @@ export default {
 
 <style lang="scss" scoped>
 #pie_chart_2 {
-  width: 300px;
-  height: 300px;
+  width: 100%;
+  height: 100%;
 }
 </style>

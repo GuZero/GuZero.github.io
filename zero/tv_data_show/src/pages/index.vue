@@ -81,7 +81,115 @@
 				</div>
 			</div>
 		</div>
-		<div class="center-box">
+		<div class="center-box flex rel">
+			<header class="abs flex flex-align-center flex-justify-center">
+				<div>
+					<p>云厨小站战略分布图</p>
+					<p class="f16">{{time}}</p>
+				</div>
+			</header>
+			<div class="center-left-box rel">
+				<div class="card-box">
+					<div class="f16">小站用户</div>
+					<div class="card-content">
+						<div class="flex flex-align-center">
+							<span class="icon"></span>
+							<span>用户总数：88888</span>
+						</div>
+						<div class="flex flex-align-center">
+							<span class="icon"></span>
+							<span>今日新增：666</span>
+						</div>
+					</div>
+				</div>
+				<div class="card-box">
+					<div class="f16">昨日数据</div>
+					<div class="card-content">
+						<div class="flex flex-align-center">
+							<span class="icon"></span>
+							<span>昨日订单数量：888</span>
+						</div>
+						<div class="flex flex-align-center">
+							<span class="icon"></span>
+							<span>昨日销售额：666</span>
+						</div>
+					</div>
+				</div>
+				<div class="msg-box">
+					<Msg></Msg>
+				</div>
+				<div class="progress-box abs">
+					<div class="progress-item rel">
+						<div class="item-title title-font-2 abs">点位开发进度</div>
+						<div class="item-content flex flex-justify-between flex-align-center">
+							<div>
+								<p>累计开发</p>
+								<p class="f16">666</p>
+							</div>
+							<div>
+								<p>今日开发</p>
+								<p class="f16">666</p>
+							</div>
+							<div>
+								<p>上周开发</p>
+								<p class="f16">666</p>
+							</div>
+						</div>
+					</div>
+					<div class="progress-item rel">
+						<div class="item-title title-font-2 abs">小站安装进度</div>
+						<div class="item-content flex flex-justify-between flex-align-center">
+							<div>
+								<p>累计安装</p>
+								<p class="f16">666</p>
+							</div>
+							<div>
+								<p>今日安装</p>
+								<p class="f16">666</p>
+							</div>
+							<div>
+								<p>上周安装</p>
+								<p class="f16">666</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="center-map-box rel">
+				<div class="map abs">
+					<div class="map-legend abs">
+						<div class="flex flex-align-center">
+							<span class="icon-1"></span>
+							<p>云厨1站分布</p>
+						</div>
+						<div class="flex flex-align-center">
+							<span class="icon-1 icon-1-bg"></span>
+							<p>云厨小站分布</p>
+						</div>
+					</div>
+					<Map></Map>
+				</div>
+			</div>
+			<div class="center-right-box rel">
+				<div class="tips-box">
+					<p>今日订单量：55555</p>
+					<p class="text-algin-center">同比昨日：4%</p>
+				</div>
+				<div class="tips-box">
+					<p>今日订单量：55555</p>
+					<p class="text-algin-center">同比昨日：4%</p>
+				</div>
+				<div class="pre-chart-box">
+					<div class="pre-chart rel">
+						<div class="item-title title-font-2 abs">各区小站数量占比</div>
+						<pie-chart3></pie-chart3>
+					</div>
+					<div class="pre-chart rel">
+						<div class="item-title title-font-2 abs">昨日各区小站数量占比</div>
+						<pie-chart2></pie-chart2>
+					</div>
+				</div>
+			</div>
 		</div>
 		<div class="right-box">
 			<div class="top-box">
@@ -120,7 +228,8 @@ import barChart2 from "../components/bar-chart2/index";
 export default {
   data() {
     return {
-      loading: false
+      loading: false,
+      time: new Date().format("yyyy-MM-dd hh:mm")
     };
   },
   components: {
@@ -138,6 +247,6 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
- @import './index'
+@import "./index";
 </style>
 

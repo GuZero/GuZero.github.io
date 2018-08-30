@@ -46,7 +46,7 @@
   width: 24%;
   height: 100%;
   .top-box {
-    height: 33%;
+    height: 33.33%;
     .content-box {
       padding: 15px;
       text-align: center;
@@ -54,9 +54,6 @@
       background-size: 100% 100%;
       div {
         border-bottom: 1px solid #fdfdff;
-      }
-      p {
-        margin-top: 4px;
       }
       p span:first-child {
         color: #4eccff
@@ -68,23 +65,23 @@
     }
   }
   .left-center-box {
-    height: 33%;
-    margin-top: 30px;
+    height: 33.33%;
+    margin-top: 20px;
     .content-box {
       background: url("//img.aimoge.com/FiW9IqKa77_jeYTNWKLXcUeg-Mdm") no-repeat;
       background-size: 100% 100%;
-      width: 100%; //   height: 26.66vh;
+      width: 100%;
       height: 90%;
     }
   }
   .left-bottom-box {
-    height: 32%;
+    height: 33.33%;
     .bottom-item {
       background: url("//img.aimoge.com/FjtJlTzcOu3XqWEfd0KJ0puz4Uu7") no-repeat;
       background-size: 100% 100%;
-      margin-top: 6%;
+      margin-top: 4%;
       width: 100%;
-      height: 40%;
+      height: 43%;
       .item-title {
         width: 100%;
         text-align: center;
@@ -97,6 +94,147 @@
 .center-box {
   width: 52%;
   height: 100%;
+  header {
+    width: 100%;
+    height: 8.7%;
+    text-align: center;
+    p:first-child {
+      font-size: 30px;
+      margin-bottom: 10px;
+    }
+  }
+  .center-left-box {
+    width: 34.72%;
+    height: 100%;
+    padding-top: 10%;
+    .card-box {
+      width: 55.52%;
+      height: 13.51%;
+      background: url('//img.aimoge.com/FgSxkoeeJdyHkclcqjFQnM5_hyTr');
+      background-size: 100% 100%;
+      margin-left: 50px;
+      margin-top: 70px;
+      color: #fff;
+      padding: 10px 16px;
+      .card-content {
+        div {
+          margin-top: 10px;
+          white-space: nowrap;
+        }
+      }
+      .icon {
+        width: 8px;
+        height: 8px;
+        background-color: #fff;
+        border-radius: 50%;
+        margin-right: 10px;
+      }
+    }
+    .msg-box {
+      width: 100%;
+      height: 8.51%;
+      overflow: hidden;
+      margin-left: 40px;
+      margin-top: 90px;
+      color: #fff;
+    }
+    .progress-box {
+      width: 105%;
+      height: 33.33%;
+      bottom: -2.6%;
+      left: 42px;
+      .progress-item {
+        background: url("//img.aimoge.com/FivNrk0jLR7TbibSi9oEf34vbuGi") no-repeat;
+        background-size: 100% 100%;
+        margin-top: 4%;
+        width: 100%;
+        height: 43%;
+        padding: 10px;
+        .item-title {
+          width: 100%;
+          text-align: center;
+          margin-top: -18px;
+        }
+        .item-content {
+          margin-top: 20px;
+          div {
+            width: 30%;
+            text-align: center;
+            line-height: 30px;
+            padding: 10px 0;
+            height: 100px;
+          }
+          .f16 {
+            font-weight: 600;
+          }
+        }
+      }
+    }
+  }
+  .center-map-box {
+    width: 41%;
+    height: 100%;
+    .map {
+      height: 74vh;
+      width: 100%;
+      top: 10%;
+      left: 0;
+      .map-legend {
+        left: -10%;
+        top: 26%;
+        .icon-1 {
+          width: 8px;
+          height: 8px;
+          background-color: #eb6100;
+          border-radius: 50%;
+          margin-right: 10px;
+        }
+        .icon-1-bg {
+          background-color: #8fc41e;
+        }
+      }
+    }
+  }
+  .center-right-box {
+    width: 24.28%;
+	height: 100%;
+	padding-top: 15%;
+    .tips-box {
+      width: 84%;
+      height: 6%;
+      margin-top: 40px;
+      background: url('//img.aimoge.com/Ft0RsJdqitfrUutCmUHdvqGPtTCB') no-repeat;
+      background-size: 100% 100%;
+      p {
+        font-size: 12px;
+      }
+      p:first-child {
+        padding: 4px;
+      }
+      .text-algin-center {
+        text-align: center;
+      }
+    }
+    .pre-chart-box {
+		width: 100%;
+		height: 60%;
+		position: absolute;
+		left: 0;
+		bottom: 8.2%;
+      .pre-chart {
+        margin-top: 20%;
+        width: 90%;
+        height: 50%;
+        background: url("//img.aimoge.com/FhG7uiGqvnBCnxe05dBIZbJznhgJ") no-repeat;
+        background-size: 100% 100%;
+        .item-title {
+          width: 100%;
+          text-align: center;
+          margin-top: -8px;
+        }
+      }
+    }
+  }
 }
 
 .right-box {
@@ -105,7 +243,7 @@
   .top-box,
   .right-center-box,
   .right-bottom-box {
-    height: 33%;
+    height: 33.33%;
     .title-box {
       padding-left: 10px;
     }
@@ -113,7 +251,11 @@
       background: url("//img.aimoge.com/FiW9IqKa77_jeYTNWKLXcUeg-Mdm") no-repeat;
       background-size: 100% 100%;
       width: 100%;
-      height: 82%;
+      height: 85%;
     }
+  }
+  .right-center-box,
+  .right-bottom-box {
+    margin-top: 10px;
   }
 }

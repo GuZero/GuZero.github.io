@@ -17,7 +17,7 @@ body {
   background: url("//img.aimoge.com/llxjn1k6oSSnCjlQUvQOi184SVoe") no-repeat;
   background-size: 100% 100%;
   position: relative;
-  overflow: hidden;
+  
 }
 #app {
   width: 100vw;
@@ -25,5 +25,6 @@ body {
   position: absolute;
   left: 0;
   top: 0;
+  overflow: hidden;
 }
 </style>
