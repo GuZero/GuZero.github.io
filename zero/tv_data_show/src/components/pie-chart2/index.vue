@@ -35,8 +35,8 @@ export default {
 
       // 总和
       let total = {
-        value: "小站总数量",
-        name: "1000"
+        value: "昨日销售额",
+        name: "1,1000"
       };
       let data = [
         {
@@ -160,7 +160,6 @@ export default {
         },
         series: [
           {
-            hoverAnimation: false, //设置饼图默认的展开样式
             radius: ["40%", "60%"],
             center: ["50%", "35%"],
             name: "pie",

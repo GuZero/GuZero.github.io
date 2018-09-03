@@ -160,7 +160,6 @@ export default {
         },
         series: [
           {
-            hoverAnimation: false, //设置饼图默认的展开样式
             radius: ["40%", "60%"],
             center: ["50%", "35%"],
             name: "pie",

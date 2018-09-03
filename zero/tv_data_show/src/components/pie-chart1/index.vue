@@ -149,33 +149,34 @@ export default {
           data[n]["sum"];
         data_name.push(data[n]["name"]);
       }
-
+      if (window.innerHeight < 1080) {
+        data_name = data_name.slice(0, 9);
+      }
       let option = {
         tooltip: {
           trigger: "item",
           formatter: "{b}"
         },
-        avoidLabelOverlap: false,
         legend: {
           orient: "vertical",
           top: "10%",
           right: "10%",
-          itemHeight:6,
-          itemWidth:6,
-          padding:0,
+          itemHeight: 6,
+          itemWidth: 6,
+          padding: 0,
           data: data_name,
           icon: "circle",
           textStyle: {
             color: "#fff",
-            fontsize:12
+            fontsize: 12
           }
         },
         series: [
           {
             name: "销售额占比",
-            roseType: "radius",
             type: "pie",
-            center:['20%','50%'],
+            radius: "55%",
+            center: ["25%", "50%"],
             data: data,
             label: {
               show: false
@@ -193,7 +194,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#pie_chart_1{
+#pie_chart_1 {
   width: 100%;
   height: 100%;
 }
