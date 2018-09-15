@@ -1,0 +1,5 @@
+{
+    "usingComponents": {
+        "ebox": "/components/ebox/index"
+    }
+}

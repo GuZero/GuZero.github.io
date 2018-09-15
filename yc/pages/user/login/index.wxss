@@ -1,0 +1,153 @@
+/* pages/login/index.wxss */
+page {
+  background-color: #ffffff;
+}
+
+.container {
+  background-color: #ffffff;
+}
+.code-dialog{
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.57);
+    z-index: 30000;  
+}
+.imgCode {
+    /*display: none;*/
+    width: 280px;
+    height: 180px;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    background-color: #fff;
+    left: 50%;
+    margin-left: -140px;
+    top: 20%;
+    padding: 23px 35px;
+    border-radius: 8px;
+    z-index: 30000;      
+}
+.closePic {
+    background: transparent;
+    width: 20px;
+    height: 20px;
+    top: 8px;
+    left: 15px;
+}
+.div {
+    width: 150px;
+    height: 50px;
+    margin: 0 auto;
+}
+.div img {
+    width: 150px;
+    height: 50px;
+    border: none;
+}
+.picode {
+    margin: 12px 0 0 0;
+    border-bottom: 1px #4d4d4d solid;
+    height: 28px;
+    line-height: 28px;
+}
+.reflush {
+    background: url(https://img.aimoge.com/FvsVMv1Umg5JsDSN0Uz-vZE2EYqs) center center no-repeat;
+    background-size: 12px;
+    width: 30px;
+    height: 50px;
+    top: 0;
+    right: -33px;
+}
+.picode input {
+    color: #4d4d4d;
+    height: 24px;
+    width: 100%;
+    line-height: 24px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.ok {
+    color: #4285f4;
+    border: 1px #4285f4 solid;
+    text-align: center;
+    border-radius: 22px;
+    height: 35px;
+    line-height: 35px;
+    margin-top: 15px;
+}
+
+.logo-box{
+    width: 100%;
+    height: 558rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.logo-box .logo-icon{
+    width: 344rpx;
+    height: 336rpx;
+    box-sizing: border-box;
+    margin: 0 auto;
+}
+.login-form {
+    width: 100%;
+    padding: 0 10%;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+.login-form .item .icon{
+    width: 44rpx;
+    height: 48rpx;
+    margin-right: 36rpx;
+}
+.login-form .item{
+    display: flex;
+    padding-bottom: 18rpx;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 20rpx;
+}
+.login-form .item .code-text{
+    position:absolute;
+    right:0;
+    color:#333333;
+    z-index:1000;
+    padding:16rpx 10rpx 16rpx 10rpx;
+    top:-16rpx;
+}
+.login-form .login-btn{
+    margin-top: 60rpx;
+}
+.login-form .protocol{
+    display: flex;
+    justify-content: center;
+    margin-top: 16rpx;
+    color: #ccc;
+    font-size: 14px;
+}
+.login-form .weixin-login-btn{
+     margin-top: 16rpx; 
+}
+.color-black{
+    color: #ffc200;
+}
+.weixin-login-box {
+    width: 100%;
+    left: 0;
+    bottom: 110rpx;
+}
+.weixin-login-box .login-image {
+    width: 100rpx;
+    height: 100rpx;
+    margin: 0 auto;
+}
+.weixin-login-box .weixin-login-btn{
+    width: 50%;
+    top: 0;
+    left: 50%;
+    margin-left: -25%;
+    opacity: 0;
+    z-index: 3;
+}

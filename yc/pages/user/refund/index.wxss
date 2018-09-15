@@ -1,0 +1,55 @@
+/* pages/refund/index.wxss */
+page{
+    background-color: #f5f8fa;
+}
+.title{
+    padding-top: 30rpx;
+    font-size: 32rpx;
+    font-weight: 600;
+}
+.reason-box{
+    padding-left: 30rpx;
+    font-size: 28rpx;
+    border-top: 2rpx solid #f2f2f2;
+    background-color: #fff;
+    }
+.reason-list{
+    display: flex;
+    height: 88rpx;
+    align-items: center;
+    padding-right: 30rpx;
+    box-sizing: border-box;
+    justify-content: space-between;
+    border-bottom: 2rpx solid #fafafa;
+}
+.reason-list .icon-box{
+    width: 48rpx;
+    height: 48rpx;
+}
+.description-box{
+    padding: 0 30rpx;
+    background-color: #fff;
+    margin-top: 15rpx;
+    padding-bottom: 50rpx;
+    box-sizing: border-box;
+}
+.description-box textarea{
+    background-color: #f2f2f2;
+    width: 100%;
+    padding: 20rpx;
+    box-sizing: border-box;
+    margin-top: 30rpx;
+    font-size: 28rpx;
+}
+.footer-box{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    height: 98rpx;
+    box-sizing: border-box;
+    left: 0;
+    background-color: #ffc200;
+    bottom: 0;
+}

@@ -1,0 +1,180 @@
+<!--pages/order/index.wxml-->
+<view class='container' wx:hidden="{{loaded}}">
+    <view class="purchase_limits" wx:if="{{purchase_limits && purchase_limits.length}}">
+        <text wx:for="{{purchase_limits}}" wx:for-item="item" wx:key="index" wx:for-index="index">{{item.desc}}{{index+1 < purchase_limits.length ? '、' : ''}}</text>，请修改后再提交。
+    </view>
+    <navigator url='/pages/user/address/index' class='choose-address' wx:if="{{is_self}}">
+        <view class='flex'>
+            <view class='icon-box'>
+                <image src='https://img.aimoge.com/FkLrywcbi31Eoui_8oqrjxszRixT'></image>
+            </view>
+            <view class='ellipsis'>{{current_address?current_address.district.province+current_address.district.city+current_address.district.name+current_address.address:'请选择收货地址'}}</view>
+        </view>
+        <view class='icon-l'>
+            <image src='https://img.aimoge.com/FiEPYS_sVWTRWHhmJgmmiTzOUlgq'></image>
+        </view>
+    </navigator>
+    <view class='phone-box' wx:if="{{address && address.address_type==1}}">
+        <text hidden='{{!isModify}}'>取货人手机号：{{user_mobile}}</text>
+        <input hidden='{{isModify}}' placeholder='请输入取货人手机号' type='number' maxlength='11' bindinput="bindInput"></input>
+        <view hidden='{{!isModify}}' class='text-btn' bindtap="isModifyFun">修改</view>
+        <view hidden='{{isModify}}' class='text-btn' bindtap="isModifyFun">完成</view>
+    </view>
+    <view class='info-box rel' wx:if="{{address && address.address_type==1}}">
+        <view>
+            <text>取货小区：{{community.name}}</text>
+        </view>
+        <view>
+            <text>待收点地址：{{community.address}}</text>
+        </view>
+        <view>
+            <text>小美先生联系方式：{{cart.address.partner_username}}</text>
+        </view>
+        <view class='line-icon abs'>
+            <image src='https://img.aimoge.com/FvfUgJREEFNqm0eKuZ7Co1jWeQ4i'></image>
+        </view>
+    </view>
+    <view class='order-box'>
+        <view class='order-title' wx:if="{{address && address.address_type==1}}">
+            收到到件通知后至代收点取货
+        </view>
+        <view class='order-content' bindtap='goToGoodsList'>
+            <view class='content-l'>
+                <view class='image-box' wx:for="{{short_tradings}}" wx:key="_id" wx:for-item="item" wx:for-index="index">
+                    <image src='{{item.trading.image_src}}'></image>
+                </view>
+            </view>
+            <view class='content-r'>
+                <view>共{{tradings_count}}件商品</view>
+                <view class='icon-l'>
+                    <image src='https://img.aimoge.com/FugziEpaIZv40bT75hPz40e0_HDn'></image>
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class='select-box' wx:if="{{delivery_rule && delivery_rule.allow_delivery_house}}">
+        <view class='top-box'>
+            <view>
+                <text style='padding-top:4rpx;' wx:if="{{delivery_checked}}">送货上门</text>
+                <text style='padding-top:4rpx;' wx:elif="{{tradings_total_fee<delivery_rule.free_fee}}">加{{delivery_rule.fee / 100}}元可送货上门</text>
+                <text style='padding-top:4rpx;' wx:else>是否送货上门</text>
+
+                <text class='f-14' style='padding-top:2px' wx:if="{{tradings_total_fee<delivery_rule.free_fee}}">（满{{delivery_rule.free_fee / 100}}元免费）</text>
+                <text class='f-14' style='padding-top:2px' wx:else>（已免配送费）</text>
+
+                <view class='top-icon' bindtap='showDeliverInfo'>
+                    <image mode="aspectFit" src='https://img.aimoge.com/FnO1I_6r8VnnSnb7IhAmFeTRN0P4'></image>
+                </view>
+            </view>
+            <switch bindchange="switchChange" />
+        </view>
+        <view class='bottom-box' wx:if="{{delivery_checked}}">
+            <view>
+                <label>楼号</label>
+                <input placeholder='例：4幢' class='floor' placeholder-style="color:#ccc;" bindinput='setUserFloor' bindblur='checkUserFloor'></input>
+            </view>
+            <view>
+                <label>单元门牌号</label>
+                <input placeholder='例：2单元201室' placeholder-style="color:#ccc;" bindinput='setUserHouseNum'></input>
+            </view>
+        </view>
+    </view>
+    <view class='price-box'>
+        <view class='price-item'>
+            <text>商品总价</text>
+            <view>
+                <text class='f-12'>￥</text>
+                <text class='f-16'>{{tradings_total_fee/ 100}}</text>
+            </view>
+        </view>
+        <view class='price-item' wx:if="{{(delivery_rule && delivery_rule.allow_delivery_house && delivery_checked && delivery_fee) || (delivery_fee && delivery_fee.fee)}}">
+            <text>运费</text>
+            <view>
+                <text class='f-12'>￥</text>
+                <text class='f-16'>{{ delivery_fee.fee / 100}}</text>
+            </view>
+        </view>
+        <view class='price-item coupon-item  rel' bindtap='linkSelectCoupon'>
+            <text>优惠券</text>
+            <view wx:if="{{coupon_fee}}" style='margin-top: 8rpx;'>
+                <text class='f-12 member-price'>-￥</text>
+                <text class='f-16 member-price'>{{coupon_fee / 100}}</text>
+            </view>
+            <view wx:else style='margin-top: 8rpx;'>
+                <text class='f-12 member-price' wx:if="{{coupon_can_used.length}}">{{coupon_can_used.length}}张可用</text>
+                <text class='f-12 color-gray' wx:else>暂无可用</text>
+            </view>
+            <view class='icon-l abs'>
+                <image src='https://img.aimoge.com/FugziEpaIZv40bT75hPz40e0_HDn'></image>
+            </view>
+        </view>
+        <view class='price-item' wx:for="{{discounteds}}" wx:key="index" wx:for-item="item" wx:for-index="index">
+            <text>{{item.desc}}</text>
+            <view>
+                <text class='f-12'>-￥</text>
+                <text class='f-16'>{{item.fee / 100}}</text>
+            </view>
+        </view>
+        <view class='price-item price-sum'>
+            <view>
+                <text>合计</text>
+                <text class='f-12 member-price'>￥</text>
+                <text class='f-18 member-price'>{{(tradings_total_fee + ((delivery_fee && delivery_fee.fee) || 0) - coupon_fee - discounteds_fee) / 100}}</text>
+            </view>
+        </view>
+    </view>
+    <view class='pay-box'>
+        <view class='pay-item' bindtap='selectPayType' wx:for="{{aPayInfo}}" wx:key="id" data-id="{{item.id}}" data-typeid="{{item.pay_type}}">
+            <text>{{item.value}}</text>
+            <view class='icon-box'>
+                <image wx:if="{{curIndex==index}}" src='https://img.aimoge.com/FgqmqyD7jNYwFv5BSeev_jV6AogU'></image>
+                <image wx:if="{{curIndex!=index}}" src='https://img.aimoge.com/FvU6xHDDHcVhYyHCMyhQlTi0uhkI'></image>
+            </view>
+        </view>
+    </view>
+    <view class='footer-box fixed'>
+        <view class='footer-l'>
+            <view class='text f-16'>付款</view>
+            <view class='price-box'>
+                <text class='f-12 member-price'>￥</text>
+                <text class='f-18 member-price'>{{(tradings_total_fee + ((delivery_fee && delivery_fee.fee) || 0) - coupon_fee - discounteds_fee) / 100}}</text>
+                <text class='f-12 mg-l-5' wx:if="{{(coupon_fee + discounteds_fee)}}">已优惠￥{{(coupon_fee + discounteds_fee)/100}}</text>
+            </view>
+        </view>
+        <form report-submit="true" bindsubmit="submitOrder">
+            <button class='pay-btn' formType="submit">
+                支付
+            </button>
+        </form>
+        <view class="gege-tip fixed" animation="{{animOfNoneNetWork}}">{{animMsg}}</view>
+    </view>
+</view>
+
+<view class='layer-box fixed' wx:if="{{isPayPasswordShow}}">
+    <view class='layer-content rel'>
+        <view class='content-title'>请输入支付密码</view>
+        <view class='input-box rel'>
+            <paySix bindvalueSix="submitBalancePassword" input_value="{{inputData.input_value}}" value_length="{{inputData.value_length}}" isNext="{{inputData.isNext}}" get_focus="{{inputData.get_focus}}" focus_class="{{inputData.focus_class}}" value_num="{{inputData.value_num}}"
+                height="{{inputData.height}}" width="{{inputData.width}}" see="{{inputData.see}}" interval="{{inputData.interval}}">
+            </paySix>
+        </view>
+        <view class='cancel-box abs' bindtap='cancelBalancePassword'>
+            <icon type='cancel' size='30' color='#ccc'></icon>
+        </view>
+    </view>
+</view>
+
+<view class='deliver-layer-box' wx:if="{{delivery_rule && delivery_rule.allow_delivery_house && isDeliverInfoShow}}">
+    <view class='deliver-container rel'>
+        <view class='deliver-title'>送货上门说明</view>
+        <view>1.务必保证填写的地址及联系方式正确， 以确保您的商品及时送到您的手中。
+        </view>
+        <view>2.若订单已经开始配送，配送上门的费用 将不予退换。
+        </view>
+        <view>3.订单满{{delivery_rule.free_fee / 100}}元可自由选择免费送货上门服 务，送货上门配送费系统将根据购买的品 类及数量自行计算。
+        </view>
+        <view class='close-btn abs' bindtap='showDeliverInfo'>
+            <image src='https://img.aimoge.com/FmSpIMe2Sz5JwWeADJGJ6mpz_gBM'></image>
+        </view>
+    </view>
+</view>

@@ -1,0 +1,32 @@
+<!--pages/recharge/index.wxml-->
+<view class='container' wx:if="{{activitys}}">
+    <view class='switch-box'>
+        <view class='image-box'>
+            <image src='{{current_activity.image_src}}'></image>
+        </view>
+        <view class='switch-content'>
+            <view class="tab rel {{tabIndex == index ? 'active': ''}}" wx:for="{{activitys}}" data-current-index='{{ index }}' wx:key="_id" wx:for-item="item" wx:for-index="index" bindtap="switchTab">{{item.amount / 100 }}元</view>
+        </view>
+    </view>
+    <view class='btn-box fixed'>
+        <button bindtap='submitRecharge'>充值</button>
+        <view class='protocol'>
+            <text>点击充值，即表示已阅读并同意</text>
+            <navigator class='color-black'>充值协议</navigator>
+        </view>
+    </view>
+</view>
+<view class="gege-tip fixed" animation="{{animOfNoneNetWork}}">{{animMsg}}</view>
+<view class='layer-box fixed' wx:if="{{isShow}}">
+    <view class='layer-content rel'>
+        <view class='content-title'>{{ password ? '请再次确认支付密码' : '设置支付密码' }}</view>
+        <view class='input-box rel'>
+            <paySix bindvalueSix="submitResetPassword" input_value="{{inputData.input_value}}" value_length="{{inputData.value_length}}" isNext="{{inputData.isNext}}" get_focus="{{inputData.get_focus}}" focus_class="{{inputData.focus_class}}" value_num="{{inputData.value_num}}"
+                height="{{inputData.height}}" width="{{inputData.width}}" see="{{inputData.see}}" interval="{{inputData.interval}}">
+            </paySix>
+        </view>
+        <view class='cancel-icon abs' bindtap='cancelBalancePassword'>
+            <icon type='cancel' size='30' color='#ccc'></icon>
+        </view>
+    </view>
+</view>

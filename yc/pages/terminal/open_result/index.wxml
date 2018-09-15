@@ -1,0 +1,34 @@
+<!--pages/terminal/open_result/index.wxml-->
+<view class='page'>
+    <view class='success-box rel' wx:if='{{isSuccess}}'>
+        <view class='icon-box'>
+            <image src='https://img.aimoge.com/FlraQ8PEdVBIqrKNxQByRF9YsPaY'></image>
+        </view>
+        <view class='text-box'>
+            <view class='f-20'>开门成功</view>
+            <view class='f-15'>请保持货物摆放整齐</view>
+            <view class='f-15'>不需要的商品请放回原处</view>
+        </view>
+        <view class='footer-box abs'>
+            <view class='color-black'>完成选购,随手关门</view>
+            <view>关门自动扣款,并发送账单</view>
+        </view>
+    </view>
+    <view class='fail-box' wx:if='{{!isSuccess}}'>
+        <view class='icon-box'>
+            <image src='https://img.aimoge.com/FgkfGB_Olpl-h6SW8SsfoGxiE9uB'></image>
+        </view>
+        <view class='text-box'>
+            <view class='f-20'>开门失败</view>
+            <view class='error_msg' wx:if='{{error_msg}}'>{{error_msg}}</view>
+            <view class='f-15'>请重新扫描门上二维码</view>
+        </view>
+    </view>
+    <view class='button-box fixed' wx:if="{{isSuccess}}">
+        <button bindtap='linkIndex'>返回首页</button>
+    </view>
+    <view class="button-box fixed" wx:if="{{!isSuccess}}">
+        <view  bindtap='linkIndex'>返回首页</view>
+        <view bindtap='scanCode'>重新扫码</view>
+    </view>
+</view>

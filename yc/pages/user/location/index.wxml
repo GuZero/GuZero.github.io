@@ -1,0 +1,54 @@
+<!--pages/address/index.wxml-->
+<view class='container' wx:if="{{current_community}}">
+    <view class="search flex fixed">
+        <view class="input rel">
+            <view class="abs search-icon"></view>
+            <input type="text" placeholder="请输入小区名称" placeholder-class="gege-gray" bindinput="change" value="{{key}}" bindconfirm='isSearch' />
+            <view class="tag abs" wx:if="{{key}}" bindtap="clearInput"></view>
+        </view>
+        <view class="search-btn" bindtap="isSearch">搜索</view>
+    </view>
+    <view class='info-box' hidden='{{isShowSearch}}'>
+        <view class='item rel' wx:if="{{current_community}}" data-id="{{current_community._id}}" bindtap='gotoIndex'>
+            <view class='item-title'>当前</view>
+            <view class='item-content'>
+                <view class='f-14'>取货小区:{{current_community.name}}</view>
+                <view class='f-12'>待收货地址:{{current_community.address}}</view>
+            </view>
+            <view class='item-icon abs'>
+                <image src='https://img.aimoge.com/FgqmqyD7jNYwFv5BSeev_jV6AogU'></image>
+            </view>
+        </view>
+        <scroll-view scroll-y class='nearby-list'>
+            <view class='nearby-title'>附近</view>
+            <view class='item rel' wx:if="{{aNearby.length}}" wx:for="{{aNearby}}" wx:key="index" data-id="{{item._id}}" bindtap='gotoIndex'>
+                <view class='item-content'>
+                    <view class='f-14'>取货小区:{{item.name}}</view>
+                    <view class='f-12'>待收货地址:{{item.address}}</view>
+                </view>
+            </view>
+            <view wx:if="{{!aNearby.length}}" class='nothing'>
+                <text>附近暂无开通小区</text>
+            </view>
+        </scroll-view>
+    </view>
+    <view class='search-info' hidden='{{!isShowSearch}}'>
+        <view class='solid'></view>
+        <view class='item rel' wx:for="{{items}}" wx:key="index" data-id="{{item._id}}" bindtap='gotoIndex'>
+            <view class='item-content'>
+                <view class='f-14'>取货小区:{{item.name}}</view>
+                <view class='f-12'>待收货地址:{{item.address}}</view>
+            </view>
+        </view>
+        <view class="mgLoadingWarp" wx:if="{{scroll_load_loading && !isLocation}}">
+            <span>
+                <i class="icon ion-loading-c rel"></i>加载中...</span>
+        </view>
+        <view class="empty-content" wx:if="{{items.length <= 0 && !scroll_load_loading && !noNetWork &&isShowEmpty}}">
+            <view class="empty-img"></view>
+            <view>您搜索的小区暂未开通</view>
+            <view>敬请期待</view>
+        </view>
+    </view>
+    <view class="gege-tip fixed" animation="{{animOfNoneNetWork}}">{{animMsg}}</view>
+</view>

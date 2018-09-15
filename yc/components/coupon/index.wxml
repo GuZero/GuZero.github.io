@@ -1,0 +1,10 @@
+<!--components/coupon/index.wxml-->
+<view class='coupon-box' wx:if="{{is_show}}">
+    <view class="{{channel_name=='dazhaxie'?'coupon-image-1':'coupon-image'}} rel">
+        <image mode='scaleToFill'  src="{{image_url}}"></image>
+        <view class='coupon-btn abs' bindtap='takeCoupon'>{{btn_value}}</view>
+        <view class='close-btn abs' bindtap='isShow'>
+            <image src='https://img.aimoge.com/Fozh6NsnIkOq8MeecJZXHEykwMEm'></image>
+        </view>
+    </view>
+</view>

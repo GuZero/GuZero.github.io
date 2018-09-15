@@ -1,0 +1,30 @@
+<!--pages/after_market_detalis/index.wxml-->
+<view class='page'>
+    <view class='page_bd'>
+        <view class='tips-msg' hidden='true'>
+            <view class='icon-box'>
+                <image src='https://img.aimoge.com/FsqCKxHapM39Ll2JBrMb7OqodG9f'></image>
+            </view>
+            <view>已退款</view>
+        </view>
+        <view class='item'>
+            <view class='item-title'>申请理由</view>
+            <view class='text-box color-gray f-14'>{{afterMarkets_detalis[0].category}}</view>
+        </view>
+        <view class='item'>
+            <view class='item-title'>问题描述</view>
+            <view class='text-box color-gray f-14'>{{afterMarkets_detalis[0].content}}</view>
+            <view class='weui-uploader__bd '>
+                <view class='weui-uploader__file' wx:for="{{afterMarkets_detalis[0].image_info}}" wx:key="{{index}}">
+                    <image class='weui-uploader__img' src='{{item.image_src}}'></image>
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class='item'>
+        <view class='item-title'>售后进度</view>
+        <view class='steps-box'>
+            <zan-steps type="vertical" hasDesc="true" steps="{{orderStatus}}"></zan-steps>
+        </view>
+    </view>
+</view>

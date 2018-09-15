@@ -1,0 +1,58 @@
+<!--pages/login/index.wxml-->
+<view class='container'>
+    <view class='logo-box'>
+        <view class='logo-icon'>
+            <image mode='widthFix' src='https://img.aimoge.com/FsNGelkpw6eGUQ5R5zq1bk3jbab3'></image>
+        </view>
+    </view>
+    <view class='login-form'>
+        <view class='item'>
+            <view class='icon'>
+                <image src='https://img.aimoge.com/Fgcw3thKUbvx2fXuMWRF4RsCdZAj'></image>
+            </view>
+            <input placeholder="输入手机号码" maxlength="11" placeholder-class="gege-placeholder" type='number' bindinput="bindInput"></input>
+        </view>
+        <view class='item rel'>
+            <view class='code-text' bindtap="sendCode">{{tips}}</view>
+            <view class='icon'>
+                <image src='https://img.aimoge.com/Fs6SS-QkhIsyDJLmOykhovOVA4nQ'></image>
+            </view>
+            <input placeholder="输入输入验证码" maxlength="6" placeholder-class="gege-placeholder" bindinput="bindInputCode"></input>
+        </view>
+        <view class='login-btn' bindtap="login">
+            <button class="button button-blue   {{isActiveBtn ? '' : 'disabled' }}" loading="{{isLogining}}">
+                {{isLogining ? "登录中" : "登录"}}
+            </button>
+        </view>
+        <view class='protocol'>
+            <text>登录表示您即同意</text>
+            <navigator url='../user_agreement/index' class='color-black'>用户协议</navigator>
+        </view>
+    </view>
+    <view class='weixin-login-box fixed'>
+        <view class='login-image'>
+            <image src='https://img.aimoge.com/FkR6IvHjyjxR3GgyFBfusPGo9l9P'></image>
+        </view>
+        <view class='weixin-login-btn abs'>
+            <button type="primary" lang="zh_CN" bindgetphonenumber='getPhoneNumber' open-type="getPhoneNumber" loading="{{isWeixinLogining}}">
+                {{isWeixinLogining ? "登录中" : "微信一键登录"}}
+            </button>
+        </view>
+    </view>
+    <view class="gege-tip fixed" animation="{{animOfNoneNetWork}}">{{animMsg}}</view>
+    <view class="code-dialog fixed" style="display:{{isShowImgCode ? 'block' : 'none'}}">
+        <view class="imgCode abs">
+            <image src="https://img.aimoge.com/FgSgIducS7NfJNk-ZqN933p7JEaJ" class="abs closePic" bindtap="hideImgCode"></image>
+            <view class="pic rel">
+                <view class="div rel">
+                    <image src="{{imgCodeSrc}}"></image>
+                    <view class="reflush abs" bindtap="loadCaptchacodeIamge"></view>
+                </view>
+                <view class="picode rel">
+                    <input type="text" placeholder="填写验证码" bindinput="bindInputImgCode" />
+                </view>
+                <view class="ok rel" bindtap="doNextSendAction">提交</view>
+            </view>
+        </view>
+    </view>
+</view>

@@ -1,0 +1,63 @@
+<view class='container'>
+    <view class='bg-box rel'>
+        <view class='user-box'>
+            <view class='avatar-box' bbindtap='showLogoutLayer'>
+                <image src='{{avatar}}'></image>
+            </view>
+            <view class='info-box'>
+                <view class='icon-1'> 普通用户</view>
+                <view class='nickname'>{{userInfo.nickname}}</view>
+            </view>
+        </view>
+        <view class='tab-box abs' wx:if="{{false}}">
+            <view class='tab-item'>
+                <view class='f-16 f-w-b'>{{balance.total_balance}}</view>
+                <view>余额·充值</view>
+            </view>
+            <view class='solid abs'></view>
+            <view class='tab-item'>
+                <view class='f-16 f-w-b'>3张</view>
+                <view>优惠券</view>
+            </view>
+        </view>
+    </view>
+    <view class='order-box'>
+        <view class='order-title'>我的订单</view>
+        <view class='choose-box rel'>
+            <navigator url='../order_list/index?order_type=ebox'>
+                <view class='order-icon'>
+                    <image src='/images/icon/mine (1).png'></image>
+                </view>
+                <view class='f-11'>智能柜</view>
+            </navigator>
+            <navigator url='../order_list/index?order_type=community_groupbuy'>
+                <view class='order-icon'>
+                    <image src='/images/icon/mine (2).png'></image>
+                </view>
+                <view class='f-11'>预定专区</view>
+            </navigator>
+            <navigator url='/pages/user/card_list/index'>
+                <view class='order-icon'>
+                    <image src='/images/icon/mine (3).png'></image>
+                </view>
+                <view class='f-11'>赠送好友</view>
+            </navigator>
+            <view class='order-solid solid-1'></view>
+            <view class='order-solid solid-2'></view>
+        </view>
+    </view>
+    <view class='list-box'>
+        <view class='item rel'>
+            <text>我的客服</text>
+            <view class='icon-l abs'>
+                <image src='/images/icon/common (1).png'></image>
+            </view>
+        </view>
+        <navigator url='../issue/index' class='item rel'>
+            <text>常见问题</text>
+            <view class='icon-l abs'>
+                <image src='/images/icon/common (1).png'></image>
+            </view>
+        </navigator>
+    </view>
+</view>

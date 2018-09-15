@@ -1,0 +1,68 @@
+<!--pages/user/pick_up/index.wxml-->
+<view class="page">
+    <view class="page__bd">
+        <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell weui-cell_select">
+                <view class="weui-cell__hd weui-cell__hd_in-select-after">
+                    <view class="weui-label">所在区域</view>
+                </view>
+                <view class="weui-cell__bd" bindtap='chooseAddress'>
+                    <view class="weui-select weui-select_in-select-after f-14">{{province.name}} {{city.name}} {{area.name}}</view>
+                </view>
+            </view>
+            <view class="weui-cell weui-cell_input">
+                <view class="weui-cell__hd">
+                    <view class="weui-label">详细地址</view>
+                </view>
+                <view class="weui-cell__bd">
+                    <input class="weui-input" bindinput='bindSetAddress' placeholder="如道路、门牌号、小区、楼栋号等" placeholder-class='placeholder' />
+                </view>
+            </view>
+            <view class="weui-cell weui-cell_input">
+                <view class="weui-cell__hd">
+                    <view class="weui-label">收货人</view>
+                </view>
+                <view class="weui-cell__bd">
+                    <input class="weui-input" bindinput='bindSetName' placeholder-class='placeholder' placeholder="请填写收货人姓名" />
+                </view>
+            </view>
+            <view class="weui-cell weui-cell_input">
+                <view class="weui-cell__hd">
+                    <view class="weui-label">联系电话</view>
+                </view>
+                <view class="weui-cell__bd">
+                    <input class="weui-input" bindinput='bindSetMobile' type='number' maxlength='11' placeholder-class='placeholder' placeholder="请填写收货人联系电话" />
+                </view>
+            </view>
+        </view>
+        <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell info-title">
+                <view class="weui-cell__hd">
+                    <view class="weui-label">收货时间</view>
+                </view>
+            </view>
+            <radio-group bindchange="radioChange">
+                <label class="weui-cell weui-check__label" wx:for="{{radioItems}}" wx:key="value">
+                    <radio class="weui-check" value="{{item.value}}" checked="{{item.checked}}" />
+                    <view class="weui-cell__bd f-14">{{item.name}}</view>
+                    <view class="weui-cell__ft weui-cell__ft_in-radio">
+                        <icon class="weui-icon-checkbox_circle" type="circle" size="23" wx:if="{{!item.checked}}"></icon>
+                        <icon class="weui-icon-checkbox_success" type="success" size="23" wx:if="{{item.checked}}"></icon>
+                    </view>
+                </label>
+            </radio-group>
+            <view class="weui-cell weui-cell_input">
+                <view class="weui-cell__hd">
+                    <view class="weui-label">自定义</view>
+                </view>
+                <view class="weui-cell__bd">
+                    <picker mode="date" value="{{date}}" start="{{statr_date}}" end="2018-12-31" bindchange="bindDateChange">
+                        <view class="weui-input text-right">{{date}}</view>
+                    </picker>
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class='footer fixed' bindtap='submit'>提交</view>
+    <w-area-picker show="{{show}}" bind:sureSelectArea="sureSelectAreaListener"></w-area-picker>
+</view>

@@ -1,0 +1,5 @@
+{
+    "usingComponents": {
+        "w-area-picker": "/components/w-area-picker/index"
+    }
+}

@@ -1,0 +1,41 @@
+<!--pages/user/order_coupon/index.wxml-->
+<view class='page'>
+    <view class='page_bd'>
+        <view class="item-box {{item.is_can_used?'':'disable'}}" wx:for="{{coupon_info}}" wx:key="index" data-item="{{item}}" bindtap='selectCoupon'>
+            <view class='up-box'>
+                <view class='left-box'>
+                    <view wx:if="{{item.fee}}">
+                        <text class='f-16'>￥</text>
+                        <text class='f-30'>{{item.fee/100}}</text>
+                    </view>
+                    <text class='f-30' wx:else>{{item.discount_rate_val}}折</text>
+                </view>
+                <view class='right-box'>
+                    <view class='right-title'>{{item.name}}</view>
+                    <view wx:for="{{item.rules}}" wx:key="index" wx:for-index="idx" wx:for-item="i">{{i.descript}}</view>
+                </view>
+            </view>
+            <view class='dashed-line rel'>
+                <view class='round round-left'></view>
+                <view class='round round-right'></view>
+            </view>
+            <view class='down-box'>
+                <view>有效期至：{{item.expried_time}}</view>
+            </view>
+        </view>
+        <view class='nothing-box fixed' wx:if='{{loaded && (!coupon_info || !coupon_info.length)}}'>
+            <view class='image-box'>
+                <image src='https://img.aimoge.com/FtVqSGSB9A-N2wt6ixVQN3rzF165'></image>
+            </view>
+            <view class='text-box'>
+                <view>您暂时还没有优惠券哦！</view>
+                <view hidden='true'>开通会员享受会员专属优惠券</view>
+            </view>
+        </view>
+        <view class='footer-box fixed' hidden='true'>
+            <view>开通会员享受会员专属优惠券</view>
+            <navigator url='../../member/index/index'>马上开通</navigator>
+        </view>
+    </view>
+    <view class="gege-tip fixed" animation="{{animOfNoneNetWork}}">{{animMsg}}</view>
+</view>

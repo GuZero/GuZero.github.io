@@ -1,0 +1,122 @@
+/* components/ebox/index.wxss */
+
+.container {
+    width: 100vw;
+    background-color: #f5f8fa;
+    /* margin-top: 178rpx; */
+}
+
+.title-box {
+    width: 100%;
+    height: 128rpx;
+    display: flex;
+    align-items: center;
+    margin: 10rpx 0;
+    background-color: #fff;
+    box-sizing: border-box;
+}
+
+.title-box .title-l {
+    margin-left: 30rpx;
+    margin-right: 32rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.title-box .title-l .title-image {
+    width: 72rpx;
+    height: 64rpx;
+}
+
+.title-box .title-r {
+    width: 80%;
+}
+
+.title-box .title-r .f-14 {
+    font-weight: 600;
+}
+
+.title-box .icon-l {
+    width: 19rpx;
+    height: 34rpx;
+    top: 50%;
+    margin-top: -17rpx;
+    right: 30rpx;
+}
+
+.content-box {
+    width: 100%;
+    background-color: #fff;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.content-box .item {
+    width: 50%;
+    padding-bottom: 20rpx;
+    box-sizing: border-box;
+    border-bottom: 2rpx solid #f2f2f2;
+    border-right: 2rpx solid #f2f2f2;
+}
+
+.item .item-image {
+    width: 280rpx;
+    height: 280rpx;
+    margin: 24rpx auto;
+}
+
+.item .item-text {
+    width: 100%;
+    padding: 0 30rpx;
+    box-sizing: border-box;
+    color: #333;
+}
+
+.item .item-text .f-12{
+    padding-left:6rpx;
+    padding-top:10rpx;
+}
+
+.item .item-text .price{
+    line-height:40rpx;
+}
+
+/* .item .item-text .f-14 {
+    font-weight: 700;
+} */
+
+.color-gray{
+    color: #999;
+}
+
+.rel {
+    position: relative;
+}
+
+.abs {
+    position: absolute;
+}
+
+.f-14 {
+    font-size: 28rpx;
+}
+
+.f-12 {
+    font-size: 24rpx;
+}
+
+.f-13{
+    font-size: 26rpx;
+}
+
+.member-price {
+    color: #fc2525;
+    margin-right: 10rpx;
+}
+
+.original-price {
+    font-size: 24rpx;
+    color: #999;
+    text-decoration: line-through;
+}

@@ -1,0 +1,21 @@
+/* components/countDown/index.wxss */
+
+.count-down-box {
+    display: flex;
+    color: #dbdbdb;
+}
+
+.count-down-box view {
+    width: 45rpx;
+    height: 45rpx;
+    text-align: center;
+    line-height: 45rpx;
+    border-radius: 4rpx;
+    margin-right: 5rpx;
+    margin-left: 5rpx;
+    font-size: 26rpx;
+    border: 2rpx solid #dbdbdb;
+    background-color: #fff;
+    color: #fbab12;
+    font-weight: normal;
+}

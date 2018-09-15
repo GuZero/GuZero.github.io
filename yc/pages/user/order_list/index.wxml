@@ -1,0 +1,40 @@
+<!--pages/order_list/index.wxml-->
+<view class='container' wx:if="{{loaded}}">
+    <view class='item' wx:for="{{aOrder}}" wx:key="order_id" data-id="{{item.order_id}}" bindtap='linkOrderDetails' wx:if='{{aOrder.length}}'>
+        <view class='item-title'>
+            <view>{{item.address.name}}</view>
+            <view class='color-orange'>{{item.status_val}}</view>
+        </view>
+        <view class='item-content'>
+            <view class='content-l' wx:for="{{item.goods}}" wx:key="sku_ids" wx:for-item="i">
+                <view class='item-icon' wx:if="{{index==0||index==1||index==2}}">
+                    <image src="{{i.trading.image_src}}"></image>
+                </view>
+            </view>
+            <view class='content-r'>
+                <view>共{{item.total_num}}件商品</view>
+                <view class='icon-l'>
+                    <image src='https://img.aimoge.com/FugziEpaIZv40bT75hPz40e0_HDn'></image>
+                </view>
+            </view>
+        </view>
+        <view class='item-footer'>
+            <view>实付：
+                <text class='member-price f-12'>￥</text>
+                <text class='member-price f-16'>{{(item.pay_fee)/100}}</text>
+            </view>
+            <view>{{item.order_at}}</view>
+        </view>
+    </view>
+    <view class="weui-loadmore" wx:if="{{scroll_load_loading}}">
+        <view class="weui-loading"></view>
+        <view class="weui-loadmore__tips">正在加载</view>
+    </view>
+    <view class='nothing-box' wx:if='{{!aOrder.length&&!scroll_load_loading}}'>
+        <view class='image-box'>
+            <image src='https://img.aimoge.com/FhrNu4mQmYKsXW56El3cU_zQNImP'></image>
+        </view>
+        <view>您目前没有订单</view>
+        <view class='footer-box' bindtap='linkIndex'>去下单</view>
+    </view>
+</view>

@@ -1,0 +1,17 @@
+<!--pages/user/pay_result/index.wxml-->
+<view class='container'>
+    <view class='success-box msg-box' wx:if="{{status}}">
+        <view class='icon-box'>
+            <image src='https://img.aimoge.com/FvWjsjAvJ_cwey_raGGpqlVLWxBG'></image>
+        </view>
+        <view>下单成功</view>
+    </view>
+    <view class='success-box msg-box' wx:if="{{!status}}">
+        <view class='icon-box'>
+            <image src='https://img.aimoge.com/FuwW3G5GVgAmQyrrvlQxcLZPzga3'></image>
+        </view>
+        <view>支付失败</view>
+    </view>
+    <button class='share-btn' open-type="share">送给好友100元优惠券</button>
+    <view class='text-box'>查看<navigator url='../card/index'>我的蟹卡</navigator></view>
+</view>

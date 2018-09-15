@@ -1,0 +1,26 @@
+<!--pages/recharge_result/index.wxml-->
+<view class='container'>
+    <!-- <view class='tips'>
+        <text>请及时支付，9分20秒后取消订单</text>
+    </view> -->
+    <view class='success-box msg-box' wx:if="{{status}}">
+        <view class='icon-box'>
+            <image src='https://img.aimoge.com/FvWjsjAvJ_cwey_raGGpqlVLWxBG'></image>
+        </view>
+        <view>下单成功</view>
+    </view>
+    <view class='success-box msg-box' wx:if="{{!status}}">
+        <view class='icon-box'>
+            <image src='https://img.aimoge.com/FuwW3G5GVgAmQyrrvlQxcLZPzga3'></image>
+        </view>
+        <view>支付失败</view>
+    </view>
+    <view class='btn-box fixed' hidden="{{status}}">
+        <button class='btn-1' bindtap='linkIndex'>返回首页</button>
+        <button class='btn-2' bindtap='linkOrder'>继续付款</button>
+    </view>
+    <view class='btn-box fixed' hidden="{{!status}}">
+        <!-- <button class='btn-1' bindtap='makePhoneCall'>联系客服</button> -->
+        <button class='btn-2' bindtap='linkOrder'>查看详情</button>
+    </view>
+</view>

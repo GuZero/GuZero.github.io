@@ -1,0 +1,179 @@
+/* pages/user/card_details/index.wxss */
+/* pages/activity/hairycrab/card_details/index.wxss */
+
+page {
+    background-color: #f5f8fa;
+}
+
+.card {
+    padding: 30rpx 75rpx;
+}
+
+.card-box {
+    width: 100%;
+    height: 280rpx;
+    font-size: 24rpx;
+    box-sizing: border-box;
+}
+
+.card-box .card-bg {
+    width: 100%;
+    height: 100%;
+}
+
+.card-box  .card-l {
+    top: 60rpx;
+    margin-left: 44rpx;
+}
+
+.card-box  .card-l .f-16 {
+    margin-bottom: 40rpx;
+    font-weight: 600;
+}
+
+.card-box   .status-box {
+    width: 110rpx;
+    height: 40rpx;
+    line-height: 40rpx;
+    text-align: center;
+    border-radius: 8rpx;
+    background-color: #f6c344;
+    right: 30rpx;
+    top: 40rpx;
+    color: #fff;
+}
+
+.content-box {
+    padding-left: 28rpx;
+    background-color: #fff;
+    margin-bottom: 20rpx;
+}
+
+.content-box  .info-box {
+    font-size: 28rpx;
+    margin-bottom: 120rpx;
+    padding: 6rpx 0;
+}
+
+.content-box  .info-box view {
+    line-height: 50rpx;
+}
+
+.content-box .content-title {
+    height: 80rpx;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #333;
+    padding-right: 28rpx;
+    border-bottom: 2rpx solid #f2f2f2;
+    font-size: 32rpx;
+    position: relative;
+}
+
+.content-box .content-title  button{
+    background: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    font-size: 32rpx
+}
+
+.content-box .content-title  button::after{
+    border: none;
+}
+
+.list-item {
+    width: 100%;
+    display: flex;
+    padding-top: 30rpx;
+    padding-bottom: 20rpx;
+    box-sizing: border-box;
+    background-color: #fff;
+    border-bottom: 2rpx solid #f2f2f2;
+}
+
+.list-item:last-child {
+    border: none;
+}
+
+.list-item .item-l {
+    width: 30%;
+    display: flex;
+    align-items: center;
+}
+
+.list-item .item-l .image-box image {
+    width: 180rpx;
+    height: 180rpx;
+}
+
+.list-item .item-r {
+    position: relative;
+    width: 70%;
+    box-sizing: border-box;
+}
+
+.list-item .item-r .item-title {
+    display: flex;
+    justify-content: space-between;
+    padding-right: 28rpx;
+}
+
+.list-item .item-r .item-info {
+    color: #999;
+    font-size: 28rpx;
+    white-space:normal;
+    padding-right: 4rpx;
+}
+
+.list-item .item-r .item-num {
+    color: #999;
+    margin: 6rpx 0;
+}
+
+.footer-box {
+    width: 100%;
+    height: 97rpx;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    left: 0;
+    bottom: 0;
+    font-size: 32rpx;
+    color: #fff;
+    background-color: #ffb140;
+}
+
+.footer-box .soild {
+    width: 2rpx;
+    background-color: #fff;
+    height: 46rpx;
+    top: 50%;
+    left: 50%;
+    margin-left: -1rpx;
+    margin-top: -23rpx;
+}
+
+.footer-box  .w-50 {
+    width: 50%;
+    text-align: center;
+}
+
+.flex-1 {
+    flex: 1 1 auto;
+    text-align: center;
+}
+
+.invite-btn {
+    font-weight: normal;
+    padding: 0;
+    margin: 0;
+    background: none;
+    color: #fff;
+}
+
+.invite-btn::after {
+    border: none;
+}

@@ -1,0 +1,32 @@
+<!--pages/terminal/pickup_goods_result/index.wxml-->
+<view class='page'>
+    <view class='success-box rel' wx:if='{{isSuccess != 2}}'>
+        <view class='icon-box'>
+            <image src='https://img.aimoge.com/FkdGrKDYYOoq9GdmWEAPTrKSnN_f'></image>
+        </view>
+        <view class='text-box'>
+            <view class='color-black'>取货成功</view>
+            <view wx:if="{{!wait_count}}">
+                <view>你已取走此柜机中所有包裹</view>
+                <view>请核对商品</view>
+            </view>
+        </view>
+        <view class='footer-box abs' wx:if="{{wait_count}}">
+            <view class='color-black'>柜子中还有您的{{wait_count}}个包裹未取</view>
+            <view class='color-black'>请再次扫码开门领取</view>
+        </view>
+    </view>
+    <view class='fail-box' wx:if='{{isSuccess == 2}}'>
+        <view class='icon-box'>
+            <image src='https://img.aimoge.com/Ft0j5zI5WiCCycsCF6t7GdzuWx4w'></image>
+        </view>
+        <view class='text-box'>
+            <view class='color-black'>商品误取</view>
+            <view>您误拿了他人预定的商品</view>
+            <view>请放回原处,谢谢配合</view>
+        </view>
+    </view>
+    <view class="button-box fixed">
+        <button class="weui-btn gege-btn" type="primary" bindtap='linkIndex'>返回首页</button>
+    </view>
+</view>

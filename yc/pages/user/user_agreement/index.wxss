@@ -1,0 +1,22 @@
+/* pages/user_agreement/index.wxss */
+page {
+  background-color: #f8f8f8;
+  height: 100%;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  color: #323232;
+}
+.container{
+  padding: 30rpx;
+  border-top: 2rpx solid #e5e5e5;
+}
+.h1{
+ font-size: 40rpx;
+ font-weight: 600;
+ text-align: center;
+}
+.p{
+  margin: 6px 0;
+  line-height: 50rpx;
+  font-size: 24rpx;
+}

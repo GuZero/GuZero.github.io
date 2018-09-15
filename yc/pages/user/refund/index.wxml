@@ -1,0 +1,19 @@
+<!--pages/refund/index.wxml-->
+<view class='container'>
+    <view class='reason-box'>
+        <view class='title'>申请原因</view>
+        <view class='reason-list' bindtap='selectReason' wx:for="{{aReason}}" wx:key="id" data-id="{{item.id}}">
+            <text>{{item.value}}</text>
+            <view class='icon-box'>
+                <image wx:if="{{curIndex==index}}" src=' https://img.aimoge.com/FgqmqyD7jNYwFv5BSeev_jV6AogU'></image>
+                <image wx:if="{{curIndex!=index}}" src='https://img.aimoge.com/FvU6xHDDHcVhYyHCMyhQlTi0uhkI'></image>
+            </view>
+        </view>
+    </view>
+    <view class='description-box'>
+        <view class='title'>问题描述</view>
+        <textarea bindinput="setDescription"></textarea>
+    </view>
+    <view class='footer-box fixed' bindtap='submitRefund'>提交</view>
+    <view class="gege-tip fixed" animation="{{animOfNoneNetWork}}">{{animMsg}}</view>
+</view>

@@ -1,0 +1,135 @@
+/* pages/user/coupon/index.wxss */
+
+page {
+    background-color: #f6f8fa;
+}
+
+.page_bd {
+    width: 100vw;
+    padding: 20rpx 30rpx 120rpx;
+    box-sizing: border-box;
+}
+
+.f-30 {
+    font-size: 60rpx;
+}
+
+.item-box {
+    background-color: #fff;
+    font-size: 26rpx;
+    border-radius: 10rpx;
+    box-shadow: 0 4rpx 6rpx #e2e4e6;
+}
+
+.item-box .up-box {
+    display: flex;
+    padding: 46rpx 0;
+}
+
+.item-box .up-box .left-box {
+    color: #ff9700;
+    width: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.item-box .up-box .left-box .f-40 {
+    font-weight: 600;
+}
+
+.item-box .up-box .right-box {
+    color: #333;
+    line-height: 52rpx;
+}
+
+.item-box .up-box .right-box .right-title {
+    font-weight: 600;
+    font-size: 32rpx;
+}
+
+.item-box .dashed-line {
+    height: 2rpx;
+    border-top: 2rpx dashed #ddd;
+}
+
+.item-box .dashed-line .round {
+    width: 30rpx;
+    height: 30rpx;
+    border-radius: 50%;
+    background-color: #f6f8fa;
+    position: absolute;
+}
+
+.item-box .dashed-line .round-left {
+    left: -15rpx;
+    top: 50%;
+    margin-top: -15rpx;
+}
+
+.item-box .dashed-line .round-right {
+    right: -15rpx;
+    top: 50%;
+    margin-top: -15rpx;
+}
+
+.item-box .down-box {
+    padding: 0 46rpx;
+    height: 70rpx;
+    line-height: 70rpx;
+    color: #999;
+}
+
+.item-box {
+    margin-top: 30rpx;
+}
+
+.footer-box {
+    width: 100%;
+    background-color: #fff;
+    height: 98rpx;
+    font-size: 30rpx;
+    color: #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 50rpx;
+    padding-right: 30rpx;
+    box-sizing: border-box;
+    bottom: 0;
+    left: 0;
+    z-index: 3;
+}
+
+.footer-box navigator {
+    color: #fff;
+    background-color: #ffc200;
+    padding: 10rpx 30rpx;
+    border-radius: 10rpx;
+}
+
+.footer-box navigator:active {
+    background-color: #ff9700;
+}
+
+.nothing-box {
+    width: 100vw;
+    height: 100vh;
+    background-color: #f5f8fa;
+    left: 0;
+    top: 0;
+    z-index: 2;
+    text-align: center;
+}
+
+.nothing-box .image-box {
+    width: 320rpx;
+    height: 280rpx;
+    margin: 0 auto;
+    margin-top: 210rpx;
+}
+
+.nothing-box .text-box {
+    font-size: 30rpx;
+    color: #999;
+}

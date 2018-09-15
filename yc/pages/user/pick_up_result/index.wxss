@@ -1,0 +1,53 @@
+/* pages/user/pick_up_result/index.wxss */
+.container {
+    border-top: 2rpx solid #fafafa;
+    height: 100vh;
+}
+
+.msg-box {
+    width: 100%;
+    text-align: center;
+    margin-top: 134rpx;
+    font-size: 36rpx;
+    color: #333;
+}
+
+.icon-box {
+    width: 320rpx;
+    margin: 0 auto;
+    height: 280rpx;
+}
+
+.share-btn {
+    width: 650rpx;
+    height: 88rpx;
+    line-height: 88rpx;
+    font-size: 30rpx;
+    color: #fff;
+    text-align: center;
+    margin: 40rpx auto;
+    background-color: #ffb140;
+    border-radius: 10rpx;
+    left: 60rpx;
+    bottom: 0;
+}
+
+.text-box {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    font-size: 30rpx;
+    color: #ccc;
+}
+
+.text-box navigator {
+    color: #ffb140;
+}
+
+.share-btn::after {
+    border: none;
+}
+
+.f-14{
+    color: #999;
+}

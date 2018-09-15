@@ -1,0 +1,127 @@
+/* pages/recharge/index.wxss */
+
+.container {
+    border-top: 2rpx solid #fafafa;
+    height: 100vh;
+}
+
+.switch-box {
+    padding: 50rpx 100rpx;
+}
+
+.switch-box .image-box {
+    width: 500rpx;
+    margin: 0 auto;
+    height: 300rpx;
+}
+
+.switch-box .switch-content {
+    display: flex;
+    justify-content: space-between;
+    color: #999;
+    font-size: 32rpx;
+    margin-top: 50rpx;
+}
+
+.switch-box .switch-content .active {
+    color: #333;
+}
+
+.switch-box .switch-content .active::after {
+    content: '';
+    position: absolute;
+    bottom: -10rpx;
+    left: 50%;
+    width: 70rpx;
+    height: 8rpx;
+    border-radius: 50rpx;
+    background-color: #ffc200;
+    margin-left: -35rpx;
+}
+
+.btn-box {
+    padding: 60rpx;
+    text-align: center;
+    box-sizing: border-box;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+}
+
+.btn-box button {
+    background-color: #ffc200;
+    border: none;
+    color: #fff;
+}
+
+.btn-box button:active{
+    background-color: #ff9802;
+}
+
+.protocol {
+    display: flex;
+    justify-content: center;
+    margin-top: 16rpx;
+    color: #ccc;
+    font-size: 14px;
+}
+
+.color-black {
+    color: #000;
+}
+
+.layer-box {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(122, 122, 122, 0.6);
+    left: 0;
+    bottom: 0;
+}
+
+.layer-box .layer-content {
+    width: 570rpx;
+    margin: 0 auto;
+    margin-top: 30%;
+    height: 280rpx;
+    background-color: #fff;
+    border-radius: 10rpx;
+    text-align: center;
+    position: relative;
+    padding-top: 50rpx;
+}
+
+.layer-box .layer-content .content-title {
+    font-size: 32rpx;
+    color: #333;
+}
+
+.layer-box .layer-content .pay-btn {
+    width: 100%;
+    height: 88rpx;
+    line-height: 88rpx;
+    background-color: #ffc200;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    color: #fff;
+    border-radius: 0 0 10rpx 10rpx;
+    font-size: 30rpx;
+}
+.layer-box .layer-content .input-box{
+    width: 500rpx;
+    margin: 50rpx auto;
+    height: 80rpx
+}
+.layer-box .layer-content .input-box input{
+    font-size: 30px;
+    top: 0;
+    left: 0;
+    text-align: left;
+    height: 80rpx;
+    padding-left: 20rpx;
+    line-height: 80rpx;
+}
+.cancel-icon{
+    right: 16rpx;
+    top: 16rpx;
+}

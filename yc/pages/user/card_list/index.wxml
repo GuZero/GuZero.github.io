@@ -1,0 +1,40 @@
+<!--pages/user/card_list/index.wxml-->
+<view class='container'>
+    <view class='switch-box  fixed'>
+        <view class="rel {{tabIndex == 1 ? 'active': ''}}" data-index="1" bindtap='switchTab'>我购买的</view>
+        <view class="rel {{tabIndex == 2 ? 'active': ''}}" data-index="2" bindtap='switchTab'>我收到的</view>
+    </view>
+    <view class='item-list'>
+        <view class='item rel' wx:for="{{aOrder}}" wx:key="index">
+            <navigator url='../card_details/index?order_id={{item.order_id}}&uid={{item.uid}}'>
+                <view class='item-bg'>
+                    <image wx:if="{{tabIndex==1}}" src='https://img.aimoge.com/FiOgDDeTz2y1P66engJHQ7lXydZS'></image>
+                    <image wx:if="{{tabIndex==2}}" src='https://img.aimoge.com/FsZSmWypMhJiIpZ9awqeGnQExO3J'></image>
+                </view>
+                <view class="item-l abs">
+                    <view class='f-16'>{{item.gift_card.name}}</view>
+                    <view>· 有效期至{{item.expried_time_zh}}</view>
+                    <view>· 请在有效期前点击提货</view>
+                </view>
+                <view class='status-box abs' wx:if="{{tabIndex==1}}">{{item.status_zh}}</view>
+                <view class='status-box abs' wx:if="{{tabIndex==2}}">{{item.status==500?'已提货':'未提货'}}</view>
+                <view class='btn-box abs' wx:if="{{item.status==300}}">
+                    <button wx:if="{{tabIndex==1}}" class='invite-btn w-50' data-id="{{item.order_id}}" data-uid="{{item.uid}}" open-type="share">送给他人</button>
+                    <view wx:if="{{tabIndex==2}}" data-id='{{item.order_id}}' class='linkCardDetails'>查看详情</view>
+                    <view class='solid'></view>
+                    <view class='w-50' data-id='{{item.order_id}}' catchtap='linkToPickUp'>马上提货</view>
+                </view>
+                <view class='btn-box abs' wx:else>
+                    <view data-id='{{item.order_id}}' catchtap='linkCardDetails'>查看详情</view>
+                </view>
+            </navigator>
+        </view>
+    </view>
+    <view class='nothing-box' wx:if='{{!aOrder.length&&!scroll_load_loading}}'>
+        <view class='image-box'>
+            <image src='https://img.aimoge.com/FiSNsRvvbFQn0ccOiPOL4uJQsizG'></image>
+        </view>
+        <view>您暂未{{tabIndex==2?'收到':'购买'}}任何蟹礼喔~</view>
+        <view class='footer-box' bindtap='linkIndex'>{{tabIndex==2?'自己购买':'马上购买'}}</view>
+    </view>
+</view>

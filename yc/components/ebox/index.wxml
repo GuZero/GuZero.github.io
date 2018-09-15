@@ -1,0 +1,32 @@
+<!--components/ebox/index.wxml-->
+<view class='container' wx:if="{{canpoy_info}}">
+    <view class='title-box rel'>
+        <view class='title-l'>
+            <view class='title-image'>
+                <image src='https://img.aimoge.com/Fse6PEAgJPr_u3nhDls2WTDFsIWN'></image>
+            </view>
+        </view>
+        <view class='title-r'>
+            <view class='f-14'>{{canpoy_info.name}}</view>
+            <view class='f-12'>{{canpoy_info.addr+canpoy_info.terminal_village_addr}}</view>
+        </view>
+        <view class='icon-l abs' wx:if="{{false}}">
+            <image src='https://img.aimoge.com/Fsho-J4PBixOsPHw_8sOc_B821Zj'></image>
+        </view>
+    </view>
+    <view class='content-box'>
+        <view class='item' wx:for="{{items}}" wx:key="index">
+            <view class='item-image'>
+                <image mode="aspectFill" src="{{item.image_src}}"></image>
+            </view>
+            <view class='item-text'>
+                <view class='f-13'>{{item.title}}</view>
+                <view class='f-12 color-gray'>剩余：{{item.remnant_num}}</view>
+                <view class='price'>
+                    <text class='member-price f-14'>￥{{(item.discount_price/100)}}</text>
+                    <text class='original-price'>￥{{(item.price/100)}}</text>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>

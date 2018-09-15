@@ -1,0 +1,149 @@
+<!--pages/index/index.wxml-->
+<view wx:if="{{loaded}}">
+    <view class='banner-box rel'>
+        <image src='https://img.aimoge.com/FhXPQbDlRCuwHFTA2cEkUpAjUsv5'></image>
+    </view>
+    <view class='container'>
+        <view class='title-box-1'>
+            <view class='f-16 f-w-b'>大餐直送</view>
+            <view class='f-12'>云厨请你回家吃大餐</view>
+        </view>
+        <view class='list-box'>
+            <view class='list-item' wx:for="{{tradings}}" wx:key="index" wx:if="{{item.good_category==1}}">
+                <navigator class='item-l rel' url='../details/index?sku_id={{item.sku_id}}'>
+                    <view class='image-box'>
+                        <image mode="aspectFill" src="{{item.image_src}}"></image>
+                    </view>
+                </navigator>
+                <view class='item-r'>
+                    <navigator url='../details/index?sku_id={{item.sku_id}}'>
+                        <view class='item-title f-16'>{{item.sku.trading.title}}</view>
+                        <view class='item-info'>{{item.sku.trading.descript}}</view>
+                    </navigator>
+                    <view class='special-pice'>今日特价</view>
+                    <view class='item-price'>
+                        <text class='member-price'>{{(item.sku.discount_price || item.sku.price)/100}}</text>
+                        <text class='original-price' wx:if="{{item.sku.discount_price!= item.sku.price}}">{{ (item.sku.price) /100}}</text>
+                    </view>
+                    <view class='btn-box'>
+                        <view>
+                            <view class='btn-icon' data-item='{{item}}' bindtap='reduce'>
+                                <image src='/images/icon/index (8).png'></image>
+                            </view>
+                        </view>
+                        <view class='f-15'>{{item.sku.sum}}</view>
+                        <view>
+                            <view class='btn-icon' data-item='{{item}}' bindtap='add'>
+                                <image src='/images/icon/index (7).png'></image>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </view>
+        <view class='title-box-2'>
+            <view class='f-16 f-w-b'>会员特价</view>
+            <view class='f-12'>特特特特价·会员5折起</view>
+        </view>
+        <view class='list-box'>
+            <view class='list-item rel' wx:for="{{tradings}}" wx:key="index" wx:if="{{item.good_category==2}}">
+                <view class='discount-icon abs'>6.8折</view>
+                <navigator class='item-l rel' url='../details/index?sku_id={{item.sku_id}}'>
+                    <view class='image-box'>
+                        <image mode="aspectFill" src="{{item.image_src}}"></image>
+                    </view>
+                </navigator>
+                <view class='item-r'>
+                    <navigator url='../details/index?sku_id={{item.sku_id}}'>
+                        <view class='item-title f-16'>{{item.sku.trading.title}}</view>
+                        <view class='item-info'>{{item.sku.trading.descript}}</view>
+                    </navigator>
+                    <view class='special-pice member-price'>今日特价</view>
+                    <view class='item-price'>
+                        <text class='member-price'>{{(item.sku.discount_price || item.sku.price)/100}}</text>
+                        <text class='original-price' wx:if="item.sku.discount_price">{{ (item.sku.price) /100}}</text>
+                    </view>
+                    <view class='btn-box'>
+                        <view>
+                            <view class='btn-icon' data-item='{{item}}' bindtap='reduce'>
+                                <image src='/images/icon/index (8).png'></image>
+                            </view>
+                        </view>
+                        <view class='f-15'>{{item.sku.sum}}</view>
+                        <view>
+                            <view class='btn-icon' data-item='{{item}}' bindtap='add'>
+                                <image src='/images/icon/index (7).png'></image>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class='footer-box fixed' wx:if="{{is_show_footer}}">
+        <view class='car-icon' bindtap='bindPopup'>
+            <view class='info abs'>{{num}}</view>
+            <image src='/images/icon/index (3).png'></image>
+        </view>
+        <view class='text-box'>
+            <text class='f-14'>合计   </text>
+            <text class='f-12 member-price'>￥</text>
+            <text class='member-price'>{{(total)/100}}</text>
+            <text class='original-price'>{{(discount)/100}}</text>
+        </view>
+        <view class='btn-box'>
+            <view class='btn-box-1 rel'>
+                <view data-status='0' bindtap='submit'>赠好友</view>
+                <button class='abs' wx:if="{{use_weixin_userinfo_btn}}" lang="zh_CN" bindgetuserinfo='getUserInfo' open-type="getUserInfo" data-status='0' data-action="submit"></button>
+            </view>
+            <view class='btn-box-2 rel'>
+                <view data-status='1' bindtap='submit'>赠自己</view>
+                <button class='abs' wx:if="{{use_weixin_userinfo_btn}}" lang="zh_CN" bindgetuserinfo='getUserInfo' open-type="getUserInfo" data-status='1'  data-action="submit"></button>
+            </view>
+        </view>
+        <view class='close-btn' wx:if="{{!is_show_list}}" bindtap='closeFooter'>
+            <image src='/images/icon/index (4).png'></image>
+        </view>
+    </view>
+    <view class='tabbar-box' wx:else>
+        <van-tabbar active="{{ active }}" z-index="3" custom-class="tabbar" bind:change="switchTab">
+            <van-tabbar-item wx:for="{{tabBar}}" wx:key="index">
+                <span>{{item.value}}</span>
+                <image slot="icon" src="{{ item.icon.normal }}" class="icon" mode="aspectFit" />
+                <image slot="icon-active" src="{{ item.icon.active }}" mode="aspectFit" />
+                <button class='abs' wx:if="{{index==2&&use_weixin_userinfo_btn}}" lang="zh_CN" bindgetuserinfo='getUserInfo' open-type="getUserInfo" data-action="linkToMine"></button>
+            </van-tabbar-item>
+        </van-tabbar>
+    </view>
+    <view class='shopping-cart-list'>
+        <van-popup overlay-style='background-color: rgba(0, 0, 0, .3) ' show="{{is_show_list}}" position="bottom" custom-class="shopping-cart-list" bind:close="bindPopup">
+            <view class='content-box'>
+                <view class='content-title'>已选商品</view>
+                <scroll-view scroll-y class='list'>
+                    <view class='item' wx:for="{{tradings}}" wx:key="index" wx:if="{{item.sku.sum}}">
+                        <view class='item-l'>
+                            <view class='f-17 f-w-b'>{{item.sku.trading.title}}</view>
+                            <view>
+                                <text class='f-11 member-price'>￥</text>
+                                <text class='f-14 member-price'>{{(item.sku.discount_price || item.sku.price)/100}}</text>
+                            </view>
+                        </view>
+                        <view class='item-r'>
+                            <view>
+                                <view class='btn-icon' data-item='{{item}}' bindtap='reduce'>
+                                    <image src='/images/icon/index (8).png'></image>
+                                </view>
+                            </view>
+                            <view class='f-15'>{{item.sku.sum}}</view>
+                            <view>
+                                <view class='btn-icon' data-item='{{item}}' bindtap='add'>
+                                    <image src='/images/icon/index (7).png'></image>
+                                </view>
+                            </view>
+                        </view>
+                    </view>
+                </scroll-view>
+            </view>
+        </van-popup>
+    </view>
+</view>

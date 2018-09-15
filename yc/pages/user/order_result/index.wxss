@@ -1,0 +1,53 @@
+/* pages/recharge_result/index.wxss */
+
+.container {
+    border-top: 2rpx solid #fafafa;
+    height: 100vh;
+}
+
+.msg-box {
+    width: 100%;
+    text-align: center;
+    margin-top: 134rpx;
+    font-size: 36rpx;
+    color: #333;
+}
+
+.icon-box {
+    width: 200rpx;
+    margin: 0 auto;
+    height: 180rpx;
+}
+
+.btn-box {
+    width: 100%;
+    display: flex;
+    left: 0;
+    bottom: 60rpx;
+    justify-content: space-between;
+}
+
+.btn-box button {
+    width: 40%;
+    font-size: 30rpx;
+    border: none;
+}
+
+.btn-box .btn-1 {
+    background-color: #fff;
+    color: #ffc200;
+    border: 1px solid #ffc200;
+}
+
+.btn-box .btn-2 {
+    color: #fff;
+    background-color: #ffc200;
+}
+.tips{
+    height: 48rpx;
+    line-height: 48rpx;
+    text-align: center;
+    font-size: 24rpx;
+    background-color: #fa5858;
+    color: #fff;
+}

@@ -1,0 +1,131 @@
+/* pages/user/address/index.wxss */
+
+page {
+    background-color: #fff;
+}
+
+.weui-label {
+    font-size: 28rpx;
+    color: #aaa;
+}
+
+.weui-input {
+    font-size: 28rpx;
+}
+
+.weui-cells {
+    margin-bottom: 15rpx;
+}
+
+.info-title {
+    border-bottom: 2rpx solid #f2f2f2;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.placeholder {
+    color: #ccc;
+}
+
+.footer {
+    background-color: #ffc200;
+    width: 100%;
+    height: 96rpx;
+    line-height: 96rpx;
+    text-align: center;
+    color: #fff;
+    left: 0;
+    bottom: 0;
+    font-size: 32rpx;
+}
+
+.foote:active {
+    background-color: #ff9802;
+}
+
+.weui-cell__bd {
+    padding: 6rpx 0;
+}
+
+.address-list .list-title {
+    font-size: 28rpx;
+    color: #333;
+    display: flex;
+    justify-content: space-between;
+    height: 80rpx;
+    padding: 0 30rpx;
+    align-items: center;
+    box-sizing: border-box;
+    border-top: 2rpx solid #eee;
+    border-bottom: 2rpx solid #eee;
+}
+
+.address-list .list-title view:first-child{
+    color: #888;
+}
+
+.mg-r-40{
+    margin-right: 40rpx;
+}
+
+.address-list .list-content {
+    padding: 0 30rpx;
+    border-bottom: 2rpx solid #eee;
+}
+
+.list-content .item {
+    font-size: 34rpx;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2rpx solid #eee;
+    padding: 30rpx 0;
+}
+
+.list-content .item .f-13 {
+    color: #888;
+}
+
+.list-content .item:last-child{
+    border: none;
+}
+
+.list-content .item .item-icon {
+    width: 45rpx;
+    height: 45rpx;
+}
+
+.nothing-box {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 32rpx;
+    color: #999;
+    padding: 138rpx 60rpx;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.nothing-box .image-box {
+    width: 320rpx;
+    height: 280rpx;
+    margin: 20rpx auto;
+}
+
+.nothing-box .footer-box {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    height: 98rpx;
+    box-sizing: border-box;
+    background-color: #ffc200;
+    font-size: 32rpx;
+    border-radius: 10rpx;
+    margin-top: 80%;
+}

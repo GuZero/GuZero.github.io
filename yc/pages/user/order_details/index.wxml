@@ -1,0 +1,239 @@
+<view class='container' wx:if="{{false}}">
+    <view class='tips' wx:if='{{cancelMsg}}'>
+        <text>请及时支付，{{cancelMsg}}后取消订单</text>
+    </view>
+    <view class='steps-box' hidden='{{!isShowStatus}}'>
+        <zan-steps type="horizon" steps="{{orderStatus}}"></zan-steps>
+    </view>
+    <view class='feature-group-box' wx:if="{{orderInfo.order_type=='fight_groupbuy'}}">
+        <view class='fail-box' wx:if="{{orderInfo.fight_groupbuy.groupbuy.status==100||orderInfo.fight_groupbuy.groupbuy.status==400}}">
+            <view class='fail-l'>
+                <view class='fail-icon'>
+                    <image src='https://img.aimoge.com/Fu4MIAmMFPSFOWYTshzx9ZsrECDp'></image>
+                </view>
+            </view>
+            <view class='fail-r'>
+                <view class='f-15'>拼团{{orderInfo.fight_groupbuy.groupbuy.status==100?'取消':'失败'}}</view>
+                <view class='f-12'>订单金额已经按照原路退回您的账户</view>
+            </view>
+        </view>
+        <view class='success-box' wx:else>
+            <view class='countdwon-box'>
+                <view>
+                    <text>距离结束</text>
+                    <w-countdown countdown="{{countdown}}" num-style="{{numStyle}}" symbol-style="{{symbolStyle}}" format="{{'dd:hh:mm:ss'}}"></w-countdown>
+                </view>
+            </view>
+            <view class='text-box'>
+                <view wx:if="{{orderInfo.fight_groupbuy.groupbuy.succed_num-orderInfo.fight_groupbuy.groupbuy.sale_num>0}}"> 还差
+                    <text class='color-theme'>{{(orderInfo.fight_groupbuy.groupbuy.succed_num-orderInfo.fight_groupbuy.groupbuy.sale_num)}}</text>份成团，快邀请好友来参团</view>
+                <view wx:else>已成团，仍可邀请好友来参团</view>
+            </view>
+            <navigator url="../../fightGroup/details/index?groupbuy_id={{orderInfo.fight_groupbuy.groupbuy._id}}" class='success-btn'>邀请好友参团</navigator>
+            <text class='f-12'>正在拼团中，拼团结束后发货</text>
+        </view>
+    </view>
+    <view class='phone-box' wx:if="{{false}}">
+        <view>取货人手机号:
+            <text>{{orderInfo.address.mobile}}</text>
+        </view>
+        <view class='f-13'>(请务必使用取货人手机号绑定的微信开门取货)</view>
+    </view>
+    <view class='info-box rel'>
+        <view wx:if="{{orderInfo.address.address_type==1&&orderInfo.address.building_address&&orderInfo.address.house_address}}">
+            <text>配送至：{{orderInfo.address.name+orderInfo.address.building_address+orderInfo.address.house_address}}</text>
+        </view>
+        <view wx:else>
+            <view>
+                <text>取货门店：{{orderInfo.canopy.name||orderInfo.address.name}}</text>
+            </view>
+            <view>
+                <text>取货智能柜：{{orderInfo.terminal.terminal_name||orderInfo.address.name}}</text>
+            </view>
+        </view>
+        <view>小美先生联系方式：
+            <text class='color-blue' bindtap='makePhoneCall'>{{orderInfo.address.partner_mobile}}</text>
+        </view>
+        <view class='line-icon abs'>
+            <image src='https://img.aimoge.com/FvfUgJREEFNqm0eKuZ7Co1jWeQ4i'></image>
+        </view>
+    </view>
+    <view class='order-box'>
+        <view class='order-title'>
+            商品信息
+        </view>
+        <navigator url='../goods_list_order/index?order_id={{orderInfo.order_id}}&order_type=community_groupbuy' class='order-content'>
+            <view class='content-l'>
+                <view class='image-box' wx:for="{{orderInfo.short_goods}}" wx:key="_id">
+                    <image src="{{item.trading.image_src}}"></image>
+                </view>
+            </view>
+            <view class='content-r'>
+                <view>共{{orderInfo.total_num}}件商品</view>
+                <view class='icon-l'>
+                    <image src='https://img.aimoge.com/FugziEpaIZv40bT75hPz40e0_HDn'></image>
+                </view>
+            </view>
+        </navigator>
+    </view>
+    <view class='price-box'>
+        <view class='price-item'>
+            <text>商品总价</text>
+            <view>
+                <text class='f-12'>￥</text>
+                <text class='f-16'>{{(orderInfo.total_fee - orderInfo.delivery_fee)/100}}</text>
+            </view>
+        </view>
+        <view class='price-item' wx:if="{{orderInfo.delivery_fee}}">
+            <text>运费</text>
+            <view>
+                <text class='f-12'>￥</text>
+                <text class='f-16'>{{(orderInfo.delivery_fee)/100}}</text>
+            </view>
+        </view>
+        <view class='price-item price-sum'>
+            <view>
+                <text>合计</text>
+                <text class='f-12 member-price'>￥</text>
+                <text class='f-18 member-price'>{{(orderInfo.pay_fee)/100}}</text>
+            </view>
+        </view>
+    </view>
+    <view class='order-info'>
+        <view class='info-title'>
+            订单信息
+            <navigator wx:if="{{after_market_info.length}}" class='color-blue' url='../after_market_detalis/index?order_id={{orderInfo.order_id}}'>查看售后详情</navigator>
+        </view>
+        <view class='info-content'>
+            <view>订单编号：{{orderInfo.order_id}}</view>
+            <view>支付方式：{{orderInfo.pay_type=='4'?'微信':'余额'}}</view>
+            <view wx:if="{{orderInfo.order_at_time}}">支付时间：{{orderInfo.order_at_time}}</view>
+            <view>配送方式：{{orderInfo.address.address_type==1&&orderInfo.address.house_address?'送货上门':'代收点自提'}}</view>
+        </view>
+    </view>
+    <view class='footer-box fixed cancel-box' wx:if="{{isCanCancel || isCanPay}}">
+        <view bindtap='cancelOrder' wx:if="{{isCanCancel}}">取消订单</view>
+        <view class='solid' wx:if="{{isCanCancel && isCanPay}}"></view>
+        <view class="{{!isCanCancel?'flex-1':''}}" bindtap='continuePay' wx:if="{{isCanPay}}">继续支付</view>
+    </view>
+    <view class='footer-box fixed' bindtap='goRefund' wx:if="{{isCanRefund && !refundMsg}}">申请退款</view>
+    <view class='footer-box fixed' wx:if="{{isCanRefund && refundMsg}}">{{refundMsg}}</view>
+
+    <view class='footer-box fixed' wx:if="{{isCanAfterMarket&&!after_market_info.length}}" bindtap='linkAfterMarket'>申请售后</view>
+    <view class='footer-box fixed' wx:if="{{after_market_info.length && afterMarketdMsg}}">{{afterMarketdMsg}}</view>
+</view>
+
+<view class='page'>
+    <view class='bg-box bg-1'>
+        <view class='order-status'>
+            <view class='f-17 f-w-b'>{{refundMsg}}</view>
+            <view class='count-down f-11'  wx:if='{{cancelMsg}}'>剩余：{{cancelMsg}}</view>
+        </view>
+        <view class='address-info'>
+            <view>
+                <text>张一如</text>
+                <text>15852931861</text>
+            </view>
+            <view>江苏省南京市雨花台区绿地之窗C2 拷贝</view>
+        </view>
+    </view>
+    <view class='product-info'>
+        <view class='product-title'>商品信息</view>
+        <navigator url='../goods_list_order/index?order_id={{orderInfo.order_id}}&order_type=community_groupbuy' class='order-content'>
+            <view class='content-l'>
+                <view class='image-box' wx:for="{{orderInfo.short_goods}}" wx:key="_id">
+                    <image src="{{item.trading.image_src}}"></image>
+                </view>
+            </view>
+            <view class='content-r'>
+                <view>共{{orderInfo.total_num}}件</view>
+                <view class='icon-l'>
+                    <image src='/images/icon/common (1).png'></image>
+                </view>
+            </view>
+        </navigator>
+    </view>
+    <view class='price-box'>
+        <view class='price-item'>
+            <text>商品总价</text>
+            <view>
+                <text class='f-12'>￥</text>
+                <text class='f-16'>{{(orderInfo.total_fee - orderInfo.delivery_fee)/100}}</text>
+            </view>
+        </view>
+        <view class='price-item' wx:if="{{orderInfo.delivery_fee}}">
+            <text>运费</text>
+            <view>
+                <text class='f-12'>￥</text>
+                <text class='f-16'>{{(orderInfo.delivery_fee)/100}}</text>
+            </view>
+        </view>
+        <!-- <view class='price-item'>
+            <text>满减</text>
+            <view class='member-price'>满1800减100</view>
+        </view> -->
+        <view class='price-item price-sum'>
+            <view>
+                <text>合计</text>
+                <text class='f-12 member-price'>￥</text>
+                <text class='f-16 member-price f-w-b'>{{(orderInfo.pay_fee)/100}}</text>
+            </view>
+        </view>
+    </view>
+    <view class='order-info'>
+        <view class='info-title'>
+            订单信息
+            <navigator wx:if="{{after_market_info.length}}" class='color-blue' url='../after_market_detalis/index?order_id={{orderInfo.order_id}}'>查看售后详情</navigator>
+        </view>
+        <view class='info-content'>
+            <view>订单编号：{{orderInfo.order_id}}</view>
+            <view>支付方式：{{orderInfo.pay_type=='4'?'微信':'余额'}}</view>
+            <view wx:if="{{orderInfo.order_at_time}}">支付时间：{{orderInfo.order_at_time}}</view>
+        </view>
+    </view>
+    <view class='btn-box' wx:if="{{isCanCancel || isCanPay}}">
+        <view bindtap='cancelOrder' wx:if="{{isCanCancel}}">取消订单</view>
+        <view class="{{!isCanCancel?'flex-1':''}}" bindtap='continuePay' wx:if="{{isCanPay}}">立即支付</view>
+    </view>
+    <view class='btn-box-1' bindtap='goRefund' wx:if="{{isCanRefund && !refundMsg}}">
+        <view>申请退款</view>
+    </view>
+    <view class='btn-box-1' wx:if="{{isCanRefund && refundMsg}}">
+        <view>{{refundMsg}}</view>
+    </view>
+    <view class='btn-box-1' wx:if="{{isCanAfterMarket&&!after_market_info.length}}" bindtap='linkAfterMarket'>
+        <view>申请售后</view>
+    </view>
+    <view wx:if="{{after_market_info.length && afterMarketdMsg}}">
+        <view>{{afterMarketdMsg}}</view>
+    </view>
+</view>
+
+<view class='layer-box fixed' wx:if="{{isPayPasswordShow}}">
+    <view class='layer-content rel'>
+        <view class='content-title'>请输入支付密码</view>
+        <view class='input-box rel'>
+            <paySix bindvalueSix="submitBalancePassword" input_value="{{inputData.input_value}}" value_length="{{inputData.value_length}}" isNext="{{inputData.isNext}}" get_focus="{{inputData.get_focus}}" focus_class="{{inputData.focus_class}}" value_num="{{inputData.value_num}}"
+                height="{{inputData.height}}" width="{{inputData.width}}" see="{{inputData.see}}" interval="{{inputData.interval}}">
+            </paySix>
+        </view>
+        <view class='cancel-icon abs' bindtap='cancelBalancePassword'>
+            <icon type='cancel' size='30' color='#ccc'></icon>
+        </view>
+    </view>
+</view>
+<view class='layer-box fixed' hidden='{{isLayerHidden}}'>
+    <view class='pay-box'>
+        <view class='pay-title'>请选择支付方式</view>
+        <view class='pay-item' bindtap='selectPayType' wx:for="{{aPayInfo}}" wx:key="id" data-id="{{item.id}}" data-typeid="{{item.pay_type}}">
+            <text>{{item.value}}</text>
+            <view class='icon-box'>
+                <image wx:if="{{curIndex==index}}" src='https://img.aimoge.com/FgqmqyD7jNYwFv5BSeev_jV6AogU'></image>
+                <image wx:if="{{curIndex!=index}}" src='https://img.aimoge.com/FvU6xHDDHcVhYyHCMyhQlTi0uhkI'></image>
+            </view>
+        </view>
+        <view class='pay-btn'>
+            <button bindtap='confirmContinuePay'>支付</button>
+        </view>
+    </view>
+</view>

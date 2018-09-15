@@ -1,0 +1,22 @@
+<!--pages/user/goods_list_order/index.wxml-->
+<view class='contaner' wx:if="{{loaded}}">
+    <view class='solid'></view>
+    <view class='item' wx:for="{{tradings}}" wx:key="_id" wx:for-item="item" wx:for-index="index">
+        <view class='item-l'>
+            <view class='item-icon'>
+                <image src='{{item.trading.image_src}}'></image>
+            </view>
+        </view>
+        <view class='item-r'>
+            <view class='item-title'>{{item.trading.title}}</view>
+            <view class='price-box'>
+                <view>
+                    <text class='f-12 member-pice'>￥</text>
+                    <text class='f-16 member-pice'>{{(item.discount_price || item.price) / 100}}</text>
+                    <text class='f-13 original-price'>{{item.price / 100}}</text>
+                </view>
+                <view>{{item.order_goods.num||''}}份</view>
+            </view>
+        </view>
+    </view>
+</view>

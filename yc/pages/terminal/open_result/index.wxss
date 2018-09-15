@@ -1,0 +1,102 @@
+/* pages/terminal/open_result/index.wxss */
+
+.page {
+    height: 100vh;
+    box-sizing: border-box;
+}
+
+.success-box,.fail-box {
+    height: 100%;
+    width: 100%;
+    padding-top: 30rpx;
+    box-sizing: border-box;
+}
+
+.color-black {
+    color: #333;
+}
+
+.text-box {
+    width: 100%;
+    text-align: center;
+    color: #000;
+}
+
+.icon-box {
+    width: 220rpx;
+    height: 220rpx;
+    margin: 60rpx auto;
+}
+
+.text-box .f-15 {
+    color: #333;
+}
+
+.text-box .f-20 {
+    font-weight: 600;
+}
+
+.text-box .error_msg {
+    color: #333;
+    margin-bottom: 10rpx;
+}
+
+.footer-box {
+    width: 400rpx;
+    height: 180rpx;
+    left: 50%;
+    margin-left: -200rpx;
+    bottom: 230rpx;
+    background-color: #eee;
+    border-radius: 10rpx;
+    text-align: center;
+    font-size: 26rpx;
+    color: #666;
+    padding: 50rpx 0;
+    box-sizing: border-box;
+}
+
+.footer-box .color-black {
+    font-size: 30rpx;
+    font-weight: 600;
+}
+
+.button-box {
+    width: 100%;
+    padding: 0 60rpx;
+    box-sizing: border-box;
+    left: 0;
+    bottom: 40rpx;
+    display: flex;
+    justify-content: space-between;
+}
+
+.button-box>view {
+    height: 90rpx;
+    width: 300rpx;
+    line-height: 90rpx;
+    text-align: center;
+    font-size: 34rpx;
+    border-radius: 10rpx;
+    border: 2rpx solid #ffc200;
+}
+
+.button-box>view:first-child {
+    color: #333;
+}
+
+.button-box>view:last-child {
+    background-color: #ffc200;
+    color: #fff;
+}
+
+.button-box>view:first-child:active {
+    background-color: #ff9802;
+}
+
+.button-box button {
+    width: 100%;
+    background-color: #ffc200;
+    font-size: 34rpx;
+    color: #fff;
+}

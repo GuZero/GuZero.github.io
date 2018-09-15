@@ -1,0 +1,4 @@
+<!--components/countDown/index.wxml-->
+<view class='count-down-box'>
+    <view>{{countDownDay}}</view>:<view>{{countDownHour}}</view>:<view>{{countDownMinute}}</view>:<view>{{countDownSecond}}</view>
+</view>

@@ -1,0 +1,40 @@
+<!--pages/terminal/open/index.wxml-->
+<view class='page rel'>
+    <view wx:if="{{contract_id&&!orders.length}}">
+        <form report-submit="true" bindsubmit="openDoor">
+            <view class='logo-box'>
+                <image mode='widthFix' src='https://img.aimoge.com/FsNGelkpw6eGUQ5R5zq1bk3jbab3'></image>
+            </view>
+            <navigator url='../../user/mine/index' class='icon-box fixed'>
+                <image src='https://img.aimoge.com/FkX207IzvmwACD-JprQRPdl-7lu6'></image>
+            </navigator>
+            <button class='btn-box fixed' formType="submit">立即开门</button>
+        </form>
+    </view>
+
+    <view class='loading-box abs' hidden='{{ishiddenLoading}}'>
+        <view>
+            <view class="weui-loading"></view>
+            <view>正在开门请稍后</view>
+        </view>
+    </view>
+    <view class='tips-box fixed' wx:if="{{is_new_user&&!contract_id&&!is_checking_contract}}">
+        <view class='bg'>
+            <image src='https://img.aimoge.com/FvetaAAs6kaaZqMq1T4SjsdeI4jG'></image>
+        </view>
+        <view class='text text-1'>
+            开通
+            <text>免密</text>支付授权
+        </view>
+        <view class='text text-2'>开门扫码</view>
+        <view class='text text-3'>选购商品</view>
+        <view class='text text-4'>
+            <view>关门自动扣款</view>
+            <view>并发送账单</view>
+        </view>
+        <view class='new-user-btn abs' bindtap='showApplyTips'>
+            新用户注册
+        </view>
+    </view>
+    <view class="gege-tip fixed" animation="{{animOfNoneNetWork}}">{{animMsg}}</view>
+</view>

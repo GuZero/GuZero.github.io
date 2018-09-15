@@ -1,0 +1,74 @@
+/* pages/terminal/pickup_goods_result/index.wxss */
+
+.page {
+    height: 100vh;
+    border-top: 2rpx solid #f4f4f4;
+    box-sizing: border-box;
+}
+
+.success-box {
+    height: 100%;
+    width: 100%;
+    padding-top: 30rpx;
+    box-sizing: border-box;
+}
+
+.color-black {
+    color: #333;
+}
+
+.text-box {
+    width: 100%;
+    text-align: center;
+    font-size: 26rpx;
+    color: #999;
+}
+
+.icon-box {
+    width: 220rpx;
+    height: 220rpx;
+    margin: 60rpx auto;
+}
+
+.text-box .color-black {
+    font-size: 36rpx;
+    margin-bottom: 20rpx;
+    font-weight: 600;
+}
+
+.footer-box {
+    width: 400rpx;
+    height: 180rpx;
+    left: 50%;
+    margin-left: -200rpx;
+    bottom: 230rpx;
+    background-color: #eee;
+    border-radius: 10rpx;
+    text-align: center;
+    font-size: 26rpx;
+    color: #666;
+    padding: 50rpx 0;
+    box-sizing: border-box;
+}
+
+.footer-box .color-black {
+    font-size: 28rpx;
+     font-weight: 600; 
+}
+
+.button-box {
+    width: 100%;
+    padding: 0 30rpx;
+    box-sizing: border-box;
+    left: 0;
+    bottom: 30rpx;
+}
+
+.button-box .gege-btn {
+    background-color: #ffc200;
+    border: none;
+}
+
+.button-box .gege-btn:active {
+    background-color: #ff9802;
+}

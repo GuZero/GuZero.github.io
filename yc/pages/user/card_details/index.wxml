@@ -1,0 +1,64 @@
+<!--pages/user/card_details/index.wxml-->
+<view class='container' wx:if="{{loaded&&!is_pick_up}}">
+    <view class='card'>
+        <view class='card-box rel'>
+            <view class='card-bg'>
+                <image src='https://img.aimoge.com/FslXlGvDejfmJs8fM0jCoaYVjLXq'></image>
+            </view>
+            <view class="card-l abs">
+                <view class='f-16'>{{order_info.gift_card.name}}</view>
+                <view>· 有效期至{{order_info.expried_time_zh}}</view>
+                <view>· 请在有效期前点击提货</view>
+            </view>
+            <view class='status-box abs' wx:esle>{{order_info.status_zh}}</view>
+        </view>
+    </view>
+    <view class='content-box'>
+        <view class='content-title'>
+            <view>礼包详情</view>
+            <button class='color-theme' bindtap='callMobile'>联系客服</button>
+        </view>
+        <view class='list-box'>
+            <view class='list-item' wx:for="{{order_info.order.goods}}" wx:key="{{index}}">
+                <view class='item-l rel'>
+                    <view class='image-box'>
+                        <image mode="aspectFill" src="{{item.image_src}}"></image>
+                    </view>
+                </view>
+                <view class='item-r'>
+                    <view class='item-title f-16'>{{item.trading.title}}</view>
+                    <view class='item-info'>{{item.trading.descript}}</view>
+                    <view class='item-price'>
+                        <text class='member-price'>{{(item.discount_price || item.price)/100}}</text>
+                        <text class='original-price' wx:if="item.discount_price">{{ (item.price) /100}}</text>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class='content-box' wx:if="{{order_info.status==500&&(!is_self||order_info.receiver_uid=='000000000000000000000000')}}">
+        <view class='content-title'>
+            <view>提货详情</view>
+        </view>
+        <view class='info-box'>
+            <view>收货地址：{{order_info.order.address.address_detail.province}}{{order_info.order.address.address_detail.city}}{{order_info.order.address.address_detail.name}}{{order_info.order.address.address}}</view>
+            <view>收货人：{{order_info.order.address.name}}</view>
+            <view>联系方式：{{order_info.order.address.mobile}}</view>
+            <view>收货时间：{{order_info.receiver_booking_time}}</view>
+        </view>
+    </view>
+    <view class='footer-box fixed' wx:if="{{order_info.status==300}}">
+        <button class='invite-btn f-16 w-50' data-id="{{order_info.order_id}}" data-uid="{{order_info.uid}}" open-type="share">送给他人</button>
+        <view class='soild abs'></view>
+        <navigator class='w-50' url='../pick_up/index?order_id={{order_info.order_id}}&uid={{order_info.uid}}'>马上提货</navigator>
+    </view>
+    <view class='footer-box fixed' wx:if="{{order_info.status==400&&!is_self}}">
+        <navigator class='w-50' url='../pick_up/index?order_id={{order_info.order_id}}&uid={{order_info.uid}}'>马上提货</navigator>
+    </view>
+</view>
+<view class='nothing-box' wx:if='{{is_pick_up}}'>
+    <view class='image-box'>
+        <image src='https://img.aimoge.com/FiSNsRvvbFQn0ccOiPOL4uJQsizG'></image>
+    </view>
+    <view>该蟹礼已经被领取~</view>
+</view>

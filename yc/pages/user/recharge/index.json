@@ -1,0 +1,5 @@
+{
+    "usingComponents": {
+        "paySix":"../../../components/payInput/index"
+    }
+}

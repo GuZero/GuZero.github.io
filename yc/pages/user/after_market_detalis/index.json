@@ -1,0 +1,6 @@
+{
+    "navigationBarTitleText": "售后处理",
+        "usingComponents": {
+            "zan-steps": "../../../components/steps/index"
+        }
+}

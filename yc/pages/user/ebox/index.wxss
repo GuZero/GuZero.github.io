@@ -1,0 +1,27 @@
+/* pages/user/ebox/index.wxss */
+
+.ebox {
+    border-top: 2rpx solid #f2f2f2;
+}
+
+.nothing-box {
+    width: 100vw;
+    height: 100vh;
+    background-color: #f5f8fa;
+    left: 0;
+    top: 0;
+    z-index: 2;
+    text-align: center;
+}
+
+.nothing-box .image-box {
+    width: 320rpx;
+    height: 280rpx;
+    margin: 0 auto;
+    margin-top: 210rpx;
+}
+
+.nothing-box .text-box {
+    font-size: 30rpx;
+    color: #999;
+}

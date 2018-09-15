@@ -1,0 +1,11 @@
+<!--pages/user/pick_up_result/index.wxml-->
+<view class='container'>
+    <view class='success-box msg-box'>
+        <view class='icon-box'>
+            <image src='https://img.aimoge.com/Fo99xTBXI4oMGibnGqlS4LNXxQzU'></image>
+        </view>
+        <view>提货成功</view>
+        <view class='f-14'>我们将在您预约的收货时间为您送货上门</view>
+    </view>
+    <navigator url='../card_details/index?order_id={{order_id}}&uid={{uid}}' class='share-btn fixed'>查看详情</navigator>
+</view>

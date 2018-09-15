@@ -1,0 +1,50 @@
+{
+    "pages": [
+        "pages/index/index",
+        
+        "pages/user/login/index",
+        "pages/user/order_list/index",
+        "pages/user/refund/index",
+        
+        "pages/user/location/index",
+        "pages/user/recharge/index",
+        "pages/user/order_result/index",
+        "pages/user/order/index",
+        "pages/user/order_coupon/index",
+        "pages/user/goods_list/index",
+        "pages/user/goods_list_order/index",
+        "pages/user/after_market_detalis/index",
+        "pages/user/after_market/index",
+        "pages/user/user_agreement/index",
+        "pages/user/issue/index",
+        "pages/user/coupon/index",
+        "pages/user/address/index",
+        "pages/user/ebox/index",
+        "pages/user/mine/index",
+        "pages/user/card_list/index",
+        "pages/user/card_details/index",
+        "pages/user/pick_up/index",
+        "pages/user/pick_up_result/index",
+        "pages/user/pay_result/index",
+        "pages/user/order_details/index",
+
+        "pages/terminal/open/index",
+        "pages/terminal/open_result/index",
+        "pages/terminal/pickup_goods_result/index"
+    ],
+    "window": {
+        "navigationBarBackgroundColor": "#ffffff",
+        "navigationBarTextStyle": "black",
+        "enablePullDownRefresh": true,
+        "backgroundColor": "#efeff4",
+        "backgroundTextStyle": "dark",
+        "navigationBarTitleText": "云厨小站"
+    },
+    "networkTimeout": {
+        "connectSocket": 15000,
+        "request": 60000,
+        "uploadFile": 120000,
+        "downloadFile": 120000
+    },
+    "debug": false
+}

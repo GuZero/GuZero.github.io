@@ -1,0 +1,8 @@
+{
+    "navigationBarTitleText": "订单详情",
+    "usingComponents": {
+        "zan-steps": "../../../components/steps/index",
+        "paySix": "../../../components/payInput/index",
+        "w-countdown":"../../../components/w-countdown/index"
+    }
+}

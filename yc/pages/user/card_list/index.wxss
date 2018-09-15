@@ -1,0 +1,122 @@
+/* pages/user/card_list/index.wxss */
+
+page {
+    background-color: #f7f8fa;
+}
+
+.switch-box {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    color: #999;
+    font-size: 28rpx;
+    height: 80rpx;
+    padding: 0 50rpx;
+    align-items: center;
+    background-color: #fff;
+    border-top: 2rpx solid #f2f2f2;
+    left: 0;
+    top: 0;
+    z-index: 2;
+    box-sizing: border-box;
+}
+
+.switch-box .active {
+    color: #333;
+}
+
+.switch-box>view {
+    text-align: center;
+    width: 50%;
+}
+
+.switch-box .active::after {
+    content: '';
+    position: absolute;
+    bottom: -14rpx;
+    left: 50%;
+    width: 70rpx;
+    height: 8rpx;
+    border-radius: 50rpx;
+    background-color: #ffb140;
+    margin-left: -35rpx;
+}
+
+.item-list {
+    padding: 0 75rpx;
+    padding-top: 110rpx;
+}
+
+.item-list .item {
+    width: 100%;
+    height: 330rpx;
+    margin-bottom: 30rpx;
+    font-size: 24rpx;
+    color: #333;
+    border-radius: 16rpx;
+    box-shadow: 0 4rpx 8rpx #ffa94e;
+}
+
+.item-list .item .item-bg {
+    height: 330rpx;
+}
+
+.item-list .item  .item-l {
+    top: 60rpx;
+    margin-left: 44rpx;
+}
+
+.item-list .item  .item-l .f-16 {
+    margin-bottom: 40rpx;
+    font-weight: 600;
+}
+
+.item-list .item .status-box {
+    width: 110rpx;
+    height: 40rpx;
+    line-height: 40rpx;
+    text-align: center;
+    border-radius: 25rpx  0 0 25rpx;
+    background-color: #f6c344;
+    right:0;
+    top: 40rpx;
+    color: #fff;
+}
+
+.item-list .item .btn-box {
+    width: 100%;
+    height: 80rpx;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    font-size: 26rpx;
+    border-radius: 8rpx 8rpx 16rpx 16rpx;
+    left: 0;
+    bottom: 0;
+}
+
+.item-list .item .btn-box .w-50 {
+    width: 50%;
+    text-align: center;
+}
+
+.item-list .item .btn-box .solid {
+    width: 2rpx;
+    height: 46rpx;
+    background-color: #fcd351;
+    left: 50%;
+    top: 50%;
+}
+
+.invite-btn {
+    font-weight: normal;
+    padding: 0;
+    margin: 0;
+    background: none;
+    font-size: 28rpx;
+}
+
+.invite-btn::after {
+    border: none;
+}

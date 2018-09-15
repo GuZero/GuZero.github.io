@@ -1,0 +1,42 @@
+<!--pages/issue/index.wxml-->
+<view class="page">
+    <view class='item'>
+        <view class='item-title'>
+            <view class='icon'></view>
+            <view>零售柜如何下单</view>
+        </view>
+        <view class='item-content'>
+            <view>三个步骤轻松购物</view>
+            <view>
+                微信扫码开门->选购商品->关门自动结算</view>
+        </view>
+    </view>
+    <view class='item'>
+        <view class='item-title'>
+            <view class='icon'></view>
+            <view>关于免密支付</view>
+        </view>
+        <view class='item-content'>
+            <view>智能柜购物前需要开通微信小额免密支付哦，取货后系统自动扣款，购物更方便。</view>
+        </view>
+    </view>
+    <view class='item'>
+        <view class='item-title'>
+            <view class='icon'></view>
+            <view> 智能柜商品价格</view>
+        </view>
+        <view class='item-content'>
+            <view>扫描智能柜二维码，可查看柜内所有出售商品及价格，方便您的选购。柜机内商品会不定期折扣出售，敬请关注哦。</view>
+        </view>
+    </view>
+    <view class='item'>
+        <view class='item-title'>
+            <view class='icon'></view>
+            <view> 线上商城攻略 </view>
+        </view>
+        <view class='item-content'>
+            <view>a)  下单后可直接填写自己地址，我们将为您配送上门</view>
+            <view>b)   商城所有商品都可作为礼物送给好友啦，接收者只需填写自己所在地址，我们就会把您挑选的礼物送到您好友手中，小小的礼物传达浓浓的情意。</view>
+        </view>
+    </view>
+</view>

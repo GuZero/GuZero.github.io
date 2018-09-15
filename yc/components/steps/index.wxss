@@ -1,0 +1,233 @@
+.zan-steps--steps.zan-steps--5 .zan-steps__step {
+    width: 25%;
+}
+
+.zan-steps--steps.zan-steps--4 .zan-steps__step {
+    width: 33%;
+}
+
+.zan-steps--steps.zan-steps--3 .zan-steps__step {
+    width: 50%;
+}
+
+.zan-steps--steps .zan-steps__step {
+    position: relative;
+    float: left;
+    color: #b1b1b1;
+    width: 100%;
+}
+
+.zan-steps--steps .zan-steps__title {
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    font-size: 10px;
+    text-align: center;
+    margin-top: 28rpx;
+}
+
+.zan-steps--steps .zan-steps__icons {
+    position: absolute;
+    /* top: 28px; */
+    top: -6rpx;
+    left: -10px;
+    padding: 0 8px;
+    z-index: 10;
+}
+
+.zan-steps--steps .zan-steps__circle {
+    display: block;
+    position: relative;
+    width: 20rpx;
+    height: 20rpx;
+    background-color: #ccc;
+    border-radius: 50%;
+}
+
+.zan-steps--steps .zan-steps__line {
+    position: absolute;
+    left: 0;
+    /* top: 32px; */
+    width: 100%;
+    height: 1px;
+    background-color: #ccc;
+}
+
+.zan-steps--steps .zan-steps__step--done {
+    color: #333;
+}
+
+.zan-steps--steps .zan-steps__step--done .zan-steps__line {
+    background-color: #ccc;
+}
+
+.zan-steps--steps .zan-steps__step--done .zan-steps__circle {
+    width: 20rpx;
+    height: 20rpx;
+    background-color: #ffb140;
+}
+
+.zan-steps--steps .zan-steps__step--cur .zan-steps__icons {
+    /* top: 26px; */
+    top: -12rpx;
+    left: -14px;
+}
+
+.zan-steps--steps .zan-steps__step--cur .zan-steps__circle {
+    width: 13px;
+    height: 13px;
+    background-size: 13px 13px;
+}
+
+.zan-steps--steps .zan-steps__step--cur .zan-steps__line {
+    background-color: #ffb140;
+}
+
+.zan-steps--steps .zan-steps__step--first-child .zan-steps__title {
+    margin-left: 0;
+    -webkit-transform: none;
+    transform: none;
+    text-align: left;
+}
+
+.zan-steps--steps .zan-steps__step--first-child .zan-steps__icons {
+    left: -8px;
+}
+
+.zan-steps--steps .zan-steps__step--last-child {
+    position: absolute;
+    right: -4rpx;
+    top: 0;
+    text-align: right;
+}
+
+.zan-steps--steps .zan-steps__step--last-child .zan-steps__title {
+    -webkit-transform: none;
+    transform: none;
+    text-align: right;
+}
+
+.zan-steps--steps .zan-steps__step--last-child .zan-steps__icons {
+    left: auto;
+    right: -6px;
+}
+
+.zan-steps--steps .zan-steps__step--last-child .zan-steps__line {
+    display: none;
+}
+
+.zan-steps--steps .zan-steps__step--db-title {
+    min-height: 29px;
+}
+
+.zan-steps--steps .zan-steps__step--db-title .zan-steps__line {
+    top: 45px;
+}
+
+.zan-steps--steps .zan-steps__step--db-title .zan-steps__icons {
+    top: 43px;
+}
+
+.zan-steps--steps .zan-steps__step--db-title.zan-steps__step--cur .zan-steps__icons {
+    top: 39px;
+}
+
+.zan-steps--vsteps {
+    color: #999;
+    font-size: 14px;
+}
+
+.zan-steps--vsteps .zan-steps__step {
+    position: relative;
+    padding: 14rpx 0;
+}
+
+.zan-steps--vsteps .zan-steps__step--done {
+    color: #ffb140;
+}
+.zan-steps--vsteps .zan-steps__step--cur  .zan-steps__line{
+        background-color: #ffb140;
+}
+.zan-steps--vsteps .zan-steps__line {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 7px;
+    width: 1px;
+    background-color: #cccccc;
+}
+
+.zan-steps--vsteps .zan-steps__title {
+    display: inline-block;
+    line-height: 20px;
+    padding-left: 27px;
+}
+
+.zan-steps--vsteps .zan-steps__title--desc {
+    color: #999;
+    position: absolute;
+    right: 0;
+}
+
+.zan-steps--vsteps .zan-steps__icons {
+    position: absolute;
+    left: 7px;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    padding: 3px 0;
+
+}
+
+.zan-steps--vsteps .zan-steps__circle {
+    width: 16rpx;
+    height: 16rpx;
+    background-color: #cccccc;
+    border-radius: 50%;
+}
+
+.zan-steps--vsteps .zan-steps__step--done .zan-steps__circle {
+    width: 5px;
+    height: 5px;
+    background-color: #ffb140;
+}
+
+.zan-steps--vsteps .zan-steps__step--cur .zan-steps__circle {
+    width: 24rpx;
+    height: 24rpx;
+    background-image: url('https://img.aimoge.com/FnjIiusRHLa8Y_ReerwJc1S9Q2qE');
+    background-size: 100%;
+    background-color: #fff;
+    border-radius: 0;
+}
+
+.zan-steps--vsteps .zan-steps__icon--active {
+    width: 13px;
+    height: 13px;
+}
+
+.zan-steps--vsteps .zan-steps__step--first-child .zan-steps__title::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 50%;
+    left: 7px;
+    width: 1px;
+    background-color: #fff;
+    z-index: 1;
+}
+
+.zan-steps--vsteps .zan-steps__step--last-child .zan-steps__title::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    bottom: 0;
+    left: 7px;
+    width: 1px;
+    background-color: #fff;
+    z-index: 1;
+}
+
+.zan-steps {
+    position: relative;
+}

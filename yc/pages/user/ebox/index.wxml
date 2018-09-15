@@ -1,0 +1,15 @@
+<!--pages/user/ebox/index.wxml-->
+<view class='page'>
+    <view class='ebox' wx:if="{{hasTerminal}}">
+        <ebox wx:if="{{community}}" community="{{community}}"></ebox>
+    </view>
+    <view class='nothing-box fixed' wx:else>
+        <view class='image-box'>
+            <image src='https://img.aimoge.com/FpPz2aSUGUHigBopMbFby8uzMbLt'></image>
+        </view>
+        <view class='text-box'>
+            <view>当前小区的智能柜正在紧张的安装中</view>
+            <view>敬请期待喔</view>
+        </view>
+    </view>
+</view>
